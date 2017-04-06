@@ -22,9 +22,9 @@
 	<message id="entity_player_nation">Nationality (Country)</message>
 	<message id="entity_player_picture">Picture</message>
 	<message id="entity_player_verletzt">Injured</message>
-	<message id="entity_player_gesperrt">Blocked</message>
-	<message id="entity_player_gesperrt_cups">Blocked (Cups)</message>
-	<message id="entity_player_gesperrt_nationalteam">Blocked (National team)</message>
+	<message id="entity_player_gesperrt">Suspended</message>
+	<message id="entity_player_gesperrt_cups">Suspended (Cups)</message>
+	<message id="entity_player_gesperrt_nationalteam">Suspended (National team)</message>
 	<message id="entity_player_w_staerke">Skill</message>
 	<message id="entity_player_w_technik">Technique</message>
 	<message id="entity_player_w_kondition">Stamina</message>
@@ -44,14 +44,14 @@
 	<message id="entity_player_sa_assists">Assists (this season)</message>
 	<message id="entity_player_sa_spiele">Matches (this season)</message>	
 	<message id="entity_player_sa_karten_gelb">Yellow Cards (this season)</message>	
-	<message id="entity_player_sa_karten_gelb_rot">Yellow-Red Cards (this season)</message>	
+	<message id="entity_player_sa_karten_gelb_rot">Double Yellow Cards (this season)</message>	
 	<message id="entity_player_sa_karten_rot">Red Cards (this season)</message>	
 	
 	<message id="entity_player_st_tore">Goals (total)</message>	
 	<message id="entity_player_st_assists">Assists (total)</message>	
 	<message id="entity_player_st_spiele">Matches (total)</message>	
 	<message id="entity_player_st_karten_gelb">Yellow Cards (total)</message>	
-	<message id="entity_player_st_karten_gelb_rot">Yellow-Red Cards (total)</message>	
+	<message id="entity_player_st_karten_gelb_rot">Double Yellow Cards (total)</message>	
 	<message id="entity_player_st_karten_rot">Red Cards (total)</message>	
 	
 	<message id="entity_player_history">History</message>	    

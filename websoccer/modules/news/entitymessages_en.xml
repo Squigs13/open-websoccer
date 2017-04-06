@@ -2,7 +2,7 @@
 <!DOCTYPE module SYSTEM "../messages.dtd">
 <messages>
     <message id="entity_news">News</message>
-    <message id="news-details_navlabel">read</message>
+    <message id="news-details_navlabel">Read</message>
     <message id="entity_news_autor_id">Author</message>
 	<message id="entity_news_titel">Title</message>
 	<message id="entity_news_datum">Date</message>

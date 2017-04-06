@@ -17,7 +17,7 @@
     
     <message id="youthteam_action_make_professional">Transfer to professional team</message>
     <message id="youthteam_action_sell">Offer in marketplace</message>
-    <message id="youthteam_action_fire">Dismiss</message>
+    <message id="youthteam_action_fire">Release</message>
     <message id="youthteam_action_removefrommarket">Offered for transfer. Remove from market.</message>
     <message id="youthteam_action_buy">Buy</message>
     
@@ -29,12 +29,12 @@
     
     <message id="youthteam_sell_success">The player can now be bought by other managers.</message>
     <message id="youthteam_removefrommarket_success">The player has been removed from the marketplace.</message>
-    <message id="youthteam_fire_success">The player got dismissed.</message>
+    <message id="youthteam_fire_success">The player was released.</message>
     <message id="youthteam_buy_success">The player belongs to your team now!</message>
     
-    <message id="youthplayer-fire_navlabel">Dismiss youth player</message>
+    <message id="youthplayer-fire_navlabel">Release youth player</message>
     <message id="youthplayer-fire_formlabel">Remove from team</message>
-    <message id="youthplayer-fire_confirmationmsg">Do you really want to lay off this player? This cannot be undone later.</message>
+    <message id="youthplayer-fire_confirmationmsg">Do you really want to release this player? This cannot be undone later.</message>
 
     <message id="youthplayer-buy_navlabel">Buy youth player</message>
     <message id="youthplayer-buy_formlabel">Hire this player</message>

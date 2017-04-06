@@ -16,11 +16,11 @@
     
     <message id="formation_team_collapsehead_tooltip">Expand or collapse list</message>
     
-    <message id="formation_team_blocked_cards">Blocked due to red or yellow cards</message>
+    <message id="formation_team_blocked_cards">Suspended due to red or yellow cards</message>
     <message id="formation_team_blocked_injured">Player is injured</message>
     
     <message id="formation_dragging_note_title">Instructions:</message>
-    <message id="formation_dragging_note">Drag players onto the playground in order to set them for the match, or just double-click on the player.</message>
+    <message id="formation_dragging_note">Drag players onto the pitch in order to set them for the match, or just double-click on the player.</message>
     
     <message id="formation_substitutions_title">Substitutions</message>
     <message id="formation_substitutions_out">Out</message>
@@ -48,7 +48,7 @@
     <message id="formation_err_nonextmatch">There is no next match yet.</message>
     <message id="formation_err_invalidplayer">Invalid players set.</message>
     <message id="formation_err_duplicateplayer">Some players are set multiple times.</message>
-    <message id="formation_err_blockedplayer">Injured or blocked players set.</message>
+    <message id="formation_err_blockedplayer">Injured or suspended players set.</message>
     
     <message id="formation_err_invalidsubstitutionminute">You are allowed to substitute players only between the second and 90th minute.</message>
     

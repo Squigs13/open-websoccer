@@ -10,7 +10,7 @@
     <message id="userprofile_block_highscore">Highscore</message>
     <message id="userprofile_block_link_table">Table</message>
     
-    <message id="userprofile_block_tooltip_popularity">Depends on your success und influences the ticket sales.</message>
+    <message id="userprofile_block_tooltip_popularity">Depends on your success and influences ticket sales.</message>
     
     <message id="profile_navlabel">User Profile</message>
     <message id="profile_title">Edit Profile</message>

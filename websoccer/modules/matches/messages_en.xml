@@ -16,7 +16,7 @@
     <message id="match_details_stadium">Stadium</message>
     
     <message id="match_details_matchday">matchday %d</message>
-    <message id="match_details_audience">Audience</message>
+    <message id="match_details_audience">Crowd</message>
     
     <message id="match_details_noformation">%s has not submitted any formation.</message>
     
@@ -42,7 +42,7 @@
     <message id="match_details_players_grade_helptext">Grading in the range of 1.00 (very good) to 6.00 (very poor)</message>
     
     <message id="match_details_statistic_shoots">Shots</message>
-    <message id="match_details_statistic_tackles">Tacklings</message>
+    <message id="match_details_statistic_tackles">Tackles</message>
     <message id="match_details_statistic_ballcontacts">Ball Possession</message>
     <message id="match_details_statistic_successfulpasses">Successful Passes</message>
     
@@ -88,7 +88,7 @@
 	
 	<message id="match_details_report_halftime">Half-time break! Score: %s</message>
 	<message id="match_details_report_extension">Extra time! Score: %s</message>
-	<message id="match_details_report_penaltyshooting">Penalty shooting! Score: %s</message>
+	<message id="match_details_report_penaltyshooting">Penalty shootout! Score: %s</message>
 	
 	<message id="match_details_statistic_ballcontacts_player">Touches of ball</message>
 	<message id="match_details_statistic_tackles_player">Won tackles</message>
@@ -97,23 +97,23 @@
 	<message id="myschedule_navlabel">Schedule</message>
 	
 	<message id="matchpreview_last_matches">Last matches in competition</message>
-	<message id="matchpreview_nolastmatches">%s has not played in this competition yet.</message>
-	<message id="matchpreview_nouser">%s has currently no manager.</message>
+	<message id="matchpreview_nolastmatches">%s have not played in this competition yet.</message>
+	<message id="matchpreview_nouser">%s currently have no manager.</message>
 	
 	<!-- Match report messages -->
 	<message id="Tor von {sp1}!"><b>Goal by {sp1}!</b></message>
-	<message id="{sp1} schießt..... TOR!"><b>{sp1} shoots..... GOAL!</b></message>
-	<message id="{sp1} kommt zum Kopfball... und da flattert der Ball im Netz!"><b>Header by {sp1}..... and the ball is in the net!</b></message>
-	<message id="TOR - wunderschön gemacht von {sp1}"><b>GOAL - what a trick by {sp1}!</b></message>
-	<message id="{sp1} schießt auf das Tor... und der Ball ist drin!"><b>{sp1} shootstowards the goal... and the ball is in!</b></message>
+	<message id="{sp1} schießt..... TOR!"><b>{sp1} shoots... GOAL!</b></message>
+	<message id="{sp1} kommt zum Kopfball... und da flattert der Ball im Netz!"><b>Header by {sp1}... and the ball is in the net!</b></message>
+	<message id="TOR - wunderschön gemacht von {sp1}"><b>GOAL - what a strike by {sp1}!</b></message>
+	<message id="{sp1} schießt auf das Tor... und der Ball ist drin!"><b>{sp1} shoots towards the goal... and it's in!</b></message>
 	<message id="{sp1} kommt für {sp2}"><em>{sp1} substitutes {sp2}.</em></message>
-	<message id="{sp1} geht auf seinen Gegenspieler zu und gewinnt den Zweikampf!">{sp1} runs towards his opponent and wins the tackling!</message>
-	<message id="{sp1} in einem Zweikampf.... gewonnen!">{sp1} in a tackling... and wins it!</message>
-	<message id="{sp1} läuft mit dem Ball am Fuß auf seinen Gegenspieler zu... und gewinnt den Zweikampf.">{sp1} has the ball and sees his opponent in front of him... but he can win the tackling.</message>
-	<message id="{sp1} nimmt seinem Gegenspieler gekonnt den Ball von den Füßen.">{sp1} steals his opponent's ball in a tackling.</message>
-	<message id="{sp1} geht auf {sp2} zu... und verliert den Zweikampf.">{sp1} runs towards {sp2}... and looses the ball.</message>
-	<message id="{sp1} in einem Zweikampf.... und verliert ihn.">{sp1} in a tackling... and looses it!</message>
-	<message id="{sp1} geht mit dem Ball am Fuß auf seinen Gegenspieler zu... und verliert ihn.">{sp1} has the ball and sees his opponent in front of him... and looses the tackling.</message>
+	<message id="{sp1} geht auf seinen Gegenspieler zu und gewinnt den Zweikampf!">{sp1} runs towards his opponent and wins the tackle!</message>
+	<message id="{sp1} in einem Zweikampf.... gewonnen!">{sp1} with a tackle... and wins it!</message>
+	<message id="{sp1} läuft mit dem Ball am Fuß auf seinen Gegenspieler zu... und gewinnt den Zweikampf.">{sp1} has the ball and sees his opponent in front of him... but he can win the tackle.</message>
+	<message id="{sp1} nimmt seinem Gegenspieler gekonnt den Ball von den Füßen.">{sp1} steals his opponent's ball in a tackle.</message>
+	<message id="{sp1} geht auf {sp2} zu... und verliert den Zweikampf.">{sp1} runs towards {sp2}... and loses the ball.</message>
+	<message id="{sp1} in einem Zweikampf.... und verliert ihn.">{sp1} in a tackle... and loses it!</message>
+	<message id="{sp1} geht mit dem Ball am Fuß auf seinen Gegenspieler zu... und verliert ihn.">{sp1} has the ball and sees his opponent in front of him... and loses the tackle.</message>
 	<message id="{sp1} sieht seinen Gegenspieler gegenüber und lässt sich den Ball abnehmen.">{sp1} lets taken away the ball.</message>
 	<message id="Flanke von {sp1}... in die Wolken!">Cross by {sp1}... into the clouds!</message>
 	<message id="{sp1} passt den Ball in die Mitte... genau auf die Füße des Gegners.">{sp1} passes the ball towards the centre... but the opponent catches it.</message>
@@ -123,7 +123,7 @@
 	<message id="{sp1} schießt..... daneben.">{sp1} shoots... but missed.</message>
 	<message id="{sp1} schießt auf das Tor... aber genau auf den Torwart.">{sp1} shoots towards the goal... but into the arms of the goalkeeper!</message>
 	<message id="Kopfball {sp1}... daneben.">Header by {sp1}... but missed.</message>
-	<message id="{sp1} haut mit aller Kraft auf den Ball... Abschlag.">{sp1} tries it with a strong shoot... but missed.</message>
+	<message id="{sp1} haut mit aller Kraft auf den Ball... Abschlag.">{sp1} tries it with a strong shot... but missed.</message>
 	<message id="{sp1} schießt..... in die Wolken.">{sp1} shoots... into the sky.</message>
 	<message id="{sp1} schießt..... Glanzparade des Torwarts!">{sp1} shoots... but the goalkeeper can somehow catch it.</message>
 	<message id="{sp1} schießt auf das Tor... aber der Torwart macht einen Hechtsprung und hat den Ball.">{sp1} shoots... but the goalkeeper dives to get the ball.</message>

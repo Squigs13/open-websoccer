@@ -6,7 +6,7 @@
 	
 	<message id="entity_match_datum">Date</message>
 	<message id="entity_match_home_verein">Home Team</message>
-	<message id="entity_match_gast_verein">Guest Team</message>
+	<message id="entity_match_gast_verein">Away Team</message>
 	
 	<message id="entity_match_saison_id">Season</message>
 	<message id="entity_match_pokalname">Cup</message>
@@ -15,9 +15,9 @@
 	<message id="entity_match_berechnet">Is simulated</message>
 	
 		<message id="entity_match_spieltyp">Type</message>
-	<message id="entity_match_elfmeter">Penalty shooting on draw</message>
+	<message id="entity_match_elfmeter">Penalty shootout on draw</message>
 	<message id="entity_match_home_tore">Goals (Home)</message>
-	<message id="entity_match_gast_tore">Goals (Guest)</message>
+	<message id="entity_match_gast_tore">Goals (Away)</message>
 	<message id="entity_match_zuschauer">Audience</message>
 	<message id="entity_match_bericht">Match Report</message>
 	<message id="entity_match_bericht_help">Must be specified only when the automatically generated report shall not be displayed.</message>
@@ -43,10 +43,10 @@
 	<message id="option_Torschuss_auf_Tor">Unsuccessful shot: on goal</message>
 	<message id="option_Karte_gelb">Yellow card</message>
 	<message id="option_Karte_rot">Red card</message>
-	<message id="option_Karte_gelb_rot">Yellow-red card</message>
+	<message id="option_Karte_gelb_rot">Second yellow card</message>
 	<message id="option_Verletzung">Injury</message>
-	<message id="option_Elfmeter_erfolg">Penaty: hit</message>
-	<message id="option_Elfmeter_verschossen">Penalty: failed</message>
+	<message id="option_Elfmeter_erfolg">Penalty: Goal</message>
+	<message id="option_Elfmeter_verschossen">Penalty: missed</message>
 	<message id="option_Taktikaenderung">Manager changes tactic</message>
 	<message id="option_Ecke">Corner</message>
 	<message id="option_Freistoss_daneben">Free kick: missed</message>

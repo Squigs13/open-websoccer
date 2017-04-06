@@ -13,8 +13,8 @@
     <message id="team_details_statistic_season">This Season</message>
     <message id="team_details_statistic_total">Total</message>
     
-        <message id="team_details_statistic_goals">Goals</message>
-	<message id="team_details_statistic_againsts">Goals received</message>
+    <message id="team_details_statistic_goals">Goals</message>
+	<message id="team_details_statistic_againsts">Goals Conceded</message>
 	<message id="team_details_statistic_matches">Matches</message>
 	<message id="team_details_statistic_wins">Wins</message>
 	<message id="team_details_statistic_losses">Losses</message>

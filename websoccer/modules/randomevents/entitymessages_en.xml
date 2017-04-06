@@ -15,7 +15,7 @@
 
 	<message id="option_money">Team budget will be changed</message>
 	<message id="option_player_injured">A random player will get injured</message>
-	<message id="option_player_blocked">A random player will get blocked</message>
+	<message id="option_player_blocked">A random player will get suspended</message>
 	<message id="option_player_happiness">A random player's happiness will be changed</message>
 	<message id="option_player_fitness">A random player's fitness will be changed</message>
 	<message id="option_player_stamina">A random player's stamina will be changed</message>

@@ -15,12 +15,12 @@
     <message id="match_manage_karte_gelb">Yellow cards</message>
     <message id="match_manage_karte_rot">Red card</message>
     <message id="match_manage_verletzt">Matches injured</message>
-    <message id="match_manage_gesperrt">Maches blocked</message>
-    <message id="match_manage_ballcontacts">Ball contacts</message>
+    <message id="match_manage_gesperrt">Matches suspended</message>
+    <message id="match_manage_ballcontacts">Ball touches</message>
     <message id="match_manage_wontackles">Tackles won</message>
     <message id="match_manage_shoots">Shots</message>
-    <message id="match_manage_passes_successed">Passes success</message>
-    <message id="match_manage_passes_failed">Passes failed</message>
+    <message id="match_manage_passes_successed">Successful passes</message>
+    <message id="match_manage_passes_failed">Misplaced passes</message>
     
     <message id="match_manage_position_field_1">On pitch</message>
     <message id="match_manage_position_field_bench">Bench</message>

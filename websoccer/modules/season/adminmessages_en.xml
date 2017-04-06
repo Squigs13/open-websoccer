@@ -39,5 +39,5 @@
 	
 	<message id="schedulegenerator_err_noteams">There are no teams in this league.</message>
 	<message id="schedulegenerator_err_invalidrounds">The number of rounds must be between 1 and 10.</message>
-	<message id="schedulegenerator_err_invalidtimebreak">The number of daysbetween mach days must be between 1 and 50.</message>
+	<message id="schedulegenerator_err_invalidtimebreak">The number of days between match days must be between 1 and 50.</message>
 </messages>

@@ -24,7 +24,7 @@
 	<message id="entity_stadiumbuilding_effect_fanpopularity">Effect: Popularity (once)</message>
 	<message id="entity_stadiumbuilding_effect_fanpopularity_help">Number of per cent points by that the user's popularity will be changed once. <strong>Important:</strong> The change takes effect immediately once the building construction is ordered without waiting for the construction ending.</message>
 	<message id="entity_stadiumbuilding_effect_injury">Effect: Injuries</message>
-    <message id="entity_stadiumbuilding_effect_injury_help">Number of matches that will decrease the number of suspended matches due to an injury, additonally to the standard reduction. Example: With value 1, the duration of an injury is cut down to the half.</message>
+    <message id="entity_stadiumbuilding_effect_injury_help">Number of matches that will decrease the number of suspended matches due to an injury, additionally to the standard reduction. Example: With value 1, the duration of an injury is cut down to the half.</message>
     <message id="entity_stadiumbuilding_effect_income">Revenue/costs per home match</message>
     <message id="entity_stadiumbuilding_effect_income_help">Amount that will be credited (if positive) or debited (if negative) at every home match.</message>
 </messages>

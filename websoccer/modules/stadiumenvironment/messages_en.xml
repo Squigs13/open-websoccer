@@ -13,8 +13,8 @@
 	<message id="stadiumenvironment_build">Build</message>
 	
 	<message id="stadiumenvironment_build_err_too_expensive">You cannot afford the construction costs.</message>
-	<message id="stadiumenvironment_build_err_already_exists">You are already owning this building.</message>
-	<message id="stadiumenvironment_build_err_requires_building">This building is currently not vailable for you.</message>
+	<message id="stadiumenvironment_build_err_already_exists">You already own this building.</message>
+	<message id="stadiumenvironment_build_err_requires_building">This building is currently not available for you.</message>
 	<message id="stadiumenvironment_build_err_premium_balance">Your premium balance is not enough for this building. Please recharge your premium account first.</message>
 	
 	<message id="stadiumenvironment_build_success">The building has been successfully ordered.</message>

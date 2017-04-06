@@ -3,7 +3,7 @@
 <messages>
 	
 	<message id="firemanagers_navlabel">Fire managers</message> 
-	<message id="firemanagers_introduction">Search for clubs managed by users you want to dismiss. A dismissal means that the user is going to loose his club. The selected user accounts will <strong>not</strong> be deleted, but can be disabled if you wish. If a user ran his club economically down, the system can make it attractive to other users again.</message>
+	<message id="firemanagers_introduction">Search for clubs managed by users you want to dismiss. A dismissal means that the user is going to lose his club. The selected user accounts will <strong>not</strong> be deleted, but can be disabled if you wish. If a user ran his club economically down, the system can make it attractive to other users again.</message>
 
 	<message id="firemanagers_search_label">Find clubs</message>
 	

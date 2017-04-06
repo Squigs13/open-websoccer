@@ -19,7 +19,7 @@
     <message id="playertable_head_strength_satisfaction_abbr">Mor</message>
     <message id="playertable_head_strength_satisfaction">Morale</message>
     <message id="playertable_head_age">Age</message>
-    <message id="playertable_head_blocked">Blocked</message>
+    <message id="playertable_head_blocked">Suspended</message>
     <message id="playertable_head_matches_abbr">Matches</message>
     
     <message id="player_details_tab_general">Profile</message>
@@ -37,10 +37,10 @@
     <message id="player_details_statistic_assists">Assists</message>
     <message id="player_details_statistic_matches">Matches</message>
     <message id="player_details_statistic_yellow">Yellow Cards</message>
-    <message id="player_details_statistic_yellow_red">Yell.-R. Cards</message>
+    <message id="player_details_statistic_yellow_red">Double Yellow Cards</message>
     <message id="player_details_statistic_red">Red Cards</message>
     <message id="player_details_statistic_assists">Assists</message>
-    <message id="player_details_statistic_shoots">Goal Attempts</message>
+    <message id="player_details_statistic_shoots">Shots on Goal</message>
     <message id="player_details_statistic_grade">Average Grade</message>
     <message id="player_details_statistic_passquota">Pass Quota</message>
     
