@@ -184,7 +184,12 @@ if (preg_match('#^[a-z0-9_-]+$#i', $site) && file_exists($includeFile) ) {
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-    <script src="bootstrap-datepicker/js/locales/bootstrap-datepicker.<?php echo $i18n->getCurrentLanguage(); ?>.js"></script>
+    <?php
+    	// Only load the bootstrap-datepicker translation if language is not set to English.
+			if ($i18n->getCurrentLanguage() != "en") {
+    		echo "<script src=\"bootstrap-datepicker/js/locales/bootstrap-datepicker.". $i18n->getCurrentLanguage() .".js\"></script>";
+			}
+		?>
     <script src="bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
 	<script src="select2/select2.min.js"></script>
 	<?php 
