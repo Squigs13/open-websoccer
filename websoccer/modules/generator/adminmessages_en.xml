@@ -3,8 +3,12 @@
 <messages>
     
     <message id="teamsgenerator_navlabel">Generate Clubs</message>
+    <message id="importteams_navlabel">Import Clubs</message>
+    <message id="importplayers_navlabel">Import Players</message>
     
     <message id="teamsgenerator_intro">Usually it is prohibited by the appropriate league associations to use original names in football games, except the provider has obtained a special licence for this purpose from the association. This tool generates for you randomly picked fantasy names which might be similar to original names, but not identical.</message>
+    <message id="importteams_intro">Import clubs from a file on the server. The files should be uploaded to <em>/admin/config/names/import/clubs</em> in order to be selected from the list below. Import does not check if teams already exist.</message>
+    <message id="importplayers_intro">Import players from a file on the server. The files should be uploaded to <em>/admin/config/names/import/players</em> in order to be selected from the list below. Import does not check if players already exist.</message>
     
     <message id="generator_label_league">League</message>
     <message id="generator_label_numberofteams">Number of Teams</message>
@@ -19,14 +23,21 @@
     <message id="generator_label_stadium_p_seats_grand">Seats Grandstanding</message>
     <message id="generator_label_stadium_p_vip">VIP Lounges</message>
     
+    <message id="import_label_league">League</message>
+    <message id="import_label_importfile">Import File</message>
+    
     <message id="generator_label">Generate records automatically</message>
     <message id="generator_button">Generate</message>
+    
+    <message id="import_label">Import records from file</message>
+    <message id="import_button">Import</message>
     
     <message id="generator_validationerror_numberofitems">You need to let generating at least one record.</message>
     <message id="generator_validationerror_numberofitems_max">You can generate a maximum number of 100 records only at once.</message>
     <message id="generator_validationerror_noleague">You need to select a league.</message>
     
     <message id="generator_success">Records have been successfully generated.</message>
+    <message id="import_success">Records have been successfully imported.</message>
     
 	<message id="generator_err_filedoesnotexist">In order to generate data for this league, you need the file: %s</message>
 	<message id="generator_err_emptyfile">The following file has no valid entries: %s</message>
