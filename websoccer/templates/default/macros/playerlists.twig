@@ -22,6 +22,14 @@
 					{% endif %}
 				</td>
 				
+				{% set nationImg = skin.getImage("flags/players/" ~ player.player_nationality ~ ".png") %}
+				  	{% if i18n.hasMessage("option_" ~ player.player_nationality) %}
+						{% set countryLabel = i18n.getMessage("option_" ~ player.player_nationality) %}
+					{% else %}
+						{% set countryLabel = player.player_nationality %}
+					{% endif %}
+				<td>{% if nationImg %}<img src="{{ nationImg }}" title="{{ countryLabel }}" alt="{{ countryLabel }}" width="20px" />{% else %}{{ countryLabel }}{% endif %}</td>
+				
 				{% if env.getConfig("hide_strength_attributes") != "1" %}
 				<td {{ playerlists.strengthClass(player.strength) }} title="{{ i18n.getMessage("playertable_head_strength") }}"><strong>{{ player.strength }}</strong></td>
 				<td {{ playerlists.strengthClass(player.strength_technic) }} title="{{ i18n.getMessage("playertable_head_strength_technic") }}">{{ player.strength_technic }}</td>
