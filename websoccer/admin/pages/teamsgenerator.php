@@ -44,7 +44,7 @@ if (!$show) {
 	<?php 
 	$formFields = array();
 	
-	$formFields["league"] = array("type" => "foreign_key", "labelcolumns" => "land,name", "jointable" => "liga", "entity" => "league", "value" => "", "required" => "true");
+	$formFields["league"] = array("type" => "foreign_key", "labelcolumns" => "country,name", "jointable" => "league", "entity" => "league", "value" => "", "required" => "true");
 	$formFields["numberofteams"] = array("type" => "number", "value" => 20, "required" => "true");
 	$formFields["budget"] = array("type" => "number", "value" => 5000000, "required" => "true");
 	

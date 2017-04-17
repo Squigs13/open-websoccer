@@ -34,7 +34,7 @@ class NationalteamsDataService {
 	 */
 	public static function getNationalTeamManagedByCurrentUser(WebSoccer $websoccer, DbConnection $db) {
 		
-		$result = $db->queryCachedSelect("id", $websoccer->getConfig("db_prefix") . "_verein", 
+		$result = $db->queryCachedSelect("id", $websoccer->getConfig("db_prefix") . "_club", 
 				"user_id = %d AND nationalteam = '1'", $websoccer->getUser()->id, 1);
 		if (count($result)) {
 			return $result[0]["id"];
@@ -55,43 +55,43 @@ class NationalteamsDataService {
 	public static function getNationalPlayersOfTeamByPosition(WebSoccer $websoccer, DbConnection $db, $clubId, $positionSort = "ASC") {
 		$columns = array(
 				"P.id" => "id",
-				"vorname" => "firstname",
-				"nachname" => "lastname",
-				"kunstname" => "pseudonym",
-				"verletzt" => "matches_injured",
-				"gesperrt_nationalteam" => "matches_blocked",
+				"first_name" => "firstname",
+				"last_name" => "lastname",
+				"nickname" => "pseudonym",
+				"injured" => "matches_injured",
+				"suspended_nationalteam" => "matches_blocked",
 				"position" => "position",
 				"position_main" => "position_main",
 				"position_second" => "position_second",
-				"w_staerke" => "strength",
-				"w_technik" => "strength_technique",
-				"w_kondition" => "strength_stamina",
-				"w_frische" => "strength_freshness",
-				"w_zufriedenheit" => "strength_satisfaction",
-				"transfermarkt" => "transfermarket",
+				"w_strength" => "strength",
+				"w_technique" => "strength_technique",
+				"w_stamina" => "strength_stamina",
+				"w_fitness" => "strength_freshness",
+				"w_morale" => "strength_satisfaction",
+				"transfer_listed" => "transfermarket",
 				"nation" => "player_nationality",
 				"picture" => "picture",
-				"P.sa_tore" => "st_goals",
-				"P.sa_spiele" => "st_matches",
-				"P.sa_karten_gelb" => "st_cards_yellow",
-				"P.sa_karten_gelb_rot" => "st_cards_yellow_red",
-				"P.sa_karten_rot" => "st_cards_red",
-				"marktwert" => "marketvalue",
-				"verein_id" => "team_id",
+				"P.sa_goals" => "st_goals",
+				"P.sa_matches" => "st_matches",
+				"P.sa_yellow_card" => "st_cards_yellow",
+				"P.sa_yellow_card_2nd" => "st_cards_yellow_red",
+				"P.sa_red_card" => "st_cards_red",
+				"value" => "marketvalue",
+				"club_id" => "team_id",
 				"C.name" => "team_name"
 		);
 		
 		if ($websoccer->getConfig('players_aging') == 'birthday') {
-			$ageColumn = 'TIMESTAMPDIFF(YEAR,geburtstag,CURDATE())';
+			$ageColumn = 'TIMESTAMPDIFF(YEAR,birthday,CURDATE())';
 		} else {
 			$ageColumn = 'age';
 		}
 		$columns[$ageColumn] = 'age';
 	
-		$fromTable = $websoccer->getConfig("db_prefix") . "_spieler AS P";
+		$fromTable = $websoccer->getConfig("db_prefix") . "_player AS P";
 		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_nationalplayer AS NP ON NP.player_id = P.id";
-		$fromTable .= " LEFT JOIN " . $websoccer->getConfig("db_prefix") . "_verein AS C ON C.id = P.verein_id";
-		$whereCondition = "P.status = 1 AND NP.team_id = %d ORDER BY position ". $positionSort . ", position_main ASC, nachname ASC, vorname ASC";
+		$fromTable .= " LEFT JOIN " . $websoccer->getConfig("db_prefix") . "_club AS C ON C.id = P.club_id";
+		$whereCondition = "P.status = 1 AND NP.team_id = %d ORDER BY position ". $positionSort . ", position_main ASC, last_name ASC, first_name ASC";
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $clubId, 50);
 	
 		$players = array();
@@ -115,7 +115,7 @@ class NationalteamsDataService {
 	 * @param int $teamId ID of team.
 	 * @param string $firstName first name.
 	 * @param string $lastName surname or pseudonym.
-	 * @param string $position position as in DB (Torwart|ABwehr|Mittelfeld|Sturm)
+	 * @param string $position position as in DB (Goalkeeper|Defender|Midfielder|Forward)
 	 * @param string $mainPosition main position as in DB (T, LV, IV, ...)
 	 * @return int number of found players.
 	 */
@@ -143,7 +143,7 @@ class NationalteamsDataService {
 	 * @param int $teamId ID of team.
 	 * @param string $firstName first name.
 	 * @param string $lastName surname or pseudonym.
-	 * @param string $position position as in DB (Torwart|ABwehr|Mittelfeld|Sturm)
+	 * @param string $position position as in DB (Goalkeeper|Defender|Midfielder|Forward)
 	 * @param string $mainPosition main position as in DB (T, LV, IV, ...)
 	 * @param int $startIndex fetch start index.
 	 * @param int $entries_per_page number of entries per pae.
@@ -153,19 +153,19 @@ class NationalteamsDataService {
 			$firstName, $lastName, $position, $mainPosition, $startIndex, $entries_per_page) {
 	
 		$columns["P.id"] = "id";
-		$columns["P.vorname"] = "firstname";
-		$columns["P.nachname"] = "lastname";
-		$columns["P.kunstname"] = "pseudonym";
+		$columns["P.first_name"] = "firstname";
+		$columns["P.last_name"] = "lastname";
+		$columns["P.nickname"] = "pseudonym";
 	
 		$columns["P.position"] = "position";
 		$columns["P.position_main"] = "position_main";
 		$columns["P.position_second"] = "position_second";
 	
-		$columns["P.w_staerke"] = "strength";
-		$columns["P.w_technik"] = "strength_technique";
-		$columns["P.w_kondition"] = "strength_stamina";
-		$columns["P.w_frische"] = "strength_freshness";
-		$columns["P.w_zufriedenheit"] = "strength_satisfaction";
+		$columns["P.w_strength"] = "strength";
+		$columns["P.w_technique"] = "strength_technique";
+		$columns["P.w_stamina"] = "strength_stamina";
+		$columns["P.w_fitness"] = "strength_freshness";
+		$columns["P.w_morale"] = "strength_satisfaction";
 	
 		$columns["C.id"] = "team_id";
 		$columns["C.name"] = "team_name";
@@ -187,7 +187,7 @@ class NationalteamsDataService {
 	
 	private static function executeFindQuery(WebSoccer $websoccer, DbConnection $db, $columns, $limit,
 			$nationality, $teamId, $firstName, $lastName, $position, $mainPosition) {
-		$whereCondition = "P.status = 1 AND P.nation = '%s' AND P.verletzt = 0 AND P.id NOT IN (SELECT player_id FROM ". $websoccer->getConfig("db_prefix") . "_nationalplayer WHERE team_id = %d)";
+		$whereCondition = "P.status = 1 AND P.nation = '%s' AND P.injured = 0 AND P.id NOT IN (SELECT player_id FROM ". $websoccer->getConfig("db_prefix") . "_nationalplayer WHERE team_id = %d)";
 	
 		$parameters = array();
 		$parameters[] = $nationality;
@@ -195,13 +195,13 @@ class NationalteamsDataService {
 	
 		if ($firstName != null) {
 			$firstName = ucfirst($firstName);
-			$whereCondition .= " AND P.vorname LIKE '%s%%'";
+			$whereCondition .= " AND P.first_name LIKE '%s%%'";
 			$parameters[] = $firstName;
 		}
 	
 		if ($lastName != null) {
 			$lastName = ucfirst($lastName);
-			$whereCondition .= " AND (P.nachname LIKE '%s%%' OR P.kunstname LIKE '%s%%')";
+			$whereCondition .= " AND (P.last_name LIKE '%s%%' OR P.nickname LIKE '%s%%')";
 			$parameters[] = $lastName;
 			$parameters[] = $lastName;
 		}
@@ -217,10 +217,10 @@ class NationalteamsDataService {
 			$parameters[] = $mainPosition;
 		}
 		
-		$whereCondition .= " ORDER BY w_staerke DESC, w_technik DESC";
+		$whereCondition .= " ORDER BY w_strength DESC, w_technique DESC";
 
-		$fromTable = $websoccer->getConfig("db_prefix") . "_spieler AS P";
-		$fromTable .= " LEFT JOIN " . $websoccer->getConfig("db_prefix") . "_verein AS C ON C.id = P.verein_id";
+		$fromTable = $websoccer->getConfig("db_prefix") . "_player AS P";
+		$fromTable .= " LEFT JOIN " . $websoccer->getConfig("db_prefix") . "_club AS C ON C.id = P.club_id";
 	
 		return $db->querySelect($columns, $fromTable, $whereCondition, $parameters, $limit);
 	}
@@ -235,9 +235,9 @@ class NationalteamsDataService {
 	 */
 	public static function countNextMatches(WebSoccer $websoccer, DbConnection $db, $teamId) {
 		$columns = "COUNT(*) AS hits";
-		$fromTable = $websoccer->getConfig("db_prefix") . "_spiel";
+		$fromTable = $websoccer->getConfig("db_prefix") . "_match";
 		
-		$result = $db->querySelect($columns, $fromTable, "(home_verein = %d OR gast_verein = %d) AND datum > %d", array($teamId, $teamId, $websoccer->getNowAsTimestamp()));
+		$result = $db->querySelect($columns, $fromTable, "(home_club = %d OR guest_club = %d) AND date > %d", array($teamId, $teamId, $websoccer->getNowAsTimestamp()));
 		$matches = $result->fetch_array();
 		$result->free();
 		
@@ -259,7 +259,7 @@ class NationalteamsDataService {
 	 * @return array list of found matches.
 	 */
 	public static function getNextMatches(WebSoccer $websoccer, DbConnection $db, $teamId, $startIndex, $eps) {
-		$whereCondition = "(home_verein = %d OR gast_verein = %d) AND datum > %d ORDER BY datum ASC";
+		$whereCondition = "(home_club = %d OR guest_club = %d) AND date > %d ORDER BY date ASC";
 		return MatchesDataService::getMatchesByCondition($websoccer, $db, $whereCondition, 
 				array($teamId, $teamId, $websoccer->getNowAsTimestamp()), $startIndex . "," . $eps);
 	}
@@ -274,9 +274,9 @@ class NationalteamsDataService {
 	 */
 	public static function countSimulatedMatches(WebSoccer $websoccer, DbConnection $db, $teamId) {
 		$columns = "COUNT(*) AS hits";
-		$fromTable = $websoccer->getConfig("db_prefix") . "_spiel";
+		$fromTable = $websoccer->getConfig("db_prefix") . "_match";
 	
-		$result = $db->querySelect($columns, $fromTable, "(home_verein = %d OR gast_verein = %d) AND berechnet = '1'", array($teamId, $teamId));
+		$result = $db->querySelect($columns, $fromTable, "(home_club = %d OR guest_club = %d) AND simulated = '1'", array($teamId, $teamId));
 		$matches = $result->fetch_array();
 		$result->free();
 	
@@ -298,7 +298,7 @@ class NationalteamsDataService {
 	 * @return array list of found matches.
 	 */
 	public static function getSimulatedMatches(WebSoccer $websoccer, DbConnection $db, $teamId, $startIndex, $eps) {
-		$whereCondition = "(home_verein = %d OR gast_verein = %d) AND berechnet = '1' ORDER BY datum DESC";
+		$whereCondition = "(home_club = %d OR guest_club = %d) AND simulated = '1' ORDER BY date DESC";
 		return MatchesDataService::getMatchesByCondition($websoccer, $db, $whereCondition,
 				array($teamId, $teamId), $startIndex . "," . $eps);
 	}

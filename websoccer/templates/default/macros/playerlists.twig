@@ -15,10 +15,10 @@
 					{% if player.unsellable %}
 						<i class="icon-eye-close" title="{{ i18n.getMessage("entity_player_unsellable") }}"></i>
 					{% endif %}
-					{% if player.lending_owner_id > 0 %}
-						<i class="icon-star-empty" title="{{ i18n.getMessage("lending_player_marker_tooltip") }}"></i>
-					{% elseif player.lending_fee > 0 and env.getConfig("lending_enabled") %}
-						<i class="icon-share-alt" title="{{ i18n.getMessage("lending_player_marker_lendable") }}"></i>
+					{% if player.loan_owner_id > 0 %}
+						<i class="icon-star-empty" title="{{ i18n.getMessage("loan_player_marker_tooltip") }}"></i>
+					{% elseif player.loan_fee > 0 and env.getConfig("loan_enabled") %}
+						<i class="icon-share-alt" title="{{ i18n.getMessage("loan_player_marker_lendable") }}"></i>
 					{% endif %}
 				</td>
 				
@@ -108,7 +108,7 @@
 						<i class="icon-medkit" title="{{ i18n.getMessage("player_injured") }}"></i>
 					{% endif %}
 					
-					{% if player.playstatus == 'Ausgewechselt' %}
+					{% if player.playstatus == 'Substituted' %}
 					<span class="minutesPlayed" title="{{ i18n.getMessage("player_substitute_out") }}"><i class="icon-arrow-down"></i>{{ player.minutesPlayed + 1 }}'</span>
 					{% elseif player.minutesPlayed < match.match_minutes %}
 					<span class="minutesPlayed" title="{{ i18n.getMessage("player_substitute_in") }}"><i class="icon-arrow-up"></i>{{ match.match_minutes - player.minutesPlayed + 1 }}'</span>
@@ -120,13 +120,13 @@
 					<div id="playerstatistics{{ player.id }}" class="collapse">
 						<dl>
 							<dt>{{ i18n.getMessage("match_details_statistic_shoots") }}</dt>
-							<dd>{{ player.shoots }}</dd>
+							<dd>{{ player.shots }}</dd>
 							
-							<dt>{{ i18n.getMessage("match_details_statistic_ballcontacts_player") }}</dt>
-							<dd>{{ player.ballcontacts }}</dd>
+							<dt>{{ i18n.getMessage("match_details_statistic_touches_player") }}</dt>
+							<dd>{{ player.touches }}</dd>
 							
 							<dt>{{ i18n.getMessage("match_details_statistic_successfulpasses") }}</dt>
-							<dd>{{  player.passes_successed }}/{{ (player.passes_successed + player.passes_failed) }}</dd>
+							<dd>{{  player.passes_successful }}/{{ (player.passes_successful + player.passes_failed) }}</dd>
 							
 							<dt>{{ i18n.getMessage("match_details_statistic_tackles_player") }}</dt>
 							<dd>{{ player.wontackles }}{% if player.losttackles|length %}/{{ (player.losttackles + player.wontackles) }}{% endif %}</dd>
@@ -142,7 +142,7 @@
 		<p><strong>&#216; {{ i18n.getMessage("match_details_players_grade") }}:</strong> {{ (gradeSum/players|length)|number_format(2) }}</p>
 		<p><strong>&#216; {{ i18n.getMessage("match_details_players_age") }}:</strong> {{ (ageSum/players|length)|number_format(2) }}</p>
 		{% if env.getConfig("hide_strength_attributes") != "1" %}
-		<p><strong>&#216; {{ i18n.getMessage("entity_player_w_staerke") }}:</strong> {{ (strengthSum/players|length)|number_format(0) }}%</p>
+		<p><strong>&#216; {{ i18n.getMessage("entity_player_w_strength") }}:</strong> {{ (strengthSum/players|length)|number_format(0) }}%</p>
 		{% endif %}
 	{% else %}
 	<p>{{ i18n.getMessage("match_details_noplayersset") }}</p>

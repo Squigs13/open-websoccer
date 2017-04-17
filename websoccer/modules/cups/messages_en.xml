@@ -5,7 +5,7 @@
     <message id="cup_firstround">First Round</message>
     <message id="cup_secondround">Second Round</message>
     <message id="cup_created_from_winners_of_round">Winner from <strong>%s</strong>.</message>
-    <message id="cup_created_from_loosers_of_round">Loser from <strong>%s</strong>.</message>
+    <message id="cup_created_from_loser_of_round">Loser from <strong>%s</strong>.</message>
     <message id="cup_cuproundaward_perround_subject">Award for cup round</message>
     <message id="cup_cuproundaward_winner_subject">Award for winning the cup</message>
     <message id="cup_cuproundaward_second_subject">Award for silver medal.</message>

@@ -81,8 +81,8 @@
   	{% set stadiumLabel = "-" %}
   {% endif %}
   
-  {{ profile.infofield(i18n.getMessage("entity_club_kurz"), team.team_short) }}
-  {{ profile.infofield(i18n.getMessage("entity_club_liga_id"), league, true) }}
+  {{ profile.infofield(i18n.getMessage("entity_club_short"), team.team_short) }}
+  {{ profile.infofield(i18n.getMessage("entity_club_league_id"), league, true) }}
   {{ profile.infofield(i18n.getMessage("team_details_manager"), manager, true) }}
   {% if deputy is defined %}
   	{{ profile.infofield(i18n.getMessage("entity_club_user_id_actual"), deputy, true) }}
@@ -93,7 +93,7 @@
 	  	{{ profile.infofield(i18n.getMessage("entity_club_min_target_rank"), i18n.getMessage("team_details_season_place", team.team_min_target_rank)) }}
 	  {% endif %}
 	  
-	  {{ profile.infofield(i18n.getMessage("entity_club_stadion_id"), stadiumLabel, true) }}
+	  {{ profile.infofield(i18n.getMessage("entity_club_stadium_id"), stadiumLabel, true) }}
 	  {% if stadium.stadium_id is defined and stadium.stadium_id > 0 and stadium.picture|length > 0 %}
 		<div style="text-align: center; margin: 10px;">
 		<img src="{{ env.getConfig("context_root") }}/uploads/stadium/{{ stadium.picture }}" class="img-rounded">
@@ -110,8 +110,8 @@
 		{% endif %}
 		{{ profile.infofield(i18n.getMessage("entity_player"), playerfacts.numberOfPlayers) }}
 		{{ profile.infofield('&empty; ' ~ i18n.getMessage("entity_player_age"), playerfacts.avgAge|round(2), true) }}
-		{{ profile.infofield('&sum; ' ~ i18n.getMessage("entity_player_marktwert"), playerfacts.sumMarketValue|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency"), true) }}
-		{{ profile.infofield('&empty; ' ~ i18n.getMessage("entity_player_marktwert"), playerfacts.avgMarketValue|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency"), true) }}
+		{{ profile.infofield('&sum; ' ~ i18n.getMessage("entity_player_value"), playerfacts.sumMarketValue|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency"), true) }}
+		{{ profile.infofield('&empty; ' ~ i18n.getMessage("entity_player_value"), playerfacts.avgMarketValue|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency"), true) }}
   {% endif %}
   </div>
   

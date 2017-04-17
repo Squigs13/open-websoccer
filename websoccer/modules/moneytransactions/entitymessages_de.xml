@@ -3,13 +3,13 @@
 <messages>
     <message id="entity_transaction">Kontotransaktionen</message>
     
-	<message id="entity_transaction_verein_id">Empfänger</message>
-	<message id="entity_transaction_datum">Datum</message>
-	<message id="entity_transaction_absender">Absender</message>
-	<message id="entity_transaction_betrag">Betrag</message>
-	<message id="entity_transaction_betrag_help"><strong>Achtung:</strong> Das Vereinsbudget wird automatisch um diesen Betrag angepasst!</message>
-	<message id="entity_transaction_absender_help">Kann auch nur ein Messages-Key sein.</message>
-	<message id="entity_transaction_verwendung">Verwendungszweck</message>
-	<message id="entity_transaction_verwendung_help">Kann auch nur ein Messages-Key sein.</message>
+	<message id="entity_transaction_club_id">Empfänger</message>
+	<message id="entity_transaction_date">date</message>
+	<message id="entity_transaction_sender">Absender</message>
+	<message id="entity_transaction_amount">Betrag</message>
+	<message id="entity_transaction_amount_help"><strong>Achtung:</strong> Das Vereinsbudget wird automatisch um diesen Betrag angepasst!</message>
+	<message id="entity_transaction_sender_help">Kann auch nur ein Messages-Key sein.</message>
+	<message id="entity_transaction_details">Verwendungszweck</message>
+	<message id="entity_transaction_details_help">Kann auch nur ein Messages-Key sein.</message>
 	
 </messages>

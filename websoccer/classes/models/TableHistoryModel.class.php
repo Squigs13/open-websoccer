@@ -59,8 +59,8 @@ class TableHistoryModel implements IModel {
 		}
 		
 		// get current season
-		$result = $this->_db->querySelect('id', $this->_websoccer->getConfig('db_prefix') .'_saison',
-				'liga_id = %d AND beendet = \'0\' ORDER BY name DESC', $team['team_league_id'], 1);
+		$result = $this->_db->querySelect('id', $this->_websoccer->getConfig('db_prefix') .'_season',
+				'league_id = %d AND completed = \'0\' ORDER BY name DESC', $team['team_league_id'], 1);
 		$season = $result->fetch_array();
 		$result->free();
 		
@@ -81,8 +81,8 @@ class TableHistoryModel implements IModel {
 		}
 		
 		// count teams in league
-		$result = $this->_db->querySelect('COUNT(*) AS cnt', $this->_websoccer->getConfig('db_prefix') .'_verein',
-				'liga_id = %d AND status = \'1\'', $team['team_league_id'], 1);
+		$result = $this->_db->querySelect('COUNT(*) AS cnt', $this->_websoccer->getConfig('db_prefix') .'_club',
+				'league_id = %d AND status = \'1\'', $team['team_league_id'], 1);
 		$teams = $result->fetch_array();
 		$result->free();
 		

@@ -22,7 +22,7 @@
 
 echo "<h1>".  $i18n->getMessage("match_manage_complete") . "</h1>";
 
-if (!$admin["r_admin"] && !$admin["r_demo"] && !$admin["r_spiele"]) {
+if (!$admin["r_admin"] && !$admin["r_demo"] && !$admin["r_matches"]) {
 	throw new Exception($i18n->getMessage("error_access_denied"));
 }
 
@@ -45,56 +45,56 @@ if ($action == "complete") {
 	}
 	
 	// set goals and minutes played
-	$statTable = $website->getConfig("db_prefix") . "_spiel_berechnung";
-	$result = $db->querySelect("SUM(tore) AS goals, MAX(minuten_gespielt) AS minutes", $statTable, "spiel_id = %d AND team_id = %d", 
+	$statTable = $website->getConfig("db_prefix") . "_match_simulation";
+	$result = $db->querySelect("SUM(goals) AS goals, MAX(minutes_played) AS minutes", $statTable, "match_id = %d AND team_id = %d", 
 			array($matchId, $match["match_home_id"]));
 	$homeStat = $result->fetch_array();
 	$result->free();
 	
-	$result = $db->querySelect("SUM(tore) AS goals", $statTable, "spiel_id = %d AND team_id = %d",
+	$result = $db->querySelect("SUM(goals) AS goals", $statTable, "match_id = %d AND team_id = %d",
 			array($matchId, $match["match_guest_id"]));
 	$guestStat = $result->fetch_array();
 	$result->free();
 	
 	$db->queryUpdate(array(
 			"minutes" => $homeStat["minutes"],
-			"home_tore" => $homeStat["goals"],
-			"gast_tore" => $guestStat["goals"],
-			"berechnet" => "1"
-			), $website->getConfig("db_prefix") . "_spiel", "id = %d", $matchId);
+			"home_goals" => $homeStat["goals"],
+			"guest_goals" => $guestStat["goals"],
+			"simulated" => "1"
+			), $website->getConfig("db_prefix") . "_match", "id = %d", $matchId);
 	
 	// create internal model
-	$fromTable = $website->getConfig("db_prefix") ."_spiel AS M";
-	$fromTable .= " INNER JOIN " . $website->getConfig("db_prefix") ."_verein AS HOME_T ON HOME_T.id = M.home_verein";
-	$fromTable .= " INNER JOIN " . $website->getConfig("db_prefix") ."_verein AS GUEST_T ON GUEST_T.id = M.gast_verein";
+	$fromTable = $website->getConfig("db_prefix") ."_match AS M";
+	$fromTable .= " INNER JOIN " . $website->getConfig("db_prefix") ."_club AS HOME_T ON HOME_T.id = M.home_club";
+	$fromTable .= " INNER JOIN " . $website->getConfig("db_prefix") ."_club AS GUEST_T ON GUEST_T.id = M.guest_club";
 	
 	$columns = array();
 	$columns["M.id"] = "match_id";
-	$columns["M.spieltyp"] = "type";
-	$columns["M.home_verein"] = "home_id";
-	$columns["M.gast_verein"] = "guest_id";
+	$columns["M.matchtype"] = "type";
+	$columns["M.home_club"] = "home_id";
+	$columns["M.guest_club"] = "guest_id";
 	$columns["M.minutes"] = "minutes";
 	$columns["M.soldout"] = "soldout";
-	$columns["M.elfmeter"] = "penaltyshooting";
-	$columns["M.pokalname"] = "cup_name";
-	$columns["M.pokalrunde"] = "cup_roundname";
-	$columns["M.pokalgruppe"] = "cup_groupname";
+	$columns["M.penalty_kicks"] = "penaltyshooting";
+	$columns["M.cup_name"] = "cup_name";
+	$columns["M.cup_round"] = "cup_roundname";
+	$columns["M.cup_group"] = "cup_groupname";
 	
 	$columns["M.player_with_ball"] = "player_with_ball";
 	$columns["M.prev_player_with_ball"] = "prev_player_with_ball";
-	$columns["M.home_tore"] = "home_goals";
-	$columns["M.gast_tore"] = "guest_goals";
+	$columns["M.home_goals"] = "home_goals";
+	$columns["M.guest_goals"] = "guest_goals";
 	
 	$columns["M.home_offensive"] = "home_offensive";
 	$columns["M.home_setup"] = "home_setup";
 	$columns["M.home_noformation"] = "home_noformation";
 	$columns["M.home_longpasses"] = "home_longpasses";
 	$columns["M.home_counterattacks"] = "home_counterattacks";
-	$columns["M.gast_offensive"] = "guest_offensive";
+	$columns["M.guest_offensive"] = "guest_offensive";
 	$columns["M.guest_noformation"] = "guest_noformation";
-	$columns["M.gast_setup"] = "guest_setup";
-	$columns["M.gast_longpasses"] = "guest_longpasses";
-	$columns["M.gast_counterattacks"] = "guest_counterattacks";
+	$columns["M.guest_setup"] = "guest_setup";
+	$columns["M.guest_longpasses"] = "guest_longpasses";
+	$columns["M.guest_counterattacks"] = "guest_counterattacks";
 	
 	$columns["HOME_T.name"] = "home_name";
 	$columns["HOME_T.nationalteam"] = "home_nationalteam";
@@ -103,15 +103,15 @@ if ($action == "complete") {
 	
 	// substitutions
 	for ($subNo = 1; $subNo <= 3; $subNo++) {
-		$columns["M.home_w" . $subNo . "_raus"] = "home_sub_" . $subNo . "_out";
-		$columns["M.home_w" . $subNo . "_rein"] = "home_sub_" . $subNo . "_in";
+		$columns["M.home_w" . $subNo . "_out"] = "home_sub_" . $subNo . "_out";
+		$columns["M.home_w" . $subNo . "_in"] = "home_sub_" . $subNo . "_in";
 		$columns["M.home_w" . $subNo . "_minute"] = "home_sub_" . $subNo . "_minute";
 		$columns["M.home_w" . $subNo . "_condition"] = "home_sub_" . $subNo . "_condition";
 			
-		$columns["M.gast_w" . $subNo . "_raus"] = "guest_sub_" . $subNo . "_out";
-		$columns["M.gast_w" . $subNo . "_rein"] = "guest_sub_" . $subNo . "_in";
-		$columns["M.gast_w" . $subNo . "_minute"] = "guest_sub_" . $subNo . "_minute";
-		$columns["M.gast_w" . $subNo . "_condition"] = "guest_sub_" . $subNo . "_condition";
+		$columns["M.guest_w" . $subNo . "_out"] = "guest_sub_" . $subNo . "_out";
+		$columns["M.guest_w" . $subNo . "_in"] = "guest_sub_" . $subNo . "_in";
+		$columns["M.guest_w" . $subNo . "_minute"] = "guest_sub_" . $subNo . "_minute";
+		$columns["M.guest_w" . $subNo . "_condition"] = "guest_sub_" . $subNo . "_condition";
 	}
 	
 	$result = $db->querySelect($columns, $fromTable, "M.id = %d", $matchId);
@@ -127,7 +127,7 @@ if ($action == "complete") {
 		SimulationAudienceCalculator::computeAndSaveAudience($website, $db, $matchModel);
 	}
 	
-	if ($matchinfo["type"] == "Pokalspiel") {
+	if ($matchinfo["type"] == "cupmatch") {
 		SimulationCupMatchHelper::checkIfExtensionIsRequired($website, $db, $matchModel);
 	}
 	

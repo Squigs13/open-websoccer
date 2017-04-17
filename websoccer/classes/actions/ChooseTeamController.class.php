@@ -47,7 +47,7 @@ class ChooseTeamController implements IActionController {
 		$teamId = $parameters["teamId"];
 		
 		// check whether club still has no manager
-		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_verein";
+		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_club";
 		$whereCondition = "id = %d AND status = 1 AND (user_id = 0 OR user_id IS NULL OR interimmanager = '1')";
 		$result = $this->_db->querySelect("id", $fromTable, $whereCondition, $teamId);
 		$club = $result->fetch_array();

@@ -118,7 +118,7 @@
 								</span>
 								{% endif %}
 								
-								{% if player.state == 'Ausgewechselt' %}
+								{% if player.state == 'Substituted' %}
 								<span class="minutesPlayed" title="{{ i18n.getMessage("player_substitute_out") }}"><i class="icon-arrow-down"></i></span>
 								{% elseif player.minutes_played < 90 %}
 								<span class="minutesPlayed" title="{{ i18n.getMessage("player_substitute_in") }}"><i class="icon-arrow-up"></i></span>
@@ -151,20 +151,20 @@
 				<h5><a href="{{ env.getInternalUrl("team", "id=" ~ match[teamPrefix ~ "_team_id"]) }}" title="{{ i18n.getMessage("team_navlabel") }}">{{ match[teamPrefix ~ "_team_name"] }}</a></h5>
 				
 				{% if teamStatistics|length > 0 %}
-					<p><em>{{ i18n.getMessage("match_details_statistic_shoots") }}:</em> {{ teamStatistics.shoots }}</p>
+					<p><em>{{ i18n.getMessage("match_details_statistic_shoots") }}:</em> {{ teamStatistics.shots }}</p>
 					
 					<p><em>{{ i18n.getMessage("youthmatch_statistic_avg_strength") }}</em></p>
 					{{ statisticelements.progressbar(teamStatistics.avg_strength) }}
 					
-					<p><em>{{ i18n.getMessage("match_details_statistic_ballcontacts") }}</em></p>
+					<p><em>{{ i18n.getMessage("match_details_statistic_touches") }}</em></p>
 					{{ statisticelements.progressbar(teamStatistics.ballpossession) }}
 					
 					<p><em>{{ i18n.getMessage("match_details_statistic_tackles") }}</em></p>
 					{% set tackles = (teamStatistics.wontackles * 100 / (teamStatistics.wontackles + teamStatistics.losttackles))|number_format %}
 					{{ statisticelements.progressbar(tackles) }}
 					
-					{% if teamStatistics.passes_successed > 0 or teamStatistics.passes_failed > 0 %}
-						{% set succesfulPasses = (teamStatistics.passes_successed * 100 / (teamStatistics.passes_successed + teamStatistics.passes_failed))|number_format %}
+					{% if teamStatistics.passes_successful > 0 or teamStatistics.passes_failed > 0 %}
+						{% set succesfulPasses = (teamStatistics.passes_successful * 100 / (teamStatistics.passes_successful + teamStatistics.passes_failed))|number_format %}
 						<p><em>{{ i18n.getMessage("match_details_statistic_successfulpasses") }}</em></p>
 						{{ statisticelements.progressbar(succesfulPasses) }}
 					{% endif %}

@@ -28,7 +28,7 @@ $messages["label_db_host"] = "Datenbank Server (Host)";
 $messages["label_db_host_help"] = "Für gewöhnlich 'localhost'";
 $messages["label_db_name"] = "Datenbank Name";
 $messages["label_db_user"] = "Datenbank Benutzer (User)";
-$messages["label_db_password"] = "Datenbank Passwort";
+$messages["label_db_password"] = "Datenbank password";
 $messages["label_db_prefix"] = "Tabellenprefix";
 $messages["label_db_prefix_help"] = "optional; Nur erforderlich, wenn Sie von einem alten Projekt migrieren.";
 
@@ -56,7 +56,7 @@ $messages["predb_label_warning"] = "Das Laden der nächsten Seite kann einige Se
 
 $messages["user_formtitle"] = "Benutzer für AdminCenter erstellen";
 $messages["label_name"] = "Benutzername";
-$messages["label_password"] = "Passwort";
+$messages["label_password"] = "password";
 $messages["label_email"] = "E-Mail";
 
 $messages["final_success_alert"] = "Glückwunsch, die Software wurde erfolgreich installiert!";

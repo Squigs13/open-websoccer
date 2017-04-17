@@ -49,7 +49,7 @@
     
     <message id="finances_navlabel">Finanzen</message>
     
-    <message id="account_statement_date">Datum</message>
+    <message id="account_statement_date">date</message>
     <message id="account_statement_sender">Absender / Empfänger</message>
     <message id="account_statement_subject">Betreff</message>
     <message id="account_statement_amount">Betrag</message>

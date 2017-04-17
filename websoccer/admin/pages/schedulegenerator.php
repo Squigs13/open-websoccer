@@ -48,7 +48,7 @@ if (!$show) {
 	$formFields = array();
 	$seasonDefaultName = date("Y");
 	
-	$formFields["league"] = array("type" => "foreign_key", "labelcolumns" => "land,name", "jointable" => "liga", "entity" => "league", "value" => "", "required" => "true");
+	$formFields["league"] = array("type" => "foreign_key", "labelcolumns" => "country,name", "jointable" => "league", "entity" => "league", "value" => "", "required" => "true");
 	$formFields["seasonname"] = array("type" => "text", "value" => $seasonDefaultName, "required" => "true");
 	
 	$formFields["rounds"] = array("type" => "number", "value" => 2, "required" => "true");
@@ -90,7 +90,7 @@ elseif ($show == "generate") {
   else {
 
 	// get teams
-  	$result = $db->querySelect("id", $website->getConfig("db_prefix") . "_verein", "liga_id = %d", $_POST['league']);
+  	$result = $db->querySelect("id", $website->getConfig("db_prefix") . "_club", "league_id = %d", $_POST['league']);
 	if (!$result->num_rows) {
 		throw new Exception($i18n->getMessage("schedulegenerator_err__noteams"));
 	}
@@ -123,9 +123,9 @@ elseif ($show == "generate") {
 	
 	// create season
 	$seasoncolumns["name"] = $_POST["seasonname"];
-	$seasoncolumns["liga_id"] = $_POST["league"];
-	$db->queryInsert($seasoncolumns, $website->getConfig("db_prefix") . "_saison");
-	$saisonId = $db->getLastInsertedId();
+	$seasoncolumns["league_id"] = $_POST["league"];
+	$db->queryInsert($seasoncolumns, $website->getConfig("db_prefix") . "_season");
+	$seasonId = $db->getLastInsertedId();
 	
 	// create matches
 	$dateObj = DateTime::createFromFormat($website->getConfig("date_format") .", H:i",
@@ -133,7 +133,7 @@ elseif ($show == "generate") {
 	$matchTimestamp = $dateObj->getTimestamp();
 	$timeBreakSeconds = 3600 * 24 * $_POST['timebreak'];
 	
-	$matchTable = $website->getConfig("db_prefix") . "_spiel";
+	$matchTable = $website->getConfig("db_prefix") . "_match";
 	
 	foreach($schedule as $matchDay => $matches) {
 		// creates matches of match day
@@ -143,13 +143,13 @@ elseif ($show == "generate") {
 			$guestTeam = $match[1];
 			
 			$teamcolumns = array();
-			$teamcolumns["spieltyp"] = "Ligaspiel";
-			$teamcolumns["liga_id"] = $_POST["league"];
-			$teamcolumns["saison_id"] = $saisonId;
-			$teamcolumns["spieltag"] = $matchDay;
-			$teamcolumns["home_verein"] = $homeTeam;
-			$teamcolumns["gast_verein"] = $guestTeam;
-			$teamcolumns["datum"] = $matchTimestamp;
+			$teamcolumns["matchtype"] = "leaguematch";
+			$teamcolumns["league_id"] = $_POST["league"];
+			$teamcolumns["season_id"] = $seasonId;
+			$teamcolumns["matchday"] = $matchDay;
+			$teamcolumns["home_club"] = $homeTeam;
+			$teamcolumns["guest_club"] = $guestTeam;
+			$teamcolumns["date"] = $matchTimestamp;
 			
 			$db->queryInsert($teamcolumns, $matchTable);
 		}

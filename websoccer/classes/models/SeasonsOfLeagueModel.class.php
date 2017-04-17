@@ -51,9 +51,9 @@ class SeasonsOfLeagueModel implements IModel {
 	public function getTemplateParameters() {
 		
 		// get seasons
-		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_saison AS S";
-		$fromTable .= " INNER JOIN " . $this->_websoccer->getConfig("db_prefix") ."_liga AS L ON L.id = S.liga_id";
-		$whereCondition = "S.liga_id = %d ORDER BY beendet DESC, name ASC";
+		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_season AS S";
+		$fromTable .= " INNER JOIN " . $this->_websoccer->getConfig("db_prefix") ."_league AS L ON L.id = S.league_id";
+		$whereCondition = "S.league_id = %d ORDER BY completed DESC, name ASC";
 		
 		$seasons = array();
 		
@@ -74,15 +74,15 @@ class SeasonsOfLeagueModel implements IModel {
 		
 		if ($this->_websoccer->getRequestParameter("seasonid") != null) {
 			$seasonId = $this->_websoccer->getRequestParameter("seasonid");
-			$fromTable = $this->_websoccer->getConfig("db_prefix") ."_spiel";
-			$condition = "saison_id = %d";
+			$fromTable = $this->_websoccer->getConfig("db_prefix") ."_match";
+			$condition = "season_id = %d";
 			
-			$result = $this->_db->querySelect("MAX(spieltag) AS maxMatchday", $fromTable, $condition, $seasonId);
+			$result = $this->_db->querySelect("MAX(matchday) AS maxMatchday", $fromTable, $condition, $seasonId);
 			$match = $result->fetch_array();
 			$result->free();
 			$maxMatchDay = $match["maxMatchday"];
 			
-			$result = $this->_db->querySelect("MAX(spieltag) AS currentMatchday", $fromTable, $condition . " AND berechnet = '1'", $seasonId);
+			$result = $this->_db->querySelect("MAX(matchday) AS currentMatchday", $fromTable, $condition . " AND simulated = '1'", $seasonId);
 			$match = $result->fetch_array();
 			$result->free();
 			$currentMatchDay = $match["currentMatchday"];

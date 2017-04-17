@@ -55,7 +55,7 @@ class AdminPasswordConverter implements IConverter {
 
 		if (isset($_POST['id']) && $_POST['id']) {
 			$db = DbConnection::getInstance();
-			$columns = 'passwort, passwort_salt';
+			$columns = 'password, password_salt';
 			$fromTable = $this->_websoccer->getConfig('db_prefix') .'_admin';
 			$whereCondition = 'id = %d';
 			$result = $db->querySelect($columns, $fromTable, $whereCondition, $_POST['id'], 1);
@@ -63,15 +63,15 @@ class AdminPasswordConverter implements IConverter {
 			$result->free();
 			
 			if (strlen($value)) {
-				$passwort = SecurityUtil::hashPassword($value, $admin['passwort_salt']);
+				$password = SecurityUtil::hashPassword($value, $admin['password_salt']);
 			} else {
-				$passwort = $admin['passwort'];
+				$password = $admin['password'];
 			}
 		} else {
-			$passwort = SecurityUtil::hashPassword($value, '');
+			$password = SecurityUtil::hashPassword($value, '');
 		}
 		
-		return $passwort;
+		return $password;
 	}
 	
 	

@@ -58,28 +58,28 @@ class MatchSimulationExecutor {
 		}
 		
 		// find and execute open matches
-		$fromTable = $websoccer->getConfig('db_prefix') .'_spiel AS M';
-		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') .'_verein AS HOME_T ON HOME_T.id = M.home_verein';
-		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') .'_verein AS GUEST_T ON GUEST_T.id = M.gast_verein';
-		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') .'_aufstellung AS HOME_F ON HOME_F.match_id = M.id AND HOME_F.verein_id = M.home_verein';
-		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') .'_aufstellung AS GUEST_F ON GUEST_F.match_id = M.id AND GUEST_F.verein_id = M.gast_verein';
+		$fromTable = $websoccer->getConfig('db_prefix') .'_match AS M';
+		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') .'_club AS HOME_T ON HOME_T.id = M.home_club';
+		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') .'_club AS GUEST_T ON GUEST_T.id = M.guest_club';
+		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') .'_tactics AS HOME_F ON HOME_F.match_id = M.id AND HOME_F.club_id = M.home_club';
+		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') .'_tactics AS GUEST_F ON GUEST_F.match_id = M.id AND GUEST_F.club_id = M.guest_club';
 		
 		$columns['M.id'] = 'match_id';
-		$columns['M.spieltyp'] = 'type';
-		$columns['M.home_verein'] = 'home_id';
-		$columns['M.gast_verein'] = 'guest_id';
+		$columns['M.matchtype'] = 'type';
+		$columns['M.home_club'] = 'home_id';
+		$columns['M.guest_club'] = 'guest_id';
 		$columns['M.minutes'] = 'minutes';
 		$columns['M.soldout'] = 'soldout';
-		$columns['M.elfmeter'] = 'penaltyshooting';
-		$columns['M.pokalname'] = 'cup_name';
-		$columns['M.pokalrunde'] = 'cup_roundname';
-		$columns['M.pokalgruppe'] = 'cup_groupname';
-		$columns['M.stadion_id'] = 'custom_stadium_id';
+		$columns['M.penalty_kicks'] = 'penaltyshooting';
+		$columns['M.cup_name'] = 'cup_name';
+		$columns['M.cup_round'] = 'cup_roundname';
+		$columns['M.cup_group'] = 'cup_groupname';
+		$columns['M.stadium_id'] = 'custom_stadium_id';
 		
 		$columns['M.player_with_ball'] = 'player_with_ball';
 		$columns['M.prev_player_with_ball'] = 'prev_player_with_ball';
-		$columns['M.home_tore'] = 'home_goals';
-		$columns['M.gast_tore'] = 'guest_goals';
+		$columns['M.home_goals'] = 'home_goals';
+		$columns['M.guest_goals'] = 'guest_goals';
 		
 		$columns['M.home_offensive'] = 'home_offensive';
 		$columns['M.home_setup'] = 'home_setup';
@@ -88,13 +88,13 @@ class MatchSimulationExecutor {
 		$columns['M.home_counterattacks'] = 'home_counterattacks';
 		$columns['M.home_morale'] = 'home_morale';
 		$columns['M.home_freekickplayer'] = 'home_freekickplayer';
-		$columns['M.gast_offensive'] = 'guest_offensive';
+		$columns['M.guest_offensive'] = 'guest_offensive';
 		$columns['M.guest_noformation'] = 'guest_noformation';
-		$columns['M.gast_setup'] = 'guest_setup';
-		$columns['M.gast_longpasses'] = 'guest_longpasses';
-		$columns['M.gast_counterattacks'] = 'guest_counterattacks';
-		$columns['M.gast_morale'] = 'guest_morale';
-		$columns['M.gast_freekickplayer'] = 'guest_freekickplayer';
+		$columns['M.guest_setup'] = 'guest_setup';
+		$columns['M.guest_longpasses'] = 'guest_longpasses';
+		$columns['M.guest_counterattacks'] = 'guest_counterattacks';
+		$columns['M.guest_morale'] = 'guest_morale';
+		$columns['M.guest_freekickplayer'] = 'guest_freekickplayer';
 		
 		$columns['HOME_F.id'] = 'home_formation_id';
 		$columns['HOME_F.offensive'] = 'home_formation_offensive';
@@ -113,44 +113,44 @@ class MatchSimulationExecutor {
 		$columns['GUEST_T.interimmanager'] = 'guest_interimmanager';
 		
 		for ($playerNo = 1; $playerNo <= 11; $playerNo++) {
-			$columns['HOME_F.spieler' . $playerNo] = 'home_formation_player' . $playerNo;
-			$columns['HOME_F.spieler' . $playerNo . '_position'] = 'home_formation_player_pos_' . $playerNo;
-			$columns['GUEST_F.spieler' . $playerNo] = 'guest_formation_player' . $playerNo;
-			$columns['GUEST_F.spieler' . $playerNo . '_position'] = 'guest_formation_player_pos_' . $playerNo;
+			$columns['HOME_F.player' . $playerNo] = 'home_formation_player' . $playerNo;
+			$columns['HOME_F.player' . $playerNo . '_position'] = 'home_formation_player_pos_' . $playerNo;
+			$columns['GUEST_F.player' . $playerNo] = 'guest_formation_player' . $playerNo;
+			$columns['GUEST_F.player' . $playerNo . '_position'] = 'guest_formation_player_pos_' . $playerNo;
 			
 			if ($playerNo <= 5) {
-				$columns['HOME_F.ersatz' . $playerNo] = 'home_formation_bench' . $playerNo;
-				$columns['GUEST_F.ersatz' . $playerNo] = 'guest_formation_bench' . $playerNo;
+				$columns['HOME_F.sub' . $playerNo] = 'home_formation_bench' . $playerNo;
+				$columns['GUEST_F.sub' . $playerNo] = 'guest_formation_bench' . $playerNo;
 			}
 		}
 		
 		// substitutions
 		for ($subNo = 1; $subNo <= 3; $subNo++) {
 			// will be used for initial creation
-			$columns['HOME_F.w' . $subNo . '_raus'] = 'home_formation_sub' . $subNo . '_out';
-			$columns['HOME_F.w' . $subNo . '_rein'] = 'home_formation_sub' . $subNo . '_in';
+			$columns['HOME_F.w' . $subNo . '_out'] = 'home_formation_sub' . $subNo . '_out';
+			$columns['HOME_F.w' . $subNo . '_in'] = 'home_formation_sub' . $subNo . '_in';
 			$columns['HOME_F.w' . $subNo . '_minute'] = 'home_formation_sub' . $subNo . '_minute';
 			$columns['HOME_F.w' . $subNo . '_condition'] = 'home_formation_sub' . $subNo . '_condition';
 			$columns['HOME_F.w' . $subNo . '_position'] = 'home_formation_sub' . $subNo . '_position';
 			
 			// will be used for loading from state
-			$columns['M.home_w' . $subNo . '_raus'] = 'home_sub_' . $subNo . '_out';
-			$columns['M.home_w' . $subNo . '_rein'] = 'home_sub_' . $subNo . '_in';
+			$columns['M.home_w' . $subNo . '_out'] = 'home_sub_' . $subNo . '_out';
+			$columns['M.home_w' . $subNo . '_in'] = 'home_sub_' . $subNo . '_in';
 			$columns['M.home_w' . $subNo . '_minute'] = 'home_sub_' . $subNo . '_minute';
 			$columns['M.home_w' . $subNo . '_condition'] = 'home_sub_' . $subNo . '_condition';
 			$columns['M.home_w' . $subNo . '_position'] = 'home_sub_' . $subNo . '_position';
 			
-			$columns['GUEST_F.w' . $subNo . '_raus'] = 'guest_formation_sub' . $subNo . '_out';
-			$columns['GUEST_F.w' . $subNo . '_rein'] = 'guest_formation_sub' . $subNo . '_in';
+			$columns['GUEST_F.w' . $subNo . '_out'] = 'guest_formation_sub' . $subNo . '_out';
+			$columns['GUEST_F.w' . $subNo . '_in'] = 'guest_formation_sub' . $subNo . '_in';
 			$columns['GUEST_F.w' . $subNo . '_minute'] = 'guest_formation_sub' . $subNo . '_minute';
 			$columns['GUEST_F.w' . $subNo . '_condition'] = 'guest_formation_sub' . $subNo . '_condition';
 			$columns['GUEST_F.w' . $subNo . '_position'] = 'guest_formation_sub' . $subNo . '_position';
 			
-			$columns['M.gast_w' . $subNo . '_raus'] = 'guest_sub_' . $subNo . '_out';
-			$columns['M.gast_w' . $subNo . '_rein'] = 'guest_sub_' . $subNo . '_in';
-			$columns['M.gast_w' . $subNo . '_minute'] = 'guest_sub_' . $subNo . '_minute';
-			$columns['M.gast_w' . $subNo . '_condition'] = 'guest_sub_' . $subNo . '_condition';
-			$columns['M.gast_w' . $subNo . '_position'] = 'guest_sub_' . $subNo . '_position';
+			$columns['M.guest_w' . $subNo . '_out'] = 'guest_sub_' . $subNo . '_out';
+			$columns['M.guest_w' . $subNo . '_in'] = 'guest_sub_' . $subNo . '_in';
+			$columns['M.guest_w' . $subNo . '_minute'] = 'guest_sub_' . $subNo . '_minute';
+			$columns['M.guest_w' . $subNo . '_condition'] = 'guest_sub_' . $subNo . '_condition';
+			$columns['M.guest_w' . $subNo . '_position'] = 'guest_sub_' . $subNo . '_position';
 		}
 		
 		$columns['GUEST_F.id'] = 'guest_formation_id';
@@ -160,7 +160,7 @@ class MatchSimulationExecutor {
 		$columns['GUEST_F.counterattacks'] = 'guest_formation_counterattacks';
 		$columns['GUEST_F.freekickplayer'] = 'guest_formation_freekickplayer';
 		
-		$whereCondition = 'M.berechnet != \'1\' AND M.blocked != \'1\' AND M.datum <= %d ORDER BY M.datum ASC';
+		$whereCondition = 'M.simulated != \'1\' AND M.blocked != \'1\' AND M.date <= %d ORDER BY M.date ASC';
 		$parameters = $websoccer->getNowAsTimestamp();
 		
 		$interval = (int) $websoccer->getConfig('sim_interval');
@@ -170,7 +170,7 @@ class MatchSimulationExecutor {
 		$matchesSimulated = 0;
 		$lockArray = array('blocked' => '1');
 		$unlockArray = array('blocked' => '0');
-		$matchTable = $websoccer->getConfig('db_prefix') . '_spiel';
+		$matchTable = $websoccer->getConfig('db_prefix') . '_match';
 		while ($matchinfo = $result->fetch_array()) {
 			
 			// lock record
@@ -243,7 +243,7 @@ class MatchSimulationExecutor {
 	private static function createInitialMatchData(WebSoccer $websoccer, DbConnection $db, $matchinfo) {
 		
 		// delete any match report items, in case a previous initial simulation failed in between.
-		$db->queryDelete($websoccer->getConfig('db_prefix') . '_spiel_berechnung', 'spiel_id = %d', $matchinfo['match_id']);
+		$db->queryDelete($websoccer->getConfig('db_prefix') . '_match_simulation', 'match_id = %d', $matchinfo['match_id']);
 		$db->queryDelete($websoccer->getConfig('db_prefix') . '_matchreport', 'match_id = %d', $matchinfo['match_id']);
 		
 		// create model
@@ -300,39 +300,39 @@ class MatchSimulationExecutor {
 	
 	public static function addPlayers(WebSoccer $websoccer, DbConnection $db, SimulationTeam $team, $matchinfo, $columnPrefix) {
 		
-		$fromTable = $websoccer->getConfig('db_prefix') . '_spieler';
+		$fromTable = $websoccer->getConfig('db_prefix') . '_player';
 		
-		$columns['verein_id'] = 'team_id';
+		$columns['club_id'] = 'team_id';
 		$columns['nation'] = 'nation';
 		$columns['position'] = 'position';
 		$columns['position_main'] = 'mainPosition';
 		$columns['position_second'] = 'secondPosition';
-		$columns['vorname'] = 'firstName';
-		$columns['nachname'] = 'lastName';
-		$columns['kunstname'] = 'pseudonym';
-		$columns['w_staerke'] = 'strength';
-		$columns['w_technik'] = 'technique';
-		$columns['w_kondition'] = 'stamina';
-		$columns['w_frische'] = 'freshness';
-		$columns['w_zufriedenheit'] = 'satisfaction';
-		$columns['st_spiele'] = 'matches_played';
+		$columns['first_name'] = 'firstName';
+		$columns['last_name'] = 'lastName';
+		$columns['nickname'] = 'pseudonym';
+		$columns['w_strength'] = 'strength';
+		$columns['w_technique'] = 'technique';
+		$columns['w_stamina'] = 'stamina';
+		$columns['w_fitness'] = 'freshness';
+		$columns['w_morale'] = 'satisfaction';
+		$columns['st_matches'] = 'matches_played';
 		
 		if ($websoccer->getConfig('players_aging') == 'birthday') {
-			$ageColumn = 'TIMESTAMPDIFF(YEAR,geburtstag,CURDATE())';
+			$ageColumn = 'TIMESTAMPDIFF(YEAR,birthday,CURDATE())';
 		} else {
 			$ageColumn = 'age';
 		}
 		$columns[$ageColumn] = 'age';
 
-		$whereCondition = 'id = %d AND verletzt = 0';
+		$whereCondition = 'id = %d AND injured = 0';
 		
 		// player must not be blocked
 		if ($team->isNationalTeam) {
-			$whereCondition .= ' AND gesperrt_nationalteam = 0';
-		} elseif ($matchinfo['type'] == 'Pokalspiel') {
-			$whereCondition .= ' AND gesperrt_cups = 0';
-		} elseif ($matchinfo['type'] != 'Freundschaft') {
-			$whereCondition .= ' AND gesperrt = 0';
+			$whereCondition .= ' AND suspended_nationalteam = 0';
+		} elseif ($matchinfo['type'] == 'cupmatch') {
+			$whereCondition .= ' AND suspended_cups = 0';
+		} elseif ($matchinfo['type'] != 'friendly') {
+			$whereCondition .= ' AND suspended = 0';
 		}
 		
 		$positionMapping = SimulationHelper::getPositionsMapping();
@@ -399,7 +399,7 @@ class MatchSimulationExecutor {
 				&& $websoccer->getConfig('sim_createformation_on_invalidsubmission')) {
 			
 			// delete existing invalid formation
-			$db->queryDelete($websoccer->getConfig('db_prefix') . '_spiel_berechnung', 'spiel_id = %d AND team_id = %d', array($matchinfo['match_id'], $team->id));
+			$db->queryDelete($websoccer->getConfig('db_prefix') . '_match_simulation', 'match_id = %d AND team_id = %d', array($matchinfo['match_id'], $team->id));
 			$team->positionsAndPlayers = array();
 			
 			// generate a new one
@@ -479,7 +479,7 @@ class MatchSimulationExecutor {
 	private static function teamHasNoManager(WebSoccer $websoccer, DbConnection $db, $teamId) {
 		// query user id
 		$columns = 'user_id';
-		$fromTable = $websoccer->getConfig('db_prefix') . '_verein';
+		$fromTable = $websoccer->getConfig('db_prefix') . '_club';
 		$whereCondition = 'id = %d';
 		$parameters = $teamId;
 		

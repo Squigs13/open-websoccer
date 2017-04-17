@@ -7,9 +7,9 @@
     </dependencies>
     
 	<settings>
-	    <setting id="lending_enabled" category="game" type="boolean" default="1" />
-	    <setting id="lending_matches_min" category="game" type="number" default="5" />
-	    <setting id="lending_matches_max" category="game" type="number" default="20" />
+	    <setting id="loan_enabled" category="game" type="boolean" default="1" />
+	    <setting id="loan_matches_min" category="game" type="number" default="5" />
+	    <setting id="loan_matches_max" category="game" type="number" default="20" />
 	</settings>
 	
     <pages>

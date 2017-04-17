@@ -22,10 +22,10 @@
 
 define('MAX_STRENGTH', 100);
 
-define('PLAYER_POSITION_GOALY', 'Torwart');
-define('PLAYER_POSITION_DEFENCE', 'Abwehr');
-define('PLAYER_POSITION_MIDFIELD', 'Mittelfeld');
-define('PLAYER_POSITION_STRIKER', 'Sturm');
+define('PLAYER_POSITION_GOALY', 'Goalkeeper');
+define('PLAYER_POSITION_DEFENCE', 'Defender');
+define('PLAYER_POSITION_MIDFIELD', 'Midfielder');
+define('PLAYER_POSITION_STRIKER', 'Forward');
 
 /**
  * The simulation strategy determines the results of an action, and also specified what the next action is.

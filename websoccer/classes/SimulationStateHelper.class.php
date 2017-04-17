@@ -43,9 +43,9 @@ class SimulationStateHelper {
 	 */
 	public static function createSimulationRecord(WebSoccer $websoccer, DbConnection $db, $matchId, SimulationPlayer $player, $onBench = FALSE) {
 		
-		$fromTable = $websoccer->getConfig('db_prefix') . '_spiel_berechnung';
+		$fromTable = $websoccer->getConfig('db_prefix') . '_match_simulation';
 		
-		$db->queryInsert(self::getPlayerColumns($matchId, $player, ($onBench) ? 'Ersatzbank' : '1'), $fromTable);
+		$db->queryInsert(self::getPlayerColumns($matchId, $player, ($onBench) ? 'Bench' : '1'), $fromTable);
 	}
 	
 	/**
@@ -160,31 +160,31 @@ class SimulationStateHelper {
 	private static function updateMatch(WebSoccer $websoccer, DbConnection $db, SimulationMatch $match) {
 		
 		if ($match->isCompleted) {
-			$columns['berechnet'] = 1;
+			$columns['simulated'] = 1;
 		}
 		
 		$columns['minutes'] = $match->minute;
 		$columns['soldout'] = ($match->isSoldOut) ? '1' : '0';
-		$columns['home_tore'] = $match->homeTeam->getGoals();
-		$columns['gast_tore'] = $match->guestTeam->getGoals();
+		$columns['home_goals'] = $match->homeTeam->getGoals();
+		$columns['guest_goals'] = $match->guestTeam->getGoals();
 		
 		$columns['home_setup'] = $match->homeTeam->setup;
-		$columns['gast_setup'] = $match->guestTeam->setup;
+		$columns['guest_setup'] = $match->guestTeam->setup;
 		
 		$columns['home_offensive'] = $match->homeTeam->offensive;
-		$columns['gast_offensive'] = $match->guestTeam->offensive;
+		$columns['guest_offensive'] = $match->guestTeam->offensive;
 		
 		$columns['home_noformation'] = ($match->homeTeam->noFormationSet) ? '1' : '0';
 		$columns['guest_noformation'] = ($match->guestTeam->noFormationSet) ? '1' : '0';
 		
 		$columns['home_longpasses'] = ($match->homeTeam->longPasses) ? '1' : '0';
-		$columns['gast_longpasses'] = ($match->guestTeam->longPasses) ? '1' : '0';
+		$columns['guest_longpasses'] = ($match->guestTeam->longPasses) ? '1' : '0';
 		
 		$columns['home_counterattacks'] = ($match->homeTeam->counterattacks) ? '1' : '0';
-		$columns['gast_counterattacks'] = ($match->guestTeam->counterattacks) ? '1' : '0';
+		$columns['guest_counterattacks'] = ($match->guestTeam->counterattacks) ? '1' : '0';
 		
 		$columns['home_morale'] = $match->homeTeam->morale;
-		$columns['gast_morale'] = $match->guestTeam->morale;
+		$columns['guest_morale'] = $match->guestTeam->morale;
 		
 		if ($match->getPlayerWithBall() != null) {
 			$columns['player_with_ball'] = $match->getPlayerWithBall()->id;
@@ -199,14 +199,14 @@ class SimulationStateHelper {
 		}
 		
 		$columns['home_freekickplayer'] = ($match->homeTeam->freeKickPlayer != NULL) ? $match->homeTeam->freeKickPlayer->id : '';
-		$columns['gast_freekickplayer'] = ($match->guestTeam->freeKickPlayer != NULL) ? $match->guestTeam->freeKickPlayer->id : '';
+		$columns['guest_freekickplayer'] = ($match->guestTeam->freeKickPlayer != NULL) ? $match->guestTeam->freeKickPlayer->id : '';
 		
 		// substitutions
 		if (is_array($match->homeTeam->substitutions)) {
 			$subIndex = 1;
 			foreach ($match->homeTeam->substitutions as $substitution) {
-				$columns['home_w' . $subIndex . '_raus'] = $substitution->playerOut->id;
-				$columns['home_w' . $subIndex . '_rein'] = $substitution->playerIn->id;
+				$columns['home_w' . $subIndex . '_out'] = $substitution->playerOut->id;
+				$columns['home_w' . $subIndex . '_in'] = $substitution->playerIn->id;
 				$columns['home_w' . $subIndex . '_minute'] = $substitution->minute;
 				$columns['home_w' . $subIndex . '_condition'] = $substitution->condition;
 				$columns['home_w' . $subIndex . '_position'] = $substitution->position;
@@ -218,17 +218,17 @@ class SimulationStateHelper {
 		if (is_array($match->guestTeam->substitutions)) {
 			$subIndex = 1;
 			foreach ($match->guestTeam->substitutions as $substitution) {
-				$columns['gast_w' . $subIndex . '_raus'] = $substitution->playerOut->id;
-				$columns['gast_w' . $subIndex . '_rein'] = $substitution->playerIn->id;
-				$columns['gast_w' . $subIndex . '_minute'] = $substitution->minute;
-				$columns['gast_w' . $subIndex . '_condition'] = $substitution->condition;
-				$columns['gast_w' . $subIndex . '_position'] = $substitution->position;
+				$columns['guest_w' . $subIndex . '_out'] = $substitution->playerOut->id;
+				$columns['guest_w' . $subIndex . '_in'] = $substitution->playerIn->id;
+				$columns['guest_w' . $subIndex . '_minute'] = $substitution->minute;
+				$columns['guest_w' . $subIndex . '_condition'] = $substitution->condition;
+				$columns['guest_w' . $subIndex . '_position'] = $substitution->position;
 				
 				$subIndex++;
 			}
 		}
 		
-		$fromTable = $websoccer->getConfig('db_prefix') . '_spiel';
+		$fromTable = $websoccer->getConfig('db_prefix') . '_match';
 		$whereCondition = 'id = %d';
 		$parameters = $match->id;
 		
@@ -249,22 +249,22 @@ class SimulationStateHelper {
 		// bench
 		if (is_array($team->playersOnBench)) {
 			foreach ($team->playersOnBench as $player) {
-				self::updatePlayerState($websoccer, $db, $match->id, $player, 'Ersatzbank');
+				self::updatePlayerState($websoccer, $db, $match->id, $player, 'Bench');
 			}
 		}
 		
 		// removed
 		if (is_array($team->removedPlayers)) {
 			foreach ($team->removedPlayers as $player) {
-				self::updatePlayerState($websoccer, $db, $match->id, $player, 'Ausgewechselt');
+				self::updatePlayerState($websoccer, $db, $match->id, $player, 'Substituted');
 			}
 		}
 		
 	}
 	
 	private static function updatePlayerState(WebSoccer $websoccer, DbConnection $db, $matchId, $player, $fieldArea) {
-		$fromTable = $websoccer->getConfig('db_prefix') . '_spiel_berechnung';
-		$whereCondition = 'spieler_id = %d AND spiel_id = %d';
+		$fromTable = $websoccer->getConfig('db_prefix') . '_match_simulation';
+		$whereCondition = 'player_id = %d AND match_id = %d';
 		$parameters = array($player->id, $matchId);
 		
 		$columns = self::getPlayerColumns($matchId, $player, $fieldArea);
@@ -273,33 +273,33 @@ class SimulationStateHelper {
 	}
 	
 	private static function getPlayerColumns($matchId, SimulationPlayer $player, $fieldArea) {
-		$columns['spiel_id'] = $matchId;
-		$columns['spieler_id'] = $player->id;
+		$columns['match_id'] = $matchId;
+		$columns['player_id'] = $player->id;
 		$columns['team_id'] = $player->team->id;
 		$columns['name'] = $player->name;
-		$columns['note'] = $player->getMark();
-		$columns['minuten_gespielt'] = $player->getMinutesPlayed();
-		$columns['karte_gelb'] = $player->yellowCards;
-		$columns['karte_rot'] = $player->redCard;
-		$columns['verletzt'] = $player->injured;
-		$columns['gesperrt'] = $player->blocked;
-		$columns['tore'] = $player->getGoals();
-		$columns['feld'] = $fieldArea;
+		$columns['rating'] = $player->getMark();
+		$columns['minutes_played'] = $player->getMinutesPlayed();
+		$columns['yellow_card'] = $player->yellowCards;
+		$columns['red_card'] = $player->redCard;
+		$columns['injured'] = $player->injured;
+		$columns['suspended'] = $player->blocked;
+		$columns['goals'] = $player->getGoals();
+		$columns['field'] = $fieldArea;
 		$columns['position'] = $player->position;
 		$columns['position_main'] = $player->mainPosition;
 		$columns['age'] = $player->age;
 		
-		$columns['w_staerke'] = $player->strength;
-		$columns['w_technik'] = $player->strengthTech;
-		$columns['w_kondition'] = $player->strengthStamina;
-		$columns['w_frische'] = $player->strengthFreshness;
-		$columns['w_zufriedenheit'] = $player->strengthSatisfaction;
+		$columns['w_strength'] = $player->strength;
+		$columns['w_technique'] = $player->strengthTech;
+		$columns['w_stamina'] = $player->strengthStamina;
+		$columns['w_fitness'] = $player->strengthFreshness;
+		$columns['w_morale'] = $player->strengthSatisfaction;
 		
-		$columns['ballcontacts'] = $player->getBallContacts();
+		$columns['touches'] = $player->getBallContacts();
 		$columns['wontackles'] = $player->getWonTackles();
 		$columns['losttackles'] = $player->getLostTackles();
-		$columns['shoots'] = $player->getShoots();
-		$columns['passes_successed'] = $player->getPassesSuccessed();
+		$columns['shots'] = $player->getShoots();
+		$columns['passes_successful'] = $player->getPassesSuccessed();
 		$columns['passes_failed'] = $player->getPassesFailed();
 		$columns['assists'] = $player->getAssists();
 		
@@ -309,36 +309,36 @@ class SimulationStateHelper {
 	private static function loadTeam(WebSoccer $websoccer, DbConnection $db, $matchId, SimulationTeam $team) {
 		
 		// get players
-		$columns['spieler_id'] = 'player_id';
+		$columns['player_id'] = 'player_id';
 		$columns['name'] = 'name';
-		$columns['note'] = 'mark';
-		$columns['minuten_gespielt'] = 'minutes_played';
-		$columns['karte_gelb'] = 'yellow_cards';
-		$columns['karte_rot'] = 'red_cards';
-		$columns['verletzt'] = 'injured';
-		$columns['gesperrt'] = 'blocked';
-		$columns['tore'] = 'goals';
-		$columns['feld'] = 'field_area';
+		$columns['rating'] = 'mark';
+		$columns['minutes_played'] = 'minutes_played';
+		$columns['yellow_card'] = 'yellow_cards';
+		$columns['red_card'] = 'red_cards';
+		$columns['injured'] = 'injured';
+		$columns['suspended'] = 'blocked';
+		$columns['goals'] = 'goals';
+		$columns['field'] = 'field_area';
 		$columns['position'] = 'position';
 		$columns['position_main'] = 'main_position';
 		$columns['age'] = 'age';
 		
-		$columns['w_staerke'] = 'strength';
-		$columns['w_technik'] = 'strength_tech';
-		$columns['w_kondition'] = 'strength_stamina';
-		$columns['w_frische'] = 'strength_freshness';
-		$columns['w_zufriedenheit'] = 'strength_satisfaction';
+		$columns['w_strength'] = 'strength';
+		$columns['w_technique'] = 'strength_tech';
+		$columns['w_stamina'] = 'strength_stamina';
+		$columns['w_fitness'] = 'strength_freshness';
+		$columns['w_morale'] = 'strength_satisfaction';
 		
-		$columns['ballcontacts'] = 'ballcontacts';
+		$columns['touches'] = 'touches';
 		$columns['wontackles'] = 'wontackles';
 		$columns['losttackles'] = 'losttackles';
-		$columns['shoots'] = 'shoots';
-		$columns['passes_successed'] = 'passes_successed';
+		$columns['shots'] = 'shots';
+		$columns['passes_successful'] = 'passes_successful';
 		$columns['passes_failed'] = 'passes_failed';
 		$columns['assists'] = 'assists';
 		
-		$fromTable = $websoccer->getConfig('db_prefix') . '_spiel_berechnung';
-		$whereCondition = 'spiel_id = %d AND team_id = %d ORDER BY id ASC';
+		$fromTable = $websoccer->getConfig('db_prefix') . '_match_simulation';
+		$whereCondition = 'match_id = %d AND team_id = %d ORDER BY id ASC';
 		$parameters = array($matchId, $team->id);
 		
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
@@ -349,12 +349,12 @@ class SimulationStateHelper {
 					$playerinfo['strength_stamina'], $playerinfo['strength_freshness'], $playerinfo['strength_satisfaction']);
 			
 			$player->name = $playerinfo['name'];
-			$player->setBallContacts($playerinfo['ballcontacts']);
+			$player->setBallContacts($playerinfo['touches']);
 			$player->setWonTackles($playerinfo['wontackles']);
 			$player->setLostTackles($playerinfo['losttackles']);
 			$player->setGoals($playerinfo['goals']);
-			$player->setShoots($playerinfo['shoots']);
-			$player->setPassesSuccessed($playerinfo['passes_successed']);
+			$player->setShoots($playerinfo['shots']);
+			$player->setPassesSuccessed($playerinfo['passes_successful']);
 			$player->setPassesFailed($playerinfo['passes_failed']);
 			$player->setAssists($playerinfo['assists']);
 			$player->setMinutesPlayed($playerinfo['minutes_played'], FALSE);
@@ -367,9 +367,9 @@ class SimulationStateHelper {
 			// add player
 			self::$_addedPlayers[$player->id] = $player;
 			
-			if ($playerinfo['field_area'] == 'Ausgewechselt') {
+			if ($playerinfo['field_area'] == 'Substituted') {
 				$team->removedPlayers[$player->id] = $player;
-			} else if ($playerinfo['field_area'] == 'Ersatzbank') {
+			} else if ($playerinfo['field_area'] == 'Bench') {
 				$team->playersOnBench[$player->id] = $player;
 			} else {
 				$team->positionsAndPlayers[$player->position][] = $player;

@@ -200,7 +200,7 @@ class YouthPlayersDataService {
 				"P.st_cards_red" => "st_cards_red",
 				"P.team_id" => "team_id",
 				"C.name" => "team_name",
-				"C.bild" => "team_picture",
+				"C.image" => "team_picture",
 				"C.user_id" => "user_id",
 				"U.nick" => "user_nick",
 				"U.email" => "user_email",
@@ -208,7 +208,7 @@ class YouthPlayersDataService {
 				);
 		
 		$fromTable = $websoccer->getConfig("db_prefix") . "_youthplayer AS P";
-		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_verein AS C ON C.id = P.team_id";
+		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_club AS C ON C.id = P.team_id";
 		$fromTable .= " LEFT JOIN " . $websoccer->getConfig("db_prefix") . "_user AS U ON U.id = C.user_id";
 		
 		$parameters = "";
@@ -286,7 +286,7 @@ class YouthPlayersDataService {
 	 * @return number UNIX timestamp of last scouting. 0 if never executed before.
 	 */
 	public static function getLastScoutingExecutionTime(WebSoccer $websoccer, DbConnection $db, $teamId) {
-		$result = $db->querySelect("scouting_last_execution", $websoccer->getConfig("db_prefix") . "_verein", 
+		$result = $db->querySelect("scouting_last_execution", $websoccer->getConfig("db_prefix") . "_club", 
 				"id = %d", $teamId);
 		$scouted = $result->fetch_array();
 		$result->free();
@@ -365,7 +365,7 @@ class YouthPlayersDataService {
 		);
 	
 		$fromTable = $websoccer->getConfig("db_prefix") . "_youthmatch_request AS R";
-		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_verein AS C ON C.id = R.team_id";
+		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_club AS C ON C.id = R.team_id";
 		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_user AS U ON U.id = C.user_id";
 		
 		$whereCondition = "1=1 ORDER BY R.matchdate ASC";

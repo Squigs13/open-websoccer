@@ -49,12 +49,12 @@ class RemoveNationalPlayerController implements IActionController {
 		if (!$teamId) {
 			throw new Exception($this->_i18n->getMessage("nationalteams_user_requires_team"));
 		}
-		$result = $this->_db->querySelect("name", $this->_websoccer->getConfig("db_prefix") . "_verein", "id = %d", $teamId);
+		$result = $this->_db->querySelect("name", $this->_websoccer->getConfig("db_prefix") . "_club", "id = %d", $teamId);
 		$team = $result->fetch_array();
 		$result->free();
 		
 		// get player info
-		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_spieler";
+		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_player";
 		$result = $this->_db->querySelect("nation", $fromTable, "id = %d", $parameters["id"]);
 		$player = $result->fetch_array();
 		$result->free();

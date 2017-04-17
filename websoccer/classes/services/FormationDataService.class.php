@@ -35,7 +35,7 @@ class FormationDataService {
 	 * @return array previously set formation.
 	 */
 	public static function getFormationByTeamId(WebSoccer $websoccer, DbConnection $db, $teamId, $matchId) {
-		$whereCondition = 'verein_id = %d AND match_id = %d';
+		$whereCondition = 'club_id = %d AND match_id = %d';
 		$parameters = array($teamId, $matchId);
 		
 		return self::_getFormationByCondition($websoccer, $db, $whereCondition, $parameters);
@@ -51,13 +51,13 @@ class FormationDataService {
 	 * @return array formation.
 	 */
 	public static function getFormationByTemplateId(WebSoccer $websoccer, DbConnection $db, $teamId, $templateId) {
-		$whereCondition = 'id = %d AND verein_id = %d';
+		$whereCondition = 'id = %d AND club_id = %d';
 		$parameters = array($templateId, $teamId);
 		return self::_getFormationByCondition($websoccer, $db, $whereCondition, $parameters);
 	}
 	
 	private static function _getFormationByCondition(WebSoccer $websoccer, DbConnection $db, $whereCondition, $parameters) {
-		$fromTable = $websoccer->getConfig('db_prefix') . '_aufstellung';
+		$fromTable = $websoccer->getConfig('db_prefix') . '_tactics';
 	
 		// select
 		$columns['id'] = 'id';
@@ -68,17 +68,17 @@ class FormationDataService {
 		$columns['freekickplayer'] = 'freekickplayer';
 	
 		for ($playerNo = 1; $playerNo <= 11; $playerNo++) {
-			$columns['spieler' . $playerNo] = 'player' . $playerNo;
-			$columns['spieler' . $playerNo . '_position'] = 'player' . $playerNo . '_pos';
+			$columns['player' . $playerNo] = 'player' . $playerNo;
+			$columns['player' . $playerNo . '_position'] = 'player' . $playerNo . '_pos';
 		}
 	
 		for ($playerNo = 1; $playerNo <= 5; $playerNo++) {
-			$columns['ersatz' . $playerNo] = 'bench' . $playerNo;
+			$columns['sub' . $playerNo] = 'bench' . $playerNo;
 		}
 	
 		for ($subNo = 1; $subNo <= 3; $subNo++) {
-			$columns['w'. $subNo . '_raus'] = 'sub' . $subNo .'_out';
-			$columns['w'. $subNo . '_rein'] = 'sub' . $subNo .'_in';
+			$columns['w'. $subNo . '_out'] = 'sub' . $subNo .'_out';
+			$columns['w'. $subNo . '_in'] = 'sub' . $subNo .'_in';
 			$columns['w'. $subNo . '_minute'] = 'sub' . $subNo .'_minute';
 			$columns['w'. $subNo . '_condition'] = 'sub' . $subNo .'_condition';
 			$columns['w'. $subNo . '_position'] = 'sub' . $subNo .'_position';
@@ -118,16 +118,16 @@ class FormationDataService {
 		$columns = 'id,position,position_main,position_second';
 		
 		if (!$isNationalteam) {
-			$fromTable = $websoccer->getConfig('db_prefix') . '_spieler';
-			$whereCondition = 'verein_id = %d AND gesperrt';
+			$fromTable = $websoccer->getConfig('db_prefix') . '_player';
+			$whereCondition = 'club_id = %d AND suspended';
 			if ($isCupMatch) {
 				$whereCondition .= '_cups';
 			}
-			$whereCondition .= ' = 0 AND verletzt = 0 AND status = 1';
+			$whereCondition .= ' = 0 AND injured = 0 AND status = 1';
 		} else {
-			$fromTable = $websoccer->getConfig('db_prefix') . '_spieler AS P';
+			$fromTable = $websoccer->getConfig('db_prefix') . '_player AS P';
 			$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_nationalplayer AS NP ON NP.player_id = P.id';
-			$whereCondition = 'NP.team_id = %d AND gesperrt_nationalteam = 0 AND verletzt = 0 AND status = 1';
+			$whereCondition = 'NP.team_id = %d AND suspended_nationalteam = 0 AND injured = 0 AND status = 1';
 		}
 		
 		$whereCondition .=	' ORDER BY '. $sortColumn . ' ' . $sortDirection;
@@ -192,11 +192,11 @@ class FormationDataService {
 			// handle players without main position (all-rounder)
 			if (!strlen($player['position_main'])) {
 				
-				if ($player['position'] == 'Torwart') {
+				if ($player['position'] == 'Goalkeeper') {
 					$possiblePositions = array('T');
-				} elseif ($player['position'] == 'Abwehr') {
+				} elseif ($player['position'] == 'Defender') {
 					$possiblePositions = array('LV', 'IV', 'RV');
-				} elseif ($player['position'] == 'Mittelfeld') {
+				} elseif ($player['position'] == 'Midfielder') {
 					$possiblePositions = array('RM', 'ZM', 'LM', 'RM', 'DM', 'OM');
 				} else {
 					$possiblePositions = array('LS', 'MS', 'RS');

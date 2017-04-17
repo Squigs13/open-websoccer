@@ -24,7 +24,7 @@ $mainTitle = $i18n->getMessage("managecuprounds_generate_navlabel");
 
 echo "<h1>$mainTitle</h1>";
 
-if (!$admin["r_admin"] && !$admin["r_demo"] && !$admin["r_spiele"]) {
+if (!$admin["r_admin"] && !$admin["r_demo"] && !$admin["r_matches"]) {
 	throw new Exception($i18n->getMessage("error_access_denied"));
 }
 
@@ -50,7 +50,7 @@ if ($action == "generate" && isset($_POST["teams"]) && is_array($_POST["teams"])
 	$teamIds = $_POST["teams"];
 	shuffle($teamIds);
 	
-	$insertTable = $website->getConfig("db_prefix") . "_spiel";
+	$insertTable = $website->getConfig("db_prefix") . "_match";
 	
 	// create combinations
 	while(count($teamIds) > 1) {
@@ -59,23 +59,23 @@ if ($action == "generate" && isset($_POST["teams"]) && is_array($_POST["teams"])
 		
 		// create first round
 		$db->queryInsert(array(
-				"spieltyp" => "Pokalspiel",
-				"pokalname" => $round["cup_name"],
-				"pokalrunde" => $round["round_name"],
-				"datum" => $round["firstround_date"],
-				"home_verein" => $homeTeamId,
-				"gast_verein" => $guestTeamId
+				"matchtype" => "cupmatch",
+				"cup_name" => $round["cup_name"],
+				"cup_round" => $round["round_name"],
+				"date" => $round["firstround_date"],
+				"home_club" => $homeTeamId,
+				"guest_club" => $guestTeamId
 				), $insertTable);
 		
 		// create second round
 		if ($round["secondround_date"]) {
 			$db->queryInsert(array(
-					"spieltyp" => "Pokalspiel",
-					"pokalname" => $round["cup_name"],
-					"pokalrunde" => $round["round_name"],
-					"datum" => $round["secondround_date"],
-					"home_verein" => $guestTeamId,
-					"gast_verein" => $homeTeamId
+					"matchtype" => "cupmatch",
+					"cup_name" => $round["cup_name"],
+					"cup_round" => $round["round_name"],
+					"date" => $round["secondround_date"],
+					"home_club" => $guestTeamId,
+					"guest_club" => $homeTeamId
 			), $insertTable);
 		}
 	}
@@ -118,8 +118,8 @@ if ($action == "generate" && isset($_POST["teams"]) && is_array($_POST["teams"])
 				</thead>
 				<tbody>
 					<?php 
-					$result = $db->querySelect("T.id AS team_id,T.name AS team_name,L.name AS league_name,L.land AS league_country",
-							$website->getConfig("db_prefix") . "_verein AS T LEFT JOIN " . $website->getConfig("db_prefix") . "_liga AS L ON L.id = T.liga_id",
+					$result = $db->querySelect("T.id AS team_id,T.name AS team_name,L.name AS league_name,L.country AS league_country",
+							$website->getConfig("db_prefix") . "_club AS T LEFT JOIN " . $website->getConfig("db_prefix") . "_league AS L ON L.id = T.league_id",
 							"1=1 ORDER BY team_name ASC");
 		
 					while ($team = $result->fetch_array()) {

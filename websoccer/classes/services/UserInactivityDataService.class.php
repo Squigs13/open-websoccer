@@ -34,10 +34,10 @@ class UserInactivityDataService {
 		$columns["id"] = "id";
 		$columns["login"] = "login";
 		$columns["login_check"] = "login_check";
-		$columns["aufstellung"] = "tactics";
+		$columns["formation"] = "tactics";
 		$columns["transfer"] = "transfer";
 		$columns["transfer_check"] = "transfer_check";
-		$columns["vertragsauslauf"] = "contractextensions";
+		$columns["contract_expiry"] = "contractextensions";
 		
 		$fromTable = $websoccer->getConfig("db_prefix") . "_user_inactivity";
 		
@@ -76,14 +76,14 @@ class UserInactivityDataService {
 			$updatecolumns["login_check"] = $now;
 			
 			// update tactics activity
-			$formationTable = $websoccer->getConfig("db_prefix") . "_aufstellung AS F";
-			$formationTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_verein AS T ON T.id = F.verein_id";
-			$result = $db->querySelect("F.datum AS date", $formationTable, "T.user_id = %d", $userId);
+			$formationTable = $websoccer->getConfig("db_prefix") . "_tactics AS F";
+			$formationTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_club AS T ON T.id = F.club_id";
+			$result = $db->querySelect("F.date AS date", $formationTable, "T.user_id = %d", $userId);
 			$formation = $result->fetch_array();
 			$result->free();
 			if ($formation) {
 				$inactiveDays = round(($now - $formation["date"]) / (24 * 3600));
-				$updatecolumns["aufstellung"] = min(100, round($inactiveDays * INACTIVITY_PER_DAY_TACTICS));
+				$updatecolumns["formation"] = min(100, round($inactiveDays * INACTIVITY_PER_DAY_TACTICS));
 			}
 		}
 		
@@ -111,7 +111,7 @@ class UserInactivityDataService {
 	public static function resetContractExtensionField($websoccer, $db, $userId) {
 		$inactivity = self::getUserInactivity($websoccer, $db, $userId);
 		
-		$updatecolumns["vertragsauslauf"] = 0;
+		$updatecolumns["contract_expiry"] = 0;
 		$fromTable = $websoccer->getConfig("db_prefix") . "_user_inactivity";
 		$db->queryUpdate($updatecolumns, $fromTable, "id = %d", $inactivity["id"]);
 	}
@@ -119,7 +119,7 @@ class UserInactivityDataService {
 	public static function increaseContractExtensionField($websoccer, $db, $userId) {
 		$inactivity = self::getUserInactivity($websoccer, $db, $userId);
 	
-		$updatecolumns["vertragsauslauf"] = min(100, $inactivity["contractextensions"] + INACTIVITY_PER_CONTRACTEXTENSION);
+		$updatecolumns["contract_expiry"] = min(100, $inactivity["contractextensions"] + INACTIVITY_PER_CONTRACTEXTENSION);
 		$fromTable = $websoccer->getConfig("db_prefix") . "_user_inactivity";
 		$db->queryUpdate($updatecolumns, $fromTable, "id = %d", $inactivity["id"]);
 	}

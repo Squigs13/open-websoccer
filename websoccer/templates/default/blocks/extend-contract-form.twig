@@ -1,7 +1,7 @@
 {% import "macros/formelements.twig" as formelements %}
 {% import "macros/statisticelements.twig" as statisticelements %}
 
-<p><h5>{{ i18n.getMessage('entity_player_w_zufriedenheit') }} ({{ player.player_strength_satisfaction }}%)</h5>
+<p><h5>{{ i18n.getMessage('entity_player_w_morale') }} ({{ player.player_strength_satisfaction }}%)</h5>
 
 {{ statisticelements.progressbar(player.player_strength_satisfaction) }}
 
@@ -12,11 +12,11 @@
 
 <form class="form-horizontal" method="post">
 
-	{{ formelements.textfield('salary', i18n.getMessage('entity_player_vertrag_gehalt'), env.getRequestParameter('salary'), true, validationMsg, 'number') }}
+	{{ formelements.textfield('salary', i18n.getMessage('entity_player_contract_salary'), env.getRequestParameter('salary'), true, validationMsg, 'number') }}
 	
-	{{ formelements.textfield('goal_bonus', i18n.getMessage('entity_player_vertrag_torpraemie'), env.getRequestParameter('goal_bonus'), false, validationMsg, 'number') }}
+	{{ formelements.textfield('goal_bonus', i18n.getMessage('entity_player_contract_goal_bonus'), env.getRequestParameter('goal_bonus'), false, validationMsg, 'number') }}
 	
-	{{ formelements.textfield('matches', i18n.getMessage('entity_player_vertrag_spiele'), env.getRequestParameter('matches'), true, validationMsg, 'number') }}
+	{{ formelements.textfield('matches', i18n.getMessage('entity_player_contract_matches'), env.getRequestParameter('matches'), true, validationMsg, 'number') }}
 	
 	<div class="form-actions">
 		<button type="submit" class="btn btn-primary ajaxSubmit" 

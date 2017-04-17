@@ -27,18 +27,18 @@ class SponsorsDataService {
 
 	public static function getSponsorinfoByTeamId(WebSoccer $websoccer, DbConnection $db, $clubId) {
 		
-		$columns["T.sponsor_spiele"] = "matchdays";
+		$columns["T.sponsor_matches"] = "matchdays";
 		$columns["S.id"] = "sponsor_id";
 		$columns["S.name"] = "name";
-		$columns["S.b_spiel"] = "amount_match";
-		$columns["S.b_heimzuschlag"] = "amount_home_bonus";
-		$columns["S.b_sieg"] = "amount_win";
-		$columns["S.b_meisterschaft"] = "amount_championship";
-		$columns["S.bild"] = "picture";
+		$columns["S.b_match"] = "amount_match";
+		$columns["S.b_home_match"] = "amount_home_bonus";
+		$columns["S.b_win"] = "amount_win";
+		$columns["S.b_championship"] = "amount_championship";
+		$columns["S.image"] = "picture";
 		
 		$fromTable = $websoccer->getConfig("db_prefix") . "_sponsor AS S";
-		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_verein AS T ON T.sponsor_id = S.id";
-		$whereCondition = "T.id = %d AND T.sponsor_spiele > 0";
+		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_club AS T ON T.sponsor_id = S.id";
+		$whereCondition = "T.id = %d AND T.sponsor_matches > 0";
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $clubId, 1);
 		$sponsor = $result->fetch_array();
 		$result->free();
@@ -53,15 +53,15 @@ class SponsorsDataService {
 	
 		$columns["S.id"] = "sponsor_id";
 		$columns["S.name"] = "name";
-		$columns["S.b_spiel"] = "amount_match";
-		$columns["S.b_heimzuschlag"] = "amount_home_bonus";
-		$columns["S.b_sieg"] = "amount_win";
-		$columns["S.b_meisterschaft"] = "amount_championship";
+		$columns["S.b_match"] = "amount_match";
+		$columns["S.b_home_match"] = "amount_home_bonus";
+		$columns["S.b_win"] = "amount_win";
+		$columns["S.b_championship"] = "amount_championship";
 	
 		$fromTable = $websoccer->getConfig("db_prefix") . "_sponsor AS S";
-		$whereCondition = "S.liga_id = %d AND (S.min_platz = 0 OR S.min_platz >= %d)"
-							. " AND (S.max_teams <= 0 OR S.max_teams > (SELECT COUNT(*) FROM " . $websoccer->getConfig("db_prefix") . "_verein AS T WHERE T.sponsor_id = S.id AND T.sponsor_spiele > 0))"
-							. " ORDER BY S.b_spiel DESC";
+		$whereCondition = "S.league_id = %d AND (S.min_place = 0 OR S.min_place >= %d)"
+							. " AND (S.max_teams <= 0 OR S.max_teams > (SELECT COUNT(*) FROM " . $websoccer->getConfig("db_prefix") . "_club AS T WHERE T.sponsor_id = S.id AND T.sponsor_matches > 0))"
+							. " ORDER BY S.b_match DESC";
 		$parameters = array($team["team_league_id"], $teamRank);
 		
 		return $db->queryCachedSelect($columns, $fromTable, $whereCondition, $parameters, 20);

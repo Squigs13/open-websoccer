@@ -64,13 +64,13 @@ if ($isOffline) {
 	if (!isset($_SESSION['badgechecked']) && $website->getUser()->getRole() == ROLE_USER
 			&& $website->getUser()->getClubId($website, $db)) {
 		$userId = $website->getUser()->id;
-		$result = $db->querySelect('datum_anmeldung', $website->getConfig('db_prefix') . '_user', 'id = %d', $userId);
+		$result = $db->querySelect('date_registered', $website->getConfig('db_prefix') . '_user', 'id = %d', $userId);
 		$userinfo = $result->fetch_array();
 		$result->free();
 		
 		// consider only users who have a registration date (in particular manually created users might not have).
-		if ($userinfo['datum_anmeldung']) {
-			$numberOfRegisteredDays = round(($website->getNowAsTimestamp() - $userinfo['datum_anmeldung']) / (3600 * 24));
+		if ($userinfo['date_registered']) {
+			$numberOfRegisteredDays = round(($website->getNowAsTimestamp() - $userinfo['date_registered']) / (3600 * 24));
 			BadgesDataService::awardBadgeIfApplicable($website, $db, $userId, 'membership_since_x_days', $numberOfRegisteredDays);
 		}
 		

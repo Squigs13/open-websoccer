@@ -20,13 +20,13 @@
 		  		<select name="mainposition" id="mainposition">
 		  			<option></option>
 		  			
-		  			{% if player.position == "Torwart" %}
+		  			{% if player.position == "Goalkeeper" %}
 		  				<option value="T" selected>{{ i18n.getMessage("option_T") }}</option>
-		  			{% elseif player.position == "Abwehr" %}
+		  			{% elseif player.position == "Defender" %}
 		  				<option value="LV">{{ i18n.getMessage("option_LV") }}</option>
 		  				<option value="IV">{{ i18n.getMessage("option_IV") }}</option>
 		  				<option value="RV">{{ i18n.getMessage("option_RV") }}</option>
-		  			{% elseif player.position == "Mittelfeld" %}
+		  			{% elseif player.position == "Midfielder" %}
 		  				<option value="LM">{{ i18n.getMessage("option_LM") }}</option>
 		  				<option value="ZM">{{ i18n.getMessage("option_ZM") }}</option>
 		  				<option value="RM">{{ i18n.getMessage("option_RM") }}</option>

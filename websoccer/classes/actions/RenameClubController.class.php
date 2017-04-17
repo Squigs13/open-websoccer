@@ -55,14 +55,14 @@ class RenameClubController implements IActionController {
 		}
 		
 		// rename club
-		$short = strtoupper($parameters['kurz']);
-		$this->_db->queryUpdate(array('name' => $parameters['name'], 'kurz' => $short), 
-				$this->_websoccer->getConfig('db_prefix') . '_verein',
+		$short = strtoupper($parameters['short']);
+		$this->_db->queryUpdate(array('name' => $parameters['name'], 'short' => $short), 
+				$this->_websoccer->getConfig('db_prefix') . '_club',
 				'id = %d', $clubId);
 		
 		// rename stadium
 		$this->_db->queryUpdate(array('S.name' => $parameters['stadium']),
-				$this->_websoccer->getConfig('db_prefix') . '_verein AS C INNER JOIN ' . $this->_websoccer->getConfig('db_prefix') . '_stadion AS S ON S.id = C.stadion_id',
+				$this->_websoccer->getConfig('db_prefix') . '_club AS C INNER JOIN ' . $this->_websoccer->getConfig('db_prefix') . '_stadium AS S ON S.id = C.stadium_id',
 				'C.id = %d', $clubId);
 		
 		// success message

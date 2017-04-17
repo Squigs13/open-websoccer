@@ -59,12 +59,12 @@ class TeamOfTheDayModel implements IModel {
 		if (!$leagueId) {
 			$clubId = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
 			if ($clubId > 0) {
-				$result = $this->_db->querySelect("liga_id", $this->_websoccer->getConfig("db_prefix") . "_verein",
+				$result = $this->_db->querySelect("league_id", $this->_websoccer->getConfig("db_prefix") . "_club",
 						"id = %d", $clubId, 1);
 				$club = $result->fetch_array();
 				$result->free();
 					
-				$leagueId = $club["liga_id"];
+				$leagueId = $club["league_id"];
 			}
 		}
 		
@@ -72,12 +72,12 @@ class TeamOfTheDayModel implements IModel {
 		$seasons = array();
 		$seasonId = $this->_websoccer->getRequestParameter("seasonid");
 		if ($leagueId) {
-			$fromTable = $this->_websoccer->getConfig("db_prefix") ."_saison";
-			$whereCondition = "liga_id = %d ORDER BY name ASC";
-			$result = $this->_db->querySelect("id, name, beendet", $fromTable, $whereCondition, $leagueId);
+			$fromTable = $this->_websoccer->getConfig("db_prefix") ."_season";
+			$whereCondition = "league_id = %d ORDER BY name ASC";
+			$result = $this->_db->querySelect("id, name, completed", $fromTable, $whereCondition, $leagueId);
 			while ($season = $result->fetch_array()) {
 				$seasons[] = $season;
-				if (!$seasonId && !$season["beendet"]) {
+				if (!$seasonId && !$season["completed"]) {
 					$seasonId = $season["id"];
 				}
 			}
@@ -89,8 +89,8 @@ class TeamOfTheDayModel implements IModel {
 		$maxMatchDay = 0;
 		$openMatchesExist = FALSE;
 		if ($seasonId) {
-			$result = $this->_db->querySelect("MAX(spieltag) AS max_matchday", 
-					$this->_websoccer->getConfig("db_prefix") . "_spiel", "saison_id = %d AND berechnet = '1'", $seasonId);
+			$result = $this->_db->querySelect("MAX(matchday) AS max_matchday", 
+					$this->_websoccer->getConfig("db_prefix") . "_match", "season_id = %d AND simulated = '1'", $seasonId);
 			$matches = $result->fetch_array();
 			$result->free();
 			
@@ -103,7 +103,7 @@ class TeamOfTheDayModel implements IModel {
 				
 				// check if there are still open matches
 				$result = $this->_db->querySelect("COUNT(*) AS hits",
-						$this->_websoccer->getConfig("db_prefix") . "_spiel", "saison_id = %d AND spieltag = %d AND berechnet != '1'", 
+						$this->_websoccer->getConfig("db_prefix") . "_match", "season_id = %d AND matchday = %d AND simulated != '1'", 
 						array($seasonId, $matchday));
 				$openmatches = $result->fetch_array();
 				$result->free();
@@ -146,25 +146,25 @@ class TeamOfTheDayModel implements IModel {
 		
 		$columns = array(
 				"S.id" => "statistic_id",
-				"S.spieler_id" => "player_id",
+				"S.player_id" => "player_id",
 				"S.name" => "player_name",
 				"P.picture" => "picture",
 				"S.position" => "position",
 				"S.position_main" => "position_main",
-				"S.note" => "grade",
-				"S.tore" => "goals",
+				"S.rating" => "grade",
+				"S.goals" => "goals",
 				"S.assists" => "assists",
 				"T.name" => "team_name",
-				"T.bild" => "team_picture",
-				"(SELECT COUNT(*) FROM ". $this->_websoccer->getConfig("db_prefix") . "_teamoftheday AS STAT WHERE STAT.season_id = $seasonId AND STAT.player_id = S.spieler_id)" => "memberoftopteam"
+				"T.image" => "team_picture",
+				"(SELECT COUNT(*) FROM ". $this->_websoccer->getConfig("db_prefix") . "_teamoftheday AS STAT WHERE STAT.season_id = $seasonId AND STAT.player_id = S.player_id)" => "memberoftopteam"
 		);
 		
 		// concrete matchday: get from cache
 		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_teamoftheday AS C";
-		$fromTable .= " INNER JOIN " . $this->_websoccer->getConfig("db_prefix") . "_spiel_berechnung AS S ON S.id = C.statistic_id";
-		$fromTable .= " INNER JOIN " . $this->_websoccer->getConfig("db_prefix") . "_spiel AS M ON M.id = S.spiel_id";
-		$fromTable .= " INNER JOIN " . $this->_websoccer->getConfig("db_prefix") . "_verein AS T ON T.id = S.team_id";
-		$fromTable .= " LEFT JOIN " . $this->_websoccer->getConfig("db_prefix") . "_spieler AS P ON P.id = S.spieler_id";
+		$fromTable .= " INNER JOIN " . $this->_websoccer->getConfig("db_prefix") . "_match_simulation AS S ON S.id = C.statistic_id";
+		$fromTable .= " INNER JOIN " . $this->_websoccer->getConfig("db_prefix") . "_match AS M ON M.id = S.match_id";
+		$fromTable .= " INNER JOIN " . $this->_websoccer->getConfig("db_prefix") . "_club AS T ON T.id = S.team_id";
+		$fromTable .= " LEFT JOIN " . $this->_websoccer->getConfig("db_prefix") . "_player AS P ON P.id = S.player_id";
 		$result = $this->_db->querySelect($columns, $fromTable, "C.season_id = %d AND C.matchday = %d", array($seasonId, $matchday));
 		while ($player = $result->fetch_array()) {
 			$players[] = $player;
@@ -186,14 +186,14 @@ class TeamOfTheDayModel implements IModel {
 	
 	private function findPlayers($columns, $seasonId, $matchday, $mainPositions, $limit, &$players) {
 		
-		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_spiel_berechnung AS S";
-		$fromTable .= " INNER JOIN " . $this->_websoccer->getConfig("db_prefix") . "_spiel AS M ON M.id = S.spiel_id";
-		$fromTable .= " INNER JOIN " . $this->_websoccer->getConfig("db_prefix") . "_verein AS T ON T.id = S.team_id";
-		$fromTable .= " LEFT JOIN " . $this->_websoccer->getConfig("db_prefix") . "_spieler AS P ON P.id = S.spieler_id";
+		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_match_simulation AS S";
+		$fromTable .= " INNER JOIN " . $this->_websoccer->getConfig("db_prefix") . "_match AS M ON M.id = S.match_id";
+		$fromTable .= " INNER JOIN " . $this->_websoccer->getConfig("db_prefix") . "_club AS T ON T.id = S.team_id";
+		$fromTable .= " LEFT JOIN " . $this->_websoccer->getConfig("db_prefix") . "_player AS P ON P.id = S.player_id";
 		
-		$whereCondition = "M.saison_id = %d AND M.spieltag = %d AND (S.position_main = '";
+		$whereCondition = "M.season_id = %d AND M.matchday = %d AND (S.position_main = '";
 		$whereCondition .= implode("' OR S.position_main = '", $mainPositions);
-		$whereCondition .= "') ORDER BY S.note ASC, S.tore DESC, S.assists DESC, S.wontackles DESC";
+		$whereCondition .= "') ORDER BY S.rating ASC, S.goals DESC, S.assists DESC, S.wontackles DESC";
 		
 		$result = $this->_db->querySelect($columns, $fromTable, $whereCondition, array($seasonId, $matchday), $limit);
 		while ($player = $result->fetch_array()) {
@@ -214,20 +214,20 @@ class TeamOfTheDayModel implements IModel {
 	private function findPlayersForTeamOfSeason($seasonId, $mainPositions, $limit, &$players) {
 		$columns = array(
 				"P.id" => "player_id",
-				"P.vorname" => "firstname",
-				"P.nachname" => "lastname",
-				"P.kunstname" => "pseudonym",
+				"P.first_name" => "firstname",
+				"P.last_name" => "lastname",
+				"P.nickname" => "pseudonym",
 				"P.picture" => "picture",
 				"P.position" => "position",
 				"C.position_main" => "position_main",
 				"T.name" => "team_name",
-				"T.bild" => "team_picture",
+				"T.image" => "team_picture",
 				"(SELECT COUNT(*) FROM ". $this->_websoccer->getConfig("db_prefix") . "_teamoftheday AS STAT WHERE STAT.season_id = $seasonId AND STAT.player_id = P.id)" => "memberoftopteam"
 		);
 		
 		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_teamoftheday AS C";
-		$fromTable .= " INNER JOIN " . $this->_websoccer->getConfig("db_prefix") . "_spieler AS P ON P.id = C.player_id";
-		$fromTable .= " LEFT JOIN " . $this->_websoccer->getConfig("db_prefix") . "_verein AS T ON T.id = P.verein_id";
+		$fromTable .= " INNER JOIN " . $this->_websoccer->getConfig("db_prefix") . "_player AS P ON P.id = C.player_id";
+		$fromTable .= " LEFT JOIN " . $this->_websoccer->getConfig("db_prefix") . "_club AS T ON T.id = P.club_id";
 		
 		$whereCondition = "C.season_id = %d AND (C.position_main = '";
 		$whereCondition .= implode("' OR C.position_main = '", $mainPositions);

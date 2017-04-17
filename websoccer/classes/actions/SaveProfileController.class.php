@@ -51,8 +51,8 @@ class SaveProfileController implements IActionController {
 			$salt = SecurityUtil::generatePasswordSalt();
 			$hashedPassword = SecurityUtil::hashPassword($parameters["newpassword"], $salt);
 			
-			$columns["passwort_salt"] = $salt;
-			$columns["passwort"] = $hashedPassword;
+			$columns["password_salt"] = $salt;
+			$columns["password"] = $hashedPassword;
 		}
 		
 		// handle new e-mail
@@ -60,13 +60,13 @@ class SaveProfileController implements IActionController {
 			
 			$activationKey = SecurityUtil::generatePassword();
 			
-			$columns["schluessel"] = $activationKey;
+			$columns["activation_key"] = $activationKey;
 			$columns["status"] = 2;
 			$columns["email"] = $parameters["newemail"];
 			$user->email = $parameters["newemail"];
 			
 			// send e-mail
-			$querystr = "key=" . $columns["schluessel"] ."&userid=" . $user->id;
+			$querystr = "key=" . $columns["activation_key"] ."&userid=" . $user->id;
 			$tplparameters["activationlink"] = $this->_websoccer->getInternalActionUrl("activate", $querystr, "activate-user", TRUE);
 			
 			// send e-mail
@@ -83,17 +83,17 @@ class SaveProfileController implements IActionController {
 		}
 		
 		$columns["name"] = $parameters["realname"];
-		$columns["wohnort"] = $parameters["place"];
-		$columns["land"] = $parameters["country"];
-		$columns["beruf"] = $parameters["occupation"];
-		$columns["interessen"] = $parameters["interests"];
-		$columns["lieblingsverein"] = $parameters["favorite_club"];
+		$columns["city"] = $parameters["place"];
+		$columns["country"] = $parameters["country"];
+		$columns["occupation"] = $parameters["occupation"];
+		$columns["interests"] = $parameters["interests"];
+		$columns["fav_club"] = $parameters["favorite_club"];
 		$columns["homepage"] = $parameters["homepage"];
 		$columns["c_hideinonlinelist"] = $parameters["c_hideinonlinelist"];
 		
 		if ($parameters["birthday"]) {
 			$dateObj = DateTime::createFromFormat($this->_websoccer->getConfig("date_format"), $parameters["birthday"]);
-			$columns["geburtstag"] = $dateObj->format("Y-m-d");
+			$columns["birthday"] = $dateObj->format("Y-m-d");
 		}
 		
 		// update record

@@ -53,8 +53,8 @@ class SellPlayerController implements IActionController {
 		}
 		
 		// check if player is borrowed or lendable. User should not come to this point, so message is not important.
-		if ($player["lending_fee"] > 0) {
-			throw new Exception($this->_i18n->getMessage("lending_err_alreadyoffered"));
+		if ($player["loan_fee"] > 0) {
+			throw new Exception($this->_i18n->getMessage("loan_err_alreadyoffered"));
 		}
 		
 		// check violation of minimum team size
@@ -82,12 +82,12 @@ class SellPlayerController implements IActionController {
 		
 		$now = $this->_websoccer->getNowAsTimestamp();
 		
-		$columns["transfermarkt"] = 1;
+		$columns["transfer_listed"] = 1;
 		$columns["transfer_start"] = $now;
-		$columns["transfer_ende"] = $now + 24 * 3600 * $this->_websoccer->getConfig("transfermarket_duration_days");
-		$columns["transfer_mindestgebot"] = $minBid;
+		$columns["transfer_end"] = $now + 24 * 3600 * $this->_websoccer->getConfig("transfermarket_duration_days");
+		$columns["transfer_min_bid"] = $minBid;
 		
-		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_spieler";
+		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_player";
 		$whereCondition = "id = %d";
 		$parameters = $playerId;
 		

@@ -45,8 +45,8 @@ class MessageDetailsModel implements IModel {
 		
 		// update "seen" state
 		if ($message && !$message["seen"]) {
-			$columns["gelesen"] = "1";
-			$fromTable = $this->_websoccer->getConfig("db_prefix") . "_briefe";
+			$columns["msg_read"] = "1";
+			$fromTable = $this->_websoccer->getConfig("db_prefix") . "_messages";
 			$whereCondition = "id = %d";
 			
 			$this->_db->queryUpdate($columns, $fromTable, $whereCondition, $id);

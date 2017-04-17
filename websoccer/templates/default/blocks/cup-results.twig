@@ -14,8 +14,8 @@
 
 	{% if round.prev_round_winners|length > 0 %}
 	<p>{{ i18n.getMessage("cup_created_from_winners_of_round", round.prev_round_winners|e)|raw }}</p>
-	{% elseif round.prev_round_loosers|length > 0 %}
-	<p>{{ i18n.getMessage("cup_created_from_loosers_of_round", round.prev_round_loosers|e)|raw }}</p>
+	{% elseif round.prev_round_loser|length > 0 %}
+	<p>{{ i18n.getMessage("cup_created_from_loser_of_round", round.prev_round_loser|e)|raw }}</p>
 	{% endif %}
 	
 	

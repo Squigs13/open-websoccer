@@ -59,6 +59,6 @@ $messages["label_password"] = "Password";
 $messages["label_email"] = "E-Mail";
 
 $messages["final_success_alert"] = "Congratulations, the software has been successfully installed!";
-$messages["final_success_note"] = "Delete now the folder <i>/install</i> within your Websoccer drectory on the server!";
+$messages["final_success_note"] = "You should now delete the folder <i>/install</i> within your Websoccer drectory on the server!";
 $messages["final_link"] = "Log on as administrator";
 ?>

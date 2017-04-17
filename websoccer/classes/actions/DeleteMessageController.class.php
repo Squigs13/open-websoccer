@@ -41,7 +41,7 @@ class DeleteMessageController implements IActionController {
 		}
 		
 		// delete
-		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_briefe";
+		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_messages";
 		$whereCondition = "id = %d";
 		$this->_db->queryDelete($fromTable, $whereCondition, $id);
 		

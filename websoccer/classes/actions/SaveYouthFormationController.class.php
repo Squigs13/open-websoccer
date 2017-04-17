@@ -212,18 +212,18 @@ class SaveYouthFormationController implements IActionController {
 // 		}
 		
 		$positionMapping = array(
-				"T" => "Torwart",
-				"LV" => "Abwehr",
-				"IV" => "Abwehr",
-				"RV" => "Abwehr",
-				"DM" => "Mittelfeld",
-				"OM" => "Mittelfeld",
-				"ZM" => "Mittelfeld",
-				"LM" => "Mittelfeld",
-				"RM" => "Mittelfeld",
-				"LS" => "Sturm",
-				"MS" => "Sturm",
-				"RS" => "Sturm"
+				"T" => "Goalkeeper",
+				"LV" => "Defender",
+				"IV" => "Defender",
+				"RV" => "Defender",
+				"DM" => "Midfielder",
+				"OM" => "Midfielder",
+				"ZM" => "Midfielder",
+				"LM" => "Midfielder",
+				"RM" => "Midfielder",
+				"LS" => "Forward",
+				"MS" => "Forward",
+				"RS" => "Forward"
 		);
 		
 		// create field players
@@ -271,7 +271,7 @@ class SaveYouthFormationController implements IActionController {
 				"playernumber" => $playerNumber,
 				"position" => $position,
 				"position_main" => $mainPosition,
-				"state" => ($onBench) ? "Ersatzbank" : "1",
+				"state" => ($onBench) ? "Bench" : "1",
 				"strength" => 0,
 				"name" => $playerId
 				);

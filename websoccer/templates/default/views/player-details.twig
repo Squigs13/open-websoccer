@@ -41,29 +41,29 @@
 				  <dd>{{ i18n.getMessage("option_" ~ player.player_position_second) }}</dd>
 				  {% endif %}
 				  
-				  <dt>{{ i18n.getMessage("entity_player_verein_id") }}</dt>
+				  <dt>{{ i18n.getMessage("entity_player_club_id") }}</dt>
 				  <dd>
 				  {% if player.team_id > 0 %}
 				  	<a href="{{ env.getInternalUrl("team", "id=" ~ player.team_id) }}">{{ player.team_name }}</a>
 				  	
-				  	{% if player.lending_owner_id > 0 %}
-						<i class="icon-star-empty" title="{{ i18n.getMessage("lending_player_marker_tooltip") }}"></i></em>
+				  	{% if player.loan_owner_id > 0 %}
+						<i class="icon-star-empty" title="{{ i18n.getMessage("loan_player_marker_tooltip") }}"></i></em>
 					{% endif %}
 				  {% else %}
 				  	-
 				  {% endif %}
 				  </dd>
 				  
-				  {% if player.lending_owner_id > 0 %}
-					  <dt>{{ i18n.getMessage("entity_player_lending_owner_id") }}</dt>
+				  {% if player.loan_owner_id > 0 %}
+					  <dt>{{ i18n.getMessage("entity_player_loan_owner_id") }}</dt>
 					  <dd>
-					  	<a href="{{ env.getInternalUrl("team", "id=" ~ player.lending_owner_id) }}">{{ player.lending_owner_name }}</a>
+					  	<a href="{{ env.getInternalUrl("team", "id=" ~ player.loan_owner_id) }}">{{ player.loan_owner_name }}</a>
 					  </dd>
 				  {% endif %}
 				  
 				  
 				  {% if env.getConfig('players_aging') == 'birthday' %}
-				  	<dt>{{ i18n.getMessage("entity_player_geburtstag") }}</dt>
+				  	<dt>{{ i18n.getMessage("entity_player_birthday") }}</dt>
 				  	<dd>{{ player.player_birthday|date(env.getConfig("date_format")) }} ({{ player.player_age }})</dd>
 				  {% else %}
 				  	<dt>{{ i18n.getMessage("entity_player_age") }}</dt>
@@ -79,16 +79,16 @@
 					{% endif %}
 				  <dd>{% if nationImg %}<img src="{{ nationImg }}" title="{{ countryLabel }}" alt="{{ countryLabel }}" />{% else %}{{ countryLabel }}{% endif %}</dd>
 				  
-				  <dt>{{ i18n.getMessage("entity_player_verletzt") }}</dt>
+				  <dt>{{ i18n.getMessage("entity_player_injured") }}</dt>
 				  <dd>{{ player.player_matches_injured  }} {{ i18n.getMessage("player_details_unit_matches") }}</dd>
 				  
-				  <dt>{{ i18n.getMessage("entity_player_gesperrt") }}</dt>
+				  <dt>{{ i18n.getMessage("entity_player_suspended") }}</dt>
 				  <dd>{{ player.player_matches_blocked  }} {{ i18n.getMessage("player_details_unit_matches") }}</dd>
 				  
-				  <dt>{{ i18n.getMessage("entity_player_gesperrt_cups") }}</dt>
+				  <dt>{{ i18n.getMessage("entity_player_suspended_cups") }}</dt>
 				  <dd>{{ player.player_matches_blocked_cups  }} {{ i18n.getMessage("player_details_unit_matches") }}</dd>
 				  
-				  <dt>{{ i18n.getMessage("entity_player_gesperrt_nationalteam") }}</dt>
+				  <dt>{{ i18n.getMessage("entity_player_suspended_nationalteam") }}</dt>
 				  <dd>{{ player.player_matches_blocked_nationalteam  }} {{ i18n.getMessage("player_details_unit_matches") }}</dd>
 				  
 				</dl>
@@ -97,21 +97,21 @@
 			<div class="span6">
 			
 				<dl class="dl-horizontal">
-				  <dt>{{ i18n.getMessage("entity_player_vertrag_gehalt") }}</dt>
+				  <dt>{{ i18n.getMessage("entity_player_contract_salary") }}</dt>
 				  <dd>{{ player.player_contract_salary|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</dd>
 				  
-				  <dt>{{ i18n.getMessage("entity_player_vertrag_torpraemie") }}</dt>
+				  <dt>{{ i18n.getMessage("entity_player_contract_goal_bonus") }}</dt>
 				  <dd>{{ player.player_contract_goalbonus|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</dd>
 				  
-				  <dt>{{ i18n.getMessage("entity_player_vertrag_spiele") }}</dt>
+				  <dt>{{ i18n.getMessage("entity_player_contract_matches") }}</dt>
 				  <dd>{{ player.player_contract_matches  }} {{ i18n.getMessage("player_details_unit_matches") }}</dd>
 				  
-				  {% if player.lending_matches > 0 %}
-					  <dt>{{ i18n.getMessage("entity_player_lending_matches") }}</dt>
-					  <dd>{{ player.lending_matches }} {{ i18n.getMessage("player_details_unit_matches") }}</dd>
+				  {% if player.loan_matches > 0 %}
+					  <dt>{{ i18n.getMessage("entity_player_loan_matches") }}</dt>
+					  <dd>{{ player.loan_matches }} {{ i18n.getMessage("player_details_unit_matches") }}</dd>
 				  {% endif %}
 				  
-				  <dt>{{ i18n.getMessage("entity_player_marktwert") }}</dt>
+				  <dt>{{ i18n.getMessage("entity_player_value") }}</dt>
 				  <dd>{{ player.player_marketvalue|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</dd>
 				  
 				</dl>
@@ -129,11 +129,11 @@
 			<div class="alert">
 			<p>{{ i18n.getMessage("player_details_unsellable") }}</p>
 			</div>
-		{% elseif player.lending_owner_id == 0 and player.lending_fee > 0 and env.getConfig("lending_enabled") %}
+		{% elseif player.loan_owner_id == 0 and player.loan_fee > 0 and env.getConfig("loan_enabled") %}
 			<div class="alert alert-info">
-			<p>{{ i18n.getMessage("lending_player_lendable_info", player.lending_fee|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency"))|raw }}</p>
+			<p>{{ i18n.getMessage("loan_player_lendable_info", player.loan_fee|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency"))|raw }}</p>
 			{% if env.getUser().getClubId() != player.team_id %}
-				<p><a class="btn btn-mini" href="{{ env.getInternalUrl("borrow-player", "id=" ~ player.player_id) }}"><i class="icon-share-alt"></i> {{ i18n.getMessage("lending_player_hire_button") }}</a></p>
+				<p><a class="btn btn-mini" href="{{ env.getInternalUrl("borrow-player", "id=" ~ player.player_id) }}"><i class="icon-share-alt"></i> {{ i18n.getMessage("loan_player_hire_button") }}</a></p>
 			{% endif %}
 			</div>
 		{% endif %}
@@ -141,19 +141,19 @@
   		{% if env.getConfig("hide_strength_attributes") != "1" %}
 			<h4>{{ i18n.getMessage("player_details_strength_title") }}</h4>
 			
-			<p><em>{{ i18n.getMessage('entity_player_w_staerke') }} ({{ player.player_strength }}%)</em></p>
+			<p><em>{{ i18n.getMessage('entity_player_w_strength') }} ({{ player.player_strength }}%)</em></p>
 			{{ statisticelements.progressbar(player.player_strength) }}
 			
-			<p><em>{{ i18n.getMessage('entity_player_w_technik') }} ({{ player.player_strength_technique }}%)</em></p>
+			<p><em>{{ i18n.getMessage('entity_player_w_technique') }} ({{ player.player_strength_technique }}%)</em></p>
 			{{ statisticelements.progressbar(player.player_strength_technique) }}
 			
-			<p><em>{{ i18n.getMessage('entity_player_w_kondition') }} ({{ player.player_strength_stamina }}%)</em></p>
+			<p><em>{{ i18n.getMessage('entity_player_w_stamina') }} ({{ player.player_strength_stamina }}%)</em></p>
 			{{ statisticelements.progressbar(player.player_strength_stamina) }}
 			
-			<p><em>{{ i18n.getMessage('entity_player_w_frische') }} ({{ player.player_strength_freshness }}%)</em></p>
+			<p><em>{{ i18n.getMessage('entity_player_w_fitness') }} ({{ player.player_strength_freshness }}%)</em></p>
 			{{ statisticelements.progressbar(player.player_strength_freshness) }}
 			
-			<p><em>{{ i18n.getMessage('entity_player_w_zufriedenheit') }} ({{ player.player_strength_satisfaction }}%)</em></p>
+			<p><em>{{ i18n.getMessage('entity_player_w_morale') }} ({{ player.player_strength_satisfaction }}%)</em></p>
 			{{ statisticelements.progressbar(player.player_strength_satisfaction) }}
 		{% endif %}
 

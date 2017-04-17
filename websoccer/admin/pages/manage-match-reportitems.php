@@ -22,7 +22,7 @@
 
 echo "<h1>".  $i18n->getMessage("match_manage_reportitems") . "</h1>";
 
-if (!$admin["r_admin"] && !$admin["r_demo"] && !$admin["r_spiele"]) {
+if (!$admin["r_admin"] && !$admin["r_demo"] && !$admin["r_matches"]) {
 	throw new Exception($i18n->getMessage("error_access_denied"));
 }
 
@@ -78,7 +78,7 @@ echo "<input type=\"hidden\" name=\"match\" value=\"$matchId\">";
 echo "<fieldset><legend>". $i18n->getMessage("match_manage_createmessage_title") ."</legend>";
 
 echo "<div class=\"control-group\">";
-echo "<label class=\"control-label\" for=\"team_id\">". $i18n->getMessage("entity_player_verein_id") . "</label>";
+echo "<label class=\"control-label\" for=\"team_id\">". $i18n->getMessage("entity_player_club_id") . "</label>";
 echo "<div class=\"controls\">";
 echo "<select name=\"team_id\" id=\"team_id\">";
 echo "<option value=\"". $match["match_home_id"] . "\">". escapeOutput($match["match_home_name"]) . "</option>";
@@ -88,9 +88,9 @@ echo "</div>";
 echo "</div>";
 
 echo FormBuilder::createFormGroup($i18n, "message_id", array("type" => "foreign_key", 
-		"jointable" => "spiel_text", 
+		"jointable" => "match_text", 
 		"entity" => "matchtext",
-		"labelcolumns" => "aktion,nachricht"), "", "match_manage_reportmsg_");
+		"labelcolumns" => "action,message"), "", "match_manage_reportmsg_");
 echo FormBuilder::createFormGroup($i18n, "playernames", array("type" => "text"), "", "match_manage_reportmsg_");
 echo FormBuilder::createFormGroup($i18n, "minute", array("type" => "number"), "", "match_manage_reportmsg_");
 echo FormBuilder::createFormGroup($i18n, "intermediateresult", array("type" => "text"), "", "match_manage_reportmsg_");
@@ -114,8 +114,8 @@ if (!count($reportItems)) {
 	echo "<thead>";
 	echo "<tr>";
 	echo "<th>". $i18n->getMessage("match_manage_reportmsg_minute") . "</th>";
-	echo "<th>". $i18n->getMessage("entity_matchtext_aktion") . "</th>";
-	echo "<th>". $i18n->getMessage("entity_matchtext_nachricht") . "</th>";
+	echo "<th>". $i18n->getMessage("entity_matchtext_action") . "</th>";
+	echo "<th>". $i18n->getMessage("entity_matchtext_message") . "</th>";
 	echo "<th>". $i18n->getMessage("match_manage_reportmsg_playernames") . "</th>";
 	echo "<th>". $i18n->getMessage("match_manage_reportmsg_intermediateresult") . "</th>";
 	echo "</tr>";

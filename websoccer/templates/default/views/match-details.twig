@@ -48,12 +48,12 @@
 		<div class="row" style="margin: -10px 0 10px 0">
 			<div style="width: 50%; float: left;">
 				{% for goalMessage in homeStrikerMessages %}
-				<small style="font-weight: bold">{{ goalMessage.playerNames|split(';')[0] }} ({{ goalMessage.minute }}.{% if goalMessage.type == "Elfmeter_erfolg" %}, {{ i18n.getMessage("match_details_commenttitle_penalty")|slice(0, 1) }}.{% endif %})<br></small>
+				<small style="font-weight: bold">{{ goalMessage.playerNames|split(';')[0] }} ({{ goalMessage.minute }}.{% if goalMessage.type == "Penalty_scored" %}, {{ i18n.getMessage("match_details_commenttitle_penalty")|slice(0, 1) }}.{% endif %})<br></small>
 				{% endfor %}
 			</div>
 			<div style="width: 50%; float: right;">
 				{% for goalMessage in guestStrikerMessages %}
-				<small style="font-weight: bold">{{ goalMessage.playerNames|split(';')[0] }} ({{ goalMessage.minute }}.{% if goalMessage.type == "Elfmeter_erfolg" %}, {{ i18n.getMessage("match_details_commenttitle_penalty")|slice(0, 1) }}.{% endif %})<br></small>
+				<small style="font-weight: bold">{{ goalMessage.playerNames|split(';')[0] }} ({{ goalMessage.minute }}.{% if goalMessage.type == "Penalty_scored" %}, {{ i18n.getMessage("match_details_commenttitle_penalty")|slice(0, 1) }}.{% endif %})<br></small>
 				{% endfor %}
 			</div>
 		</div>
@@ -133,7 +133,7 @@
 								<td><h4>{{ i18n.getMessage("match_details_report_extension")|format(reportmessage.goals) }}</h4></td>
 							</tr>
 						{% elseif displayPenaltyMsg is defined and displayPenaltyMsg == 1 
-							and reportmessage.type != "Elfmeter_erfolg" and reportmessage.type != "Elfmeter_verschossen" %}
+							and reportmessage.type != "Penalty_scored" and reportmessage.type != "Penalty_missed" %}
 							<tr>
 								<td></td>
 								<td><h4>{{ i18n.getMessage("match_details_report_penaltyshooting")|format(reportmessage.goals) }}</h4></td>
@@ -142,43 +142,43 @@
 						{% endif %}
 							<tr>
 								<td style="text-align: center">
-								{% if reportmessage.type == "Tor" or reportmessage.type == "Elfmeter_erfolg" or reportmessage.type == "Tor_mit_vorlage" or reportmessage.type == "Freistoss_treffer"  %}
+								{% if reportmessage.type == "Tor" or reportmessage.type == "Penalty_scored" or reportmessage.type == "Goal_with_assist" or reportmessage.type == "Freekick_scored"  %}
 									<i class="websoccericon-goal"></i>
-								{% elseif reportmessage.type == "Karte_gelb" %}
+								{% elseif reportmessage.type == "Yellow_card" %}
 									<i class="websoccericon-yellowcard"></i>
-								{% elseif reportmessage.type == "Karte_gelb_rot" or reportmessage.type == "Karte_rot" %}
+								{% elseif reportmessage.type == "Yellow_card_2nd" or reportmessage.type == "Red_card" %}
 									<i class="websoccericon-redcard"></i>
-								{% elseif reportmessage.type == "Auswechslung" %}
+								{% elseif reportmessage.type == "Substitution" %}
 									<i class="websoccericon-substitution"></i>
 								{% elseif reportmessage.type == "Verletzung" %}
 									<i class="websoccericon-injury"></i>
-								{% elseif reportmessage.type == "Torschuss_daneben" %}
+								{% elseif reportmessage.type == "Shot_missed" %}
 									<i class="websoccericon-shoot"></i>
-								{% elseif reportmessage.type == "Torschuss_auf_Tor" %}
+								{% elseif reportmessage.type == "Shot_on_target" %}
 									<i class="websoccericon-attempt"></i>
-								{% elseif reportmessage.type == "Elfmeter_verschossen" or reportmessage.type == "Freistoss_daneben" %}
+								{% elseif reportmessage.type == "Penalty_missed" or reportmessage.type == "Freekick_missed" %}
 									<i class="websoccericon-penalty"></i>
-								{% elseif reportmessage.type == "Ecke" %}
+								{% elseif reportmessage.type == "Corner" %}
 									<i class="websoccericon-corner"></i>
-								{% elseif reportmessage.type == "Taktikaenderung" %}
+								{% elseif reportmessage.type == "Tactics_changed" %}
 									<i class="websoccericon-tacticschange"></i>
 								{% endif %}
 								</td>
 								<td>
 									{% set teamMarkerClass = (reportmessage.active_home) ? "report_team_home" : "report_team_guest" %}
 									<div class="report_minute {{ teamMarkerClass }}">{{ i18n.getMessage("match_report_minute", reportmessage.minute) }}
-									{% if reportmessage.type == "Elfmeter_erfolg" or reportmessage.type == "Elfmeter_verschossen" %} - {{ i18n.getMessage("match_details_commenttitle_penalty") }}
-									{% elseif reportmessage.type == "Tor" or reportmessage.type == "Tor_mit_vorlage" %} - {{ i18n.getMessage("match_details_commenttitle_goal") }}
+									{% if reportmessage.type == "Penalty_scored" or reportmessage.type == "Penalty_missed" %} - {{ i18n.getMessage("match_details_commenttitle_penalty") }}
+									{% elseif reportmessage.type == "Tor" or reportmessage.type == "Goal_with_assist" %} - {{ i18n.getMessage("match_details_commenttitle_goal") }}
 									{% endif %}
 									</div>
-									{% if (reportmessage.type == "Elfmeter_erfolg" or reportmessage.type == "Elfmeter_verschossen" or reportmessage.type == "Tor" or reportmessage.type == "Tor_mit_vorlage" or reportmessage.type == "Freistoss_treffer") and reportmessage.goals|length > 0 %}
+									{% if (reportmessage.type == "Penalty_scored" or reportmessage.type == "Penalty_missed" or reportmessage.type == "Tor" or reportmessage.type == "Goal_with_assist" or reportmessage.type == "Freekick_scored") and reportmessage.goals|length > 0 %}
 									<div class="report_comment">{{ reportmessage.goals }}</div>
 									{% endif %}
 									<div class="report_comment">{{ reportmessage.message|raw }}</div>
 								</td>
 							</tr>
 						{% set previousMinute = reportmessage.minute %}
-						{% if reportmessage.minute == 121 and (reportmessage.type == "Elfmeter_erfolg" or reportmessage.type == "Elfmeter_verschossen") %}
+						{% if reportmessage.minute == 121 and (reportmessage.type == "Penalty_scored" or reportmessage.type == "Penalty_missed") %}
 							{% set displayPenaltyMsg = 1 %}
 						{% endif %}
 					{% endfor %}

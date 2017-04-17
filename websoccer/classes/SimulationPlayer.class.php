@@ -115,7 +115,7 @@ class SimulationPlayer {
 	private $ballContacts;
 	private $wonTackles;
 	private $lostTackles;
-	private $shoots;
+	private $shots;
 	private $passesSuccessed;
 	private $passesFailed;
 	private $assists;
@@ -145,7 +145,7 @@ class SimulationPlayer {
     	$this->ballContacts = 0;
     	$this->wonTackles = 0;
     	$this->lostTackles = 0;
-    	$this->shoots = 0;
+    	$this->shots = 0;
     	$this->passesSuccessed = 0;
     	$this->passesFailed = 0;
     	$this->assists = 0;
@@ -318,15 +318,15 @@ class SimulationPlayer {
      * @return int number of attempts by the player
      */
     public function getShoots() {
-    	return $this->shoots;
+    	return $this->shots;
     }
     
     /**
-     * @param int $shoots number of attempts by the player
+     * @param int $shots number of attempts by the player
      */
-    public function setShoots($shoots) {
-    	if ($this->shoots !== $shoots) {
-    		$this->shoots = $shoots;
+    public function setShoots($shots) {
+    	if ($this->shots !== $shots) {
+    		$this->shots = $shots;
     		
     	}
     }

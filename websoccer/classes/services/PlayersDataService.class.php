@@ -38,44 +38,44 @@ class PlayersDataService {
 	public static function getPlayersOfTeamByPosition(WebSoccer $websoccer, DbConnection $db, $clubId, $positionSort = 'ASC', $considerBlocksForCups = FALSE, $considerBlocks = TRUE) {
 		$columns = array(
 				'id' => 'id', 
-				'vorname' => 'firstname', 
-				'nachname' => 'lastname', 
-				'kunstname' => 'pseudonym', 
-				'verletzt' => 'matches_injured', 
+				'first_name' => 'firstname', 
+				'last_name' => 'lastname', 
+				'nickname' => 'pseudonym', 
+				'injured' => 'matches_injured', 
 				'position' => 'position', 
 				'position_main' => 'position_main', 
 				'position_second' => 'position_second', 
-				'w_staerke' => 'strength', 
-				'w_technik' => 'strength_technique', 
-				'w_kondition' => 'strength_stamina', 
-				'w_frische' => 'strength_freshness', 
-				'w_zufriedenheit' => 'strength_satisfaction', 
-				'transfermarkt' => 'transfermarket', 
+				'w_strength' => 'strength', 
+				'w_technique' => 'strength_technique', 
+				'w_stamina' => 'strength_stamina', 
+				'w_fitness' => 'strength_freshness', 
+				'w_morale' => 'strength_satisfaction', 
+				'transfer_listed' => 'transfermarket', 
 				'nation' => 'player_nationality', 
 				'picture' => 'picture',
-				'sa_tore' => 'st_goals',
-				'sa_spiele' => 'st_matches',
-				'sa_karten_gelb' => 'st_cards_yellow',
-				'sa_karten_gelb_rot' => 'st_cards_yellow_red',
-				'sa_karten_rot' => 'st_cards_red',
-				'marktwert' => 'marketvalue'
+				'sa_goals' => 'st_goals',
+				'sa_matches' => 'st_matches',
+				'sa_yellow_card' => 'st_cards_yellow',
+				'sa_yellow_card_2nd' => 'st_cards_yellow_red',
+				'sa_red_card' => 'st_cards_red',
+				'value' => 'marketvalue'
 				);
 		
 		if ($websoccer->getConfig('players_aging') == 'birthday') {
-			$ageColumn = 'TIMESTAMPDIFF(YEAR,geburtstag,CURDATE())';
+			$ageColumn = 'TIMESTAMPDIFF(YEAR,birthday,CURDATE())';
 		} else {
 			$ageColumn = 'age';
 		}
 		$columns[$ageColumn] = 'age';
 		
 		if ($considerBlocksForCups) {
-			$columns['gesperrt_cups'] = 'matches_blocked';
+			$columns['suspended_cups'] = 'matches_blocked';
 		} else if ($considerBlocks) {
-			$columns['gesperrt'] = 'matches_blocked';
+			$columns['suspended'] = 'matches_blocked';
 		}
 		
-		$fromTable = $websoccer->getConfig('db_prefix') . '_spieler';
-		$whereCondition = 'status = 1 AND verein_id = %d ORDER BY position '. $positionSort . ', position_main ASC, nachname ASC, vorname ASC';
+		$fromTable = $websoccer->getConfig('db_prefix') . '_player';
+		$whereCondition = 'status = 1 AND club_id = %d ORDER BY position '. $positionSort . ', position_main ASC, last_name ASC, first_name ASC';
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $clubId, 50);
 		
 		$players = array();
@@ -104,38 +104,38 @@ class PlayersDataService {
 		
 		$columns = array(
 				'id' => 'id',
-				'vorname' => 'firstname',
-				'nachname' => 'lastname',
-				'kunstname' => 'pseudonym',
-				'verletzt' => 'matches_injured',
+				'first_name' => 'firstname',
+				'last_name' => 'lastname',
+				'nickname' => 'pseudonym',
+				'injured' => 'matches_injured',
 				'position' => 'position',
 				'position_main' => 'position_main',
 				'position_second' => 'position_second',
-				'w_staerke' => 'strength',
-				'w_technik' => 'strength_technic',
-				'w_kondition' => 'strength_stamina',
-				'w_frische' => 'strength_freshness',
-				'w_zufriedenheit' => 'strength_satisfaction',
-				'transfermarkt' => 'transfermarket',
+				'w_strength' => 'strength',
+				'w_technique' => 'strength_technic',
+				'w_stamina' => 'strength_stamina',
+				'w_fitness' => 'strength_freshness',
+				'w_morale' => 'strength_satisfaction',
+				'transfer_listed' => 'transfermarket',
 				'nation' => 'player_nationality',
 				'picture' => 'picture',
-				'sa_tore' => 'st_goals',
-				'sa_spiele' => 'st_matches',
-				'sa_karten_gelb' => 'st_cards_yellow',
-				'sa_karten_gelb_rot' => 'st_cards_yellow_red',
-				'sa_karten_rot' => 'st_cards_red',
-				'marktwert' => 'marketvalue',
-				'vertrag_spiele' => 'contract_matches',
-				'vertrag_gehalt' => 'contract_salary',
+				'sa_goals' => 'st_goals',
+				'sa_matches' => 'st_matches',
+				'sa_yellow_card' => 'st_cards_yellow',
+				'sa_yellow_card_2nd' => 'st_cards_yellow_red',
+				'sa_red_card' => 'st_cards_red',
+				'value' => 'marketvalue',
+				'contract_matches' => 'contract_matches',
+				'contract_salary' => 'contract_salary',
 				'unsellable' => 'unsellable',
-				'lending_matches' => 'lending_matches',
-				'lending_fee' => 'lending_fee',
-				'lending_owner_id' => 'lending_owner_id',
-				'transfermarkt' => 'transfermarket'
+				'loan_matches' => 'loan_matches',
+				'loan_fee' => 'loan_fee',
+				'loan_owner_id' => 'loan_owner_id',
+				'transfer_listed' => 'transfermarket'
 		);
 		
 		if ($websoccer->getConfig('players_aging') == 'birthday') {
-			$ageColumn = 'TIMESTAMPDIFF(YEAR,geburtstag,CURDATE())';
+			$ageColumn = 'TIMESTAMPDIFF(YEAR,birthday,CURDATE())';
 		} else {
 			$ageColumn = 'age';
 		}
@@ -143,23 +143,23 @@ class PlayersDataService {
 		
 		if (!$nationalteam) {
 			if ($considerBlocksForCups) {
-				$columns['gesperrt_cups'] = 'matches_blocked';
+				$columns['suspended_cups'] = 'matches_blocked';
 			} elseif ($considerBlocks) {
-				$columns['gesperrt'] = 'matches_blocked';
+				$columns['suspended'] = 'matches_blocked';
 			} else {
 				$columns['\'0\''] = 'matches_blocked';
 			}
 			
-			$fromTable = $websoccer->getConfig('db_prefix') . '_spieler';
-			$whereCondition = 'status = 1 AND verein_id = %d';
+			$fromTable = $websoccer->getConfig('db_prefix') . '_player';
+			$whereCondition = 'status = 1 AND club_id = %d';
 		} else {
-			$columns['gesperrt_nationalteam'] = 'matches_blocked';
-			$fromTable = $websoccer->getConfig('db_prefix') . '_spieler AS P';
+			$columns['suspended_nationalteam'] = 'matches_blocked';
+			$fromTable = $websoccer->getConfig('db_prefix') . '_player AS P';
 			$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_nationalplayer AS NP ON NP.player_id = P.id';
 			$whereCondition = 'status = 1 AND NP.team_id = %d';
 		}
 		
-		$whereCondition .= ' ORDER BY position ASC, position_main ASC, nachname ASC, vorname ASC';
+		$whereCondition .= ' ORDER BY position ASC, position_main ASC, last_name ASC, first_name ASC';
 		
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $clubId, 50);
 	
@@ -186,34 +186,34 @@ class PlayersDataService {
 	public static function getPlayersOnTransferList(WebSoccer $websoccer, DbConnection $db, $startIndex, $entries_per_page, $positionFilter = null) {
 		
 		$columns['P.id'] = 'id';
-		$columns['P.vorname'] = 'firstname';
-		$columns['P.nachname'] = 'lastname';
-		$columns['P.kunstname'] = 'pseudonym';
+		$columns['P.first_name'] = 'firstname';
+		$columns['P.last_name'] = 'lastname';
+		$columns['P.nickname'] = 'pseudonym';
 		$columns['P.position'] = 'position';
 		$columns['P.position_main'] = 'position_main';
 		
-		$columns['P.vertrag_gehalt'] = 'contract_salary';
-		$columns['P.vertrag_torpraemie'] = 'contract_goalbonus';
+		$columns['P.contract_salary'] = 'contract_salary';
+		$columns['P.contract_goal_bonus'] = 'contract_goalbonus';
 		
-		$columns['P.w_staerke'] = 'strength';
-		$columns['P.w_technik'] = 'strength_technique';
-		$columns['P.w_kondition'] = 'strength_stamina';
-		$columns['P.w_frische'] = 'strength_freshness';
-		$columns['P.w_zufriedenheit'] = 'strength_satisfaction';
+		$columns['P.w_strength'] = 'strength';
+		$columns['P.w_technique'] = 'strength_technique';
+		$columns['P.w_stamina'] = 'strength_stamina';
+		$columns['P.w_fitness'] = 'strength_freshness';
+		$columns['P.w_morale'] = 'strength_satisfaction';
 		
-		$columns['P.transfermarkt'] = 'transfermarket';
-		$columns['P.marktwert'] = 'marketvalue';
+		$columns['P.transfer_listed'] = 'transfermarket';
+		$columns['P.value'] = 'marketvalue';
 		$columns['P.transfer_start'] = 'transfer_start';
-		$columns['P.transfer_ende'] = 'transfer_deadline';
-		$columns['P.transfer_mindestgebot'] = 'min_bid';
+		$columns['P.transfer_end'] = 'transfer_deadline';
+		$columns['P.transfer_min_bid'] = 'min_bid';
 		
 		$columns['C.id'] = 'team_id';
 		$columns['C.name'] = 'team_name';
 		
-		$fromTable = $websoccer->getConfig('db_prefix') . '_spieler AS P';
-		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') . '_verein AS C ON C.id = P.verein_id';
+		$fromTable = $websoccer->getConfig('db_prefix') . '_player AS P';
+		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') . '_club AS C ON C.id = P.club_id';
 		
-		$whereCondition = 'P.status = 1 AND P.transfermarkt = 1 AND P.transfer_ende > %d';
+		$whereCondition = 'P.status = 1 AND P.transfer_listed = 1 AND P.transfer_end > %d';
 		$parameters[] = $websoccer->getNowAsTimestamp();
 		
 		if ($positionFilter != null) {
@@ -221,7 +221,7 @@ class PlayersDataService {
 			$parameters[] = $positionFilter;
 		}
 		
-		$whereCondition .= ' ORDER BY P.transfer_ende ASC, P.nachname ASC, P.vorname ASC';
+		$whereCondition .= ' ORDER BY P.transfer_end ASC, P.last_name ASC, P.first_name ASC';
 		
 		$limit = $startIndex .','. $entries_per_page;
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters, $limit);
@@ -249,9 +249,9 @@ class PlayersDataService {
 	
 		$columns = 'COUNT(*) AS hits';
 	
-		$fromTable = $websoccer->getConfig('db_prefix') . '_spieler AS P';
+		$fromTable = $websoccer->getConfig('db_prefix') . '_player AS P';
 	
-		$whereCondition = 'P.status = 1 AND P.transfermarkt = 1 AND P.transfer_ende > %d';
+		$whereCondition = 'P.status = 1 AND P.transfer_listed = 1 AND P.transfer_end > %d';
 		$parameters[] = $websoccer->getNowAsTimestamp();
 		
 		if ($positionFilter != null) {
@@ -281,79 +281,79 @@ class PlayersDataService {
 	public static function getPlayerById(WebSoccer $websoccer, DbConnection $db, $playerId) {
 		
 		$columns['P.id'] = 'player_id';
-		$columns['P.vorname'] = 'player_firstname';
-		$columns['P.nachname'] = 'player_lastname';
-		$columns['P.kunstname'] = 'player_pseudonym';
+		$columns['P.first_name'] = 'player_firstname';
+		$columns['P.last_name'] = 'player_lastname';
+		$columns['P.nickname'] = 'player_pseudonym';
 		$columns['P.position'] = 'player_position';
 		$columns['P.position_main'] = 'player_position_main';
 		$columns['P.position_second'] = 'player_position_second';
-		$columns['P.geburtstag'] = 'player_birthday';
+		$columns['P.birthday'] = 'player_birthday';
 		$columns['P.nation'] = 'player_nationality';
 		$columns['P.picture'] = 'player_picture';
 		
 		if ($websoccer->getConfig('players_aging') == 'birthday') {
-			$ageColumn = 'TIMESTAMPDIFF(YEAR,P.geburtstag,CURDATE())';
+			$ageColumn = 'TIMESTAMPDIFF(YEAR,P.birthday,CURDATE())';
 		} else {
 			$ageColumn = 'P.age';
 		}
 		$columns[$ageColumn] = 'player_age';
 		
-		$columns['P.verletzt'] = 'player_matches_injured';
-		$columns['P.gesperrt'] = 'player_matches_blocked';
-		$columns['P.gesperrt_cups'] = 'player_matches_blocked_cups';
-		$columns['P.gesperrt_nationalteam'] = 'player_matches_blocked_nationalteam';
+		$columns['P.injured'] = 'player_matches_injured';
+		$columns['P.suspended'] = 'player_matches_blocked';
+		$columns['P.suspended_cups'] = 'player_matches_blocked_cups';
+		$columns['P.suspended_nationalteam'] = 'player_matches_blocked_nationalteam';
 		
-		$columns['P.vertrag_gehalt'] = 'player_contract_salary';
-		$columns['P.vertrag_spiele'] = 'player_contract_matches';
-		$columns['P.vertrag_torpraemie'] = 'player_contract_goalbonus';
+		$columns['P.contract_salary'] = 'player_contract_salary';
+		$columns['P.contract_matches'] = 'player_contract_matches';
+		$columns['P.contract_goal_bonus'] = 'player_contract_goalbonus';
 		
-		$columns['P.w_staerke'] = 'player_strength';
-		$columns['P.w_technik'] = 'player_strength_technique';
-		$columns['P.w_kondition'] = 'player_strength_stamina';
-		$columns['P.w_frische'] = 'player_strength_freshness';
-		$columns['P.w_zufriedenheit'] = 'player_strength_satisfaction';
+		$columns['P.w_strength'] = 'player_strength';
+		$columns['P.w_technique'] = 'player_strength_technique';
+		$columns['P.w_stamina'] = 'player_strength_stamina';
+		$columns['P.w_fitness'] = 'player_strength_freshness';
+		$columns['P.w_morale'] = 'player_strength_satisfaction';
 		
-		$columns['P.sa_tore'] = 'player_season_goals';
+		$columns['P.sa_goals'] = 'player_season_goals';
 		$columns['P.sa_assists'] = 'player_season_assists';
-		$columns['P.sa_spiele'] = 'player_season_matches';
-		$columns['P.sa_karten_gelb'] = 'player_season_yellow';
-		$columns['P.sa_karten_gelb_rot'] = 'player_season_yellow_red';
-		$columns['P.sa_karten_rot'] = 'player_season_red';
+		$columns['P.sa_matches'] = 'player_season_matches';
+		$columns['P.sa_yellow_card'] = 'player_season_yellow';
+		$columns['P.sa_yellow_card_2nd'] = 'player_season_yellow_red';
+		$columns['P.sa_red_card'] = 'player_season_red';
 		
-		$columns['P.st_tore'] = 'player_total_goals';
+		$columns['P.st_goals'] = 'player_total_goals';
 		$columns['P.st_assists'] = 'player_total_assists';
-		$columns['P.st_spiele'] = 'player_total_matches';
-		$columns['P.st_karten_gelb'] = 'player_total_yellow';
-		$columns['P.st_karten_gelb_rot'] = 'player_total_yellow_red';
-		$columns['P.st_karten_rot'] = 'player_total_red';
+		$columns['P.st_matches'] = 'player_total_matches';
+		$columns['P.st_yellow_card'] = 'player_total_yellow';
+		$columns['P.st_yellow_card_2nd'] = 'player_total_yellow_red';
+		$columns['P.st_red_card'] = 'player_total_red';
 		
 		
-		$columns['P.transfermarkt'] = 'player_transfermarket';
-		$columns['P.marktwert'] = 'player_marketvalue';
+		$columns['P.transfer_listed'] = 'player_transfermarket';
+		$columns['P.value'] = 'player_marketvalue';
 		
 		$columns['P.transfer_start'] = 'transfer_start';
-		$columns['P.transfer_ende'] = 'transfer_end';
-		$columns['P.transfer_mindestgebot'] = 'transfer_min_bid';
+		$columns['P.transfer_end'] = 'transfer_end';
+		$columns['P.transfer_min_bid'] = 'transfer_min_bid';
 		
 		$columns['P.history'] = 'player_history';
 		
 		$columns['P.unsellable'] = 'player_unsellable';
 		
-		$columns['P.lending_owner_id'] = 'lending_owner_id';
-		$columns['L.name'] = 'lending_owner_name';
-		$columns['P.lending_fee'] = 'lending_fee';
-		$columns['P.lending_matches'] = 'lending_matches';
+		$columns['P.loan_owner_id'] = 'loan_owner_id';
+		$columns['L.name'] = 'loan_owner_name';
+		$columns['P.loan_fee'] = 'loan_fee';
+		$columns['P.loan_matches'] = 'loan_matches';
 		
 		$columns['C.id'] = 'team_id';
 		$columns['C.name'] = 'team_name';
-		$columns['C.finanz_budget'] = 'team_budget';
+		$columns['C.finance_budget'] = 'team_budget';
 		$columns['C.user_id'] = 'team_user_id';
 		
-		$columns['(SELECT CONCAT(AVG(S.note), \';\', SUM(S.assists)) FROM ' . $websoccer->getConfig('db_prefix') . '_spiel_berechnung AS S WHERE S.spieler_id = P.id AND S.minuten_gespielt > 0 AND S.note > 0)'] = 'matches_info';
+		$columns['(SELECT CONCAT(AVG(S.rating), \';\', SUM(S.assists)) FROM ' . $websoccer->getConfig('db_prefix') . '_match_simulation AS S WHERE S.player_id = P.id AND S.minutes_played > 0 AND S.rating > 0)'] = 'matches_info';
 		
-		$fromTable = $websoccer->getConfig('db_prefix') . '_spieler AS P';
-		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') . '_verein AS C ON C.id = P.verein_id';
-		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') . '_verein AS L ON L.id = P.lending_owner_id';
+		$fromTable = $websoccer->getConfig('db_prefix') . '_player AS P';
+		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') . '_club AS C ON C.id = P.club_id';
+		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') . '_club AS L ON L.id = P.loan_owner_id';
 		
 		$whereCondition = 'P.status = 1 AND P.id = %d';
 		$players = $db->queryCachedSelect($columns, $fromTable, $whereCondition, $playerId, 1);
@@ -393,27 +393,27 @@ class PlayersDataService {
 		$parameters = array();
 		
 		$columns['P.id'] = 'id';
-		$columns['P.vorname'] = 'firstname';
-		$columns['P.nachname'] = 'lastname';
-		$columns['P.kunstname'] = 'pseudonym';
+		$columns['P.first_name'] = 'firstname';
+		$columns['P.last_name'] = 'lastname';
+		$columns['P.nickname'] = 'pseudonym';
 		
-		$columns['P.sa_tore'] = 'goals';
-		$columns['P.sa_spiele'] = 'matches';
+		$columns['P.sa_goals'] = 'goals';
+		$columns['P.sa_matches'] = 'matches';
 		
-		$columns['P.transfermarkt'] = 'transfermarket';
+		$columns['P.transfer_listed'] = 'transfermarket';
 		
 		$columns['C.id'] = 'team_id';
 		$columns['C.name'] = 'team_name';
 		
-		$fromTable = $websoccer->getConfig('db_prefix') . '_spieler AS P';
-		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') . '_verein AS C ON C.id = P.verein_id';
+		$fromTable = $websoccer->getConfig('db_prefix') . '_player AS P';
+		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') . '_club AS C ON C.id = P.club_id';
 		
-		$whereCondition = 'P.status = 1 AND P.sa_tore > 0';
+		$whereCondition = 'P.status = 1 AND P.sa_goals > 0';
 		if ($leagueId != null) {
-			$whereCondition .= ' AND liga_id = %d';
+			$whereCondition .= ' AND league_id = %d';
 			$parameters[] = (int) $leagueId;
 		}
-		$whereCondition .= ' ORDER BY P.sa_tore DESC, P.sa_spiele ASC';
+		$whereCondition .= ' ORDER BY P.sa_goals DESC, P.sa_matches ASC';
 		
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters, $limit);
 		
@@ -439,30 +439,30 @@ class PlayersDataService {
 		$parameters = array();
 	
 		$columns['P.id'] = 'id';
-		$columns['P.vorname'] = 'firstname';
-		$columns['P.nachname'] = 'lastname';
-		$columns['P.kunstname'] = 'pseudonym';
+		$columns['P.first_name'] = 'firstname';
+		$columns['P.last_name'] = 'lastname';
+		$columns['P.nickname'] = 'pseudonym';
 	
-		$columns['P.sa_tore'] = 'goals';
+		$columns['P.sa_goals'] = 'goals';
 		$columns['P.sa_assists'] = 'assists';
-		$columns['P.sa_spiele'] = 'matches';
+		$columns['P.sa_matches'] = 'matches';
 		
-		$columns['(P.sa_tore + P.sa_assists)'] = 'score';
+		$columns['(P.sa_goals + P.sa_assists)'] = 'score';
 	
-		$columns['P.transfermarkt'] = 'transfermarket';
+		$columns['P.transfer_listed'] = 'transfermarket';
 	
 		$columns['C.id'] = 'team_id';
 		$columns['C.name'] = 'team_name';
 	
-		$fromTable = $websoccer->getConfig('db_prefix') . '_spieler AS P';
-		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') . '_verein AS C ON C.id = P.verein_id';
+		$fromTable = $websoccer->getConfig('db_prefix') . '_player AS P';
+		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') . '_club AS C ON C.id = P.club_id';
 	
-		$whereCondition = 'P.status = \'1\' AND (P.sa_tore + P.sa_assists) > 0';
+		$whereCondition = 'P.status = \'1\' AND (P.sa_goals + P.sa_assists) > 0';
 		if ($leagueId != null) {
-			$whereCondition .= ' AND liga_id = %d';
+			$whereCondition .= ' AND league_id = %d';
 			$parameters[] = (int) $leagueId;
 		}
-		$whereCondition .= ' ORDER BY score DESC, P.sa_assists DESC, P.sa_tore DESC, P.sa_spiele ASC, P.id ASC';
+		$whereCondition .= ' ORDER BY score DESC, P.sa_assists DESC, P.sa_goals DESC, P.sa_matches ASC, P.id ASC';
 	
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters, $limit);
 	
@@ -494,29 +494,29 @@ class PlayersDataService {
 			$firstName, $lastName, $clubName, $position, $strengthMax, $lendableOnly, $startIndex, $entries_per_page) {
 		
 		$columns['P.id'] = 'id';
-		$columns['P.vorname'] = 'firstname';
-		$columns['P.nachname'] = 'lastname';
-		$columns['P.kunstname'] = 'pseudonym';
+		$columns['P.first_name'] = 'firstname';
+		$columns['P.last_name'] = 'lastname';
+		$columns['P.nickname'] = 'pseudonym';
 		
 		$columns['P.position'] = 'position';
 		$columns['P.position_main'] = 'position_main';
 		$columns['P.position_second'] = 'position_second';
 		
-		$columns['P.transfermarkt'] = 'transfermarket';
+		$columns['P.transfer_listed'] = 'transfermarket';
 		$columns['P.unsellable'] = 'unsellable';
 		
-		$columns['P.w_staerke'] = 'strength';
-		$columns['P.w_technik'] = 'strength_technique';
-		$columns['P.w_kondition'] = 'strength_stamina';
-		$columns['P.w_frische'] = 'strength_freshness';
-		$columns['P.w_zufriedenheit'] = 'strength_satisfaction';
+		$columns['P.w_strength'] = 'strength';
+		$columns['P.w_technique'] = 'strength_technique';
+		$columns['P.w_stamina'] = 'strength_stamina';
+		$columns['P.w_fitness'] = 'strength_freshness';
+		$columns['P.w_morale'] = 'strength_satisfaction';
 		
-		$columns['P.vertrag_gehalt'] = 'contract_salary';
-		$columns['P.vertrag_spiele'] = 'contract_matches';
+		$columns['P.contract_salary'] = 'contract_salary';
+		$columns['P.contract_matches'] = 'contract_matches';
 		
-		$columns['P.lending_owner_id'] = 'lending_owner_id';
-		$columns['P.lending_fee'] = 'lending_fee';
-		$columns['P.lending_matches'] = 'lending_matches';
+		$columns['P.loan_owner_id'] = 'loan_owner_id';
+		$columns['P.loan_fee'] = 'loan_fee';
+		$columns['P.loan_matches'] = 'loan_matches';
 		
 		$columns['C.id'] = 'team_id';
 		$columns['C.name'] = 'team_name';	
@@ -573,13 +573,13 @@ class PlayersDataService {
 		
 		if ($firstName != null) {
 			$firstName = ucfirst($firstName);
-			$whereCondition .= ' AND P.vorname LIKE \'%s%%\'';
+			$whereCondition .= ' AND P.first_name LIKE \'%s%%\'';
 			$parameters[] = $firstName;
 		}
 		
 		if ($lastName != null) {
 			$lastName = ucfirst($lastName);
-			$whereCondition .= ' AND (P.nachname LIKE \'%s%%\' OR P.kunstname LIKE \'%s%%\')';
+			$whereCondition .= ' AND (P.last_name LIKE \'%s%%\' OR P.nickname LIKE \'%s%%\')';
 			$parameters[] = $lastName;
 			$parameters[] = $lastName;
 		}
@@ -598,17 +598,17 @@ class PlayersDataService {
 			$strengthMinValue = $strengthMax - 20;
 			$strengthMaxValue = $strengthMax;
 			
-			$whereCondition .= ' AND P.w_staerke > %d AND P.w_staerke <= %d';
+			$whereCondition .= ' AND P.w_strength > %d AND P.w_strength <= %d';
 			$parameters[] = $strengthMinValue;
 			$parameters[] = $strengthMaxValue;
 		}
 		
 		if ($lendableOnly) {
-			$whereCondition .= ' AND P.lending_fee > 0 AND (P.lending_owner_id IS NULL OR P.lending_owner_id = 0)';
+			$whereCondition .= ' AND P.loan_fee > 0 AND (P.loan_owner_id IS NULL OR P.loan_owner_id = 0)';
 		}
 		
-		$fromTable = $websoccer->getConfig('db_prefix') . '_spieler AS P';
-		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') . '_verein AS C ON C.id = P.verein_id';
+		$fromTable = $websoccer->getConfig('db_prefix') . '_player AS P';
+		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') . '_club AS C ON C.id = P.club_id';
 		
 		return $db->querySelect($columns, $fromTable, $whereCondition, $parameters, $limit);
 	}
@@ -621,11 +621,11 @@ class PlayersDataService {
 	 */
 	public static function _convertPosition($dbPosition) {
 		switch ($dbPosition) {
-			case 'Torwart':
+			case 'Goalkeeper':
 				return 'goaly';
-			case 'Abwehr':
+			case 'Defender':
 				return 'defense';
-			case 'Mittelfeld':
+			case 'Midfielder':
 				return 'midfield';
 			default:
 				return 'striker';

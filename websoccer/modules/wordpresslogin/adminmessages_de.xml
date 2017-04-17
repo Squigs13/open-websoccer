@@ -2,5 +2,5 @@
 <!DOCTYPE module SYSTEM "../messages.dtd">
 <messages>
     <message id="settings_label_wordpresslogin_tableprefix">Login über Wordpress (ab 2.5): Tabellenpräfix</message>
-    <message id="settings_label_wordpresslogin_tableprefix_help">Präfix der Datenbanktabellen Ihrer eigenen Wordpress-Installation, falls Benutzer sich nur mit dem Benutzernamen und Passwort ihres Wordpress-Accounts anmelden sollen. <em>Hinweis:</em> Aktivieren Sie den Log-In über Wordpress durch Eingabe von "WordpressUserLoginMethod" oben bei "Log-In Methode".</message>
+    <message id="settings_label_wordpresslogin_tableprefix_help">Präfix der Datenbanktabellen Ihrer eigenen Wordpress-Installation, falls Benutzer sich nur mit dem Benutzernamen und password ihres Wordpress-Accounts anmelden sollen. <em>Hinweis:</em> Aktivieren Sie den Log-In über Wordpress durch Eingabe von "WordpressUserLoginMethod" oben bei "Log-In Methode".</message>
 </messages>

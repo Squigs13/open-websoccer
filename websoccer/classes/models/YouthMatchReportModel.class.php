@@ -60,10 +60,10 @@ class YouthMatchReportModel implements IModel {
 			// init array
 			if (!isset($statistics[$teamPrefix])) {
 				$statistics[$teamPrefix]["avg_strength"] = 0;
-				$statistics[$teamPrefix]["ballcontacts"] = 0;
+				$statistics[$teamPrefix]["touches"] = 0;
 				$statistics[$teamPrefix]["wontackles"] = 0;
-				$statistics[$teamPrefix]["shoots"] = 0;
-				$statistics[$teamPrefix]["passes_successed"] = 0;
+				$statistics[$teamPrefix]["shots"] = 0;
+				$statistics[$teamPrefix]["passes_successful"] = 0;
 				$statistics[$teamPrefix]["passes_failed"] = 0;
 				$statistics[$teamPrefix]["assists"] = 0;
 			}
@@ -71,10 +71,10 @@ class YouthMatchReportModel implements IModel {
 			$players[$teamPrefix][] = $playerinfo;
 			
 			$statistics[$teamPrefix]["avg_strength"] = $statistics[$teamPrefix]["avg_strength"] + $playerinfo["strength"];
-			$statistics[$teamPrefix]["ballcontacts"] = $statistics[$teamPrefix]["ballcontacts"] + $playerinfo["ballcontacts"];
+			$statistics[$teamPrefix]["touches"] = $statistics[$teamPrefix]["touches"] + $playerinfo["touches"];
 			$statistics[$teamPrefix]["wontackles"] = $statistics[$teamPrefix]["wontackles"] + $playerinfo["wontackles"];
-			$statistics[$teamPrefix]["shoots"] = $statistics[$teamPrefix]["shoots"] + $playerinfo["shoots"];
-			$statistics[$teamPrefix]["passes_successed"] = $statistics[$teamPrefix]["passes_successed"] + $playerinfo["passes_successed"];
+			$statistics[$teamPrefix]["shots"] = $statistics[$teamPrefix]["shots"] + $playerinfo["shots"];
+			$statistics[$teamPrefix]["passes_successful"] = $statistics[$teamPrefix]["passes_successful"] + $playerinfo["passes_successful"];
 			$statistics[$teamPrefix]["passes_failed"] = $statistics[$teamPrefix]["passes_failed"] + $playerinfo["passes_failed"];
 			$statistics[$teamPrefix]["assists"] = $statistics[$teamPrefix]["assists"] + $playerinfo["assists"];
 			
@@ -92,9 +92,9 @@ class YouthMatchReportModel implements IModel {
 			$statistics["guest"]["avg_strength"] = round($statistics["guest"]["avg_strength"] / count($players["guest"]));
 		}
 		
-		if (isset($statistics["guest"]["ballcontacts"]) && isset($statistics["home"]["ballcontacts"])) {
-			$statistics["home"]["ballpossession"] = round($statistics["home"]["ballcontacts"] * 100 / ($statistics["home"]["ballcontacts"] + $statistics["guest"]["ballcontacts"]));
-			$statistics["guest"]["ballpossession"] = round($statistics["guest"]["ballcontacts"] * 100 / ($statistics["home"]["ballcontacts"] + $statistics["guest"]["ballcontacts"]));
+		if (isset($statistics["guest"]["touches"]) && isset($statistics["home"]["touches"])) {
+			$statistics["home"]["ballpossession"] = round($statistics["home"]["touches"] * 100 / ($statistics["home"]["touches"] + $statistics["guest"]["touches"]));
+			$statistics["guest"]["ballpossession"] = round($statistics["guest"]["touches"] * 100 / ($statistics["home"]["touches"] + $statistics["guest"]["touches"]));
 		}
 		
 		$reportMessages = YouthMatchesDataService::getMatchReportItems($this->_websoccer, $this->_db, $this->_i18n, $match["id"]);

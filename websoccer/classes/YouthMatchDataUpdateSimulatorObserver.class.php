@@ -125,13 +125,13 @@ class YouthMatchDataUpdateSimulatorObserver implements ISimulatorObserver {
 				'card_red' => $player->redCard,
 				'goals' => $player->getGoals(),
 				'strength' => $player->strength,
-				'ballcontacts' => $player->getBallContacts(),
+				'touches' => $player->getBallContacts(),
 				'wontackles' => $player->getWonTackles(),
-				'shoots' => $player->getShoots(),
-				'passes_successed' => $player->getPassesSuccessed(),
+				'shots' => $player->getShoots(),
+				'passes_successful' => $player->getPassesSuccessed(),
 				'passes_failed' => $player->getPassesFailed(),
 				'assists' => $player->getAssists(),
-				'state' => ($isOnPitch) ? '1' : 'Ausgewechselt'
+				'state' => ($isOnPitch) ? '1' : 'Substituted'
 				);
 		$this->_db->queryUpdate($columns, $this->_websoccer->getConfig('db_prefix') . '_youthmatch_player', 
 				'match_id = %d AND player_id = %d', array($match->id, $player->id));

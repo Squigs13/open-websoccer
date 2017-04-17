@@ -3,14 +3,14 @@
 <messages>
     <message id="entity_stadium">Stadium</message>
 	<message id="entity_stadium_name">Name</message>
-	<message id="entity_stadium_verein">Club</message>
-	<message id="entity_stadium_stadt">City</message>
-	<message id="entity_stadium_land">Country</message>
+	<message id="entity_stadium_club">Club</message>
+	<message id="entity_stadium_city">City</message>
+	<message id="entity_stadium_country">Country</message>
 	<message id="entity_stadium_picture">Picture</message>
-	<message id="entity_stadium_p_steh">Standing</message>
-	<message id="entity_stadium_p_sitz">Seats</message>
-	<message id="entity_stadium_p_haupt_steh">Standing (grandstand)</message>
-	<message id="entity_stadium_p_haupt_sitz">Seats (grandstand)</message>
+	<message id="entity_stadium_p_standing">Standing</message>
+	<message id="entity_stadium_p_seat">Seats</message>
+	<message id="entity_stadium_p_main_standing">Standing (grandstand)</message>
+	<message id="entity_stadium_p_main_seat">Seats (grandstand)</message>
     <message id="entity_stadium_p_vip">VIP Lounges</message>
     
     <message id="entity_stadiumbuilder">Stadium Builder</message>
@@ -37,10 +37,10 @@
 	<message id="entity_stadiumconstruction_builder_id">Builder</message>
 	<message id="entity_stadiumconstruction_started">Order placed</message>
 	<message id="entity_stadiumconstruction_deadline">Expected completion</message>
-	<message id="entity_stadiumconstruction_p_steh">Standing</message>
-	<message id="entity_stadiumconstruction_p_sitz">Seats</message>
-	<message id="entity_stadiumconstruction_p_haupt_steh">Standing (grandstand)</message>
-	<message id="entity_stadiumconstruction_p_haupt_sitz">Seats (grandstand)</message>
+	<message id="entity_stadiumconstruction_p_standing">Standing</message>
+	<message id="entity_stadiumconstruction_p_seat">Seats</message>
+	<message id="entity_stadiumconstruction_p_main_standing">Standing (grandstand)</message>
+	<message id="entity_stadiumconstruction_p_main_seat">Seats (grandstand)</message>
 	<message id="entity_stadiumconstruction_p_vip">VIP Lounges</message>
 	
 	<message id="entity_stadium_level_pitch">Grass quality</message>

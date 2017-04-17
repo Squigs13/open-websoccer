@@ -123,25 +123,25 @@ class Simulator {
     		// a. Normal matches end after regular time
     		// b. if penalty shooting is enabled, play extension if there is no result after 90 minutes
     		$lastMinute = 90 + SimulationHelper::getMagicNumber(1, 5);
-    		if ($match->penaltyShootingEnabled || $match->type == 'Pokalspiel') {
+    		if ($match->penaltyShootingEnabled || $match->type == 'cupmatch') {
     			
     			// match ended after regular or extension time with a winner
     			if (($match->minute == 91 || $match->minute == 121)
-    				&& ($match->type != 'Pokalspiel' && $match->homeTeam->getGoals() != $match->guestTeam->getGoals()
-    						|| $match->type == 'Pokalspiel' && !SimulationCupMatchHelper::checkIfExtensionIsRequired($this->_websoccer, $this->_db, $match))) {
+    				&& ($match->type != 'cupmatch' && $match->homeTeam->getGoals() != $match->guestTeam->getGoals()
+    						|| $match->type == 'cupmatch' && !SimulationCupMatchHelper::checkIfExtensionIsRequired($this->_websoccer, $this->_db, $match))) {
     				
     				$this->completeMatch($match);
     				break;
     				
     				// no winner after extension time -> penalty shooting
     			} elseif ($match->minute == 121 
-    					&& ($match->type != 'Pokalspiel' && $match->homeTeam->getGoals() == $match->guestTeam->getGoals()
-    							|| $match->type == 'Pokalspiel' && SimulationCupMatchHelper::checkIfExtensionIsRequired($this->_websoccer, $this->_db, $match))) {
+    					&& ($match->type != 'cupmatch' && $match->homeTeam->getGoals() == $match->guestTeam->getGoals()
+    							|| $match->type == 'cupmatch' && SimulationCupMatchHelper::checkIfExtensionIsRequired($this->_websoccer, $this->_db, $match))) {
     				
     				$this->_simStrategy->penaltyShooting($match);
     				
     				// we have a winner now
-    				if ($match->type == 'Pokalspiel') {
+    				if ($match->type == 'cupmatch') {
     					
     					// home team won
     					if ($match->homeTeam->getGoals() > $match->guestTeam->getGoals()) {

@@ -13,7 +13,7 @@
     <message id="messages_empty_inbox">Es sind keine empfangenen Nachrichten vorhanden.</message>
     <message id="messages_empty_outbox">Es sind keine gesendeten Nachrichten vorhanden.</message>
     
-    <message id="messages_date">Datum</message>
+    <message id="messages_date">date</message>
     <message id="messages_sender">Absender</message>
     <message id="messages_recipient">Empfänger</message>
     <message id="messages_subject">Betreff</message>

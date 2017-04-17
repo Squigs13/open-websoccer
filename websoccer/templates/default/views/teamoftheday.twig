@@ -33,7 +33,7 @@
 	</ul>
 	
 	{% if maxMatchDay > 0 %}
-		<h4>{{ i18n.getMessage("entity_match_spieltag") }}</h4>
+		<h4>{{ i18n.getMessage("entity_match_matchday") }}</h4>
 		<ul class="nav nav-pills">
 			{% for matchdayOfSeason in 1..maxMatchDay %}
 			<li{% if matchday == matchdayOfSeason %} class="active"{% endif %}><a href="#matchday{{ loop.index }}" class="ajaxLink"

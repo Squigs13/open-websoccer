@@ -47,7 +47,7 @@ class MatchReportLinkConverter implements IConverter {
 		$output .= '<li><a href=\'?site=manage-match-playerstatistics&match='. $row['id']. '\'><i class=\'icon-cog\'></i> '. $this->_i18n->getMessage('match_manage_playerstatistics') .'</a></li>';
 		$output .= '<li><a href=\'?site=manage-match-reportitems&match='. $row['id']. '\'><i class=\'icon-th-list\'></i> '. $this->_i18n->getMessage('match_manage_reportitems') .'</a></li>';
 		
-		if (!$row['entity_match_berechnet']) {
+		if (!$row['entity_match_simulated']) {
 			$output .= '<li><a href=\'?site=manage-match-complete&match='. $row['id']. '\'><i class=\'icon-ok-sign\'></i> '. $this->_i18n->getMessage('match_manage_complete') .'</a></li>';
 		}
 		

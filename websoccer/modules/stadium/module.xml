@@ -11,9 +11,9 @@
             id="stadium"
             entity="stadium"
             navcategory="league"
-            permissionrole="r_daten" >
+            permissionrole="r_data" >
 
-            <entity dbtable="stadion AS StadiumTab" >
+            <entity dbtable="stadium AS StadiumTab" >
 
                 <overview delete="true" edit="true" >
 
@@ -25,34 +25,34 @@
                         filter="true" />
                     
                     <column
-                        id="entity_stadium_land"
-                        field="StadiumTab.land"
+                        id="entity_stadium_country"
+                        field="StadiumTab.country"
                         type="text"
                         sort="true"
                         filter="true" />
                     
                     <column
-                        id="entity_stadium_verein"
+                        id="entity_stadium_club"
                         field="ClubTab.name"
                         type="text"
                         sort="true"
                         filter="true" />
                     
                     
-                	<join type="LEFT" jointable="verein AS ClubTab" joincondition="StadiumTab.id = ClubTab.stadion_id" />
+                	<join type="LEFT" jointable="club AS ClubTab" joincondition="StadiumTab.id = ClubTab.stadium_id" />
                 </overview>
 
                 <editform>
                     
                     <field id="name" type="text" required="true" />
-                    <field id="stadt" type="text" />
-                    <field id="land" type="text" required="true" />
+                    <field id="city" type="text" />
+                    <field id="country" type="text" required="true" />
                     <field id="picture" type="file" />
                     
-					<field id="p_steh" type="number" required="true" />
-					<field id="p_sitz" type="number" required="true" />
-					<field id="p_haupt_steh" type="number" required="true" />
-					<field id="p_haupt_sitz" type="number" required="true" />
+					<field id="p_standing" type="number" required="true" />
+					<field id="p_seat" type="number" required="true" />
+					<field id="p_main_standing" type="number" required="true" />
+					<field id="p_main_seat" type="number" required="true" />
 					<field id="p_vip" type="number" required="true" />
 					
 					<field id="level_pitch" type="number" required="true" default="0" />
@@ -72,7 +72,7 @@
             id="stadiumbuilder"
             entity="stadiumbuilder"
             navcategory="league"
-            permissionrole="r_daten" >
+            permissionrole="r_data" >
 
             <entity dbtable="stadium_builder AS BuilderTab" >
 
@@ -149,7 +149,7 @@
             id="stadiumconstruction"
             entity="stadiumconstruction"
             navcategory="league"
-            permissionrole="r_daten" >
+            permissionrole="r_data" >
 
             <entity dbtable="stadium_construction AS ConstructionTab" >
 
@@ -181,20 +181,20 @@
                         type="timestamp"
                         sort="true" />
                     
-                    <join type="LEFT" jointable="verein AS ClubTab" joincondition="ConstructionTab.team_id = ClubTab.id" />
+                    <join type="LEFT" jointable="club AS ClubTab" joincondition="ConstructionTab.team_id = ClubTab.id" />
                     <join type="INNER" jointable="stadium_builder AS BuilderTab" joincondition="ConstructionTab.builder_id = BuilderTab.id" />
                 </overview>
 
                 <editform>
                     
-                    <field id="team_id" type="foreign_key" entity="club" jointable="verein" cascade="delete" labelcolumns="name" required="true"/>
+                    <field id="team_id" type="foreign_key" entity="club" jointable="club" cascade="delete" labelcolumns="name" required="true"/>
                     <field id="builder_id" type="foreign_key" entity="stadiumbuilder" jointable="stadium_builder" labelcolumns="name" required="true" />
 					<field id="started" type="timestamp" required="true" />
 					<field id="deadline" type="timestamp" required="true" />
-					<field id="p_steh" type="number" required="true" default="0" />
-					<field id="p_sitz" type="number" required="true" default="0" />
-					<field id="p_haupt_steh" type="number" required="true" default="0" />
-					<field id="p_haupt_sitz" type="number" required="true" default="0" />
+					<field id="p_standing" type="number" required="true" default="0" />
+					<field id="p_seat" type="number" required="true" default="0" />
+					<field id="p_main_standing" type="number" required="true" default="0" />
+					<field id="p_main_seat" type="number" required="true" default="0" />
 					<field id="p_vip" type="number" required="true" default="0" />
                 </editform>
             </entity>

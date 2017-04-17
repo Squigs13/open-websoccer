@@ -48,7 +48,7 @@
 
 <p>Welche Sponsoren Ihnen zur Auswahl stehen hängt von Ihrem sportlichen Erfolg ab. Sie können mit dem Abschliessen eines Vertrages noch warten, wenn Sie denken, dass Sie die nächsten Spiele gewinnen werden und daher einen noch besseren Sponsor bekommen könnten. Oder Sie wählen früher einen Sponsor, um sofort Prämienzahlungen zu erhalten oder falls Sie befürchten, dass Sie in der Ligatabelle abrutschen könnten.</p>
 
-<p>Ein gültiger Sponsorenvertrag kann nicht vorzeitig gekündigt werden.</p>
+<p>Ein gültiger Sponsorencontract kann nicht vorzeitig gekündigt werden.</p>
 </message>
 
 <message id="help_tickets">
@@ -57,7 +57,7 @@
 <p>Die Höhe der Zuschauer richtet sich nach:</p>
 <ul>
 <li>Der Höhe der Eintrittspreise. Diese sollten nicht erheblich höher als der Ligadurchschnitt (Anfangswerte) sein.</li>
-<li>Ihrer Fanbeliebtheit. Diese richtet sich nach Ihrem sportlichen Erfolg.</li>
+<li>Ihrer popularity. Diese richtet sich nach Ihrem sportlichen Erfolg.</li>
 <li>Der Attraktivität des Heimspiels. Spielen Sie beispielsweise gegen einen &quot;Tabellennachbarn&quot; könnten Sie die Preise leichte anheben. Danach sollten Sie diese wieder erniedrigen.</li>
 </ul>
 </message>
@@ -126,7 +126,7 @@
 
 <p><strong>Ablösefreie Spieler</strong></p>
 
-<p>Sie müssen das für den Spieler attraktivste Gehaltsangebot machen. Der Spieler entscheidet sich automatisch für den Verein bei dem er insgesamt am meisten verdienen kann. Bei Abwehrspielern und Torwart ist eine Torprämie irrelevant für den Spieler.</p>
+<p>Sie müssen das für den Spieler attraktivste Gehaltsangebot machen. Der Spieler entscheidet sich automatisch für den Verein bei dem er insgesamt am meisten verdienen kann. Bei Abwehrspielern und Goalkeeper ist eine Torprämie irrelevant für den Spieler.</p>
 
 <p>&quot;Handgeld&quot; ist eine Summe, die dem Spieler bei Antritt ausbezahlt würde, unabhängig von der Vertragsdauer.</p>
 </message>

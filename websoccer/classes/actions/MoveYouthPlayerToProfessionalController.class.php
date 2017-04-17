@@ -61,11 +61,11 @@ class MoveYouthPlayerToProfessionalController implements IActionController {
 		}
 		
 		// validate main position (must be in compliance with general position)
-		if ($player["position"] == "Torwart") {
+		if ($player["position"] == "Goalkeeper") {
 			$validPositions = array("T");
-		} elseif ($player["position"] == "Abwehr") {
+		} elseif ($player["position"] == "Defender") {
 			$validPositions = array("LV", "IV", "RV");
-		} elseif ($player["position"] == "Mittelfeld") {
+		} elseif ($player["position"] == "Midfielder") {
 			$validPositions = array("LM", "RM", "DM", "OM", "ZM");
 		} else {
 			$validPositions = array("LS", "RS", "MS");
@@ -97,26 +97,26 @@ class MoveYouthPlayerToProfessionalController implements IActionController {
 		$birthday = date("Y-m-d", $time);
 		
 		$columns = array(
-				"verein_id" => $player["team_id"],
-				"vorname" => $player["firstname"],
-				"nachname" => $player["lastname"],
-				"geburtstag" => $birthday,
+				"club_id" => $player["team_id"],
+				"first_name" => $player["firstname"],
+				"last_name" => $player["lastname"],
+				"birthday" => $birthday,
 				"age" => $player["age"],
 				"position" => $player["position"],
 				"position_main" => $mainPosition,
 				"nation" => $player["nation"],
-				"w_staerke" => $player["strength"],
-				"w_technik" => $this->_websoccer->getConfig("youth_professionalmove_technique"),
-				"w_kondition" => $this->_websoccer->getConfig("youth_professionalmove_stamina"),
-				"w_frische" => $this->_websoccer->getConfig("youth_professionalmove_freshness"),
-				"w_zufriedenheit" => $this->_websoccer->getConfig("youth_professionalmove_satisfaction"),
-				"vertrag_gehalt" => $this->_websoccer->getConfig("youth_salary_per_strength") * $player["strength"],
-				"vertrag_spiele" => $this->_websoccer->getConfig("youth_professionalmove_matches"),
-				"vertrag_torpraemie" => 0,
+				"w_strength" => $player["strength"],
+				"w_technique" => $this->_websoccer->getConfig("youth_professionalmove_technique"),
+				"w_stamina" => $this->_websoccer->getConfig("youth_professionalmove_stamina"),
+				"w_fitness" => $this->_websoccer->getConfig("youth_professionalmove_freshness"),
+				"w_morale" => $this->_websoccer->getConfig("youth_professionalmove_satisfaction"),
+				"contract_salary" => $this->_websoccer->getConfig("youth_salary_per_strength") * $player["strength"],
+				"contract_matches" => $this->_websoccer->getConfig("youth_professionalmove_matches"),
+				"contract_goal_bonus" => 0,
 				"status" => "1"
 				);
 		
-		$this->_db->queryInsert($columns, $this->_websoccer->getConfig("db_prefix") ."_spieler");
+		$this->_db->queryInsert($columns, $this->_websoccer->getConfig("db_prefix") ."_player");
 		
 		// delete youth player
 		$this->_db->queryDelete($this->_websoccer->getConfig("db_prefix") ."_youthplayer", "id = %d", $player["id"]);

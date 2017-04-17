@@ -60,7 +60,7 @@ class DefaultUserLoginMethod implements IUserLoginMethod {
 		$fromTable = $this->_websoccer->getConfig('db_prefix') .'_user';
 		
 		// get user data
-		$columns = 'id, passwort, passwort_neu, passwort_salt';
+		$columns = 'id, password, password_new, password_salt';
 		
 		$wherePart = $column . ' = \'%s\' AND status = 1';
 		$parameter = $loginstr;
@@ -75,14 +75,14 @@ class DefaultUserLoginMethod implements IUserLoginMethod {
 		}
 		
 		// check password
-		$inputPassword = SecurityUtil::hashPassword($password, $userdata['passwort_salt']);
-		if ($inputPassword != $userdata['passwort'] && $inputPassword != $userdata['passwort_neu']) {
+		$inputPassword = SecurityUtil::hashPassword($password, $userdata['password_salt']);
+		if ($inputPassword != $userdata['password'] && $inputPassword != $userdata['password_new']) {
 			return FALSE;
 		}
 		
 		// update password after a generated one
-		if ($userdata['passwort_neu'] == $inputPassword) {
-			$columns = array('passwort' => $inputPassword, 'passwort_neu_angefordert' => 0, 'passwort_neu' => '');
+		if ($userdata['password_new'] == $inputPassword) {
+			$columns = array('password' => $inputPassword, 'password_new_requested' => 0, 'password_new' => '');
 			$whereCondition = 'id = %d';
 			$parameter = $userdata['id'];
 			$this->_db->queryUpdate($columns, $fromTable, $whereCondition, $parameter);

@@ -12,7 +12,7 @@
 <!ATTLIST adminpage id CDATA #REQUIRED>
 <!ATTLIST adminpage navcategory CDATA #REQUIRED>
 <!ATTLIST adminpage entity CDATA #IMPLIED>
-<!ATTLIST adminpage permissionrole (r_admin|r_daten|r_adminuser|r_news|r_spiele|r_user) #IMPLIED>
+<!ATTLIST adminpage permissionrole (r_admin|r_data|r_adminuser|r_news|r_matches|r_user) #IMPLIED>
 <!ATTLIST adminpage filename CDATA #IMPLIED>
 
 <!ELEMENT entity (overview, editform?)>

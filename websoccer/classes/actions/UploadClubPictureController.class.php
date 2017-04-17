@@ -107,18 +107,18 @@ class UploadClubPictureController implements IActionController {
 		}
 		
 		// delete old picture
-		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_verein";
+		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_club";
 		$whereCondition = "id = %d";
-		$result = $this->_db->querySelect("bild", $fromTable, $whereCondition, $clubId);
+		$result = $this->_db->querySelect("image", $fromTable, $whereCondition, $clubId);
 		$clubinfo = $result->fetch_array();
 		$result->free();
 		
-		if (strlen($clubinfo["bild"]) && file_exists(CLUBPICTURE_UPLOAD_DIR . "/" . $clubinfo["bild"])) {
-			unlink(CLUBPICTURE_UPLOAD_DIR . "/" . $clubinfo["bild"]);
+		if (strlen($clubinfo["image"]) && file_exists(CLUBPICTURE_UPLOAD_DIR . "/" . $clubinfo["image"])) {
+			unlink(CLUBPICTURE_UPLOAD_DIR . "/" . $clubinfo["image"]);
 		}
 		
 		// update user
-		$this->_db->queryUpdate(array("bild" => $name), $fromTable, $whereCondition, $clubId);
+		$this->_db->queryUpdate(array("image" => $name), $fromTable, $whereCondition, $clubId);
 		
 		// show success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS, 

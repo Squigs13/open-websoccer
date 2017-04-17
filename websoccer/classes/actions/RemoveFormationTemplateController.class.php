@@ -41,13 +41,13 @@ class RemoveFormationTemplateController implements IActionController {
 	public function executeAction($parameters) {
 		$teamId = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
 		
-		$dbTable = $this->_websoccer->getConfig('db_prefix') . '_aufstellung';
+		$dbTable = $this->_websoccer->getConfig('db_prefix') . '_tactics';
 		
 		// verify that it is own template
-		$result = $this->_db->querySelect('verein_id', $dbTable, 'id = %d', $parameters['templateid']);
+		$result = $this->_db->querySelect('club_id', $dbTable, 'id = %d', $parameters['templateid']);
 		$template = $result->fetch_array();
 		$result->free();
-		if (!$template || $template['verein_id'] != $teamId) {
+		if (!$template || $template['club_id'] != $teamId) {
 			throw new Exception('illegal template ID');
 		}
 		

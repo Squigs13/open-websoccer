@@ -55,11 +55,11 @@ class ShoutboxLeagueModel implements IModel {
 		$tablePrefix = $this->_websoccer->getConfig('db_prefix');
 		$fromTable = $tablePrefix . '_shoutmessage AS MESSAGE';
 		$fromTable .= ' INNER JOIN ' . $tablePrefix . '_user AS U ON U.id = MESSAGE.user_id';
-		$fromTable .= ' INNER JOIN ' . $tablePrefix . '_spiel AS M ON M.id = MESSAGE.match_id';
-		$fromTable .= ' INNER JOIN ' . $tablePrefix . '_verein AS HOME ON HOME.id = M.home_verein';
-		$fromTable .= ' INNER JOIN ' . $tablePrefix . '_verein AS GUEST ON GUEST.id = M.gast_verein';
-		$fromTable .= ' INNER JOIN ' . $tablePrefix . '_saison AS SEASON ON (M.saison_id = SEASON.id)';
-		$fromTable .= ' INNER JOIN ' . $tablePrefix . '_liga AS L ON (L.id = SEASON.liga_id)';
+		$fromTable .= ' INNER JOIN ' . $tablePrefix . '_match AS M ON M.id = MESSAGE.match_id';
+		$fromTable .= ' INNER JOIN ' . $tablePrefix . '_club AS HOME ON HOME.id = M.home_club';
+		$fromTable .= ' INNER JOIN ' . $tablePrefix . '_club AS GUEST ON GUEST.id = M.guest_club';
+		$fromTable .= ' INNER JOIN ' . $tablePrefix . '_season AS SEASON ON (M.season_id = SEASON.id)';
+		$fromTable .= ' INNER JOIN ' . $tablePrefix . '_league AS L ON (L.id = SEASON.league_id)';
 		
 		$whereCondition = 'L.id = %d ORDER BY MESSAGE.created_date DESC';
 		

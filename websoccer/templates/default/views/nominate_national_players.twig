@@ -14,9 +14,9 @@
 	
 	<form class="form-horizontal" method="post">
 	
-		{{ formelements.textfield('fname', i18n.getMessage('entity_player_vorname'), env.getRequestParameter('fname'), false, validationMsg, 'text') }}
+		{{ formelements.textfield('fname', i18n.getMessage('entity_player_first_name'), env.getRequestParameter('fname'), false, validationMsg, 'text') }}
 		
-		{{ formelements.textfield('lname', i18n.getMessage('entity_player_nachname'), env.getRequestParameter('lname'), false, validationMsg, 'text') }}
+		{{ formelements.textfield('lname', i18n.getMessage('entity_player_last_name'), env.getRequestParameter('lname'), false, validationMsg, 'text') }}
 		
 		<div class="control-group">
 			<label class="control-label" for="position">
@@ -25,10 +25,10 @@
 			<div class="controls">
 		  		<select name="position" id="position">
 		  			<option></option>
-		  			<option value="Torwart"{% if env.getRequestParameter("position") == "Torwart" %} selected{% endif %}>{{ i18n.getMessage("option_Torwart") }}</option>
-		  			<option value="Abwehr"{% if env.getRequestParameter("position") == "Abwehr" %} selected{% endif %}>{{ i18n.getMessage("option_Abwehr") }}</option>
-		  			<option value="Mittelfeld"{% if env.getRequestParameter("position") == "Mittelfeld" %} selected{% endif %}>{{ i18n.getMessage("option_Mittelfeld") }}</option>
-		  			<option value="Sturm"{% if env.getRequestParameter("position") == "Sturm" %} selected{% endif %}>{{ i18n.getMessage("option_Sturm") }}</option>
+		  			<option value="Goalkeeper"{% if env.getRequestParameter("position") == "Goalkeeper" %} selected{% endif %}>{{ i18n.getMessage("option_Goalkeeper") }}</option>
+		  			<option value="Defender"{% if env.getRequestParameter("position") == "Defender" %} selected{% endif %}>{{ i18n.getMessage("option_Defender") }}</option>
+		  			<option value="Midfielder"{% if env.getRequestParameter("position") == "Midfielder" %} selected{% endif %}>{{ i18n.getMessage("option_Midfielder") }}</option>
+		  			<option value="Forward"{% if env.getRequestParameter("position") == "Forward" %} selected{% endif %}>{{ i18n.getMessage("option_Forward") }}</option>
 		  		</select>
 			</div>
 		</div>
@@ -40,7 +40,7 @@
 			<div class="controls">
 		  		<select name="position_main" id="position_main">
 		  			<option></option>
-		  			<option value="T"{% if env.getRequestParameter("position_main") == "T" %} selected{% endif %}>{{ i18n.getMessage("option_Torwart") }}</option>
+		  			<option value="T"{% if env.getRequestParameter("position_main") == "T" %} selected{% endif %}>{{ i18n.getMessage("option_Goalkeeper") }}</option>
 		  			<option value="LV"{% if env.getRequestParameter("position_main") == "LV" %} selected{% endif %}>{{ i18n.getMessage("option_LV") }}</option>
 		  			<option value="IV"{% if env.getRequestParameter("position_main") == "IV" %} selected{% endif %}>{{ i18n.getMessage("option_IV") }}</option>
 		  			<option value="RV"{% if env.getRequestParameter("position_main") == "RV" %} selected{% endif %}>{{ i18n.getMessage("option_RV") }}</option>
@@ -73,7 +73,7 @@
 					<tr>
 						<th><abbr title="{{ i18n.getMessage("playertable_head_position") }}">{{ i18n.getMessage("playertable_head_position_abbr") }}</abbr></th>
 						<th>{{ i18n.getMessage("playertable_head_name") }}</th>
-						<th>{{ i18n.getMessage("entity_player_verein_id") }}</th>
+						<th>{{ i18n.getMessage("entity_player_club_id") }}</th>
 						{% if env.getConfig("hide_strength_attributes") != "1" %}
 							<th>{{ i18n.getMessage("playertable_head_strength") }}</th>
 						{% endif %}

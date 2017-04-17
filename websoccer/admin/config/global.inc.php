@@ -110,7 +110,7 @@ try {
 	$db = DbConnection::getInstance();
 	$db->connect($website->getConfig('db_host'),
 			$website->getConfig('db_user'),
-			$website->getConfig('db_passwort'),
+			$website->getConfig('db_password'),
 			$website->getConfig('db_name'));
 } catch(Exception $e) {
 	// write to log

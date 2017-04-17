@@ -15,7 +15,7 @@
   	
   	{% if env.getRequestParameter("seasonid") > 0 %}
 	<div class="control-group">
-  		<label class="control-label" for="matchday">{{ i18n.getMessage("entity_match_spieltag") }}</label>
+  		<label class="control-label" for="matchday">{{ i18n.getMessage("entity_match_matchday") }}</label>
   		<div class="controls">
 	  		<input id="matchday" name="matchday" type="number" value="{{ env.getRequestParameter("matchday") }}" required/>
   		</div>
@@ -58,7 +58,7 @@
 </ul>
 
 {% if env.getRequestParameter("matchday") > 0 %}
-	<h4>{{ i18n.getMessage("entity_match_spieltag") }}: {{ env.getRequestParameter("matchday") }}</h4>
+	<h4>{{ i18n.getMessage("entity_match_matchday") }}: {{ env.getRequestParameter("matchday") }}</h4>
 	<p><a href="{{ env.getInternalUrl("teamoftheday", "leagueid=" ~ env.getRequestParameter("leagueid") ~ "&seasonid=" ~ env.getRequestParameter("seasonid") ~ "&matchday=" ~ env.getRequestParameter("matchday")) }}" class="btn btn-small"><i class="icon-heart-empty"></i> {{ i18n.getMessage("teamoftheday_navlabel") }}</a></p>
 {% endif %}
 <span id="results-list_block">{{ viewHandler.renderBlock("results-list")|raw }}</span>

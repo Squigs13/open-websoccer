@@ -60,24 +60,24 @@ class PlayerStatisticsModel implements IModel {
 		$columns = array(
 			'L.name' => 'league_name',	
 			'SEAS.name' => 'season_name',
-			'M.pokalname' => 'cup_name',
+			'M.cup_name' => 'cup_name',
 			'COUNT(S.id)' => 'matches',
 			'SUM(S.assists)' => 'assists',
-			'AVG(S.note)' => 'grade',
-			'SUM(S.tore)' => 'goals',
-			'SUM(S.karte_gelb)' => 'yellowcards',
-			'SUM(S.karte_rot)' => 'redcards',
-			'SUM(S.shoots)' => 'shoots',
-			'SUM(S.passes_successed)' => 'passes_successed',
+			'AVG(S.rating)' => 'grade',
+			'SUM(S.goals)' => 'goals',
+			'SUM(S.yellow_card)' => 'yellowcards',
+			'SUM(S.red_card)' => 'redcards',
+			'SUM(S.shots)' => 'shots',
+			'SUM(S.passes_successful)' => 'passes_successful',
 			'SUM(S.passes_failed)' => 'passes_failed'
 		);
 		
-		$fromTable = $this->_websoccer->getConfig('db_prefix') . '_spiel_berechnung AS S';
-		$fromTable .= ' INNER JOIN ' . $this->_websoccer->getConfig('db_prefix') . '_spiel AS M ON M.id = S.spiel_id';
-		$fromTable .= ' LEFT JOIN ' . $this->_websoccer->getConfig('db_prefix') . '_saison AS SEAS ON SEAS.id = M.saison_id';
-		$fromTable .= ' LEFT JOIN ' . $this->_websoccer->getConfig('db_prefix') . '_liga AS L ON SEAS.liga_id = L.id';
+		$fromTable = $this->_websoccer->getConfig('db_prefix') . '_match_simulation AS S';
+		$fromTable .= ' INNER JOIN ' . $this->_websoccer->getConfig('db_prefix') . '_match AS M ON M.id = S.match_id';
+		$fromTable .= ' LEFT JOIN ' . $this->_websoccer->getConfig('db_prefix') . '_season AS SEAS ON SEAS.id = M.season_id';
+		$fromTable .= ' LEFT JOIN ' . $this->_websoccer->getConfig('db_prefix') . '_league AS L ON SEAS.league_id = L.id';
 		
-		$whereCondition = 'S.spieler_id = %d AND S.minuten_gespielt > 0 AND ((M.spieltyp = \'Pokalspiel\' AND M.pokalname IS NOT NULL AND M.pokalname != \'\') OR (M.spieltyp = \'Ligaspiel\' AND SEAS.id IS NOT NULL)) GROUP BY IFNULL(M.pokalname,\'\'), SEAS.id ORDER BY L.name ASC, SEAS.id ASC, M.pokalname ASC';		
+		$whereCondition = 'S.player_id = %d AND S.minutes_played > 0 AND ((M.matchtype = \'cupmatch\' AND M.cup_name IS NOT NULL AND M.cup_name != \'\') OR (M.matchtype = \'leaguematch\' AND SEAS.id IS NOT NULL)) GROUP BY IFNULL(M.cup_name,\'\'), SEAS.id ORDER BY L.name ASC, SEAS.id ASC, M.cup_name ASC';		
 		
 		// execute
 		$result = $this->_db->querySelect($columns, $fromTable, $whereCondition, $playerId);

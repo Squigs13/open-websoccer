@@ -52,7 +52,7 @@ class SelectCaptainController implements IActionController {
 		}
 		
 		$this->_db->queryUpdate(array("captain_id" => $parameters["id"]), 
-				$this->_websoccer->getConfig("db_prefix") . "_verein", "id = %d", $clubId);
+				$this->_websoccer->getConfig("db_prefix") . "_club", "id = %d", $clubId);
 		
 		// success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS,
@@ -68,8 +68,8 @@ class SelectCaptainController implements IActionController {
 			if ($oldPlayer["team_id"] == $clubId) {
 				
 				$newSatisfaction = round($oldPlayer["player_strength_satisfaction"] * 0.6);
-				$this->_db->queryUpdate(array("w_zufriedenheit" => $newSatisfaction),
-						$this->_websoccer->getConfig("db_prefix") . "_spieler", "id = %d", $oldPlayer["player_id"]);
+				$this->_db->queryUpdate(array("w_morale" => $newSatisfaction),
+						$this->_websoccer->getConfig("db_prefix") . "_player", "id = %d", $oldPlayer["player_id"]);
 				
 				$playername = (strlen($oldPlayer["player_pseudonym"])) ? $oldPlayer["player_pseudonym"] : $oldPlayer["player_firstname"] . " " . $oldPlayer["player_lastname"];
 				

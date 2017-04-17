@@ -83,7 +83,7 @@ class UpgradeStadiumController implements IActionController {
 		$this->_db->queryUpdate(array(
 				"level_" . $type => $existingLevel + 1,
 				"maintenance_" . $type => $maintenanceDue
-				), $this->_websoccer->getConfig("db_prefix") . "_stadion", "id = %d", $stadium["stadium_id"]);
+				), $this->_websoccer->getConfig("db_prefix") . "_stadium", "id = %d", $stadium["stadium_id"]);
 		
 		// success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS, 

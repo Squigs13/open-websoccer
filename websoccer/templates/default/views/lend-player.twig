@@ -13,26 +13,26 @@
 {% block page_content %}
 
 <dl class="dl-horizontal">
-  <dt>{{ i18n.getMessage("entity_player_marktwert") }}</dt>
+  <dt>{{ i18n.getMessage("entity_player_value") }}</dt>
   <dd>{{ player.player_marketvalue|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</dd>
 
-  <dt>{{ i18n.getMessage("entity_player_vertrag_gehalt") }}</dt>
+  <dt>{{ i18n.getMessage("entity_player_contract_salary") }}</dt>
   <dd>{{ player.player_contract_salary|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</dd>
   
-  <dt>{{ i18n.getMessage("entity_player_vertrag_torpraemie") }}</dt>
+  <dt>{{ i18n.getMessage("entity_player_contract_goal_bonus") }}</dt>
   <dd>{{ player.player_contract_goalbonus|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</dd>
   
-  <dt>{{ i18n.getMessage("entity_player_vertrag_spiele") }}</dt>
+  <dt>{{ i18n.getMessage("entity_player_contract_matches") }}</dt>
   <dd>{{ player.player_contract_matches  }} {{ i18n.getMessage("player_details_unit_matches") }}</dd>
 </dl>
 
 <p style="margin-top: 30px"><i class="icon-arrow-right"></i> <a href="{{ env.getInternalUrl("player", "id=" ~ player.player_id) }}">{{ i18n.getMessage("player_navlabel") }}</a></p>
 
-<p>{{ i18n.getMessage("lend-player_intro", env.getConfig("lending_matches_max"))|raw }}</p>
+<p>{{ i18n.getMessage("lend-player_intro", env.getConfig("loan_matches_max"))|raw }}</p>
 
 <form class="form-horizontal" method="post">
 
-	{{ formelements.textfield('fee', i18n.getMessage('entity_player_lending_fee'), env.getRequestParameter('fee'), true, validationMsg, 'number') }}
+	{{ formelements.textfield('fee', i18n.getMessage('entity_player_loan_fee'), env.getRequestParameter('fee'), true, validationMsg, 'number') }}
 	
 	<div class="form-actions">
 		<button type="submit" class="btn btn-primary">{{ i18n.getMessage('button_submit') }}</button>

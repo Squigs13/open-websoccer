@@ -80,17 +80,17 @@ class FormLoginController implements IActionController {
 			$parameter = $userId;
 			
 			// get password salt
-			$result = $this->_db->querySelect("passwort_salt", $fromTable, $whereCondition, $parameter);
+			$result = $this->_db->querySelect("password_salt", $fromTable, $whereCondition, $parameter);
 			$saltinfo = $result->fetch_array();
 			$result->free();
 			
-			$salt = $saltinfo["passwort_salt"];
+			$salt = $saltinfo["password_salt"];
 			if (!strlen($salt)) {
 				$salt = SecurityUtil::generatePasswordSalt();
 			}
 			
 			$sessionToken = SecurityUtil::generateSessionToken($userId, $salt);
-			$columns = array("tokenid" => $sessionToken, "passwort_salt" => $salt);
+			$columns = array("tokenid" => $sessionToken, "password_salt" => $salt);
 			
 			$this->_db->queryUpdate($columns, $fromTable, $whereCondition, $parameter);
 			

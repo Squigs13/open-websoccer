@@ -21,13 +21,13 @@
   <dt>{{ i18n.getMessage("transfer_bid_handmoney") }}</dt>
   <dd>{{ highestbid.hand_money|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</dd>
   {% endif %}
-  <dt>{{ i18n.getMessage("entity_player_vertrag_gehalt") }}</dt>
+  <dt>{{ i18n.getMessage("entity_player_contract_salary") }}</dt>
   <dd>{{ highestbid.contract_salary|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</dd>
   
-  <dt>{{ i18n.getMessage("entity_player_vertrag_torpraemie") }}</dt>
+  <dt>{{ i18n.getMessage("entity_player_contract_goal_bonus") }}</dt>
   <dd>{{ highestbid.contract_goalbonus|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</dd>
   
-  <dt>{{ i18n.getMessage("entity_player_vertrag_spiele") }}</dt>
+  <dt>{{ i18n.getMessage("entity_player_contract_matches") }}</dt>
   <dd>{{ highestbid.contract_matches  }} {{ i18n.getMessage("player_details_unit_matches") }}</dd>
 </dl>
 
@@ -52,11 +52,11 @@
 	{{ formelements.textfield('handmoney', i18n.getMessage('transfer_bid_handmoney'), env.getRequestParameter('handmoney'), false, validationMsg, 'number') }}
 	{% endif %}
 	
-	{{ formelements.textfield('contract_salary', i18n.getMessage('entity_player_vertrag_gehalt'), env.getRequestParameter('contract_salary'), true, validationMsg, 'number') }}
+	{{ formelements.textfield('contract_salary', i18n.getMessage('entity_player_contract_salary'), env.getRequestParameter('contract_salary'), true, validationMsg, 'number') }}
 	
-	{{ formelements.textfield('contract_goal_bonus', i18n.getMessage('entity_player_vertrag_torpraemie'), env.getRequestParameter('contract_goal_bonus'), false, validationMsg, 'number') }}
+	{{ formelements.textfield('contract_goal_bonus', i18n.getMessage('entity_player_contract_goal_bonus'), env.getRequestParameter('contract_goal_bonus'), false, validationMsg, 'number') }}
 	
-	{{ formelements.textfield('contract_matches', i18n.getMessage('entity_player_vertrag_spiele'), env.getRequestParameter('contract_matches'), true, validationMsg, 'number') }}
+	{{ formelements.textfield('contract_matches', i18n.getMessage('entity_player_contract_matches'), env.getRequestParameter('contract_matches'), true, validationMsg, 'number') }}
 	
 	<div class="form-actions">
 		<button type="submit" class="btn btn-primary ajaxSubmit" 

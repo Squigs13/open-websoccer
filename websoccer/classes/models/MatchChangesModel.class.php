@@ -117,9 +117,9 @@ class MatchChangesModel extends FormationModel {
 				'LS' => 'outsideforward',
 				'MS' => 'striker',
 				'RS' => 'outsideforward');
-		$setupPosMapping = array('Abwehr' => 'defense',
-				'Mittelfeld' => 'midfield',
-				'Sturm' => 'striker');
+		$setupPosMapping = array('Defender' => 'defense',
+				'Midfielder' => 'midfield',
+				'Forward' => 'striker');
 		
 		// override formation by user input and count setup
 		for ($playerNo = 1; $playerNo <= 11; $playerNo++) {

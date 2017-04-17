@@ -103,7 +103,7 @@ class ScoutYouthPlayerController implements IActionController {
 		
 		// update last execution time
 		$this->_db->queryUpdate(array("scouting_last_execution" => $now), 
-				$this->_websoccer->getConfig("db_prefix") . "_verein", "id = %d", $clubId);
+				$this->_websoccer->getConfig("db_prefix") . "_club", "id = %d", $clubId);
 		
 		
 		return ($found) ? "youth-team" : "youth-scouting";
@@ -126,36 +126,36 @@ class ScoutYouthPlayerController implements IActionController {
 		$strength = max($minStrength, min($maxStrength, $strength)); // make sure that condigured boundaries are not violated
 		
 		// determine position
-		if ($scout["speciality"] == "Torwart") {
+		if ($scout["speciality"] == "Goalkeeper") {
 			$positionProbabilities = array(
-					"Torwart" => 40,
-					"Abwehr" => 30,
-					"Mittelfeld" => 25,
-					"Sturm" => 5);
-		} elseif ($scout["speciality"] == "Abwehr") {
+					"Goalkeeper" => 40,
+					"Defender" => 30,
+					"Midfielder" => 25,
+					"Forward" => 5);
+		} elseif ($scout["speciality"] == "Defender") {
 			$positionProbabilities = array(
-					"Torwart" => 10,
-					"Abwehr" => 50,
-					"Mittelfeld" => 30,
-					"Sturm" => 10);
-		} elseif ($scout["speciality"] == "Mittelfeld") {
+					"Goalkeeper" => 10,
+					"Defender" => 50,
+					"Midfielder" => 30,
+					"Forward" => 10);
+		} elseif ($scout["speciality"] == "Midfielder") {
 			$positionProbabilities = array(
-					"Torwart" => 10,
-					"Abwehr" => 15,
-					"Mittelfeld" => 60,
-					"Sturm" => 15);
-		} elseif ($scout["speciality"] == "Sturm") {
+					"Goalkeeper" => 10,
+					"Defender" => 15,
+					"Midfielder" => 60,
+					"Forward" => 15);
+		} elseif ($scout["speciality"] == "Forward") {
 			$positionProbabilities = array(
-					"Torwart" => 5,
-					"Abwehr" => 15,
-					"Mittelfeld" => 40,
-					"Sturm" => 40);
+					"Goalkeeper" => 5,
+					"Defender" => 15,
+					"Midfielder" => 40,
+					"Forward" => 40);
 		} else {
 			$positionProbabilities = array(
-					"Torwart" => 15,
-					"Abwehr" => 30,
-					"Mittelfeld" => 35,
-					"Sturm" => 20);
+					"Goalkeeper" => 15,
+					"Defender" => 30,
+					"Midfielder" => 35,
+					"Forward" => 20);
 		}
 		
 		$position = SimulationHelper::selectItemFromProbabilities($positionProbabilities);

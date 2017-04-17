@@ -38,8 +38,8 @@ class YouthMatchesDataService {
 	public static function getYouthMatchinfoById(WebSoccer $websoccer, DbConnection $db, I18n $i18n, $matchId) {
 		$columns = "M.*, HOME.name AS home_team_name, GUEST.name AS guest_team_name";
 		$fromTable = $websoccer->getConfig("db_prefix") . "_youthmatch AS M";
-		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_verein AS HOME ON HOME.id = M.home_team_id";
-		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_verein AS GUEST ON GUEST.id = M.guest_team_id";
+		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_club AS HOME ON HOME.id = M.home_team_id";
+		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_club AS GUEST ON GUEST.id = M.guest_team_id";
 		
 		$result = $db->querySelect($columns, $fromTable, "M.id = %d", $matchId);
 		$match = $result->fetch_array();
@@ -125,22 +125,22 @@ class YouthMatchesDataService {
 		$tablePrefix = $websoccer->getConfig("db_prefix");
 		
 		$fromTable = $tablePrefix . "_youthmatch AS M";
-		$fromTable .= " INNER JOIN " . $tablePrefix . "_verein AS HOME ON M.home_team_id = HOME.id";
-		$fromTable .= " INNER JOIN " . $tablePrefix . "_verein AS GUEST ON M.guest_team_id = GUEST.id";
+		$fromTable .= " INNER JOIN " . $tablePrefix . "_club AS HOME ON M.home_team_id = HOME.id";
+		$fromTable .= " INNER JOIN " . $tablePrefix . "_club AS GUEST ON M.guest_team_id = GUEST.id";
 		$fromTable .= " LEFT JOIN " . $tablePrefix . "_user AS HOMEUSER ON HOME.user_id = HOMEUSER.id";
 		$fromTable .= " LEFT JOIN " . $tablePrefix . "_user AS GUESTUSER ON GUEST.user_id = GUESTUSER.id";
 		
 		// select
 		$columns["M.id"] = "match_id";
 		$columns["HOME.name"] = "home_team";
-		$columns["HOME.bild"] = "home_team_picture";
+		$columns["HOME.image"] = "home_team_picture";
 		$columns["HOME.id"] = "home_id";
 		$columns["HOMEUSER.id"] = "home_user_id";
 		$columns["HOMEUSER.nick"] = "home_user_nick";
 		$columns["HOMEUSER.email"] = "home_user_email";
 		$columns["HOMEUSER.picture"] = "home_user_picture";
 		$columns["GUEST.name"] = "guest_team";
-		$columns["GUEST.bild"] = "guest_team_picture";
+		$columns["GUEST.image"] = "guest_team_picture";
 		$columns["GUEST.id"] = "guest_id";
 		$columns["GUESTUSER.id"] = "guest_user_id";
 		$columns["GUESTUSER.nick"] = "guest_user_nick";

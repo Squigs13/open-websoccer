@@ -44,7 +44,7 @@
 	<message id="stadium_acceptconstruction_err_nonedue">Im Moment gibt es keine Ausbauarbeiten, die fällig sind.</message>
 	
 	<message id="stadium_acceptconstruction_notcompleted_title">Die Arbeiten sind leider noch nicht abgeschlossen.</message>
-	<message id="stadium_acceptconstruction_notcompleted_details">Der Bauträger entschuldigt sich für die Umstände und hat ein neues Fertigstellungsdatum berechnet.</message>
+	<message id="stadium_acceptconstruction_notcompleted_details">Der Bauträger entschuldigt sich für die Umstände und hat ein neues Fertigstellungsdatum simulated.</message>
 	
 	<message id="stadium_acceptconstruction_completed_title">Glückwunsch!</message>
 	<message id="stadium_acceptconstruction_completed_details">Die Arbeiten wurden erfolgreich abgeschlossen. Die neuen Plätze stehen ab sofort für Ihre Zuschauer zur Verfügung.</message>

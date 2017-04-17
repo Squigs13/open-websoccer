@@ -41,7 +41,7 @@ class RandomEventsDataService {
 		}
 		
 		// user must manage at least one team
-		$result = $db->querySelect('id', $websoccer->getConfig('db_prefix') . '_verein', 'user_id = %d AND status = \'1\'', $userId);
+		$result = $db->querySelect('id', $websoccer->getConfig('db_prefix') . '_club', 'user_id = %d AND status = \'1\'', $userId);
 		$clubIds = array();
 		while ($club = $result->fetch_array()) {
 			$clubIds[] = $club['id'];
@@ -57,11 +57,11 @@ class RandomEventsDataService {
 		// do not create an event within first 24 hours of registration
 		$now = $websoccer->getNowAsTimestamp();
 		
-		$result = $db->querySelect('datum_anmeldung', $websoccer->getConfig('db_prefix') . '_user',
+		$result = $db->querySelect('date_registered', $websoccer->getConfig('db_prefix') . '_user',
 				'id = %d', $userId, 1);
 		$user = $result->fetch_array();
 		$result->free();
-		if ($user['datum_anmeldung'] >= ($now - 24 * 3600)) {
+		if ($user['date_registered'] >= ($now - 24 * 3600)) {
 			return;
 		}
 		
@@ -145,9 +145,9 @@ class RandomEventsDataService {
 		} else {
 			
 			// select random player from team
-			$result = $db->querySelect('id, vorname, nachname, kunstname, w_frische, w_kondition, w_zufriedenheit', 
-					$websoccer->getConfig('db_prefix') . '_spieler',
-					'verein_id = %d AND gesperrt = 0 AND verletzt = 0 AND status = \'1\' ORDER BY RAND()', $clubId, 1);
+			$result = $db->querySelect('id, first_name, last_name, nickname, w_fitness, w_stamina, w_morale', 
+					$websoccer->getConfig('db_prefix') . '_player',
+					'club_id = %d AND suspended = 0 AND injured = 0 AND status = \'1\' ORDER BY RAND()', $clubId, 1);
 			$player = $result->fetch_array();
 			$result->free();
 			if (!$player) {
@@ -157,23 +157,23 @@ class RandomEventsDataService {
 			// execute (get update column)
 			switch ($event['effect']) {
 				case 'player_injured':
-					$columns = array('verletzt' => $event['effect_blocked_matches']);
+					$columns = array('injured' => $event['effect_blocked_matches']);
 					break;
 					
 				case 'player_blocked':
-					$columns = array('gesperrt' => $event['effect_blocked_matches']);
+					$columns = array('suspended' => $event['effect_blocked_matches']);
 					break;
 					
 				case 'player_happiness':
-					$columns = array('w_zufriedenheit' => max(1, min(100, $player['w_zufriedenheit'] + $event['effect_skillchange'])));
+					$columns = array('w_morale' => max(1, min(100, $player['w_morale'] + $event['effect_skillchange'])));
 					break;
 					
 				case 'player_fitness':
-					$columns = array('w_frische' => max(1, min(100, $player['w_frische'] + $event['effect_skillchange'])));
+					$columns = array('w_fitness' => max(1, min(100, $player['w_fitness'] + $event['effect_skillchange'])));
 					break;
 					
 				case 'player_stamina':
-					$columns = array('w_kondition' => max(1, min(100, $player['w_kondition'] + $event['effect_skillchange'])));
+					$columns = array('w_stamina' => max(1, min(100, $player['w_stamina'] + $event['effect_skillchange'])));
 					break;
 			}
 			
@@ -181,10 +181,10 @@ class RandomEventsDataService {
 			if (!isset($columns)) {
 				return;
 			}
-			$db->queryUpdate($columns, $websoccer->getConfig('db_prefix') . '_spieler', 'id = %d', $player['id']);
+			$db->queryUpdate($columns, $websoccer->getConfig('db_prefix') . '_player', 'id = %d', $player['id']);
 			
 			// create notification
-			$playerName = (strlen($player['kunstname'])) ? $player['kunstname'] : $player['vorname'] . ' ' . $player['nachname'];
+			$playerName = (strlen($player['nickname'])) ? $player['nickname'] : $player['first_name'] . ' ' . $player['last_name'];
 			NotificationsDataService::createNotification($websoccer, $db, $userId, $subject, array('playername' => $playerName), 
 				$notificationType, 'player', 'id=' . $player['id'], $clubId);
 		}

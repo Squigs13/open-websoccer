@@ -12,11 +12,11 @@
             id="club"
             entity="club"
             navcategory="league"
-            permissionrole="r_daten" >
+            permissionrole="r_data" >
 
-            <entity dbtable="verein AS ClubTab" >
+            <entity dbtable="club AS ClubTab" >
 
-                <overview delete="true" edit="true" logging="true" loggingcolumns="name,liga_id">
+                <overview delete="true" edit="true" logging="true" loggingcolumns="name,league_id">
 
                     <column
                         id="entity_club_name"
@@ -26,7 +26,7 @@
                         filter="true" />
                     
                     <column
-                        id="entity_club_liga_id"
+                        id="entity_club_league_id"
                         field="LeagueTab.name"
                         type="text"
                         sort="true"
@@ -47,14 +47,14 @@
                         filter="true" />
                     
                     <column
-                        id="entity_club_finanz_budget"
-                        field="ClubTab.finanz_budget"
+                        id="entity_club_finance_budget"
+                        field="ClubTab.finance_budget"
                         type="number"
                         sort="true" />
                     
                     <column
                         id="entity_player"
-                        field="(SELECT COUNT(*) FROM {tablePrefix}_spieler AS PlayerTab WHERE PlayerTab.verein_id = ClubTab.id)"
+                        field="(SELECT COUNT(*) FROM {tablePrefix}_player AS PlayerTab WHERE PlayerTab.club_id = ClubTab.id)"
                         type="number"
                         sort="true" />
                     
@@ -63,50 +63,50 @@
                         field="ClubTab.status"
                         type="boolean" />
                     
-                	<join type="LEFT" jointable="liga AS LeagueTab" joincondition="ClubTab.liga_id = LeagueTab.id" />
+                	<join type="LEFT" jointable="league AS LeagueTab" joincondition="ClubTab.league_id = LeagueTab.id" />
 		    		<join type="LEFT" jointable="user AS UserTab" joincondition="ClubTab.user_id = UserTab.id" />
                 </overview>
 
                 <editform>
                     <field id="name" type="text" required="true" />
-					<field id="kurz" type="text" required="true" />
+					<field id="short" type="text" required="true" />
 					<field id="nationalteam" type="boolean" required="false" />
-					<field id="liga_id" type="foreign_key" entity="league" jointable="liga" cascade="delete" labelcolumns="land, name" required="false" default="0" />
+					<field id="league_id" type="foreign_key" entity="league" jointable="league" cascade="delete" labelcolumns="country, name" required="false" default="0" />
 					<field id="user_id" type="foreign_key" entity="users" jointable="user" labelcolumns="nick" />
 					<field id="user_id_actual" type="foreign_key" entity="users" jointable="user" labelcolumns="nick" />
 					<field id="interimmanager" type="boolean" required="false" />
-					<field id="bild" type="file" />
-					<field id="stadion_id" type="foreign_key" entity="stadium"  jointable="stadion" labelcolumns="name" />
+					<field id="image" type="file" />
+					<field id="stadium_id" type="foreign_key" entity="stadium"  jointable="stadium" labelcolumns="name" />
 					<field id="sponsor_id" type="foreign_key" entity="sponsor"  jointable="sponsor" labelcolumns="name" />
-					<field id="sponsor_spiele" type="number" />
-					<field id="finanz_budget" type="number" />
+					<field id="sponsor_matches" type="number" />
+					<field id="finance_budget" type="number" />
 					<field id="min_target_rank" type="number" default="0" />
-					<field id="preis_stehen" type="number" />
-					<field id="preis_sitz" type="number" />
-					<field id="preis_haupt_stehen" type="number" />
-					<field id="preis_haupt_sitze" type="number" />
-					<field id="preis_vip" type="number" />
-					<field id="last_steh" type="number" editonly="true" />
-					<field id="last_sitz" type="number" editonly="true" />
-					<field id="last_haupt_steh" type="number" editonly="true" />
-					<field id="last_haupt_sitz" type="number" editonly="true" />
+					<field id="price_stand" type="number" />
+					<field id="price_seat" type="number" />
+					<field id="price_main_stand" type="number" />
+					<field id="price_main_seat" type="number" />
+					<field id="price_vip" type="number" />
+					<field id="last_standing" type="number" editonly="true" />
+					<field id="last_seat" type="number" editonly="true" />
+					<field id="last_main_standing" type="number" editonly="true" />
+					<field id="last_main_seat" type="number" editonly="true" />
 					<field id="last_vip" type="number" editonly="true" />
-					<field id="meisterschaften" type="number" editonly="true" />
-					<field id="st_tore" type="number" editonly="true" />
-					<field id="st_gegentore" type="number" editonly="true" />
-					<field id="st_spiele" type="number" editonly="true" />
-					<field id="st_siege" type="number" editonly="true" />
-					<field id="st_niederlagen" type="number" editonly="true" />
-					<field id="st_unentschieden" type="number" editonly="true" />
-					<field id="st_punkte" type="number" editonly="true" />
-					<field id="sa_tore" type="number" editonly="true" />
-					<field id="sa_gegentore" type="number" editonly="true" />
-					<field id="sa_spiele" type="number" editonly="true" />
-					<field id="sa_siege" type="number" editonly="true" />
-					<field id="sa_niederlagen" type="number" editonly="true" />
-					<field id="sa_unentschieden" type="number" editonly="true" />
-					<field id="sa_punkte" type="number" editonly="true" />
-					<field id="captain_id" type="foreign_key" entity="player" jointable="spieler" labelcolumns="vorname,nachname,kunstname" required="false" default="0" />
+					<field id="championships" type="number" editonly="true" />
+					<field id="st_goals" type="number" editonly="true" />
+					<field id="st_goals_conceded" type="number" editonly="true" />
+					<field id="st_matches" type="number" editonly="true" />
+					<field id="st_wins" type="number" editonly="true" />
+					<field id="st_losses" type="number" editonly="true" />
+					<field id="st_draws" type="number" editonly="true" />
+					<field id="st_points" type="number" editonly="true" />
+					<field id="sa_goals" type="number" editonly="true" />
+					<field id="sa_goals_conceded" type="number" editonly="true" />
+					<field id="sa_matches" type="number" editonly="true" />
+					<field id="sa_wins" type="number" editonly="true" />
+					<field id="sa_losses" type="number" editonly="true" />
+					<field id="sa_draws" type="number" editonly="true" />
+					<field id="sa_points" type="number" editonly="true" />
+					<field id="captain_id" type="foreign_key" entity="player" jointable="player" labelcolumns="first_name,last_name,nickname" required="false" default="0" />
 					<field id="history" type="textarea" />
 					<field id="status" type="boolean" default="1" />
                 </editform>

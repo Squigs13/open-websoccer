@@ -35,7 +35,7 @@ class LeagueDataService {
 	 * @return array data about league or empty array if league could not be found.
 	 */
 	public static function getLeagueById(WebSoccer $websoccer, DbConnection $db, $leagueId) {
-		$fromTable = $websoccer->getConfig("db_prefix") . "_liga AS L";
+		$fromTable = $websoccer->getConfig("db_prefix") . "_league AS L";
 	
 		// where
 		$whereCondition = "L.id = %d";
@@ -44,8 +44,8 @@ class LeagueDataService {
 		// select
 		$columns["L.id"] = "league_id";
 		$columns["L.name"] = "league_name";
-		$columns["L.kurz"] = "league_short";
-		$columns["L.land"] = "league_country";
+		$columns["L.short"] = "league_short";
+		$columns["L.country"] = "league_country";
 	
 		$leagueinfos = $db->queryCachedSelect($columns, $fromTable, $whereCondition, $parameters, 1);
 		$league = (isset($leagueinfos[0])) ? $leagueinfos[0] : array();
@@ -62,7 +62,7 @@ class LeagueDataService {
 	 * @return array list of leagues or empty array.
 	 */
 	public static function getLeaguesSortedByCountry(WebSoccer $websoccer, DbConnection $db) {
-		$fromTable = $websoccer->getConfig("db_prefix") . "_liga AS L";
+		$fromTable = $websoccer->getConfig("db_prefix") . "_league AS L";
 	
 		// where
 		$whereCondition = "1 ORDER BY league_country ASC, league_name ASC";
@@ -70,8 +70,8 @@ class LeagueDataService {
 		// select
 		$columns["L.id"] = "league_id";
 		$columns["L.name"] = "league_name";
-		$columns["L.kurz"] = "league_short";
-		$columns["L.land"] = "league_country";
+		$columns["L.short"] = "league_short";
+		$columns["L.country"] = "league_country";
 	
 		return $db->queryCachedSelect($columns, $fromTable, $whereCondition);
 	}
@@ -84,7 +84,7 @@ class LeagueDataService {
 	 * @return int total number of leagues.
 	 */
 	public static function countTotalLeagues(WebSoccer $websoccer, DbConnection $db) {
-		$result = $db->querySelect("COUNT(*) AS hits", $websoccer->getConfig("db_prefix") . "_liga",
+		$result = $db->querySelect("COUNT(*) AS hits", $websoccer->getConfig("db_prefix") . "_league",
 				"1=1");
 		$leagues = $result->fetch_array();
 		$result->free();

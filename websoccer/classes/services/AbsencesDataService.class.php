@@ -68,7 +68,7 @@ class AbsencesDataService {
 		$db->queryUpdate(array(
 				'user_id' => $deputyId,
 				'user_id_actual' => $userId
-				), $websoccer->getConfig('db_prefix') . '_verein', 'user_id = %d', $userId);
+				), $websoccer->getConfig('db_prefix') . '_club', 'user_id = %d', $userId);
 	
 		// create notification for deputy
 		$user = UsersDataService::getUserById($websoccer, $db, $userId);
@@ -96,7 +96,7 @@ class AbsencesDataService {
 		$db->queryUpdate(array(
 				'user_id' => $userId,
 				'user_id_actual' => NULL
-		), $websoccer->getConfig('db_prefix') . '_verein', 'user_id_actual = %d', $userId);
+		), $websoccer->getConfig('db_prefix') . '_club', 'user_id_actual = %d', $userId);
 		
 		// delete absence(s)
 		$db->queryDelete($websoccer->getConfig('db_prefix') . '_userabsence', 'user_id', $userId);

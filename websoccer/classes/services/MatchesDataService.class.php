@@ -29,13 +29,13 @@ class MatchesDataService {
 		$fromTable = self::_getFromPart($websoccer);
 	
 		// where
-		$whereCondition = 'M.berechnet != \'1\' AND (HOME.id = %d OR GUEST.id = %d) AND M.datum > %d ORDER BY M.datum ASC';
+		$whereCondition = 'M.simulated != \'1\' AND (HOME.id = %d OR GUEST.id = %d) AND M.date > %d ORDER BY M.date ASC';
 		$parameters = array($clubId, $clubId, $websoccer->getNowAsTimestamp());
 	
 		// select
 		$columns['M.id'] = 'match_id';
-		$columns['M.datum'] = 'match_date';
-		$columns['M.spieltyp'] = 'match_type';
+		$columns['M.date'] = 'match_date';
+		$columns['M.matchtype'] = 'match_type';
 		$columns['HOME.id'] = 'match_home_id';
 		$columns['HOME.name'] = 'match_home_name';
 		$columns['GUEST.id'] = 'match_guest_id';
@@ -54,18 +54,18 @@ class MatchesDataService {
 
 	public static function getNextMatch(WebSoccer $websoccer, DbConnection $db, $clubId) {
 		$fromTable = self::_getFromPart($websoccer);
-		$formationTable = $websoccer->getConfig('db_prefix') . '_aufstellung';
-		$fromTable .= ' LEFT JOIN ' . $formationTable . ' AS HOME_F ON HOME_F.verein_id = HOME.id AND HOME_F.match_id = M.id';
-		$fromTable .= ' LEFT JOIN ' . $formationTable . ' AS GUEST_F ON GUEST_F.verein_id = GUEST.id AND GUEST_F.match_id = M.id';
+		$formationTable = $websoccer->getConfig('db_prefix') . '_tactics';
+		$fromTable .= ' LEFT JOIN ' . $formationTable . ' AS HOME_F ON HOME_F.club_id = HOME.id AND HOME_F.match_id = M.id';
+		$fromTable .= ' LEFT JOIN ' . $formationTable . ' AS GUEST_F ON GUEST_F.club_id = GUEST.id AND GUEST_F.match_id = M.id';
 		
 		// where
-		$whereCondition = 'M.berechnet != \'1\' AND (HOME.id = %d OR GUEST.id = %d) AND M.datum > %d ORDER BY M.datum ASC';
+		$whereCondition = 'M.simulated != \'1\' AND (HOME.id = %d OR GUEST.id = %d) AND M.date > %d ORDER BY M.date ASC';
 		$parameters = array($clubId, $clubId, $websoccer->getNowAsTimestamp());
 		
 		// select
 		$columns['M.id'] = 'match_id';
-		$columns['M.datum'] = 'match_date';
-		$columns['M.spieltyp'] = 'match_type';
+		$columns['M.date'] = 'match_date';
+		$columns['M.matchtype'] = 'match_type';
 		$columns['HOME.id'] = 'match_home_id';
 		$columns['HOME.name'] = 'match_home_name';
 		$columns['HOME_F.id'] = 'match_home_formation_id';
@@ -89,13 +89,13 @@ class MatchesDataService {
 		$fromTable = self::_getFromPart($websoccer);
 	
 		// where
-		$whereCondition = 'M.berechnet != \'1\' AND M.minutes > 0 AND (HOME.user_id = %d OR GUEST.user_id = %d) AND M.datum < %d ORDER BY M.datum DESC';
+		$whereCondition = 'M.simulated != \'1\' AND M.minutes > 0 AND (HOME.user_id = %d OR GUEST.user_id = %d) AND M.date < %d ORDER BY M.date DESC';
 		$parameters = array($websoccer->getUser()->id, $websoccer->getUser()->id, $websoccer->getNowAsTimestamp());
 	
 		// select
 		$columns['M.id'] = 'match_id';
-		$columns['M.datum'] = 'match_date';
-		$columns['M.spieltyp'] = 'match_type';
+		$columns['M.date'] = 'match_date';
+		$columns['M.matchtype'] = 'match_type';
 		$columns['HOME.id'] = 'match_home_id';
 		$columns['HOME.name'] = 'match_home_name';
 		$columns['GUEST.id'] = 'match_guest_id';
@@ -117,14 +117,14 @@ class MatchesDataService {
 		$fromTable = self::_getFromPart($websoccer);
 		
 		if ($loadStadiumInfo) {
-			$fromTable .= ' LEFT JOIN '. $websoccer->getConfig('db_prefix') . '_stadion AS S ON  S.id = IF(M.stadion_id IS NOT NULL, M.stadion_id, HOME.stadion_id)';
+			$fromTable .= ' LEFT JOIN '. $websoccer->getConfig('db_prefix') . '_stadium AS S ON  S.id = IF(M.stadium_id IS NOT NULL, M.stadium_id, HOME.stadium_id)';
 			$columns['S.name'] = 'match_stadium_name';
 		}
 		
 		if ($loadSeasonInfo) {
-			$fromTable .= ' LEFT JOIN '. $websoccer->getConfig('db_prefix') . '_saison AS SEASON ON SEASON.id = M.saison_id';
+			$fromTable .= ' LEFT JOIN '. $websoccer->getConfig('db_prefix') . '_season AS SEASON ON SEASON.id = M.season_id';
 			$columns['SEASON.name'] = 'match_season_name';
-			$columns['SEASON.liga_id'] = 'match_league_id';
+			$columns['SEASON.league_id'] = 'match_league_id';
 		}
 	
 		// where
@@ -133,48 +133,48 @@ class MatchesDataService {
 	
 		// select
 		$columns['M.id'] = 'match_id';
-		$columns['M.datum'] = 'match_date';
-		$columns['M.spieltyp'] = 'match_type';
+		$columns['M.date'] = 'match_date';
+		$columns['M.matchtype'] = 'match_type';
 		$columns['HOME.id'] = 'match_home_id';
 		$columns['HOME.name'] = 'match_home_name';
 		$columns['HOME.nationalteam'] = 'match_home_nationalteam';
-		$columns['HOME.bild'] = 'match_home_picture';
+		$columns['HOME.image'] = 'match_home_picture';
 		$columns['GUEST.id'] = 'match_guest_id';
 		$columns['GUEST.name'] = 'match_guest_name';
 		$columns['GUEST.nationalteam'] = 'match_guest_nationalteam';
-		$columns['GUEST.bild'] = 'match_guest_picture';
-		$columns['M.pokalname'] = 'match_cup_name';
-		$columns['M.pokalrunde'] = 'match_cup_round';
-		$columns['M.spieltag'] = 'match_matchday';
-		$columns['M.saison_id'] = 'match_season_id';
-		$columns['M.berechnet'] = 'match_simulated';
-		$columns['M.home_tore'] = 'match_goals_home';
-		$columns['M.gast_tore'] = 'match_goals_guest';
-		$columns['M.bericht'] = 'match_deprecated_report';
+		$columns['GUEST.image'] = 'match_guest_picture';
+		$columns['M.cup_name'] = 'match_cup_name';
+		$columns['M.cup_round'] = 'match_cup_round';
+		$columns['M.matchday'] = 'match_matchday';
+		$columns['M.season_id'] = 'match_season_id';
+		$columns['M.simulated'] = 'match_simulated';
+		$columns['M.home_goals'] = 'match_goals_home';
+		$columns['M.guest_goals'] = 'match_goals_guest';
+		$columns['M.report'] = 'match_deprecated_report';
 		$columns['M.minutes'] = 'match_minutes';
 		$columns['M.home_noformation'] = 'match_home_noformation';
 		$columns['M.guest_noformation'] = 'match_guest_noformation';
-		$columns['M.zuschauer'] = 'match_audience';
+		$columns['M.crowd'] = 'match_audience';
 		$columns['M.soldout'] = 'match_soldout';
-		$columns['M.elfmeter'] = 'match_penalty_enabled';
+		$columns['M.penalty_kicks'] = 'match_penalty_enabled';
 		$columns['M.home_offensive'] = 'match_home_offensive';
-		$columns['M.gast_offensive'] = 'match_guest_offensive';
+		$columns['M.guest_offensive'] = 'match_guest_offensive';
 		$columns['M.home_longpasses'] = 'match_home_longpasses';
-		$columns['M.gast_longpasses'] = 'match_guest_longpasses';
+		$columns['M.guest_longpasses'] = 'match_guest_longpasses';
 		$columns['M.home_counterattacks'] = 'match_home_counterattacks';
-		$columns['M.gast_counterattacks'] = 'match_guest_counterattacks';
+		$columns['M.guest_counterattacks'] = 'match_guest_counterattacks';
 		
 		// data about substitutions
 		for ($subNo = 1; $subNo <= 3; $subNo++) {
-			$columns['M.home_w' . $subNo . '_raus'] = 'match_home_sub' . $subNo . '_out';
-			$columns['M.home_w' . $subNo . '_rein'] = 'match_home_sub' . $subNo . '_in';
+			$columns['M.home_w' . $subNo . '_out'] = 'match_home_sub' . $subNo . '_out';
+			$columns['M.home_w' . $subNo . '_in'] = 'match_home_sub' . $subNo . '_in';
 			$columns['M.home_w' . $subNo . '_minute'] = 'match_home_sub' . $subNo . '_minute';
 			$columns['M.home_w' . $subNo . '_condition'] = 'match_home_sub' . $subNo . '_condition';
 			
-			$columns['M.gast_w' . $subNo . '_raus'] = 'match_guest_sub' . $subNo . '_out';
-			$columns['M.gast_w' . $subNo . '_rein'] = 'match_guest_sub' . $subNo . '_in';
-			$columns['M.gast_w' . $subNo . '_minute'] = 'match_guest_sub' . $subNo . '_minute';
-			$columns['M.gast_w' . $subNo . '_condition'] = 'match_guest_sub' . $subNo . '_condition';
+			$columns['M.guest_w' . $subNo . '_out'] = 'match_guest_sub' . $subNo . '_out';
+			$columns['M.guest_w' . $subNo . '_in'] = 'match_guest_sub' . $subNo . '_in';
+			$columns['M.guest_w' . $subNo . '_minute'] = 'match_guest_sub' . $subNo . '_minute';
+			$columns['M.guest_w' . $subNo . '_condition'] = 'match_guest_sub' . $subNo . '_condition';
 		}
 		
 		$matchinfos = $db->queryCachedSelect($columns, $fromTable, $whereCondition, $parameters, 1);
@@ -188,7 +188,7 @@ class MatchesDataService {
 	}
 	
 	public static function getMatchSubstitutionsById(WebSoccer $websoccer, DbConnection $db, $matchId) {
-		$fromTable = $websoccer->getConfig('db_prefix') . '_spiel AS M';
+		$fromTable = $websoccer->getConfig('db_prefix') . '_match AS M';
 	
 		// where
 		$whereCondition = 'M.id = %d';
@@ -196,9 +196,9 @@ class MatchesDataService {
 	
 		// select
 		$columns['M.id'] = 'match_id';
-		$columns['M.home_verein'] = 'match_home_id';
-		$columns['M.gast_verein'] = 'match_guest_id';
-		$columns['M.berechnet'] = 'match_simulated';
+		$columns['M.home_club'] = 'match_home_id';
+		$columns['M.guest_club'] = 'match_guest_id';
+		$columns['M.simulated'] = 'match_simulated';
 		$columns['M.minutes'] = 'match_minutes';
 		
 		$columns['M.home_offensive'] = 'match_home_offensive';
@@ -207,24 +207,24 @@ class MatchesDataService {
 		$columns['M.home_counterattacks'] = 'match_home_counterattacks';
 		$columns['M.home_freekickplayer'] = 'match_home_freekickplayer';
 		
-		$columns['M.gast_offensive_changed'] = 'match_guest_offensive_changed';
-		$columns['M.gast_offensive'] = 'match_guest_offensive';
-		$columns['M.gast_longpasses'] = 'match_guest_longpasses';
-		$columns['M.gast_counterattacks'] = 'match_guest_counterattacks';
-		$columns['M.gast_freekickplayer'] = 'match_guest_freekickplayer';
+		$columns['M.guest_offensive_changed'] = 'match_guest_offensive_changed';
+		$columns['M.guest_offensive'] = 'match_guest_offensive';
+		$columns['M.guest_longpasses'] = 'match_guest_longpasses';
+		$columns['M.guest_counterattacks'] = 'match_guest_counterattacks';
+		$columns['M.guest_freekickplayer'] = 'match_guest_freekickplayer';
 		
 		for ($subNo = 1; $subNo <= 3; $subNo++) {
-			$columns['M.home_w'. $subNo . '_raus'] = 'home_sub'. $subNo . '_out';
-			$columns['M.home_w'. $subNo . '_rein'] = 'home_sub'. $subNo . '_in';
+			$columns['M.home_w'. $subNo . '_out'] = 'home_sub'. $subNo . '_out';
+			$columns['M.home_w'. $subNo . '_in'] = 'home_sub'. $subNo . '_in';
 			$columns['M.home_w'. $subNo . '_minute'] = 'home_sub'. $subNo . '_minute';
 			$columns['M.home_w'. $subNo . '_condition'] = 'home_sub'. $subNo . '_condition';
 			$columns['M.home_w'. $subNo . '_position'] = 'home_sub'. $subNo . '_position';
 			
-			$columns['M.gast_w'. $subNo . '_raus'] = 'guest_sub'. $subNo . '_out';
-			$columns['M.gast_w'. $subNo . '_rein'] = 'guest_sub'. $subNo . '_in';
-			$columns['M.gast_w'. $subNo . '_minute'] = 'guest_sub'. $subNo . '_minute';
-			$columns['M.gast_w'. $subNo . '_condition'] = 'guest_sub'. $subNo . '_condition';
-			$columns['M.gast_w'. $subNo . '_position'] = 'guest_sub'. $subNo . '_position';
+			$columns['M.guest_w'. $subNo . '_out'] = 'guest_sub'. $subNo . '_out';
+			$columns['M.guest_w'. $subNo . '_in'] = 'guest_sub'. $subNo . '_in';
+			$columns['M.guest_w'. $subNo . '_minute'] = 'guest_sub'. $subNo . '_minute';
+			$columns['M.guest_w'. $subNo . '_condition'] = 'guest_sub'. $subNo . '_condition';
+			$columns['M.guest_w'. $subNo . '_position'] = 'guest_sub'. $subNo . '_position';
 		}
 	
 		$matchinfos = $db->queryCachedSelect($columns, $fromTable, $whereCondition, $parameters, 1);
@@ -235,7 +235,7 @@ class MatchesDataService {
 	
 	public static function getLastMatch(WebSoccer $websoccer, DbConnection $db) {
 		// where
-		$whereCondition = 'M.berechnet = 1 AND (HOME.user_id = %d OR GUEST.user_id = %d) AND M.datum < %d ORDER BY M.datum DESC';
+		$whereCondition = 'M.simulated = 1 AND (HOME.user_id = %d OR GUEST.user_id = %d) AND M.date < %d ORDER BY M.date DESC';
 		$parameters = array($websoccer->getUser()->id, $websoccer->getUser()->id, $websoccer->getNowAsTimestamp());
 	
 		return self::_getMatchSummaryByCondition($websoccer, $db, $whereCondition, $parameters);
@@ -243,7 +243,7 @@ class MatchesDataService {
 	
 	public static function getLiveMatchByTeam(WebSoccer $websoccer, DbConnection $db, $teamId) {
 		// where
-		$whereCondition = 'M.berechnet != 1 AND (HOME.id = %d OR GUEST.id = %d) AND M.minutes > 0 ORDER BY M.datum DESC';
+		$whereCondition = 'M.simulated != 1 AND (HOME.id = %d OR GUEST.id = %d) AND M.minutes > 0 ORDER BY M.date DESC';
 		$parameters = array($teamId, $teamId);
 	
 		return self::_getMatchSummaryByCondition($websoccer, $db, $whereCondition, $parameters);
@@ -254,14 +254,14 @@ class MatchesDataService {
 	
 		// select
 		$columns['M.id'] = 'match_id';
-		$columns['M.datum'] = 'match_date';
-		$columns['M.spieltyp'] = 'match_type';
+		$columns['M.date'] = 'match_date';
+		$columns['M.matchtype'] = 'match_type';
 		$columns['HOME.id'] = 'match_home_id';
 		$columns['HOME.name'] = 'match_home_name';
 		$columns['GUEST.id'] = 'match_guest_id';
 		$columns['GUEST.name'] = 'match_guest_name';
-		$columns['M.home_tore'] = 'match_goals_home';
-		$columns['M.gast_tore'] = 'match_goals_guest';
+		$columns['M.home_goals'] = 'match_goals_home';
+		$columns['M.guest_goals'] = 'match_goals_guest';
 	
 		$matchinfos = $db->queryCachedSelect($columns, $fromTable, $whereCondition, $parameters, 1);
 	
@@ -279,15 +279,15 @@ class MatchesDataService {
 		$fromTable = self::_getFromPart($websoccer);
 		
 		// where
-		$whereCondition = 'M.berechnet = 1 AND (HOME.id = %d AND GUEST.id = %d OR HOME.id = %d AND GUEST.id = %d) ORDER BY M.datum DESC';
+		$whereCondition = 'M.simulated = 1 AND (HOME.id = %d AND GUEST.id = %d OR HOME.id = %d AND GUEST.id = %d) ORDER BY M.date DESC';
 		$parameters = array($matchinfo['match_home_id'], $matchinfo['match_guest_id'], $matchinfo['match_guest_id'], $matchinfo['match_home_id']);
 		
 		// select
 		$columns['M.id'] = 'id';
 		$columns['HOME.name'] = 'home_team';
 		$columns['GUEST.name'] = 'guest_team';
-		$columns['M.home_tore'] = 'home_goals';
-		$columns['M.gast_tore'] = 'guest_goals';
+		$columns['M.home_goals'] = 'home_goals';
+		$columns['M.guest_goals'] = 'guest_goals';
 		
 		$matches = array();
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters, 4);
@@ -320,7 +320,7 @@ class MatchesDataService {
 	
 	public static function getMatchesByMatchday(WebSoccer $websoccer, DbConnection $db, $seasonId, $matchDay) {
 		// where
-		$whereCondition = 'M.saison_id = %d AND M.spieltag = %d  ORDER BY M.datum ASC';
+		$whereCondition = 'M.season_id = %d AND M.matchday = %d  ORDER BY M.date ASC';
 		$parameters = array($seasonId, $matchDay);
 	
 		return self::getMatchesByCondition($websoccer, $db, $whereCondition, $parameters, 50);
@@ -328,7 +328,7 @@ class MatchesDataService {
 	
 	public static function getMatchesByCupRound(WebSoccer $websoccer, DbConnection $db, $cupName, $cupRound) {
 		// where
-		$whereCondition = 'M.pokalname = \'%s\' AND M.pokalrunde = \'%s\'  ORDER BY M.datum ASC';
+		$whereCondition = 'M.cup_name = \'%s\' AND M.cup_round = \'%s\'  ORDER BY M.date ASC';
 		$parameters = array($cupName, $cupRound);
 	
 		return self::getMatchesByCondition($websoccer, $db, $whereCondition, $parameters, 50);
@@ -336,7 +336,7 @@ class MatchesDataService {
 	
 	public static function getMatchesByCupRoundAndGroup(WebSoccer $websoccer, DbConnection $db, $cupName, $cupRound, $cupGroup) {
 		// where
-		$whereCondition = 'M.pokalname = \'%s\' AND M.pokalrunde = \'%s\' AND M.pokalgruppe = \'%s\' ORDER BY M.datum ASC';
+		$whereCondition = 'M.cup_name = \'%s\' AND M.cup_round = \'%s\' AND M.cup_group = \'%s\' ORDER BY M.date ASC';
 		$parameters = array($cupName, $cupRound, $cupGroup);
 	
 		return self::getMatchesByCondition($websoccer, $db, $whereCondition, $parameters, 50);
@@ -344,11 +344,11 @@ class MatchesDataService {
 	
 	public static function getLatestMatches(WebSoccer $websoccer, DbConnection $db, $limit = 20, $ignoreFriendlies = FALSE) {
 		// where
-		$whereCondition = 'M.berechnet = 1';
+		$whereCondition = 'M.simulated = 1';
 		if ($ignoreFriendlies) {
-			$whereCondition .= ' AND M.spieltyp != \'Freundschaft\'';
+			$whereCondition .= ' AND M.matchtype != \'friendly\'';
 		}
-		$whereCondition .= ' ORDER BY M.datum DESC';
+		$whereCondition .= ' ORDER BY M.date DESC';
 		$parameters = array();
 	
 		return self::getMatchesByCondition($websoccer, $db, $whereCondition, $parameters, $limit);
@@ -356,7 +356,7 @@ class MatchesDataService {
 	
 	public static function getLatestMatchesByUser(WebSoccer $websoccer, DbConnection $db, $userId) {
 		// where
-		$whereCondition = 'M.berechnet = 1 AND (M.home_user_id = %d OR M.gast_user_id = %d) ORDER BY M.datum DESC';
+		$whereCondition = 'M.simulated = 1 AND (M.home_user_id = %d OR M.guest_user_id = %d) ORDER BY M.date DESC';
 		$parameters = array($userId, $userId);
 	
 		return self::getMatchesByCondition($websoccer, $db, $whereCondition, $parameters, 20);
@@ -364,7 +364,7 @@ class MatchesDataService {
 	
 	public static function getLatestMatchesByTeam(WebSoccer $websoccer, DbConnection $db, $teamId) {
 		// where
-		$whereCondition = 'M.berechnet = 1 AND (HOME.id = %d OR GUEST.id = %d) ORDER BY M.datum DESC';
+		$whereCondition = 'M.simulated = 1 AND (HOME.id = %d OR GUEST.id = %d) ORDER BY M.date DESC';
 		$parameters = array($teamId, $teamId);
 	
 		return self::getMatchesByCondition($websoccer, $db, $whereCondition, $parameters, 20);
@@ -376,7 +376,7 @@ class MatchesDataService {
 		$endTs = $startTs + 3600 * 24;
 		
 		// where
-		$whereCondition = 'M.datum >= %d AND M.datum < %d ORDER BY M.datum ASC';
+		$whereCondition = 'M.date >= %d AND M.date < %d ORDER BY M.date ASC';
 		$parameters = array($startTs, $endTs);
 	
 		$limit = $startIndex .','. $entries_per_page;
@@ -389,10 +389,10 @@ class MatchesDataService {
 		$endTs = $startTs + 3600 * 24;
 	
 		// where
-		$whereCondition = 'M.datum >= %d AND M.datum < %d';
+		$whereCondition = 'M.date >= %d AND M.date < %d';
 		$parameters = array($startTs, $endTs);
 		
-		$result = $db->querySelect('COUNT(*) AS hits', $websoccer->getConfig('db_prefix') . '_spiel AS M', $whereCondition, $parameters);
+		$result = $db->querySelect('COUNT(*) AS hits', $websoccer->getConfig('db_prefix') . '_match AS M', $whereCondition, $parameters);
 		$matches = $result->fetch_array();
 		$result->free();
 		
@@ -406,16 +406,16 @@ class MatchesDataService {
 	
 	public static function getMatchesByTeamAndTimeframe(WebSoccer $websoccer, DbConnection $db, $teamId, $dateStart, $dateEnd) {
 		// where
-		$whereCondition = '(HOME.id = %d OR GUEST.id = %d) AND datum >= %d AND datum <= %d ORDER BY M.datum DESC';
+		$whereCondition = '(HOME.id = %d OR GUEST.id = %d) AND date >= %d AND date <= %d ORDER BY M.date DESC';
 		$parameters = array($teamId, $teamId, $dateStart, $dateEnd);
 	
 		return self::getMatchesByCondition($websoccer, $db, $whereCondition, $parameters, 20);
 	}
 	
 	public static function getMatchdayNumberOfTeam(WebSoccer $websoccer, DbConnection $db, $teamId) {
-		$columns = 'spieltag AS matchday';
-		$fromTable = $websoccer->getConfig('db_prefix') . '_spiel';
-		$whereCondition = 'spieltyp = \'Ligaspiel\' AND berechnet = 1 AND (home_verein = %d OR gast_verein = %d) ORDER BY datum DESC';
+		$columns = 'matchday AS matchday';
+		$fromTable = $websoccer->getConfig('db_prefix') . '_match';
+		$whereCondition = 'matchtype = \'leaguematch\' AND simulated = 1 AND (home_club = %d OR guest_club = %d) ORDER BY date DESC';
 		$parameters = array($teamId, $teamId);
 		
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters, 1);
@@ -431,37 +431,37 @@ class MatchesDataService {
 	
 	public static function getMatchReportPlayerRecords(WebSoccer $websoccer, DbConnection $db, $matchId, $teamId) {
 		
-		$fromTable = $websoccer->getConfig('db_prefix') . '_spiel_berechnung AS M';
-		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_spieler AS P ON P.id = M.spieler_id';
+		$fromTable = $websoccer->getConfig('db_prefix') . '_match_simulation AS M';
+		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_player AS P ON P.id = M.player_id';
 		
 		$columns['P.id'] = 'id';
-		$columns['P.vorname'] = 'firstName';
-		$columns['P.nachname'] = 'lastName';
-		$columns['P.kunstname'] = 'pseudonym';
+		$columns['P.first_name'] = 'firstName';
+		$columns['P.last_name'] = 'lastName';
+		$columns['P.nickname'] = 'pseudonym';
 		$columns['P.position'] = 'position';
 		
 		$columns['M.position_main'] = 'position_main';
 		
-		$columns['M.note'] = 'grade';
-		$columns['M.tore'] = 'goals';
-		$columns['M.verletzt'] = 'injured';
-		$columns['M.gesperrt'] = 'blocked';
-		$columns['M.karte_gelb'] = 'yellowCards';
-		$columns['M.karte_rot'] = 'redCard';
-		$columns['M.feld'] = 'playstatus';
-		$columns['M.minuten_gespielt'] = 'minutesPlayed';
+		$columns['M.rating'] = 'grade';
+		$columns['M.goals'] = 'goals';
+		$columns['M.injured'] = 'injured';
+		$columns['M.suspended'] = 'blocked';
+		$columns['M.yellow_card'] = 'yellowCards';
+		$columns['M.red_card'] = 'redCard';
+		$columns['M.field'] = 'playstatus';
+		$columns['M.minutes_played'] = 'minutesPlayed';
 		$columns['M.assists'] = 'assists';
-		$columns['M.ballcontacts'] = 'ballcontacts';
+		$columns['M.touches'] = 'touches';
 		$columns['M.wontackles'] = 'wontackles';
 		$columns['M.losttackles'] = 'losttackles';
-		$columns['M.shoots'] = 'shoots';
-		$columns['M.passes_successed'] = 'passes_successed';
+		$columns['M.shots'] = 'shots';
+		$columns['M.passes_successful'] = 'passes_successful';
 		$columns['M.passes_failed'] = 'passes_failed';
 		$columns['M.age'] = 'age';
-		$columns['M.w_staerke'] = 'strength';
+		$columns['M.w_strength'] = 'strength';
 		
 		$order = 'field(M.position_main, \'T\', \'LV\', \'IV\', \'RV\', \'DM\', \'LM\', \'ZM\', \'RM\', \'OM\', \'LS\', \'MS\', \'RS\')';
-		$whereCondition = 'M.spiel_id = %d AND M.team_id = %d AND M.feld != \'Ersatzbank\' ORDER BY ' . $order . ', M.id ASC';
+		$whereCondition = 'M.match_id = %d AND M.team_id = %d AND M.field != \'Bench\' ORDER BY ' . $order . ', M.id ASC';
 		$parameters = array($matchId, $teamId);
 		
 		$players = $db->queryCachedSelect($columns, $fromTable, $whereCondition, $parameters);
@@ -470,45 +470,45 @@ class MatchesDataService {
 	
 	public static function getMatchPlayerRecordsByField(WebSoccer $websoccer, DbConnection $db, $matchId, $teamId) {
 	
-		$fromTable = $websoccer->getConfig('db_prefix') . '_spiel_berechnung AS M';
-		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_spieler AS P ON P.id = M.spieler_id';
+		$fromTable = $websoccer->getConfig('db_prefix') . '_match_simulation AS M';
+		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_player AS P ON P.id = M.player_id';
 		
 		$columns = array(
 				'P.id' => 'id',
-				'P.vorname' => 'firstname',
-				'P.nachname' => 'lastname',
-				'P.kunstname' => 'pseudonym',
-				'P.verletzt' => 'matches_injured',
+				'P.first_name' => 'firstname',
+				'P.last_name' => 'lastname',
+				'P.nickname' => 'pseudonym',
+				'P.injured' => 'matches_injured',
 				'P.position' => 'position',
 				'P.position_main' => 'position_main',
 				'P.position_second' => 'position_second',
-				'P.w_staerke' => 'strength',
-				'P.w_technik' => 'strength_technique',
-				'P.w_kondition' => 'strength_stamina',
-				'P.w_frische' => 'strength_freshness',
-				'P.w_zufriedenheit' => 'strength_satisfaction',
+				'P.w_strength' => 'strength',
+				'P.w_technique' => 'strength_technique',
+				'P.w_stamina' => 'strength_stamina',
+				'P.w_fitness' => 'strength_freshness',
+				'P.w_morale' => 'strength_satisfaction',
 				'P.nation' => 'player_nationality',
 				'P.picture' => 'picture',
-				'P.sa_tore' => 'st_goals',
-				'P.sa_spiele' => 'st_matches',
-				'P.sa_karten_gelb' => 'st_cards_yellow',
-				'P.sa_karten_gelb_rot' => 'st_cards_yellow_red',
-				'P.sa_karten_rot' => 'st_cards_red',
+				'P.sa_goals' => 'st_goals',
+				'P.sa_matches' => 'st_matches',
+				'P.sa_yellow_card' => 'st_cards_yellow',
+				'P.sa_yellow_card_2nd' => 'st_cards_yellow_red',
+				'P.sa_red_card' => 'st_cards_red',
 				'M.id' => 'match_record_id',
 				'M.position' => 'match_position',
 				'M.position_main' => 'match_position_main',
-				'M.feld' => 'field',
-				'M.note' => 'grade'
+				'M.field' => 'field',
+				'M.rating' => 'grade'
 		);
 		
 		if ($websoccer->getConfig('players_aging') == 'birthday') {
-			$ageColumn = 'TIMESTAMPDIFF(YEAR,P.geburtstag,CURDATE())';
+			$ageColumn = 'TIMESTAMPDIFF(YEAR,P.birthday,CURDATE())';
 		} else {
 			$ageColumn = 'P.age';
 		}
 		$columns[$ageColumn] = 'age';
 		
-		$whereCondition = 'M.spiel_id = %d AND M.team_id = %d AND M.feld != \'Ausgewechselt\' ORDER BY field(M.position_main, \'T\', \'LV\', \'IV\', \'RV\', \'DM\', \'LM\', \'ZM\', \'RM\', \'OM\', \'LS\', \'MS\', \'RS\'), M.id ASC';
+		$whereCondition = 'M.match_id = %d AND M.team_id = %d AND M.field != \'Substituted\' ORDER BY field(M.position_main, \'T\', \'LV\', \'IV\', \'RV\', \'DM\', \'LM\', \'ZM\', \'RM\', \'OM\', \'LS\', \'MS\', \'RS\'), M.id ASC';
 		$parameters = array($matchId, $teamId);
 		
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
@@ -527,14 +527,14 @@ class MatchesDataService {
 	public static function getMatchReportMessages(WebSoccer $websoccer, DbConnection $db, I18n $i18n, $matchId) {
 		
 		$fromTable = $websoccer->getConfig('db_prefix') . '_matchreport AS R';
-		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_spiel_text AS T ON R.message_id = T.id';
+		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_match_text AS T ON R.message_id = T.id';
 		
 		$columns['R.id'] = 'report_id';
 		$columns['R.minute'] = 'minute';
 		$columns['R.playernames'] = 'playerNames';
 		$columns['R.goals'] = 'goals';
-		$columns['T.nachricht'] = 'message';
-		$columns['T.aktion'] = 'type';
+		$columns['T.message'] = 'message';
+		$columns['T.action'] = 'type';
 		$columns['R.active_home'] = 'active_home';
 		
 		$whereCondition = 'R.match_id = %d ORDER BY R.minute DESC, R.id DESC';
@@ -603,30 +603,30 @@ class MatchesDataService {
 		
 		// select
 		$columns['M.id'] = 'id';
-		$columns['M.spieltyp'] = 'type';
-		$columns['M.pokalname'] = 'cup_name';
-		$columns['M.pokalrunde'] = 'cup_round';
+		$columns['M.matchtype'] = 'type';
+		$columns['M.cup_name'] = 'cup_name';
+		$columns['M.cup_round'] = 'cup_round';
 		$columns['M.home_noformation'] = 'home_noformation';
 		$columns['M.guest_noformation'] = 'guest_noformation';
 		$columns['HOME.name'] = 'home_team';
-		$columns['HOME.bild'] = 'home_team_picture';
+		$columns['HOME.image'] = 'home_team_picture';
 		$columns['HOME.id'] = 'home_id';
 		$columns['HOMEUSER.id'] = 'home_user_id';
 		$columns['HOMEUSER.nick'] = 'home_user_nick';
 		$columns['HOMEUSER.email'] = 'home_user_email';
 		$columns['HOMEUSER.picture'] = 'home_user_picture';
 		$columns['GUEST.name'] = 'guest_team';
-		$columns['GUEST.bild'] = 'guest_team_picture';
+		$columns['GUEST.image'] = 'guest_team_picture';
 		$columns['GUEST.id'] = 'guest_id';
 		$columns['GUESTUSER.id'] = 'guest_user_id';
 		$columns['GUESTUSER.nick'] = 'guest_user_nick';
 		$columns['GUESTUSER.email'] = 'guest_user_email';
 		$columns['GUESTUSER.picture'] = 'guest_user_picture';
-		$columns['M.home_tore'] = 'home_goals';
-		$columns['M.gast_tore'] = 'guest_goals';
-		$columns['M.berechnet'] = 'simulated';
+		$columns['M.home_goals'] = 'home_goals';
+		$columns['M.guest_goals'] = 'guest_goals';
+		$columns['M.simulated'] = 'simulated';
 		$columns['M.minutes'] = 'minutes';
-		$columns['M.datum'] = 'date';
+		$columns['M.date'] = 'date';
 		
 		$matches = array();
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters, $limit);
@@ -643,21 +643,21 @@ class MatchesDataService {
 		$tablePrefix = $websoccer->getConfig('db_prefix');
 		
 		// from
-		$fromTable = $tablePrefix . '_spiel AS M';
-		$fromTable .= ' INNER JOIN ' . $tablePrefix . '_verein AS HOME ON M.home_verein = HOME.id';
-		$fromTable .= ' INNER JOIN ' . $tablePrefix . '_verein AS GUEST ON M.gast_verein = GUEST.id';
+		$fromTable = $tablePrefix . '_match AS M';
+		$fromTable .= ' INNER JOIN ' . $tablePrefix . '_club AS HOME ON M.home_club = HOME.id';
+		$fromTable .= ' INNER JOIN ' . $tablePrefix . '_club AS GUEST ON M.guest_club = GUEST.id';
 		$fromTable .= ' LEFT JOIN ' . $tablePrefix . '_user AS HOMEUSER ON M.home_user_id = HOMEUSER.id';
-		$fromTable .= ' LEFT JOIN ' . $tablePrefix . '_user AS GUESTUSER ON M.gast_user_id = GUESTUSER.id';
+		$fromTable .= ' LEFT JOIN ' . $tablePrefix . '_user AS GUESTUSER ON M.guest_user_id = GUESTUSER.id';
 		return $fromTable;
 	}
 	
 	private static function _convertLeagueType($dbValue) {
 		switch ($dbValue) {
-			case 'Ligaspiel':
+			case 'leaguematch':
 				return 'league';
-			case 'Pokalspiel':
+			case 'cupmatch':
 				return 'cup';
-			case 'Freundschaft':
+			case 'friendly':
 				return 'friendly';
 		}
 	}

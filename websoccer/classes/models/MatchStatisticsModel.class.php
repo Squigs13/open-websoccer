@@ -48,14 +48,14 @@ class MatchStatisticsModel implements IModel {
 		$match = MatchesDataService::getMatchById($this->_websoccer, $this->_db, $matchId);
 		
 		// get statistics
-		$columns["SUM(shoots)"] = "shoots";
-		$columns["SUM(ballcontacts)"] = "ballcontacts";
+		$columns["SUM(shots)"] = "shots";
+		$columns["SUM(touches)"] = "touches";
 		$columns["SUM(wontackles)"] = "wontackles";
-		$columns["SUM(passes_successed)"] = "passes_successed";
+		$columns["SUM(passes_successful)"] = "passes_successful";
 		$columns["SUM(passes_failed)"] = "passes_failed";
 		
-		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_spiel_berechnung";
-		$whereCondition = "spiel_id = %d AND team_id = %d";
+		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_match_simulation";
+		$whereCondition = "match_id = %d AND team_id = %d";
 		
 		// home team
 		$parameters = array($matchId, $match["match_home_id"]);

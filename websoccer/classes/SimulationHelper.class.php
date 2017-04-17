@@ -361,22 +361,22 @@ class SimulationHelper {
 	
 	/**
 	 * 
-	 * @return array assoc array with key=main position (e.g. "LV"), value=position (e.g. "Abwehr").
+	 * @return array assoc array with key=main position (e.g. "LV"), value=position (e.g. "Defender").
 	 */
 	public static function getPositionsMapping() {
 		return array(
-				'T' => 'Torwart',
-				'LV' => 'Abwehr',
-				'IV' => 'Abwehr',
-				'RV' => 'Abwehr',
-				'DM' => 'Mittelfeld',
-				'OM' => 'Mittelfeld',
-				'ZM' => 'Mittelfeld',
-				'LM' => 'Mittelfeld',
-				'RM' => 'Mittelfeld',
-				'LS' => 'Sturm',
-				'MS' => 'Sturm',
-				'RS' => 'Sturm'
+				'T' => 'Goalkeeper',
+				'LV' => 'Defender',
+				'IV' => 'Defender',
+				'RV' => 'Defender',
+				'DM' => 'Midfielder',
+				'OM' => 'Midfielder',
+				'ZM' => 'Midfielder',
+				'LM' => 'Midfielder',
+				'RM' => 'Midfielder',
+				'LS' => 'Forward',
+				'MS' => 'Forward',
+				'RS' => 'Forward'
 		);
 	}
 	

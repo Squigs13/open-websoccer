@@ -106,12 +106,12 @@ class OrderBuildingController implements IActionController {
 		
 		// credit fan popularity change
 		if ($building['effect_fanpopularity'] != 0) {
-			$result = $this->_db->querySelect('fanbeliebtheit', $dbPrefix . '_user', 'id = %d', $user->id, 1);
+			$result = $this->_db->querySelect('popularity', $dbPrefix . '_user', 'id = %d', $user->id, 1);
 			$userinfo = $result->fetch_array();
 			$result->free();
 			
-			$popularity = min(100, max(1, $building['effect_fanpopularity'] + $userinfo['fanbeliebtheit']));
-			$this->_db->queryUpdate(array('fanbeliebtheit' => $popularity), $dbPrefix . '_user', 'id = %d', $user->id);
+			$popularity = min(100, max(1, $building['effect_fanpopularity'] + $userinfo['popularity']));
+			$this->_db->queryUpdate(array('popularity' => $popularity), $dbPrefix . '_user', 'id = %d', $user->id);
 		}
 		
 		// success message

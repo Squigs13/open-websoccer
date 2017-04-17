@@ -21,11 +21,11 @@
 	{% endif %}
 
 	{{ profile.infofield(i18n.getMessage("entity_sponsor_name"), sponsor.name) }}
-	{{ profile.infofield(i18n.getMessage("entity_sponsor_b_spiel"), sponsor.amount_match|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency")) }}
-	{{ profile.infofield(i18n.getMessage("entity_sponsor_b_heimzuschlag"), sponsor.amount_home_bonus|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency")) }}
-	{{ profile.infofield(i18n.getMessage("entity_sponsor_b_sieg"), sponsor.amount_win|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency")) }}
-	{{ profile.infofield(i18n.getMessage("entity_sponsor_b_meisterschaft"), sponsor.amount_championship|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency")) }}
-	{{ profile.infofield(i18n.getMessage("entity_club_sponsor_spiele"), sponsor.matchdays) }}
+	{{ profile.infofield(i18n.getMessage("entity_sponsor_b_match"), sponsor.amount_match|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency")) }}
+	{{ profile.infofield(i18n.getMessage("entity_sponsor_b_home_match"), sponsor.amount_home_bonus|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency")) }}
+	{{ profile.infofield(i18n.getMessage("entity_sponsor_b_win"), sponsor.amount_win|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency")) }}
+	{{ profile.infofield(i18n.getMessage("entity_sponsor_b_championship"), sponsor.amount_championship|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency")) }}
+	{{ profile.infofield(i18n.getMessage("entity_club_sponsor_matches"), sponsor.matchdays) }}
 
 {# choose sponsor #}
 {% else %}
@@ -41,10 +41,10 @@
 			<thead>
 				<tr>
 					<th>{{ i18n.getMessage("entity_sponsor_name") }}</th>
-					<th>{{ i18n.getMessage("entity_sponsor_b_spiel") }}</th>
-					<th>{{ i18n.getMessage("entity_sponsor_b_heimzuschlag") }}</th>
-					<th>{{ i18n.getMessage("entity_sponsor_b_sieg") }}</th>
-					<th>{{ i18n.getMessage("entity_sponsor_b_meisterschaft") }}</th>
+					<th>{{ i18n.getMessage("entity_sponsor_b_match") }}</th>
+					<th>{{ i18n.getMessage("entity_sponsor_b_home_match") }}</th>
+					<th>{{ i18n.getMessage("entity_sponsor_b_win") }}</th>
+					<th>{{ i18n.getMessage("entity_sponsor_b_championship") }}</th>
 				</tr>
 			</thead>
 			<tbody>

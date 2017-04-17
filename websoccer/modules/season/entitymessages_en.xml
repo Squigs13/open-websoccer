@@ -4,12 +4,12 @@
     <message id="entity_season">Season</message>
     
     <message id="entity_season_name">Name</message>
-    <message id="entity_season_liga_id">League</message>
-    <message id="entity_season_beendet">Is completed</message>
+    <message id="entity_season_league_id">League</message>
+    <message id="entity_season_completed">Is completed</message>
     
-    <message id="entity_season_platz_1_id">First Place</message>
-    <message id="entity_season_platz_2_id">Second Place</message>
-    <message id="entity_season_platz_3_id">Third Place</message>
-    <message id="entity_season_platz_4_id">Fourth Place</message>
-    <message id="entity_season_platz_5_id">Fifth Place</message>
+    <message id="entity_season_place_1_id">First Place</message>
+    <message id="entity_season_place_2_id">Second Place</message>
+    <message id="entity_season_place_3_id">Third Place</message>
+    <message id="entity_season_place_4_id">Fourth Place</message>
+    <message id="entity_season_place_5_id">Fifth Place</message>
 </messages>

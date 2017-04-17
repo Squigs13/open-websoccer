@@ -80,19 +80,19 @@ elseif ($show == "save") {
     if ($_POST['newpassword']) {
 	
 		// create new salt
-		if (!strlen($admin["passwort_salt"])) {
+		if (!strlen($admin["password_salt"])) {
 			$salt = SecurityUtil::generatePasswordSalt();
-			$db->queryUpdate(array("passwort_salt" => $salt), $fromTable, $whereCondition, $parameter);
+			$db->queryUpdate(array("password_salt" => $salt), $fromTable, $whereCondition, $parameter);
 		} else {
-			$salt = $admin["passwort_salt"];
+			$salt = $admin["password_salt"];
 		}
 
-		$passwort = SecurityUtil::hashPassword(trim($_POST['newpassword']), $salt);
+		$password = SecurityUtil::hashPassword(trim($_POST['newpassword']), $salt);
     } else {
-		$passwort = $admin['passwort'];
+		$password = $admin['password'];
     }
 	
-	$columns = array("passwort" => $passwort,
+	$columns = array("password" => $password,
 					"email" => $_POST['email'],
 					"lang" => $_POST['language']);
 	

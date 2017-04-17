@@ -52,7 +52,7 @@ class DemoUserLoginMethod implements IUserLoginMethod {
 		// Note: If your source application shares the same data base, you can simply use $this->_db, rather than open another connection.
 		$mysqli = new mysqli($this->_websoccer->getConfig('db_host'),
 			$this->_websoccer->getConfig('db_user'),
-			$this->_websoccer->getConfig('db_passwort'),
+			$this->_websoccer->getConfig('db_password'),
 			$this->_websoccer->getConfig('db_name'));
 		
 		// get user from your source table

@@ -10,7 +10,7 @@
     
     <message id="transfermarket_min_bid">Mindestgebot</message>
     
-    <message id="sell_player_min_bid_too_low">Das Mindestgebot muss mindestens die Hälfte des Marktwertes betragen.</message>
+    <message id="sell_player_min_bid_too_low">Das Mindestgebot muss mindestens die Hälfte des Marktwertes amounten.</message>
     <message id="sell_player_already_on_list">Der Spieler ist bereits auf der Transferliste.</message>
     
     <message id="sell_player_teamsize_too_small">Ihr Kader (%d Spieler) ist zu klein. Sie können im Moment keine weiteren Spieler verkaufen.</message>
@@ -31,7 +31,7 @@
     <message id="transfermarket_head_highestbid">Höchstgebot</message>
     <message id="transfermarket_bid">Bieten</message>
     
-    <message id="transfermarket_without_team">vereinslos</message>
+    <message id="transfermarket_without_team">clubslos</message>
     
     <message id="transfer-bid_navlabel">Gebot abgeben</message>
     
@@ -45,15 +45,15 @@
     
     <message id="transfer_bid_amount">Ablöse</message>
     <message id="transfer_bid_handmoney">Handgeld</message>
-    <message id="transfer_bid_date">Datum</message>
+    <message id="transfer_bid_date">date</message>
     <message id="transfer_bid_withoutfee">ablösefrei</message>
     
     <message id="transfer_bid_on_own_player">Sie können nicht auf Ihren eigenen Spieler bieten.</message>
-    <message id="transfer_bid_auction_ended">Die Auktion ist bereits beendet.</message>
+    <message id="transfer_bid_auction_ended">Die Auktion ist bereits completed.</message>
     <message id="transfer_bid_player_not_on_list">Der Spieler steht nicht (mehr) auf der Transferliste.</message>
     <message id="transfer_bid_salary_too_less">Der Spieler will für dieses Gehalt nicht zu Ihnen wechseln.</message>
     <message id="transfer_bid_goalbonus_too_less">Der Spieler möchte eine höhere Torprämie haben.</message>
-    <message id="transfer_bid_too_many_transactions_with_user">Sie haben mit dem Verkäufer in den letzten 30 Tagen bereits %d Transfers vereinbart. Ein weiterer Transfer ist derzeit nicht erlaubt.</message>
+    <message id="transfer_bid_too_many_transactions_with_user">Sie haben mit dem Verkäufer in den letzten 30 Tagen bereits %d Transfers clubbart. Ein weiterer Transfer ist derzeit nicht erlaubt.</message>
     <message id="transfer_bid_amount_must_be_higher">Die Ablösesumme muss höher als %d sein.</message>
     <message id="transfer_bid_contract_conditions_too_low">Die angebotenen Vertragsbedingungen sind schlechter als bei dem bisherigen Höchstgebot.</message>
     <message id="transfer_bid_budget_too_less">Ihr Vereinsbudget ist zu gering für ein solch hohes Angebot.</message>
@@ -72,7 +72,7 @@
     
     <message id="transfers_no_transfers">Keine Transfers vorhanden.</message>
     
-    <message id="transfer_date">Datum</message>
+    <message id="transfer_date">date</message>
     <message id="transfer_from">Von</message>
     <message id="transfer_to">Nach</message>
     

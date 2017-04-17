@@ -5,14 +5,14 @@
     <message id="category_season_navlabel">Saisons</message>
 	<message id="complete-season_navlabel">Saison beenden</message>
     <message id="season_complete_title">Saisons beenden</message>
-	<message id="season_complete_introduction">Durch auswählen einer Saison wird diese als "beendet" markiert, Statistiken aktualisiert und Sponsorenprämien ausbezahlt. Für folgende Saisons gibt es keine Ligaspiele mehr zu berechnen:</message>
+	<message id="season_complete_introduction">Durch auswählen einer Saison wird diese als "completed" markiert, Statistiken aktualisiert und Sponsorenprämien ausbezahlt. Für folgende Saisons gibt es keine leaguematche mehr zu berechnen:</message>
     <message id="season_complete_noseasons">Keine beendbare Saison vorhanden.</message>
 	<message id="season_complete_submit">Saison beenden</message>
     <message id="season_complete_label_playerdisableage">Spielerrentenalter</message>
 	<message id="season_complete_label_playerdisableage_help">Spieler ab diesem Alter werden deaktiviert.</message>
 	
 	<message id="season_complete_label_target_missed_firemanager">Manager automatisch feuern, wenn das Saisonziel nicht erreicht wurde.</message>
-	<message id="season_complete_label_target_missed_popularityreduction">Verlust Fanbeliebtheit</message>
+	<message id="season_complete_label_target_missed_popularityreduction">Verlust popularity</message>
 	<message id="season_complete_label_target_missed_popularityreduction_help">bei Nichterreichen des Saisonziels. 0 für keine Auswirkungen.</message>
 	
 	<message id="season_complete_label_target_missed_penalty">Strafzahlung</message>
@@ -28,7 +28,7 @@
 	<message id="schedulegenerator_label_seasonname">Name der neuen Saison</message>
 	<message id="schedulegenerator_label_rounds">Anzahl Runden</message>
 	<message id="schedulegenerator_label_rounds_help">2 bedeutet Hin- und Rückrunde</message>
-	<message id="schedulegenerator_label_firstmatchday">Datum des ersten Spieltages</message>
+	<message id="schedulegenerator_label_firstmatchday">date des ersten Spieltages</message>
 	<message id="schedulegenerator_label_timebreak">Pause zwischen zwei Spieltagen</message>
 	<message id="schedulegenerator_label_timebreak_help">in Tagen. Die Spiele finden immer zur selben Uhrzeit vom ersten Spieltag statt.</message>
 	

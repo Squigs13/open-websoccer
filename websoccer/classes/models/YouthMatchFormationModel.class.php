@@ -213,7 +213,7 @@ class YouthMatchFormationModel implements IModel {
 		$result = $this->_db->querySelect("*", $this->_websoccer->getConfig("db_prefix") . "_youthmatch_player", 
 				"match_id = %d AND team_id = %d", array($matchinfo["id"], $matchinfo[$teamPrefix . "_team_id"]));
 		while ($player = $result->fetch_array()) {
-			if ($player["state"] == "Ersatzbank") {
+			if ($player["state"] == "Bench") {
 				$formation["bench" . $player["playernumber"]] = $player["player_id"];
 			} else {
 				$formation["player" . $player["playernumber"]] = $player["player_id"];
@@ -223,11 +223,11 @@ class YouthMatchFormationModel implements IModel {
 				$mainPosition = $player["position_main"];
 				$position = $player["position"];
 				
-				if ($position == "Abwehr") {
+				if ($position == "Defender") {
 					$setup["defense"] = $setup["defense"] + 1;
-				} elseif ($position == "Sturm") {
+				} elseif ($position == "Forward") {
 					$setup["striker"] = $setup["striker"] + 1;
-				} elseif ($position == "Mittelfeld") {
+				} elseif ($position == "Midfielder") {
 					if ($mainPosition == "DM") {
 						$setup["dm"] = $setup["dm"] + 1;
 					} elseif ($mainPosition == "OM") {

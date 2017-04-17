@@ -11,7 +11,7 @@
             id="trainer"
             entity="trainer"
             navcategory="league"
-            permissionrole="r_daten" >
+            permissionrole="r_data" >
 
             <entity dbtable="trainer" >
 

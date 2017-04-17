@@ -53,7 +53,7 @@ if (!$show) {
 	<?php 
 	$formFields = array();
 	
-	$formFields["league"] = array("type" => "foreign_key", "labelcolumns" => "land,name", "jointable" => "liga", "entity" => "league", "value" => "", "required" => "true");
+	$formFields["league"] = array("type" => "foreign_key", "labelcolumns" => "country,name", "jointable" => "league", "entity" => "league", "value" => "", "required" => "true");
 	$formFields["importfile"] = array("type" => "select", "selection" => "$filelist", "required" => "true");
 	
 	foreach ($formFields as $fieldId => $fieldInfo) {

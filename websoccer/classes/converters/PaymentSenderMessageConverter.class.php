@@ -39,11 +39,11 @@ class PaymentSenderMessageConverter implements IConverter {
 	 */
 	public function toHtml($row) {
 		include(sprintf(CONFIGCACHE_MESSAGES, $this->_i18n->getCurrentLanguage()));
-		if (isset($msg[$row['entity_transaction_absender']])) {
-			return $msg[$row['entity_transaction_absender']];
+		if (isset($msg[$row['entity_transaction_sender']])) {
+			return $msg[$row['entity_transaction_sender']];
 		}
 		
-		return $row['entity_transaction_absender'];
+		return $row['entity_transaction_sender'];
 	}
 	
 	/**

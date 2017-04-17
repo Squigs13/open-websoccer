@@ -68,20 +68,20 @@ class SendMessageController implements IActionController {
 		}
 		
 		// create message
-		$columns["empfaenger_id"] = $recipientId;
-		$columns["absender_id"] = $senderId;
-		$columns["datum"] = $now;
-		$columns["betreff"] = $parameters["subject"];
-		$columns["nachricht"] = $parameters["msgcontent"];
+		$columns["recipient_id"] = $recipientId;
+		$columns["sender_id"] = $senderId;
+		$columns["date"] = $now;
+		$columns["subject"] = $parameters["subject"];
+		$columns["message"] = $parameters["msgcontent"];
 		
-		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_briefe";
+		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_messages";
 		
 		// create message in inbox of recipient
-		$columns["typ"] = "eingang";
+		$columns["type"] = "incoming";
 		$this->_db->queryInsert($columns, $fromTable);
 		
 		// create message in outbox of sender
-		$columns["typ"] = "ausgang";
+		$columns["type"] = "outgoing";
 		$this->_db->queryInsert($columns, $fromTable);
 		
 		// success message

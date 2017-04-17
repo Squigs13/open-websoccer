@@ -58,7 +58,7 @@ class BuyYouthPlayerController implements IActionController {
 		}
 		
 		// player must not be tranfered from one of user's other teams
-		$result = $this->_db->querySelect("user_id", $this->_websoccer->getConfig("db_prefix") . "_verein", "id = %d", $player["team_id"]);
+		$result = $this->_db->querySelect("user_id", $this->_websoccer->getConfig("db_prefix") . "_club", "id = %d", $player["team_id"]);
 		$playerteam = $result->fetch_array();
 		$result->free_result();
 		if ($playerteam["user_id"] == $user->id) {

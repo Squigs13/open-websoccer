@@ -169,7 +169,7 @@ class DirectTransferOfferController implements IActionController {
 		
 		$result = $this->_db->querySelect("COUNT(*) AS hits",
 				$this->_websoccer->getConfig("db_prefix") . "_transfer",
-				"spieler_id = %d AND datum > %d",
+				"player_id = %d AND date > %d",
 				array($playerId, $transferBoundary));
 		$count = $result->fetch_array();
 		$result->free();

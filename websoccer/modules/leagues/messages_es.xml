@@ -7,7 +7,7 @@
     <message id="league_navlabel">Clasificación</message>
     
     <message id="leaguetable_block_title">Últimas Clasificaciones</message>
-    <message id="leaguetable_block_noteamsavailable">No hay equipos en esta liga.</message>
+    <message id="leaguetable_block_noteamsavailable">No hay equipos en esta league.</message>
     
     <message id="leaguetable_head_place">Posición</message>
     <message id="leaguetable_head_place_abbr">P</message>

@@ -35,7 +35,7 @@
     <message id="training_execute_success">Das Team wurde trainiert.</message>
     <message id="training_execute_err_already_executed">Die Trainingseinheit wurde bereits ausgeführt. Laden Sie die Seite neu und probieren Sie es noch einmal.</message>
     
-    <message id="training_execute_err_too_early">Die Ruhepause nach der letzten Trainingseinheit ist zu kurz. Das nächste Training darf frühestens wieder stattfinden: %s</message>
+    <message id="training_execute_err_too_early">Die Ruhepause nach der letzten Trainingseinheit ist zu short. Das nächste Training darf frühestens wieder stattfinden: %s</message>
     <message id="training_execute_err_match_simulating">Das Team ist im Moment bei einem Spiel. Sie können erst danach wieder trainieren.</message>
     
     <message id="training_execute_effects_title">Ergebnis der Trainingseinheit</message>

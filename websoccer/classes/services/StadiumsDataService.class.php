@@ -41,10 +41,10 @@ class StadiumsDataService {
 		$columns["S.id"] = "stadium_id";
 		$columns["S.name"] = "name";
 		$columns["S.picture"] = "picture";
-		$columns["S.p_steh"] = "places_stands";
-		$columns["S.p_sitz"] = "places_seats";
-		$columns["S.p_haupt_steh"] = "places_stands_grand";
-		$columns["S.p_haupt_sitz"] = "places_seats_grand";
+		$columns["S.p_standing"] = "places_stands";
+		$columns["S.p_seat"] = "places_seats";
+		$columns["S.p_main_standing"] = "places_stands_grand";
+		$columns["S.p_main_seat"] = "places_seats_grand";
 		$columns["S.p_vip"] = "places_vip";
 		
 		$columns["S.level_pitch"] = "level_pitch";
@@ -52,8 +52,8 @@ class StadiumsDataService {
 		$columns["S.level_seatsquality"] = "level_seatsquality";
 		$columns["S.level_vipquality"] = "level_vipquality";
 		
-		$fromTable = $websoccer->getConfig("db_prefix") . "_stadion AS S";
-		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_verein AS T ON T.stadion_id = S.id";
+		$fromTable = $websoccer->getConfig("db_prefix") . "_stadium AS S";
+		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_club AS T ON T.stadium_id = S.id";
 		$whereCondition = "T.id = %d";
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $clubId, 1);
 		$stadium = $result->fetch_array();
@@ -161,7 +161,7 @@ class StadiumsDataService {
 	public static function getDueConstructionOrders(WebSoccer $websoccer, DbConnection $db) {
 		$fromTable = $websoccer->getConfig("db_prefix") . "_stadium_construction AS C";
 		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_stadium_builder AS B ON B.id = C.builder_id";
-		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_verein AS T ON T.id = C.team_id";
+		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_club AS T ON T.id = C.team_id";
 		
 		$result = $db->querySelect("C.*, T.user_id AS user_id, B.reliability AS builder_reliability", $fromTable, "C.deadline <= %d", 
 				$websoccer->getNowAsTimestamp());

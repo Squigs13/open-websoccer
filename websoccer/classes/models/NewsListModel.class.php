@@ -63,17 +63,17 @@ class NewsListModel implements IModel {
 		$paginator = new Paginator($rows["hits"], $eps, $this->_websoccer);
 		
 		// select
-		$columns = "id, titel, datum, nachricht";
-		$whereCondition .= " ORDER BY datum DESC";
+		$columns = "id, title, date, message";
+		$whereCondition .= " ORDER BY date DESC";
 		$limit = $paginator->getFirstIndex() .",". $eps;
 		$result = $this->_db->querySelect($columns, $fromTable, $whereCondition, $parameters, $limit);
 		
 		$articles = array();
 		while ($article = $result->fetch_array()) {
 			$articles[] = array("id" => $article["id"],
-								"title" => $article["titel"],
-								"date" => $this->_websoccer->getFormattedDate($article["datum"]),
-								"teaser" => $this->_shortenMessage($article["nachricht"]));
+								"title" => $article["title"],
+								"date" => $this->_websoccer->getFormattedDate($article["date"]),
+								"teaser" => $this->_shortenMessage($article["message"]));
 		}
 		$result->free();
 		

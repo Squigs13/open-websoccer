@@ -3,10 +3,10 @@
 <module version="1.0.0">
     
     <admin>
-		<adminpage id="teamsgenerator" permissionrole="r_daten" navcategory="league" filename="teamsgenerator"/>
-		<adminpage id="importteams" permissionrole="r_daten" navcategory="league" filename="importteams"/>
-		<adminpage id="playersgenerator" permissionrole="r_daten" navcategory="league" filename="playersgenerator"/>
-		<adminpage id="importplayers" permissionrole="r_daten" navcategory="league" filename="importplayers"/>
+		<adminpage id="teamsgenerator" permissionrole="r_data" navcategory="league" filename="teamsgenerator"/>
+		<adminpage id="importteams" permissionrole="r_data" navcategory="league" filename="importteams"/>
+		<adminpage id="playersgenerator" permissionrole="r_data" navcategory="league" filename="playersgenerator"/>
+		<adminpage id="importplayers" permissionrole="r_data" navcategory="league" filename="importplayers"/>
 	</admin>
   
 </module>

@@ -17,14 +17,14 @@
 		    </overview>
 		    <editform>
 				<field id="name" type="text" required="true" />
-				<field id="passwort" type="password" required="true" converter="AdminPasswordConverter" />
+				<field id="password" type="password" required="true" converter="AdminPasswordConverter" />
 				<field id="email" type="email" required="true" />
 				<field id="r_admin" type="boolean" />
 				<field id="r_adminuser" type="boolean" />
 				<field id="r_user" type="boolean" />
-				<field id="r_daten" type="boolean" />
-				<field id="r_staerken" type="boolean" />
-				<field id="r_spiele" type="boolean" />
+				<field id="r_data" type="boolean" />
+				<field id="r_attributes" type="boolean" />
+				<field id="r_matches" type="boolean" />
 				<field id="r_news" type="boolean" />
 				<field id="r_demo" type="boolean" />		        
 		    </editform>

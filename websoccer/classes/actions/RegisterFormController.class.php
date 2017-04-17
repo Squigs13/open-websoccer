@@ -115,10 +115,10 @@ class RegisterFormController implements IActionController {
 		
 		$dbcolumns["nick"] = $parameters["nick"];
 		$dbcolumns["email"] = strtolower($parameters["email"]);
-		$dbcolumns["passwort_salt"] = SecurityUtil::generatePasswordSalt();
-		$dbcolumns["passwort"] = SecurityUtil::hashPassword($parameters["pswd"], $dbcolumns["passwort_salt"]);
-		$dbcolumns["datum_anmeldung"] = $this->_websoccer->getNowAsTimestamp();
-		$dbcolumns["schluessel"] = str_replace("&", "_", SecurityUtil::generatePassword());
+		$dbcolumns["password_salt"] = SecurityUtil::generatePasswordSalt();
+		$dbcolumns["password"] = SecurityUtil::hashPassword($parameters["pswd"], $dbcolumns["password_salt"]);
+		$dbcolumns["date_registered"] = $this->_websoccer->getNowAsTimestamp();
+		$dbcolumns["activation_key"] = str_replace("&", "_", SecurityUtil::generatePassword());
 		$dbcolumns["status"] = 2;
 		$dbcolumns["lang"] = $this->_i18n->getCurrentLanguage();
 		
@@ -135,7 +135,7 @@ class RegisterFormController implements IActionController {
 		$newuser = $result->fetch_array();
 		$result->free();
 		
-		$querystr = "key=" . $dbcolumns["schluessel"] ."&userid=" . $newuser["id"];
+		$querystr = "key=" . $dbcolumns["activation_key"] ."&userid=" . $newuser["id"];
 		$tplparameters["activationlink"] = $this->_websoccer->getInternalActionUrl("activate", $querystr, "activate-user", TRUE);
 		
 		// send e-mail

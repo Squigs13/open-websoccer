@@ -61,7 +61,7 @@ class UsersDataService {
 				"nick" => $username,
 				"email" => $emailAddress,
 				"status" => "1",
-				"datum_anmeldung" => $websoccer->getNowAsTimestamp(),
+				"date_registered" => $websoccer->getNowAsTimestamp(),
 				"lang" => $i18n->getCurrentLanguage()
 				);
 		if ($websoccer->getConfig("premium_initial_credit")) {
@@ -124,16 +124,16 @@ class UsersDataService {
 		$columns["email"] = "email";
 		$columns["U.picture"] = "picture";
 		$columns["highscore"] = "highscore";
-		$columns["datum_anmeldung"] = "registration_date";
+		$columns["date_registered"] = "registration_date";
 		$columns["C.id"] = "team_id";
 		$columns["C.name"] = "team_name";
-		$columns["C.bild"] = "team_picture";
+		$columns["C.image"] = "team_picture";
 		
 		$limit = $startIndex .",". $entries_per_page;
 		
 		$fromTable = $websoccer->getConfig("db_prefix") . "_user AS U";
-		$fromTable .= " LEFT JOIN " . $websoccer->getConfig("db_prefix") . "_verein AS C ON C.user_id = U.id";
-		$whereCondition = "U.status = 1 AND highscore > 0 GROUP BY id ORDER BY highscore DESC, datum_anmeldung ASC";
+		$fromTable .= " LEFT JOIN " . $websoccer->getConfig("db_prefix") . "_club AS C ON C.user_id = U.id";
+		$whereCondition = "U.status = 1 AND highscore > 0 GROUP BY id ORDER BY highscore DESC, date_registered ASC";
 		
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, null, $limit);
 		
@@ -161,19 +161,19 @@ class UsersDataService {
 		$columns["nick"] = "nick";
 		$columns["email"] = "email";
 		$columns["highscore"] = "highscore";
-		$columns["fanbeliebtheit"] = "popularity";
-		$columns["datum_anmeldung"] = "registration_date";
+		$columns["popularity"] = "popularity";
+		$columns["date_registered"] = "registration_date";
 		$columns["lastonline"] = "lastonline";
 		$columns["picture"] = "picture";
 		$columns["history"] = "history";
 		
 		$columns["name"] = "name";
-		$columns["wohnort"] = "place";
-		$columns["land"] = "country";
-		$columns["geburtstag"] = "birthday";
-		$columns["beruf"] = "occupation";
-		$columns["interessen"] = "interests";
-		$columns["lieblingsverein"] = "favorite_club";
+		$columns["city"] = "place";
+		$columns["country"] = "country";
+		$columns["birthday"] = "birthday";
+		$columns["occupation"] = "occupation";
+		$columns["interests"] = "interests";
+		$columns["fav_club"] = "favorite_club";
 		$columns["homepage"] = "homepage";
 		
 		$columns["premium_balance"] = "premium_balance";
@@ -357,12 +357,12 @@ class UsersDataService {
 		$columns["c_hideinonlinelist"] = "hideinonlinelist";
 		$columns["C.id"] = "team_id";
 		$columns["C.name"] = "team_name";
-		$columns["C.bild"] = "team_picture";
+		$columns["C.image"] = "team_picture";
 	
 		$limit = $startIndex .",". $entries_per_page;
 	
 		$fromTable = $websoccer->getConfig("db_prefix") . "_user AS U";
-		$fromTable .= " LEFT JOIN " . $websoccer->getConfig("db_prefix") . "_verein AS C ON C.user_id = U.id";
+		$fromTable .= " LEFT JOIN " . $websoccer->getConfig("db_prefix") . "_club AS C ON C.user_id = U.id";
 		$whereCondition = "U.status = 1 AND lastonline >= %d GROUP BY id ORDER BY lastonline DESC";
 	
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $timeBoundary, $limit);

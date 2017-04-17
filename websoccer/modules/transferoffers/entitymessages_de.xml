@@ -4,8 +4,8 @@
 	<message id="entity_transfer_offer">Transferangebot</message>
 	<message id="entity_transfer_offer_submitted_date">Angebotsdatum</message>
 	<message id="entity_transfer_offer_player_id">Spieler</message>
-	<message id="entity_transfer_offer_receiver_club_id">Empfängerverein</message>
-	<message id="entity_transfer_offer_sender_club_id">Absenderverein</message>
+	<message id="entity_transfer_offer_receiver_club_id">Empfängerclub</message>
+	<message id="entity_transfer_offer_sender_club_id">Absenderclub</message>
 	<message id="entity_transfer_offer_offer_amount">Ablösesumme</message>
 	<message id="entity_transfer_offer_admin_approval_pending">benötigt Freigabe</message>
 	<message id="entity_transfer_offer_sender_user_id">Absender</message>

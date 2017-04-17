@@ -60,11 +60,11 @@ class PlayerDetailsWithDependenciesModel implements IModel {
 	private function _getGrades($playerId) {
 		$grades = array();
 		
-		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_spiel_berechnung";
+		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_match_simulation";
 		
-		$columns = "note AS grade";
+		$columns = "rating AS grade";
 		
-		$whereCondition = "spieler_id = %d AND minuten_gespielt > 0 ORDER BY id DESC";
+		$whereCondition = "player_id = %d AND minutes_played > 0 ORDER BY id DESC";
 		$parameters = $playerId;
 		
 		$result = $this->_db->querySelect($columns, $fromTable, $whereCondition, $parameters, 10);

@@ -39,7 +39,7 @@ class DataImportService {
 	public static function generateTeams(WebSoccer $websoccer, DbConnection $db, $leagueId, $importFile) {
 		
 		// get country
-		$result = $db->querySelect('*', $websoccer->getConfig('db_prefix') . '_liga', 'id = %d', $leagueId);
+		$result = $db->querySelect('*', $websoccer->getConfig('db_prefix') . '_league', 'id = %d', $leagueId);
 		$league = $result->fetch_array();
 		$result->free();
 		
@@ -47,7 +47,7 @@ class DataImportService {
 			throw new Exception('illegal league ID');
 		}
 		
-		$country = $league['land'];
+		$country = $league['country'];
 		
 		$clubs = self::_getLines(FILE_CLUBNAMES, $importFile);
 		
@@ -84,18 +84,18 @@ class DataImportService {
 		}
 		
 		/* map main position to parent position
-		$mainPositions['T'] = 'Torwart';
-		$mainPositions['LV'] = 'Abwehr';
-		$mainPositions['IV'] = 'Abwehr';
-		$mainPositions['RV'] = 'Abwehr';
-		$mainPositions['LM'] = 'Mittelfeld';
-		$mainPositions['ZM'] = 'Mittelfeld';
-		$mainPositions['OM'] = 'Mittelfeld';
-		$mainPositions['DM'] = 'Mittelfeld';
-		$mainPositions['RM'] = 'Mittelfeld';
-		$mainPositions['LS'] = 'Sturm';
-		$mainPositions['MS'] = 'Sturm';
-		$mainPositions['RS'] = 'Sturm';
+		$mainPositions['T'] = 'Goalkeeper';
+		$mainPositions['LV'] = 'Defender';
+		$mainPositions['IV'] = 'Defender';
+		$mainPositions['RV'] = 'Defender';
+		$mainPositions['LM'] = 'Midfielder';
+		$mainPositions['ZM'] = 'Midfielder';
+		$mainPositions['OM'] = 'Midfielder';
+		$mainPositions['DM'] = 'Midfielder';
+		$mainPositions['RM'] = 'Midfielder';
+		$mainPositions['LS'] = 'Forward';
+		$mainPositions['MS'] = 'Forward';
+		$mainPositions['RS'] = 'Forward';
 		
 		// create players for all positions
 		foreach($positions as $mainPosition => $numberOfPlayers) {
@@ -158,15 +158,15 @@ class DataImportService {
 		if ($generateStadium) {
 			
 			$stadiumcolumns['name'] = $stadiumName;
-			$stadiumcolumns['stadt'] = $stadiumCity;
-			$stadiumcolumns['land'] = $country;
-			$stadiumcolumns['p_steh'] = 0;
-			$stadiumcolumns['p_sitz'] = $sides;
-			$stadiumcolumns['p_haupt_steh'] = 0;
-			$stadiumcolumns['p_haupt_sitz'] = $main;
+			$stadiumcolumns['city'] = $stadiumCity;
+			$stadiumcolumns['country'] = $country;
+			$stadiumcolumns['p_standing'] = 0;
+			$stadiumcolumns['p_seat'] = $sides;
+			$stadiumcolumns['p_main_standing'] = 0;
+			$stadiumcolumns['p_main_seat'] = $main;
 			$stadiumcolumns['p_vip'] = 0;
 			
-			$fromTable = $websoccer->getConfig('db_prefix') . '_stadion';
+			$fromTable = $websoccer->getConfig('db_prefix') . '_stadium';
 			
 			$db->queryInsert($stadiumcolumns, $fromTable);
 			
@@ -175,18 +175,18 @@ class DataImportService {
 		}
 		
 		$teamcolumns['name'] = $teamName;
-		$teamcolumns['kurz'] = $shortName;
-		$teamcolumns['liga_id'] = $league['id'];
-		$teamcolumns['stadion_id'] = $stadiumId;
-		$teamcolumns['finanz_budget'] = 5000000;
-		$teamcolumns['preis_stehen'] = $league['preis_steh'];
-		$teamcolumns['preis_sitz'] = $league['preis_sitz'];
-		$teamcolumns['preis_haupt_stehen'] = $league['preis_steh'];
-		$teamcolumns['preis_haupt_sitze'] = $league['preis_sitz'];
-		$teamcolumns['preis_vip'] = $league['preis_vip'];
+		$teamcolumns['short'] = $shortName;
+		$teamcolumns['league_id'] = $league['id'];
+		$teamcolumns['stadium_id'] = $stadiumId;
+		$teamcolumns['finance_budget'] = 5000000;
+		$teamcolumns['price_stand'] = $league['price_standing'];
+		$teamcolumns['price_seat'] = $league['price_seat'];
+		$teamcolumns['price_main_stand'] = $league['price_standing'];
+		$teamcolumns['price_main_seat'] = $league['price_seat'];
+		$teamcolumns['price_vip'] = $league['price_vip'];
 		$teamcolumns['status'] = '1';
 		
-		$fromTable = $websoccer->getConfig('db_prefix') . '_verein';
+		$fromTable = $websoccer->getConfig('db_prefix') . '_club';
 		$db->queryInsert($teamcolumns, $fromTable);
 		
 		echo '<p>' . $teamName . ' (' . $shortName . ')</p>';
@@ -195,69 +195,69 @@ class DataImportService {
 	private static function _importPlayer($websoccer, $db, $teamId, $firstName, $lastName, $position, $mainPosition, 
 			$country, $age, $attributes) {
 		
-		$columns['vorname'] = $firstName;
-		$columns['nachname'] = $lastName;
-		//$columns['geburtstag'] = $birthday;
+		$columns['first_name'] = $firstName;
+		$columns['last_name'] = $lastName;
+		//$columns['birthday'] = $birthday;
 		$columns['age'] = $age;
 		$columns['position'] = $position;
 		$columns['position_main'] = $mainPosition;
 		$columns['nation'] = $country;
 		/*
-		$columns['w_staerke'] = max(1, min(100, $strengths['strength'] + self::_getRandomDeviationValue($maxDeviation)));
-		$columns['w_technik'] = max(1, min(100, $strengths['technique'] + self::_getRandomDeviationValue($maxDeviation)));
-		$columns['w_kondition'] = max(1, min(100, $strengths['stamina'] + self::_getRandomDeviationValue($maxDeviation)));
-		$columns['w_frische'] = max(1, min(100, $strengths['freshness'] + self::_getRandomDeviationValue($maxDeviation)));
-		$columns['w_zufriedenheit'] = max(1, min(100, $strengths['satisfaction'] + self::_getRandomDeviationValue($maxDeviation)));
+		$columns['w_strength'] = max(1, min(100, $strengths['strength'] + self::_getRandomDeviationValue($maxDeviation)));
+		$columns['w_technique'] = max(1, min(100, $strengths['technique'] + self::_getRandomDeviationValue($maxDeviation)));
+		$columns['w_stamina'] = max(1, min(100, $strengths['stamina'] + self::_getRandomDeviationValue($maxDeviation)));
+		$columns['w_fitness'] = max(1, min(100, $strengths['freshness'] + self::_getRandomDeviationValue($maxDeviation)));
+		$columns['w_morale'] = max(1, min(100, $strengths['satisfaction'] + self::_getRandomDeviationValue($maxDeviation)));
 		*/
-		$columns['w_staerke'] = max(1, min(100, $attributes['skill'] + self::_getRandomDeviationValue(3)));
-		$columns['w_technik'] = max(1, min(100, $attributes['technique'] + self::_getRandomDeviationValue(3)));
-		$columns['w_kondition'] = max(1, min(100, $attributes['stamina'] + self::_getRandomDeviationValue(3)));
-		$columns['w_frische'] = max(1, min(100, $attributes['fitness'] + self::_getRandomDeviationValue(3)));
-		$columns['w_zufriedenheit'] = max(1, min(100, $attributes['morale'] + self::_getRandomDeviationValue(3)));
-		$columns['vertrag_gehalt'] = 10000;
-		$columns['vertrag_spiele'] = 60;
+		$columns['w_strength'] = max(1, min(100, $attributes['skill'] + self::_getRandomDeviationValue(3)));
+		$columns['w_technique'] = max(1, min(100, $attributes['technique'] + self::_getRandomDeviationValue(3)));
+		$columns['w_stamina'] = max(1, min(100, $attributes['stamina'] + self::_getRandomDeviationValue(3)));
+		$columns['w_fitness'] = max(1, min(100, $attributes['fitness'] + self::_getRandomDeviationValue(3)));
+		$columns['w_morale'] = max(1, min(100, $attributes['morale'] + self::_getRandomDeviationValue(3)));
+		$columns['contract_salary'] = 10000;
+		$columns['contract_matches'] = 60;
 		$columns['status'] = '1';
 		
 		if ($teamId) {
-			$columns['verein_id'] = $teamId;
+			$columns['club_id'] = $teamId;
 		} else {
-			$columns['transfermarkt'] = '1';
+			$columns['transfer_listed'] = '1';
 			$columns['transfer_start'] = $websoccer->getNowAsTimestamp();
-			$columns['transfer_ende'] = $columns['transfer_start'] + $websoccer->getConfig('transfermarket_duration_days') * 24 * 3600;
+			$columns['transfer_end'] = $columns['transfer_start'] + $websoccer->getConfig('transfermarket_duration_days') * 24 * 3600;
 		}
 		
-		$fromTable = $websoccer->getConfig('db_prefix') . '_spieler';
+		$fromTable = $websoccer->getConfig('db_prefix') . '_player';
 		$db->queryInsert($columns, $fromTable);
 	}
 	
 	private static function _createPlayer($websoccer, $db, $teamId, $firstName, $lastName, $position, $mainPosition, $strengths, 
 			$country, $age, $birthday, $salary, $contractDuration, $maxDeviation) {
 		
-		$columns['vorname'] = $firstName;
-		$columns['nachname'] = $lastName;
-		$columns['geburtstag'] = $birthday;
+		$columns['first_name'] = $firstName;
+		$columns['last_name'] = $lastName;
+		$columns['birthday'] = $birthday;
 		$columns['age'] = $age;
 		$columns['position'] = $position;
 		$columns['position_main'] = $mainPosition;
 		$columns['nation'] = $country;
-		$columns['w_staerke'] = max(1, min(100, $strengths['strength'] + self::_getRandomDeviationValue($maxDeviation)));
-		$columns['w_technik'] = max(1, min(100, $strengths['technique'] + self::_getRandomDeviationValue($maxDeviation)));
-		$columns['w_kondition'] = max(1, min(100, $strengths['stamina'] + self::_getRandomDeviationValue($maxDeviation)));
-		$columns['w_frische'] = max(1, min(100, $strengths['freshness'] + self::_getRandomDeviationValue($maxDeviation)));
-		$columns['w_zufriedenheit'] = max(1, min(100, $strengths['satisfaction'] + self::_getRandomDeviationValue($maxDeviation)));
-		$columns['vertrag_gehalt'] = $salary;
-		$columns['vertrag_spiele'] = $contractDuration;
+		$columns['w_strength'] = max(1, min(100, $strengths['strength'] + self::_getRandomDeviationValue($maxDeviation)));
+		$columns['w_technique'] = max(1, min(100, $strengths['technique'] + self::_getRandomDeviationValue($maxDeviation)));
+		$columns['w_stamina'] = max(1, min(100, $strengths['stamina'] + self::_getRandomDeviationValue($maxDeviation)));
+		$columns['w_fitness'] = max(1, min(100, $strengths['freshness'] + self::_getRandomDeviationValue($maxDeviation)));
+		$columns['w_morale'] = max(1, min(100, $strengths['satisfaction'] + self::_getRandomDeviationValue($maxDeviation)));
+		$columns['contract_salary'] = $salary;
+		$columns['contract_matches'] = $contractDuration;
 		$columns['status'] = '1';
 		
 		if ($teamId) {
-			$columns['verein_id'] = $teamId;
+			$columns['club_id'] = $teamId;
 		} else {
-			$columns['transfermarkt'] = '1';
+			$columns['transfer_listed'] = '1';
 			$columns['transfer_start'] = $websoccer->getNowAsTimestamp();
-			$columns['transfer_ende'] = $columns['transfer_start'] + $websoccer->getConfig('transfermarket_duration_days') * 24 * 3600;
+			$columns['transfer_end'] = $columns['transfer_start'] + $websoccer->getConfig('transfermarket_duration_days') * 24 * 3600;
 		}
 		
-		$fromTable = $websoccer->getConfig('db_prefix') . '_spieler';
+		$fromTable = $websoccer->getConfig('db_prefix') . '_player';
 		$db->queryInsert($columns, $fromTable);
 	}
 	

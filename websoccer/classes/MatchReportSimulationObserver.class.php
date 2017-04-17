@@ -42,8 +42,8 @@ class MatchReportSimulationObserver implements ISimulationObserver {
 		$this->_db = $db;
 		
 		// get available text messages
-		$fromTable = $websoccer->getConfig('db_prefix') . '_spiel_text';
-		$columns = 'id, aktion AS actiontype';
+		$fromTable = $websoccer->getConfig('db_prefix') . '_match_text';
+		$columns = 'id, action AS actiontype';
 		$result = $db->querySelect($columns, $fromTable, '1=1');
 		while ($text = $result->fetch_array()) {
 			$this->_availableTexts[$text['actiontype']][] = $text['id'];
@@ -60,9 +60,9 @@ class MatchReportSimulationObserver implements ISimulationObserver {
 			? $match->getPreviousPlayerWithBall()->name : '';
 		
 		if (strlen($assistPlayerName)) {
-			$this->_createMessage($match, 'Tor_mit_vorlage', array($scorer->name, $assistPlayerName), ($scorer->team->id == $match->homeTeam->id));
+			$this->_createMessage($match, 'Goal_with_assist', array($scorer->name, $assistPlayerName), ($scorer->team->id == $match->homeTeam->id));
 		} else {
-			$this->_createMessage($match, 'Tor', array($scorer->name, $goaly->name), ($scorer->team->id == $match->homeTeam->id));
+			$this->_createMessage($match, 'Goal', array($scorer->name, $goaly->name), ($scorer->team->id == $match->homeTeam->id));
 		}
 		
 	}
@@ -72,9 +72,9 @@ class MatchReportSimulationObserver implements ISimulationObserver {
 	 */
 	public function onShootFailure(SimulationMatch $match, SimulationPlayer $scorer, SimulationPlayer $goaly) {
 		if (SimulationHelper::getMagicNumber(0, 1)) {
-			$this->_createMessage($match, 'Torschuss_daneben', array($scorer->name, $goaly->name), ($scorer->team->id == $match->homeTeam->id));
+			$this->_createMessage($match, 'Shot_missed', array($scorer->name, $goaly->name), ($scorer->team->id == $match->homeTeam->id));
 		} else {
-			$this->_createMessage($match, 'Torschuss_auf_Tor', array($scorer->name, $goaly->name), ($scorer->team->id == $match->homeTeam->id));
+			$this->_createMessage($match, 'Shot_on_target', array($scorer->name, $goaly->name), ($scorer->team->id == $match->homeTeam->id));
 		}
 	}
 	
@@ -84,9 +84,9 @@ class MatchReportSimulationObserver implements ISimulationObserver {
 	public function onAfterTackle(SimulationMatch $match, SimulationPlayer $winner, SimulationPlayer $looser) {
 		
 		if (SimulationHelper::getMagicNumber(0, 1)) {
-			$this->_createMessage($match, 'Zweikampf_gewonnen', array($winner->name, $looser->name), ($winner->team->id == $match->homeTeam->id));
+			$this->_createMessage($match, 'Tackle_won', array($winner->name, $looser->name), ($winner->team->id == $match->homeTeam->id));
 		} else {
-			$this->_createMessage($match, 'Zweikampf_verloren', array($looser->name, $winner->name), ($looser->team->id == $match->homeTeam->id));
+			$this->_createMessage($match, 'Tackle_lost', array($looser->name, $winner->name), ($looser->team->id == $match->homeTeam->id));
 		}
 		
 	}
@@ -108,7 +108,7 @@ class MatchReportSimulationObserver implements ISimulationObserver {
 			// select random theoretical pass target
 			$targetPlayer = SimulationHelper::selectPlayer($player->team, $player->position, $player);
 			
-			$this->_createMessage($match, 'Pass_daneben', array($player->name, $targetPlayer->name), ($player->team->id == $match->homeTeam->id));
+			$this->_createMessage($match, 'Pass_missed', array($player->name, $targetPlayer->name), ($player->team->id == $match->homeTeam->id));
 		}
 	}
 	
@@ -116,7 +116,7 @@ class MatchReportSimulationObserver implements ISimulationObserver {
 	 * @see ISimulationObserver::onInjury()
 	 */
 	public function onInjury(SimulationMatch $match, SimulationPlayer $player, $numberOfMatches) {
-		$this->_createMessage($match, 'Verletzung', array($player->name), ($player->team->id == $match->homeTeam->id));
+		$this->_createMessage($match, 'Injury', array($player->name), ($player->team->id == $match->homeTeam->id));
 	}
 	
 	/**
@@ -124,9 +124,9 @@ class MatchReportSimulationObserver implements ISimulationObserver {
 	 */
 	public function onYellowCard(SimulationMatch $match, SimulationPlayer $player) {
 		if ($player->yellowCards > 1) {
-			$this->_createMessage($match, 'Karte_gelb_rot', array($player->name), ($player->team->id == $match->homeTeam->id));
+			$this->_createMessage($match, 'Yellow_card_2nd', array($player->name), ($player->team->id == $match->homeTeam->id));
 		} else {
-			$this->_createMessage($match, 'Karte_gelb', array($player->name), ($player->team->id == $match->homeTeam->id));
+			$this->_createMessage($match, 'Yellow_card', array($player->name), ($player->team->id == $match->homeTeam->id));
 		}
 	}
 	
@@ -134,7 +134,7 @@ class MatchReportSimulationObserver implements ISimulationObserver {
 	 * @see ISimulationObserver::onRedCard()
 	 */
 	public function onRedCard(SimulationMatch $match, SimulationPlayer $player, $matchesBlocked) {
-		$this->_createMessage($match, 'Karte_rot', array($player->name), ($player->team->id == $match->homeTeam->id));
+		$this->_createMessage($match, 'Red_card', array($player->name), ($player->team->id == $match->homeTeam->id));
 	}
 	
 	/**
@@ -143,9 +143,9 @@ class MatchReportSimulationObserver implements ISimulationObserver {
 	public function onPenaltyShoot(SimulationMatch $match, SimulationPlayer $player, SimulationPlayer $goaly, $successful) {
 	
 		if ($successful) {
-			$this->_createMessage($match, 'Elfmeter_erfolg', array($player->name, $goaly->name), ($player->team->id == $match->homeTeam->id));
+			$this->_createMessage($match, 'Penalty_scored', array($player->name, $goaly->name), ($player->team->id == $match->homeTeam->id));
 		} else {
-			$this->_createMessage($match, 'Elfmeter_verschossen', array($player->name, $goaly->name), ($player->team->id == $match->homeTeam->id));
+			$this->_createMessage($match, 'Penalty_missed', array($player->name, $goaly->name), ($player->team->id == $match->homeTeam->id));
 		}
 	}
 	
@@ -154,7 +154,7 @@ class MatchReportSimulationObserver implements ISimulationObserver {
 	 * @see ISimulationObserver::onCorner()
 	 */
 	public function onCorner(SimulationMatch $match, SimulationPlayer $concededByPlayer, SimulationPlayer $targetPlayer) {
-		$this->_createMessage($match, 'Ecke', array($concededByPlayer->name, $targetPlayer->name), ($concededByPlayer->team->id == $match->homeTeam->id));
+		$this->_createMessage($match, 'Corner', array($concededByPlayer->name, $targetPlayer->name), ($concededByPlayer->team->id == $match->homeTeam->id));
 	}
 	
 	/**
@@ -164,9 +164,9 @@ class MatchReportSimulationObserver implements ISimulationObserver {
 	public function onFreeKick(SimulationMatch $match, SimulationPlayer $player, SimulationPlayer $goaly, $successful) {
 	
 		if ($successful) {
-			$this->_createMessage($match, 'Freistoss_treffer', array($player->name, $goaly->name), ($player->team->id == $match->homeTeam->id));
+			$this->_createMessage($match, 'Freekick_scored', array($player->name, $goaly->name), ($player->team->id == $match->homeTeam->id));
 		} else {
-			$this->_createMessage($match, 'Freistoss_daneben', array($player->name, $goaly->name), ($player->team->id == $match->homeTeam->id));
+			$this->_createMessage($match, 'Freekick_missed', array($player->name, $goaly->name), ($player->team->id == $match->homeTeam->id));
 		}
 	}
 	

@@ -11,35 +11,35 @@
             id="tablemarker"
             entity="tablemarker"
             navcategory="league"
-            permissionrole="r_daten" >
+            permissionrole="r_data" >
 
-            <entity dbtable="tabelle_markierung AS MarkerTab" >
+            <entity dbtable="table_marker AS MarkerTab" >
 
                 <overview delete="true" edit="true" >
 
                     <column
                         id="entity_tablemarker_bezeichnung"
-                        field="MarkerTab.bezeichnung"
+                        field="MarkerTab.label"
                         type="text"
                         sort="true"
                         filter="true" />
                     
                     <column
-                        id="entity_tablemarker_liga_id"
+                        id="entity_tablemarker_league_id"
                         field="LeagueTab.name"
                         type="text"
                         sort="true"
                         filter="true" />
                     
                     <column
-                        id="entity_tablemarker_platz_von"
-                        field="MarkerTab.platz_von"
+                        id="entity_tablemarker_positions_from"
+                        field="MarkerTab.positions_from"
                         type="number"
                         sort="true" />
                   
                     <column
-                        id="entity_tablemarker_platz_bis"
-                        field="MarkerTab.platz_bis"
+                        id="entity_tablemarker_positions_to"
+                        field="MarkerTab.positions_to"
                         type="number"
                         sort="true" />
                     
@@ -51,17 +51,17 @@
                         filter="true" />
                     
                     
-                	<join type="LEFT" jointable="liga AS LeagueTab" joincondition="MarkerTab.liga_id = LeagueTab.id" />
-                	<join type="LEFT" jointable="liga AS TargetLeagueTab" joincondition="MarkerTab.target_league_id = TargetLeagueTab.id" />
+                	<join type="LEFT" jointable="league AS LeagueTab" joincondition="MarkerTab.league_id = LeagueTab.id" />
+                	<join type="LEFT" jointable="league AS TargetLeagueTab" joincondition="MarkerTab.target_league_id = TargetLeagueTab.id" />
                 </overview>
 
                 <editform>
-                    <field id="bezeichnung" type="text" required="true" />
-                    <field id="liga_id" type="foreign_key" entity="league" jointable="liga" cascade="delete" labelcolumns="land, name" required="true" />
-					<field id="platz_von" type="number" required="true" />
-					<field id="platz_bis" type="number" required="true" />
-					<field id="farbe" type="color" required="true" />
-					<field id="target_league_id" type="foreign_key" entity="league" jointable="liga" labelcolumns="land, name" required="false" />
+                    <field id="label" type="text" required="true" />
+                    <field id="league_id" type="foreign_key" entity="league" jointable="league" cascade="delete" labelcolumns="country, name" required="true" />
+					<field id="positions_from" type="number" required="true" />
+					<field id="positions_to" type="number" required="true" />
+					<field id="colour" type="color" required="true" />
+					<field id="target_league_id" type="foreign_key" entity="league" jointable="league" labelcolumns="country, name" required="false" />
                 </editform>
             </entity>
         </adminpage>

@@ -48,12 +48,12 @@ class LeagueDetailsModel implements IModel {
 		if ($leagueId == 0) {
 			$clubId = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
 			if ($clubId > 0) {
-				$result = $this->_db->querySelect("liga_id", $this->_websoccer->getConfig("db_prefix") . "_verein",
+				$result = $this->_db->querySelect("league_id", $this->_websoccer->getConfig("db_prefix") . "_club",
 						"id = %d", $clubId, 1);
 				$club = $result->fetch_array();
 				$result->free();
 					
-				$leagueId = $club["liga_id"];
+				$leagueId = $club["league_id"];
 			}
 		}
 		

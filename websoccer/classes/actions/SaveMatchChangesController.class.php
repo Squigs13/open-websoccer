@@ -68,7 +68,7 @@ class SaveMatchChangesController implements IActionController {
 		// update match fields
 		$columns = array();
 		$teamPrefix = ($matchinfo['match_home_id'] == $teamId || $matchinfo['match_home_id'] == $nationalTeamId) ? 'home' : 'guest';
-		$teamPrefixDb = ($matchinfo['match_home_id'] == $teamId || $matchinfo['match_home_id'] == $nationalTeamId) ? 'home' : 'gast';
+		$teamPrefixDb = ($matchinfo['match_home_id'] == $teamId || $matchinfo['match_home_id'] == $nationalTeamId) ? 'home' : 'guest';
 		
 		// consider already executed subs
 		$occupiedSubPos = array();
@@ -130,8 +130,8 @@ class SaveMatchChangesController implements IActionController {
 								$this->_i18n->getMessage('match_details_changes_too_late_altered', $subNo)));
 					}
 					
-					$columns[$teamPrefixDb . '_w'. $slot. '_raus'] = $newOut;
-					$columns[$teamPrefixDb . '_w'. $slot. '_rein'] = $newIn;
+					$columns[$teamPrefixDb . '_w'. $slot. '_out'] = $newOut;
+					$columns[$teamPrefixDb . '_w'. $slot. '_in'] = $newIn;
 					$columns[$teamPrefixDb . '_w'. $slot. '_minute'] = $newMinute;
 					$columns[$teamPrefixDb . '_w'. $slot. '_condition'] = $newCondition;
 					$columns[$teamPrefixDb . '_w'. $slot. '_position'] = $newPosition;
@@ -177,7 +177,7 @@ class SaveMatchChangesController implements IActionController {
 		
 		// execute update
 		if (count($columns)) {
-			$fromTable = $this->_websoccer->getConfig('db_prefix') . '_spiel';
+			$fromTable = $this->_websoccer->getConfig('db_prefix') . '_match';
 			$whereCondition = 'id = %d';
 			
 			$this->_db->queryUpdate($columns, $fromTable, $whereCondition, $matchId);
@@ -208,22 +208,22 @@ class SaveMatchChangesController implements IActionController {
 			}
 		}
 		
-		$updateTable = $this->_websoccer->getConfig('db_prefix') . '_spiel_berechnung';
+		$updateTable = $this->_websoccer->getConfig('db_prefix') . '_match_simulation';
 		$whereCondition = 'id = %d';
 		
 		$setupMainMapping = array(
-				'T' => 'Torwart',
-				'LV' => 'Abwehr',
-				'RV' => 'Abwehr',
-				'IV' => 'Abwehr',
-				'DM' => 'Mittelfeld',
-				'LM' => 'Mittelfeld',
-				'ZM' => 'Mittelfeld',
-				'RM' => 'Mittelfeld',
-				'OM' => 'Mittelfeld',
-				'LS' => 'Sturm',
-				'MS' => 'Sturm',
-				'RS' => 'Sturm');
+				'T' => 'Goalkeeper',
+				'LV' => 'Defender',
+				'RV' => 'Defender',
+				'IV' => 'Defender',
+				'DM' => 'Midfielder',
+				'LM' => 'Midfielder',
+				'ZM' => 'Midfielder',
+				'RM' => 'Midfielder',
+				'OM' => 'Midfielder',
+				'LS' => 'Forward',
+				'MS' => 'Forward',
+				'RS' => 'Forward');
 		
 		foreach ($playersOnField as $player) {
 			if (isset($submittedPositions[$player['id']])) {
@@ -249,7 +249,7 @@ class SaveMatchChangesController implements IActionController {
 						$strength = round($strength * (1 - $this->_websoccer->getConfig('sim_strength_reduction_secondary') / 100));
 					}
 					
-					$this->_db->queryUpdate(array('position_main' => $newPos, 'position' => $position, 'w_staerke' => $strength), 
+					$this->_db->queryUpdate(array('position_main' => $newPos, 'position' => $position, 'w_strength' => $strength), 
 							$updateTable, $whereCondition, $player['match_record_id']);
 				}
 			}
@@ -260,7 +260,7 @@ class SaveMatchChangesController implements IActionController {
 	private function _createMatchReportMessage(User $user, $matchId, $minute, $isHomeTeam) {
 		
 		// get available messages
-		$result = $this->_db->querySelect('id', $this->_websoccer->getConfig('db_prefix') . '_spiel_text', 'aktion = \'Taktikaenderung\'');
+		$result = $this->_db->querySelect('id', $this->_websoccer->getConfig('db_prefix') . '_match_text', 'action = \'Tactics_changed\'');
 		$messages = array();
 		while ($message = $result->fetch_array()) {
 			$messages[] = $message['id'];

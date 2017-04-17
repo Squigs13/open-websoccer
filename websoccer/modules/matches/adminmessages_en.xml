@@ -8,18 +8,18 @@
     <message id="match_manage_reportitems_noitems">There are no match report messages for this messages.</message>
     <message id="match_manage_playerstatistics_noitems">There are no players set for this match, yet.</message>
     
-    <message id="match_manage_minuten_gespielt">Minutes played</message>
-    <message id="match_manage_note">Grade</message>
-    <message id="match_manage_tore">Goals</message>
+    <message id="match_manage_minutes_played">Minutes played</message>
+    <message id="match_manage_rating">Grade</message>
+    <message id="match_manage_goals">Goals</message>
     <message id="match_manage_assists">Assists</message>
-    <message id="match_manage_karte_gelb">Yellow cards</message>
-    <message id="match_manage_karte_rot">Red card</message>
-    <message id="match_manage_verletzt">Matches injured</message>
-    <message id="match_manage_gesperrt">Matches suspended</message>
-    <message id="match_manage_ballcontacts">Ball touches</message>
+    <message id="match_manage_yellow_card">Yellow cards</message>
+    <message id="match_manage_red_card">Red card</message>
+    <message id="match_manage_injured">Matches injured</message>
+    <message id="match_manage_suspended">Matches suspended</message>
+    <message id="match_manage_touches">Ball touches</message>
     <message id="match_manage_wontackles">Tackles won</message>
-    <message id="match_manage_shoots">Shots</message>
-    <message id="match_manage_passes_successed">Successful passes</message>
+    <message id="match_manage_shots">Shots</message>
+    <message id="match_manage_passes_successful">Successful passes</message>
     <message id="match_manage_passes_failed">Misplaced passes</message>
     
     <message id="match_manage_position_field_1">On pitch</message>

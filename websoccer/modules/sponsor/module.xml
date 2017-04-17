@@ -11,7 +11,7 @@
             id="sponsor"
             entity="sponsor"
             navcategory="league"
-            permissionrole="r_daten" >
+            permissionrole="r_data" >
 
             <entity dbtable="sponsor AS SponsorTab" >
 
@@ -25,15 +25,15 @@
                         filter="true" />
                     
                     <column
-                        id="entity_sponsor_liga_id"
+                        id="entity_sponsor_league_id"
                         field="LeagueTab.name"
                         type="text"
                         sort="true"
                         filter="true" />
                     
                     <column
-                        id="entity_sponsor_min_platz"
-                        field="SponsorTab.min_platz"
+                        id="entity_sponsor_min_place"
+                        field="SponsorTab.min_place"
                         type="number"
                         sort="true" />
                     
@@ -44,20 +44,20 @@
                         sort="true" />
                     
                     
-                	<join type="LEFT" jointable="liga AS LeagueTab" joincondition="SponsorTab.liga_id = LeagueTab.id" />
+                	<join type="LEFT" jointable="league AS LeagueTab" joincondition="SponsorTab.league_id = LeagueTab.id" />
                 </overview>
 
                 <editform>
                     <field id="name" type="text" required="true" />
-                    <field id="liga_id" type="foreign_key" entity="league" jointable="liga" cascade="delete" labelcolumns="land, name" required="true" />
+                    <field id="league_id" type="foreign_key" entity="league" jointable="league" cascade="delete" labelcolumns="country, name" required="true" />
 					
-					<field id="b_spiel" type="number" required="true" />
-					<field id="b_heimzuschlag" type="number" required="true" />
-					<field id="b_sieg" type="number" required="true" />
-					<field id="b_meisterschaft" type="number" required="true" />
+					<field id="b_match" type="number" required="true" />
+					<field id="b_home_match" type="number" required="true" />
+					<field id="b_win" type="number" required="true" />
+					<field id="b_championship" type="number" required="true" />
 					<field id="max_teams" type="number" required="true" />
-					<field id="min_platz" type="number" required="true" />
-					<field id="bild" type="file" />
+					<field id="min_place" type="number" required="true" />
+					<field id="image" type="file" />
 					
                 </editform>
             </entity>

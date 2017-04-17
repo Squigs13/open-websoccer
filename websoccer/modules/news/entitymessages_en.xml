@@ -3,10 +3,10 @@
 <messages>
     <message id="entity_news">News</message>
     <message id="news-details_navlabel">Read</message>
-    <message id="entity_news_autor_id">Author</message>
-	<message id="entity_news_titel">Title</message>
-	<message id="entity_news_datum">Date</message>
-	<message id="entity_news_nachricht">Message</message>
+    <message id="entity_news_author_id">Author</message>
+	<message id="entity_news_title">Title</message>
+	<message id="entity_news_date">Date</message>
+	<message id="entity_news_message">Message</message>
 	<message id="entity_news_linktext1">Relevant Link 1 (Text)</message>
 	<message id="entity_news_linkurl1">Relevant Link 1 (URL)</message>
 	<message id="entity_news_linktext2">Relevant Link 2 (Text)</message>

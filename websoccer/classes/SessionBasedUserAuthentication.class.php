@@ -51,7 +51,7 @@ class SessionBasedUserAuthentication implements IUserAuthentication {
 			$rememberMe = CookieHelper::getCookieValue('user');
 			if ($rememberMe != null) {
 				
-				$columns = 'id, passwort_salt, nick, email, lang';
+				$columns = 'id, password_salt, nick, email, lang';
 				$whereCondition = 'status = 1 AND tokenid = \'%s\'';
 				$result = $db->querySelect($columns, $fromTable, $whereCondition, $rememberMe);
 				$rememberedUser = $result->fetch_array();
@@ -59,7 +59,7 @@ class SessionBasedUserAuthentication implements IUserAuthentication {
 				
 				if (isset($rememberedUser['id'])) {
 					
-					$currentToken = SecurityUtil::generateSessionToken($rememberedUser['id'], $rememberedUser['passwort_salt']);
+					$currentToken = SecurityUtil::generateSessionToken($rememberedUser['id'], $rememberedUser['password_salt']);
 					if ($currentToken === $rememberMe) {
 						$this->_login($rememberedUser, $db, $fromTable, $currentUser);
 						return;

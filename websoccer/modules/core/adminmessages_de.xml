@@ -11,7 +11,7 @@
     <message id="validationerror_number">Für %s wurde keine gültige Zahl eingegeben.</message>
     <message id="validationerror_percent">Für %s muss eine gültige Zahl eingegeben werden.</message>
     <message id="validationerror_text_too_long">Der Text für %s ist zu lange.</message>
-    <message id="validationerror_date">Für %s wurde kein gültiges Datum angegeben. Es muss im Format '%s' sein.</message>
+    <message id="validationerror_date">Für %s wurde kein gültiges date angegeben. Es muss im Format '%s' sein.</message>
     <message id="validationerror_required">%s benötigt eine Eingabe.</message>
     <message id="validationerror_imageupload_noimagefile">Die zu hochladende Datei ist keine gültige Grafikdatei.</message>
     <message id="error_file_upload_failed">Die ausgewählte Datei konnte nicht hochgeladen werden. Überprüfen Sie, ob der Ordner existiert und Schreibrechte hat.</message>
@@ -48,9 +48,9 @@
     
     <message id="login_title">AdminCenter Anmeldung</message>
     <message id="login_error_nousername">Es wurde kein Benutzername angegeben.</message>
-    <message id="login_error_nopassword">Es wurde kein Passwort angegeben.</message>
+    <message id="login_error_nopassword">Es wurde kein password angegeben.</message>
     <message id="login_error_unknownusername">Benutzername unbekannt.</message>   
-    <message id="login_error_invalidpassword">Falsches Passwort.</message> 
+    <message id="login_error_invalidpassword">Falsches password.</message> 
     <message id="login_alert_accessdenied_title">Sie müssen sich einloggen!</message>
     <message id="login_alert_accessdenied_content">Bitte geben Sie unten Ihre Zugangsdaten ein.</message>
     <message id="login_alert_logoutsuccess_title">Erfolgreich abgemeldet.</message>
@@ -61,10 +61,10 @@
     <message id="login_alert_error_content">Überprüfen Sie Ihre Eingabedaten.</message>
     
     <message id="login_label_user">Username</message>
-    <message id="login_label_password">Passwort</message>
+    <message id="login_label_password">password</message>
     <message id="login_button_logon">Anmelden</message>    
     
-    <message id="login_link_forgotpassword">Passwort vergessen?</message>    
+    <message id="login_link_forgotpassword">password vergessen?</message>    
     
     <message id="admincenter_brand">AdminCenter</message>
     <message id="admincenter_homelink_tooltip">Zur AdminCenter Startseite</message>
@@ -86,8 +86,8 @@
 	<message id="profile_title">Profil Bearbeiten</message>
 	<message id="profile_label_name">Name</message>
 	<message id="profile_label_email">E-Mail</message>
-	<message id="profile_label_newpassword">Neues Passwort</message>
-	<message id="profile_label_repeatpassword">Neues Passwort wiederholen</message>
+	<message id="profile_label_newpassword">Neues password</message>
+	<message id="profile_label_repeatpassword">Neues password wiederholen</message>
 	<message id="profile_label_language">Sprache</message>
 	
 	<message id="all_logging_title">Anmeldeprotokoll</message>
@@ -109,8 +109,8 @@
 	<message id="clearcache_success_message">Führen Sie diese Aktion immer aus, wenn Sie Einstellungen an den Softwaremodulen vorgenommen haben.</message>
 	
 	<message id="profile_validationerror_email">Keine E-Mail Adresse angegeben.</message>
-	<message id="profile_validationerror_password_too_short">Das Passwort ist zu kurz.</message>
-	<message id="profile_validationerror_wrong_repeated_password">Das wiederholte Passwort stimmt nicht mit dem ersten Passwort überein.</message>
+	<message id="profile_validationerror_password_too_short">Das password ist zu short.</message>
+	<message id="profile_validationerror_wrong_repeated_password">Das wiederholte password stimmt nicht mit dem ersten password überein.</message>
 	
 	<message id="home_title">Willkommen %s!</message>
 	<message id="home_intro">Schön, Sie im AdminCenter von <strong>OpenWebSoccer-Sim</strong> begrüßen zu dürfen. Bitte vergessen Sie nicht, sich nach Ihrer Sitzung <a href="logout.php">abzumelden</a>, wenn weitere Benutzer an Ihrem PC arbeiten.</message>
@@ -147,7 +147,7 @@
 	<message id="settings_label_supported_languages_help">Mit Komma getrennt</message> 
 	<message id="settings_label_date_format">Datumsformat</message> 
 	<message id="settings_label_date_format_help">Gemäss PHP <a href="http://www.php.net/manual/en/function.date.php" target="_blank">date()</a>-Funktion</message> 
-	<message id="settings_label_datetime_format">Format für Datum und Zeit</message> 
+	<message id="settings_label_datetime_format">Format für date und Zeit</message> 
 	<message id="settings_label_datetime_format_help">Gemäss PHP <a href="http://www.php.net/manual/en/function.date.php" target="_blank">date()</a>-Funktion</message> 
 	<message id="settings_label_time_format">Format für nur Zeit</message> 
 	<message id="settings_label_time_format_help">Gemäss PHP <a href="http://www.php.net/manual/en/function.date.php" target="_blank">date()</a>-Funktion</message> 
@@ -182,7 +182,7 @@
 	<message id="manage_select_all_label">Alle Einträge auswählen.</message>
 	<message id="manage_selected_items_label">Ausgewählte Datensätze:</message>
 	<message id="manage_status_active">Status: aktiv</message>
-	<message id="manage_status_blocked">Status: gesperrt</message>
+	<message id="manage_status_blocked">Status: suspended</message>
 	<message id="manage_show_details">Details anzeigen</message>
 	<message id="manage_sort_column_asc">Aufsteigend nach %s sortieren</message>	
 	<message id="manage_sort_column_desc">Absteigend nach %s sortieren</message>	
@@ -215,19 +215,19 @@
 	<message id="jobs_button_execute_once">Einmalig ausführen</message>
 	<message id="jobs_executed">Erfolgreich ausgeführt.</message>
 	
-	<message id="sendpassword_admin_email_subject">Ihr neues Passwort zum AdminCenter</message>
+	<message id="sendpassword_admin_email_subject">Ihr neues password zum AdminCenter</message>
 	<message id="sendpassword_admin_email_greeting">Guten Tag,</message>
-	<message id="sendpassword_admin_email_introduction">dies ist Ihr neues Passwort, das Sie über das AdminCenter angefordert haben und in Ihrem Profil ändern können und sollten:</message>
-	<message id="sendpassword_admin_email_newpassword_label">Ihr neues Passwort:</message>
-	<message id="sendpassword_admin_email_ending">Beachten Sie, dass Ihr neues Passwort erst aktiv wird, sobald Sie sich zum ersten mal damit anmelden.</message>
+	<message id="sendpassword_admin_email_introduction">dies ist Ihr neues password, das Sie über das AdminCenter angefordert haben und in Ihrem Profil ändern können und sollten:</message>
+	<message id="sendpassword_admin_email_newpassword_label">Ihr neues password:</message>
+	<message id="sendpassword_admin_email_ending">Beachten Sie, dass Ihr neues password erst aktiv wird, sobald Sie sich zum ersten mal damit anmelden.</message>
 	
 	<message id="sendpassword_admin_usernotfound">Benutzer nicht bekannt.</message>
-	<message id="sendpassword_admin_alreadysent">Sie haben erst kürzlich ein Passwort angefordert. Probieren Sie es später noch einmal.</message>
+	<message id="sendpassword_admin_alreadysent">Sie haben erst kürzlich ein password angefordert. Probieren Sie es später noch einmal.</message>
 	
-	<message id="sendpassword_admin_title">Passwort anfordern</message>
-	<message id="sendpassword_admin_intro">Sie haben Ihr Passwort vergessen? Geben Sie einfach Ihre E-Mail-Adresse an und wir senden Ihnen ein neues Passwort zu.</message>
+	<message id="sendpassword_admin_title">password anfordern</message>
+	<message id="sendpassword_admin_intro">Sie haben Ihr password vergessen? Geben Sie einfach Ihre E-Mail-Adresse an und wir senden Ihnen ein neues password zu.</message>
 	<message id="sendpassword_admin_label_email">E-Mail</message>
-	<message id="sendpassword_admin_button">Passwort zusenden</message>
+	<message id="sendpassword_admin_button">password zusenden</message>
 	<message id="sendpassword_admin_loginlink">Zum Log-In</message>
 	
 	<message id="entitylogging_nologgingcolumns">Wenn Sie Logging für diese Entität aktivieren, müssen Sie Datenbankspalten im Attribut <em>loggingcolumns</em> angeben.</message>

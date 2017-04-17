@@ -39,7 +39,7 @@ class UserActivationController implements IActionController {
 		
 		// get user
 		$columns = "id";
-		$wherePart = "schluessel = '%s' AND id = %d AND status = 2";
+		$wherePart = "activation_key = '%s' AND id = %d AND status = 2";
 		$parameters = array($key, $userid);
 		$result = $this->_db->querySelect($columns, $fromTable, $wherePart, $parameters);
 		$userdata = $result->fetch_array();

@@ -96,11 +96,11 @@ class BookCampController implements IActionController {
 			$camp["name"]);
 		
 		// create camp booking
-		$columns["verein_id"] = $teamId;
-		$columns["lager_id"] = $camp["id"];
-		$columns["datum_start"] = $startDateTimestamp;
-		$columns["datum_ende"] = $endDateTimestamp;
-		$this->_db->queryInsert($columns, $this->_websoccer->getConfig("db_prefix") . "_trainingslager_belegung");
+		$columns["club_id"] = $teamId;
+		$columns["camp_id"] = $camp["id"];
+		$columns["date_start"] = $startDateTimestamp;
+		$columns["date_end"] = $endDateTimestamp;
+		$this->_db->queryInsert($columns, $this->_websoccer->getConfig("db_prefix") . "_training_camp_booking");
 		
 		// success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS, 

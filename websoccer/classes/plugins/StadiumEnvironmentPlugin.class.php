@@ -104,7 +104,7 @@ class StadiumEnvironmentPlugin {
 	public static function creditAndDebitAfterHomeMatch(MatchCompletedEvent $event) {
 		
 		// do not consider friendlies
-		if ($event->match->type == 'Freundschaft' || $event->match->homeTeam->isNationalTeam) {
+		if ($event->match->type == 'friendly' || $event->match->homeTeam->isNationalTeam) {
 			return;
 		}
 		
@@ -128,7 +128,7 @@ class StadiumEnvironmentPlugin {
 	public static function handleInjuriesAfterMatch(MatchCompletedEvent $event) {
 	
 		// do not consider friendlies
-		if ($event->match->type == 'Freundschaft' || $event->match->homeTeam->isNationalTeam) {
+		if ($event->match->type == 'friendly' || $event->match->homeTeam->isNationalTeam) {
 			return;
 		}
 	
@@ -141,9 +141,9 @@ class StadiumEnvironmentPlugin {
 		if ($sumHome > 0 || $sumGuest > 0) {
 			
 			// get injured players
-			$playerTable = $event->websoccer->getConfig('db_prefix') . '_spieler';
-			$result = $event->db->querySelect('id,verein_id AS team_id,verletzt AS injured', $playerTable, 
-					'(verein_id = %d OR verein_id = %d) AND verletzt > 0', array($homeTeamId, $guestTeamId));
+			$playerTable = $event->websoccer->getConfig('db_prefix') . '_player';
+			$result = $event->db->querySelect('id,club_id AS team_id,injured AS injured', $playerTable, 
+					'(club_id = %d OR club_id = %d) AND injured > 0', array($homeTeamId, $guestTeamId));
 			while ($player = $result->fetch_array()) {
 				
 				$reduction = 0;
@@ -156,7 +156,7 @@ class StadiumEnvironmentPlugin {
 				// update player
 				if ($reduction > 0) {
 					$injured = max(0, $player['injured'] - $reduction);
-					$event->db->queryUpdate(array('verletzt' => $injured), $playerTable, 'id = %d', $player['id']);
+					$event->db->queryUpdate(array('injured' => $injured), $playerTable, 'id = %d', $player['id']);
 				}
 			}
 			$result->free();

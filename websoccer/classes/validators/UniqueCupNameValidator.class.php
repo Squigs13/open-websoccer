@@ -59,8 +59,8 @@ class UniqueCupNameValidator implements IValidator {
 		}
 		
 		// any match using the name for cup name?
-		$result = $db->querySelect('COUNT(*) AS hits', $this->_websoccer->getConfig('db_prefix') . '_spiel',
-				'pokalname = \'%s\'', $this->_value);
+		$result = $db->querySelect('COUNT(*) AS hits', $this->_websoccer->getConfig('db_prefix') . '_match',
+				'cup_name = \'%s\'', $this->_value);
 		$matches = $result->fetch_array();
 		$result->free();
 		

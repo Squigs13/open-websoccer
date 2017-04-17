@@ -11,35 +11,35 @@
             id="player"
             entity="player"
             navcategory="league"
-            permissionrole="r_daten" >
+            permissionrole="r_data" >
 
-            <entity dbtable="spieler AS PlayerTab" >
+            <entity dbtable="player AS PlayerTab" >
 
-                <overview delete="true" edit="true" logging="true" loggingcolumns="vorname,nachname,kunstname,verein_id,position">
+                <overview delete="true" edit="true" logging="true" loggingcolumns="first_name,last_name,nickname,club_id,position">
 
                     <column
-                        id="entity_player_nachname"
-                        field="PlayerTab.nachname"
+                        id="entity_player_last_name"
+                        field="PlayerTab.last_name"
                         type="text"
                         sort="true"
                         filter="true" />
                     
                     <column
-                        id="entity_player_vorname"
-                        field="PlayerTab.vorname"
+                        id="entity_player_first_name"
+                        field="PlayerTab.first_name"
                         type="text"
                         sort="true"
                         filter="true" />
                     
                     <column
-                        id="entity_player_kunstname"
-                        field="PlayerTab.kunstname"
+                        id="entity_player_nickname"
+                        field="PlayerTab.nickname"
                         type="text"
                         sort="true"
                         filter="true" />
 
                     <column
-                        id="entity_player_verein_id"
+                        id="entity_player_club_id"
                         field="ClubTab.name"
                         type="text"
                         sort="true"
@@ -64,7 +64,7 @@
                         sort="true" />
                      
                      <column
-                        id="entity_player_lending_owner_id"
+                        id="entity_player_loan_owner_id"
                         field="LenderTab.name"
                         type="text"
                         sort="true"
@@ -75,62 +75,62 @@
                         field="PlayerTab.status"
                         type="boolean" />
                     
-                	<join type="LEFT" jointable="verein AS ClubTab" joincondition="PlayerTab.verein_id = ClubTab.id" />
-                	<join type="LEFT" jointable="verein AS LenderTab" joincondition="PlayerTab.lending_owner_id = LenderTab.id" />
+                	<join type="LEFT" jointable="club AS ClubTab" joincondition="PlayerTab.club_id = ClubTab.id" />
+                	<join type="LEFT" jointable="club AS LenderTab" joincondition="PlayerTab.loan_owner_id = LenderTab.id" />
                 </overview>
 
                 <editform>
-                    <field id="vorname" type="text" />
-					<field id="nachname" type="text" />
-					<field id="kunstname" type="text" />
-					<field id="verein_id" type="foreign_key" entity="club" jointable="verein" cascade="delete" labelcolumns="name" />
-					<field id="geburtstag" type="date"  />
+                    <field id="first_name" type="text" />
+					<field id="last_name" type="text" />
+					<field id="nickname" type="text" />
+					<field id="club_id" type="foreign_key" entity="club" jointable="club" cascade="delete" labelcolumns="name" />
+					<field id="birthday" type="date"  />
 					<field id="age" type="number"  />
-					<field id="position" type="select" selection="Torwart,Abwehr,Mittelfeld,Sturm" required="true"  />
+					<field id="position" type="select" selection="Goalkeeper,Defender,Midfielder,Forward" required="true"  />
 					<field id="position_main" type="select" selection="T,LV,IV,RV,LM,ZM,DM,OM,RM,LS,MS,RS" required="false"  />
 					<field id="position_second" type="select" selection="T,LV,IV,RV,LM,ZM,DM,OM,RM,LS,MS,RS" required="false"  />
 					<field id="nation" type="text" required="true"  />
 					
 					<field id="picture" type="file"  />
-					<field id="verletzt" type="number" default="0" />
-					<field id="gesperrt" type="number" default="0"  />
-					<field id="gesperrt_cups" type="number" default="0"  />
-					<field id="gesperrt_nationalteam" type="number" default="0"  />
+					<field id="injured" type="number" default="0" />
+					<field id="suspended" type="number" default="0"  />
+					<field id="suspended_cups" type="number" default="0"  />
+					<field id="suspended_nationalteam" type="number" default="0"  />
 					
-					<field id="w_staerke" type="percent" required="true" roles="r_staerken" />
-					<field id="w_technik" type="percent" required="true" roles="r_staerken" />
-					<field id="w_kondition" type="percent" required="true" roles="r_staerken" />
-					<field id="w_frische" type="percent" required="true" roles="r_staerken" />
-					<field id="w_zufriedenheit" type="percent" required="true" roles="r_staerken" />
+					<field id="w_strength" type="percent" required="true" roles="r_attributes" />
+					<field id="w_technique" type="percent" required="true" roles="r_attributes" />
+					<field id="w_stamina" type="percent" required="true" roles="r_attributes" />
+					<field id="w_fitness" type="percent" required="true" roles="r_attributes" />
+					<field id="w_morale" type="percent" required="true" roles="r_attributes" />
 					
-					<field id="transfermarkt" type="boolean" />
+					<field id="transfer_listed" type="boolean" />
 					<field id="transfer_start" type="timestamp" />
-					<field id="transfer_ende" type="timestamp" />
-					<field id="transfer_mindestgebot" type="number" />
+					<field id="transfer_end" type="timestamp" />
+					<field id="transfer_min_bid" type="number" />
 					
-					<field id="vertrag_gehalt" type="number" />
-					<field id="vertrag_spiele" type="number" />
-					<field id="vertrag_torpraemie" type="number" />
+					<field id="contract_salary" type="number" />
+					<field id="contract_matches" type="number" />
+					<field id="contract_goal_bonus" type="number" />
 					
-					<field id="lending_owner_id" type="foreign_key" entity="club" jointable="verein" labelcolumns="name" />
-					<field id="lending_fee" type="number" />
-					<field id="lending_matches" type="number" />
+					<field id="loan_owner_id" type="foreign_key" entity="club" jointable="club" labelcolumns="name" />
+					<field id="loan_fee" type="number" />
+					<field id="loan_matches" type="number" />
 					
-					<field id="marktwert" type="number" />
+					<field id="value" type="number" />
 					
-					<field id="sa_tore" type="number" />
+					<field id="sa_goals" type="number" />
 					<field id="sa_assists" type="number" />
-					<field id="sa_spiele" type="number" />
-					<field id="sa_karten_gelb" type="number" />
-					<field id="sa_karten_gelb_rot" type="number" />
-					<field id="sa_karten_rot" type="number" />
+					<field id="sa_matches" type="number" />
+					<field id="sa_yellow_card" type="number" />
+					<field id="sa_yellow_card_2nd" type="number" />
+					<field id="sa_red_card" type="number" />
 					
-					<field id="st_tore" type="number" />
+					<field id="st_goals" type="number" />
 					<field id="st_assists" type="number" />
-					<field id="st_spiele" type="number" />
-					<field id="st_karten_gelb" type="number" />
-					<field id="st_karten_gelb_rot" type="number" />
-					<field id="st_karten_rot" type="number" />
+					<field id="st_matches" type="number" />
+					<field id="st_yellow_card" type="number" />
+					<field id="st_yellow_card_2nd" type="number" />
+					<field id="st_red_card" type="number" />
 					
 					<field id="history" type="textarea" />
 					

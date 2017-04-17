@@ -21,7 +21,7 @@
 	<message id="team_details_statistic_draws">Empatados</message>
 	<message id="team_details_statistic_score">Puntuación</message>
 	
-	<message id="team_details_noleaguevictories">Este equipo todavía no tiene victorias en su liga.</message>
+	<message id="team_details_noleaguevictories">Este equipo todavía no tiene victorias en su league.</message>
 	
 	<message id="team_details_season_place">Posición %d</message>
 </messages>

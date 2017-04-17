@@ -11,7 +11,7 @@
             id="stadiumbuilding"
             entity="stadiumbuilding"
             navcategory="league"
-            permissionrole="r_daten" >
+            permissionrole="r_data" >
 
             <entity dbtable="stadiumbuilding AS BuildingTab" >
 

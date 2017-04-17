@@ -11,54 +11,54 @@
             id="transaction"
             entity="transaction"
             navcategory="league"
-            permissionrole="r_daten" >
+            permissionrole="r_data" >
 
             <entity dbtable="konto AS TransactionTab" >
 
                 <overview delete="true" edit="false" >
 
                     <column
-                        id="entity_transaction_verein_id"
+                        id="entity_transaction_club_id"
                         field="ClubTab.name"
                         type="text"
                         sort="true"
                         filter="true" />
                     
                     <column
-                        id="entity_transaction_absender"
-                        field="TransactionTab.absender"
+                        id="entity_transaction_sender"
+                        field="TransactionTab.sender"
                         converter="PaymentSenderMessageConverter"
                         type="text" />
                     
                     <column
-                        id="entity_transaction_betrag"
-                        field="TransactionTab.betrag"
+                        id="entity_transaction_amount"
+                        field="TransactionTab.amount"
                         type="number"
                         sort="true" />
 
                     <column
-                        id="entity_transaction_datum"
-                        field="TransactionTab.datum"
+                        id="entity_transaction_date"
+                        field="TransactionTab.date"
                         type="timestamp"
                         sort="true"
                         filter="true" />
                     
                     <column
-                        id="entity_transaction_verwendung"
-                        field="TransactionTab.verwendung"
+                        id="entity_transaction_details"
+                        field="TransactionTab.details"
                         type="text"
                         converter="PaymentSubjectMessageConverter" />
                     
-                	<join type="LEFT" jointable="verein AS ClubTab" joincondition="TransactionTab.verein_id = ClubTab.id" />
+                	<join type="LEFT" jointable="club AS ClubTab" joincondition="TransactionTab.club_id = ClubTab.id" />
                 </overview>
 
                 <editform>
-					<field id="verein_id" type="foreign_key" entity="club" 
-					    jointable="verein" cascade="delete" labelcolumns="name" required="true" />
-					<field id="datum" type="timestamp" required="true"  />
-					<field id="absender" type="text" required="true"  />
-					<field id="verwendung" type="text" required="true"  />
-					<field id="betrag" type="number" required="true" converter="MoneyTransactionConverter" />
+					<field id="club_id" type="foreign_key" entity="club" 
+					    jointable="club" cascade="delete" labelcolumns="name" required="true" />
+					<field id="date" type="timestamp" required="true"  />
+					<field id="sender" type="text" required="true"  />
+					<field id="details" type="text" required="true"  />
+					<field id="amount" type="number" required="true" converter="MoneyTransactionConverter" />
 					
                 </editform>
             </entity>

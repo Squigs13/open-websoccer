@@ -13,7 +13,7 @@
 		  <dd>{{ statistic.goals }}</dd>
 		  
 		  <dt>{{ i18n.getMessage("player_details_statistic_shoots") }}</dt>
-		  <dd>{{ statistic.shoots }}</dd>
+		  <dd>{{ statistic.shots }}</dd>
 		  
 		  <dt>{{ i18n.getMessage("player_details_statistic_assists") }}</dt>
 		  <dd>{{ statistic.assists }}</dd>
@@ -28,8 +28,8 @@
 		  <dd>{{ "%.2f"|format(statistic.grade) }}</dd>
 		  
 		  <dt>{{ i18n.getMessage("player_details_statistic_passquota") }}</dt>
-		  <dd>{% if (statistic.passes_successed > 0 or statistic.passes_failed > 0) %}
-		  {{ "%d"|format(statistic.passes_successed * 100 / (statistic.passes_successed + statistic.passes_failed)) }}%
+		  <dd>{% if (statistic.passes_successful > 0 or statistic.passes_failed > 0) %}
+		  {{ "%d"|format(statistic.passes_successful * 100 / (statistic.passes_successful + statistic.passes_failed)) }}%
 		  {% else %}
 		  0%
 		  {% endif %}</dd>
@@ -47,7 +47,7 @@
 		  <dd>{{ statistic.goals }}</dd>
 		  
 		  <dt>{{ i18n.getMessage("player_details_statistic_shoots") }}</dt>
-		  <dd>{{ statistic.shoots }}</dd>
+		  <dd>{{ statistic.shots }}</dd>
 		  
 		  <dt>{{ i18n.getMessage("player_details_statistic_assists") }}</dt>
 		  <dd>{{ statistic.assists }}</dd>
@@ -62,8 +62,8 @@
 		  <dd>{{ "%.2f"|format(statistic.grade) }}</dd>
 		  
 		  <dt>{{ i18n.getMessage("player_details_statistic_passquota") }}</dt>
-		  <dd>{% if (statistic.passes_successed > 0 or statistic.passes_failed > 0) %}
-		  {{ "%d"|format(statistic.passes_successed * 100 / (statistic.passes_successed + statistic.passes_failed)) }}%
+		  <dd>{% if (statistic.passes_successful > 0 or statistic.passes_failed > 0) %}
+		  {{ "%d"|format(statistic.passes_successful * 100 / (statistic.passes_successful + statistic.passes_failed)) }}%
 		  {% else %}
 		  0%
 		  {% endif %}</dd>

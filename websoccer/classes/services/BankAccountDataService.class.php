@@ -36,9 +36,9 @@ class BankAccountDataService {
 	public static function countAccountStatementsOfTeam(WebSoccer $websoccer, DbConnection $db, $teamId) {
 		$columns = "COUNT(*) AS hits";
 		
-		$fromTable = $websoccer->getConfig("db_prefix") . "_konto";
+		$fromTable = $websoccer->getConfig("db_prefix") . "_accounts";
 		
-		$whereCondition = "verein_id = %d";
+		$whereCondition = "club_id = %d";
 		$parameters = $teamId;
 		
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
@@ -64,16 +64,16 @@ class BankAccountDataService {
 	 */
 	public static function getAccountStatementsOfTeam(WebSoccer $websoccer, DbConnection $db, $teamId, $startIndex, $entries_per_page) {
 		
-		$columns["absender"] = "sender";
-		$columns["betrag"] = "amount";
-		$columns["datum"] = "date";
-		$columns["verwendung"] = "subject";
+		$columns["sender"] = "sender";
+		$columns["amount"] = "amount";
+		$columns["date"] = "date";
+		$columns["details"] = "subject";
 		
 		$limit = $startIndex .",". $entries_per_page;
 		
-		$fromTable = $websoccer->getConfig("db_prefix") . "_konto";
+		$fromTable = $websoccer->getConfig("db_prefix") . "_accounts";
 		
-		$whereCondition = "verein_id = %d ORDER BY datum DESC";
+		$whereCondition = "club_id = %d ORDER BY date DESC";
 		$parameters = $teamId;
 		
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters, $limit);
@@ -154,18 +154,18 @@ class BankAccountDataService {
 		}
 		
 		// create transaction
-		$fromTable = $websoccer->getConfig("db_prefix") ."_konto";
-		$columns["verein_id"] = $teamId;
-		$columns["absender"] = $sender;
-		$columns["betrag"] = $amount;
-		$columns["datum"] = $websoccer->getNowAsTimestamp();
-		$columns["verwendung"] = $subject;
+		$fromTable = $websoccer->getConfig("db_prefix") ."_accounts";
+		$columns["club_id"] = $teamId;
+		$columns["sender"] = $sender;
+		$columns["amount"] = $amount;
+		$columns["date"] = $websoccer->getNowAsTimestamp();
+		$columns["details"] = $subject;
 		$db->queryInsert($columns, $fromTable);
 		
 		// update team budget
 		$newBudget = $team["team_budget"] + $amount;
-		$updateColumns["finanz_budget"] = $newBudget;
-		$fromTable = $websoccer->getConfig("db_prefix") ."_verein";
+		$updateColumns["finance_budget"] = $newBudget;
+		$fromTable = $websoccer->getConfig("db_prefix") ."_club";
 		$whereCondition = "id = %d";
 		$parameters = $teamId;
 		$db->queryUpdate($updateColumns, $fromTable, $whereCondition, $parameters);

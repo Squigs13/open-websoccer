@@ -136,15 +136,15 @@ class DirectTransfersDataService {
 	private static function _transferPlayer(WebSoccer $websoccer, DbConnection $db, $playerId, 
 			$targetClubId, $targetUserId, $currentUserId, $currentClubId, $amount, 
 			$exchangePlayer1 = 0, $exchangePlayer2 = 0) {
-		$db->queryUpdate(array("verein_id" => $targetClubId, 
-				"vertrag_spiele" => $websoccer->getConfig("transferoffers_contract_matches")), 
-				$websoccer->getConfig("db_prefix") . "_spieler", "id = %d", $playerId);
+		$db->queryUpdate(array("club_id" => $targetClubId, 
+				"contract_matches" => $websoccer->getConfig("transferoffers_contract_matches")), 
+				$websoccer->getConfig("db_prefix") . "_player", "id = %d", $playerId);
 		
 		// create log
 		$db->queryInsert(array(
 				"bid_id" => 0,
-				"datum" => $websoccer->getNowAsTimestamp(),
-				"spieler_id" => $playerId,
+				"date" => $websoccer->getNowAsTimestamp(),
+				"player_id" => $playerId,
 				"seller_user_id" => $currentUserId,
 				"seller_club_id" => $currentClubId,
 				"buyer_user_id" => $targetUserId,
@@ -252,16 +252,16 @@ class DirectTransfersDataService {
 				"O.rejected_allow_alternative" => "offer_rejected_allow_alternative",
 				"O.admin_approval_pending" => "offer_admin_approval_pending",
 				"P.id" => "player_id",
-				"P.vorname" => "player_firstname",
-				"P.nachname" => "player_lastname",
-				"P.kunstname" => "player_pseudonym",
-				"P.vertrag_gehalt" => "player_salary",
-				"P.marktwert" => "player_marketvalue",
-				"P.w_staerke" => "player_strength",
-				"P.w_technik" => "player_strength_technique",
-				"P.w_kondition" => "player_strength_stamina",
-				"P.w_frische" => "player_strength_freshness",
-				"P.w_zufriedenheit" => "player_strength_satisfaction",
+				"P.first_name" => "player_firstname",
+				"P.last_name" => "player_lastname",
+				"P.nickname" => "player_pseudonym",
+				"P.contract_salary" => "player_salary",
+				"P.value" => "player_marketvalue",
+				"P.w_strength" => "player_strength",
+				"P.w_technique" => "player_strength_technique",
+				"P.w_stamina" => "player_strength_stamina",
+				"P.w_fitness" => "player_strength_freshness",
+				"P.w_morale" => "player_strength_satisfaction",
 				"P.position_main" => "player_position_main",
 				"SU.id" => "sender_user_id",
 				"SU.nick" => "sender_user_name",
@@ -272,23 +272,23 @@ class DirectTransfersDataService {
 				"RC.id" => "receiver_club_id",
 				"RC.name" => "receiver_club_name",
 				"EP1.id" => "explayer1_id",
-				"EP1.vorname" => "explayer1_firstname",
-				"EP1.nachname" => "explayer1_lastname",
-				"EP1.kunstname" => "explayer1_pseudonym",
+				"EP1.first_name" => "explayer1_firstname",
+				"EP1.last_name" => "explayer1_lastname",
+				"EP1.nickname" => "explayer1_pseudonym",
 				"EP2.id" => "explayer2_id",
-				"EP2.vorname" => "explayer2_firstname",
-				"EP2.nachname" => "explayer2_lastname",
-				"EP2.kunstname" => "explayer2_pseudonym"
+				"EP2.first_name" => "explayer2_firstname",
+				"EP2.last_name" => "explayer2_lastname",
+				"EP2.nickname" => "explayer2_pseudonym"
 		);
 		
 		$fromTable = $websoccer->getConfig("db_prefix") . "_transfer_offer AS O";
-		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_spieler AS P ON P.id = O.player_id";
+		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_player AS P ON P.id = O.player_id";
 		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_user AS SU ON SU.id = O.sender_user_id";
-		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_verein AS SC ON SC.id = O.sender_club_id";
-		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_verein AS RC ON RC.id = O.receiver_club_id";
+		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_club AS SC ON SC.id = O.sender_club_id";
+		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_club AS RC ON RC.id = O.receiver_club_id";
 		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_user AS RU ON RU.id = RC.user_id";
-		$fromTable .= " LEFT JOIN " . $websoccer->getConfig("db_prefix") . "_spieler AS EP1 ON EP1.id = O.offer_player1";
-		$fromTable .= " LEFT JOIN " . $websoccer->getConfig("db_prefix") . "_spieler AS EP2 ON EP2.id = O.offer_player2";
+		$fromTable .= " LEFT JOIN " . $websoccer->getConfig("db_prefix") . "_player AS EP1 ON EP1.id = O.offer_player1";
+		$fromTable .= " LEFT JOIN " . $websoccer->getConfig("db_prefix") . "_player AS EP2 ON EP2.id = O.offer_player2";
 		
 		$whereCondition .= " ORDER BY O.submitted_date DESC";
 		

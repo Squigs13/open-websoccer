@@ -7,9 +7,9 @@
             id="league"
             entity="league"
             navcategory="league"
-            permissionrole="r_daten" >
+            permissionrole="r_data" >
 
-            <entity dbtable="liga" >
+            <entity dbtable="league" >
 
                 <overview
                     delete="true"
@@ -23,15 +23,15 @@
                         filter="true" />
 
                     <column
-                        id="entity_league_kurz"
-                        field="kurz"
+                        id="entity_league_short"
+                        field="short"
                         type="text"
                         sort="true"
                         filter="true" />
                     
                     <column
-                        id="entity_league_land"
-                        field="land"
+                        id="entity_league_country"
+                        field="country"
                         type="text"
                         sort="true"
                         filter="true" />
@@ -45,29 +45,29 @@
                         required="true"  />
 
                     <field
-                        id="kurz"
+                        id="short"
                         type="text"
                         required="true"  />
                     
                     <field
-                        id="land"
+                        id="country"
                         type="text"
                         required="true"  />
                     
                     <field
-                        id="p_steh"
+                        id="p_standing"
                         type="percent"
                         required="true"  />
                     <field
-                        id="p_sitz"
+                        id="p_seat"
                         type="percent"
                         required="true"  />
                     <field
-                        id="p_haupt_steh"
+                        id="p_main_standing"
                         type="percent"
                         required="true"  />
                     <field
-                        id="p_haupt_sitz"
+                        id="p_main_seat"
                         type="percent"
                         required="true"  />
                     <field
@@ -75,15 +75,15 @@
                         type="percent"
                         required="true"  />
                     <field
-                        id="preis_steh"
+                        id="price_standing"
                         type="number"
                         required="true"  />
                     <field
-                        id="preis_sitz"
+                        id="price_seat"
                         type="number"
                         required="true"  />
                     <field
-                        id="preis_vip"
+                        id="price_vip"
                         type="number"
                         required="true"  />
                 </editform>

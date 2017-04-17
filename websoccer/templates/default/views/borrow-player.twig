@@ -14,16 +14,16 @@
 
 <dl class="dl-horizontal">
 
-  <dt>{{ i18n.getMessage("entity_player_marktwert") }}</dt>
+  <dt>{{ i18n.getMessage("entity_player_value") }}</dt>
   <dd>{{ player.player_marketvalue|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</dd>
 
-  <dt>{{ i18n.getMessage("entity_player_vertrag_gehalt") }}</dt>
+  <dt>{{ i18n.getMessage("entity_player_contract_salary") }}</dt>
   <dd>{{ player.player_contract_salary|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</dd>
   
-  <dt>{{ i18n.getMessage("entity_player_vertrag_torpraemie") }}</dt>
+  <dt>{{ i18n.getMessage("entity_player_contract_goal_bonus") }}</dt>
   <dd>{{ player.player_contract_goalbonus|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</dd>
   
-  <dt>{{ i18n.getMessage("entity_player_vertrag_spiele") }}</dt>
+  <dt>{{ i18n.getMessage("entity_player_contract_matches") }}</dt>
   <dd>{{ player.player_contract_matches  }} {{ i18n.getMessage("player_details_unit_matches") }}</dd>
 </dl>
 
@@ -35,18 +35,18 @@
 
 	<div class="control-group">
 		<label class="control-label">
-			<strong>{{ i18n.getMessage("entity_player_lending_fee") }}</strong>
+			<strong>{{ i18n.getMessage("entity_player_loan_fee") }}</strong>
 		</label>
 		<div class="controls">
-			<span class="help-inline">{{ player.lending_fee|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</span>
+			<span class="help-inline">{{ player.loan_fee|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</span>
 		</div>
 	</div>
 	
-	{{ formelements.textfield('matches', i18n.getMessage('entity_player_lending_matches'), env.getRequestParameter('matches'), true, validationMsg, 'number', 
-		i18n.getMessage("lending_matches_durationhelp")|format(env.getConfig("lending_matches_min"), env.getConfig("lending_matches_max"))) }}
+	{{ formelements.textfield('matches', i18n.getMessage('entity_player_loan_matches'), env.getRequestParameter('matches'), true, validationMsg, 'number', 
+		i18n.getMessage("loan_matches_durationhelp")|format(env.getConfig("loan_matches_min"), env.getConfig("loan_matches_max"))) }}
 	
 	<div class="form-actions">
-		<button type="submit" class="btn btn-primary">{{ i18n.getMessage('lending_player_hire_button') }}</button>
+		<button type="submit" class="btn btn-primary">{{ i18n.getMessage('loan_player_hire_button') }}</button>
 		<a href="{{ env.getInternalUrl("myteam") }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
 	</div>
 	<input type="hidden" name="page" value="borrow-player"/>

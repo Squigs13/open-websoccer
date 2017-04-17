@@ -45,26 +45,26 @@ class TicketsModel implements IModel {
 			throw new Exception($this->_i18n->getMessage("feature_requires_team"));
 		}
 		
-		$columns["T.preis_stehen"] = "p_stands";
-		$columns["T.preis_sitz"] = "p_seats";
-		$columns["T.preis_haupt_stehen"] = "p_stands_grand";
-		$columns["T.preis_haupt_sitze"] = "p_seats_grand";
-		$columns["T.preis_vip"] = "p_vip";
+		$columns["T.price_stand"] = "p_stands";
+		$columns["T.price_seat"] = "p_seats";
+		$columns["T.price_main_stand"] = "p_stands_grand";
+		$columns["T.price_main_seat"] = "p_seats_grand";
+		$columns["T.price_vip"] = "p_vip";
 		
-		$columns["T.last_steh"] = "l_stands";
-		$columns["T.last_sitz"] = "l_seats";
-		$columns["T.last_haupt_steh"] = "l_stands_grand";
-		$columns["T.last_haupt_sitz"] = "l_seats_grand";
+		$columns["T.last_standing"] = "l_stands";
+		$columns["T.last_seat"] = "l_seats";
+		$columns["T.last_main_standing"] = "l_stands_grand";
+		$columns["T.last_main_seat"] = "l_seats_grand";
 		$columns["T.last_vip"] = "l_vip";
 		
-		$columns["S.p_steh"] = "s_stands";
-		$columns["S.p_sitz"] = "s_seats";
-		$columns["S.p_haupt_steh"] = "s_stands_grand";
-		$columns["S.p_haupt_sitz"] = "s_seats_grand";
+		$columns["S.p_standing"] = "s_stands";
+		$columns["S.p_seat"] = "s_seats";
+		$columns["S.p_main_standing"] = "s_stands_grand";
+		$columns["S.p_main_seat"] = "s_seats_grand";
 		$columns["S.p_vip"] = "s_vip";
 		
-		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_verein AS T";
-		$fromTable .= " LEFT JOIN " . $this->_websoccer->getConfig("db_prefix") . "_stadion AS S ON S.id = T.stadion_id";
+		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_club AS T";
+		$fromTable .= " LEFT JOIN " . $this->_websoccer->getConfig("db_prefix") . "_stadium AS S ON S.id = T.stadium_id";
 		$whereCondition = "T.id = %d";
 		$parameters = $teamId;
 		

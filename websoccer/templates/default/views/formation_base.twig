@@ -378,30 +378,30 @@
 										| {{ i18n.getMessage("player_details_statistic_goals") }}: {{ player.st_goals }}
 										| {{ i18n.getMessage("player_details_statistic_yellow") }}: {{ player.st_cards_yellow }}
 										{% if player.marketvalue is defined %}
-										| {{ i18n.getMessage("entity_player_marktwert") }}: {{ player.marketvalue|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}
+										| {{ i18n.getMessage("entity_player_value") }}: {{ player.marketvalue|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}
 										{% endif %}
 									</small>
 									
 									{% if env.getConfig("hide_strength_attributes") != "1" or youthFormation is defined and youthFormation %}
 										<div class="playerinfoStrengthRow">
-											<div class="playerinfoStrengthLabelFull">{{ i18n.getMessage("entity_player_w_staerke") }}</div>
+											<div class="playerinfoStrengthLabelFull">{{ i18n.getMessage("entity_player_w_strength") }}</div>
 											{{ statisticelements.progressbar(player.strength, "playerinfoStrength") }}
 										</div>
 										{% if player.strength_technique is defined %}
 										<div class="playerinfoStrengthRow">
-											<div class="playerinfoStrengthLabelFull">{{ i18n.getMessage("entity_player_w_technik") }}</div>
+											<div class="playerinfoStrengthLabelFull">{{ i18n.getMessage("entity_player_w_technique") }}</div>
 											{{ statisticelements.progressbar(player.strength_technique, "playerinfoStrength") }}
 										</div>
 										<div class="playerinfoStrengthRow">
-											<div class="playerinfoStrengthLabelFull">{{ i18n.getMessage("entity_player_w_kondition") }}</div>
+											<div class="playerinfoStrengthLabelFull">{{ i18n.getMessage("entity_player_w_stamina") }}</div>
 											{{ statisticelements.progressbar(player.strength_stamina, "playerinfoStrength") }}
 										</div>
 										<div class="playerinfoStrengthRow">
-											<div class="playerinfoStrengthLabelFull">{{ i18n.getMessage("entity_player_w_frische") }}</div>
+											<div class="playerinfoStrengthLabelFull">{{ i18n.getMessage("entity_player_w_fitness") }}</div>
 											{{ statisticelements.progressbar(player.strength_freshness, "playerinfoStrength") }}
 										</div>
 										<div class="playerinfoStrengthRow">
-											<div class="playerinfoStrengthLabelFull">{{ i18n.getMessage("entity_player_w_zufriedenheit") }}</div>
+											<div class="playerinfoStrengthLabelFull">{{ i18n.getMessage("entity_player_w_morale") }}</div>
 											{{ statisticelements.progressbar(player.strength_satisfaction, "playerinfoStrength") }}
 										</div>
 										{% endif %}

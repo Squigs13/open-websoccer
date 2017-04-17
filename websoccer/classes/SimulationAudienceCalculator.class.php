@@ -47,12 +47,12 @@ class SimulationAudienceCalculator {
 			
 		// is match in particular attractive?
 		$isAttractiveMatch = FALSE;
-		if ($match->type == 'Pokalspiel') {
+		if ($match->type == 'cupmatch') {
 			$isAttractiveMatch = TRUE;
-		} else if ($match->type == 'Ligaspiel') {
+		} else if ($match->type == 'leaguematch') {
 			// consider difference between points
-			$tcolumns = 'sa_punkte';
-			$fromTable = $websoccer->getConfig('db_prefix') . '_verein';
+			$tcolumns = 'sa_points';
+			$fromTable = $websoccer->getConfig('db_prefix') . '_club';
 			$whereCondition = 'id = %d';
 			
 			$result = $db->querySelect($tcolumns, $fromTable, $whereCondition, $match->homeTeam->id);
@@ -63,7 +63,7 @@ class SimulationAudienceCalculator {
 			$guest = $result->fetch_array();
 			$result->free();
 			
-			if (abs($home['sa_punkte'] - $guest['sa_punkte']) <= 9) {
+			if (abs($home['sa_points'] - $guest['sa_points']) <= 9) {
 				$isAttractiveMatch = TRUE;
 			}
 		}
@@ -126,18 +126,18 @@ class SimulationAudienceCalculator {
 		$tickets_vip = min(1, max(0, $rateVip)) * $homeInfo['places_vip'];
 		
 		// update team statistic
-		$columns['last_steh'] = $tickets_stands;
-		$columns['last_sitz'] = $tickets_seats;
-		$columns['last_haupt_steh'] = $tickets_stands_grand;
-		$columns['last_haupt_sitz'] = $tickets_seats_grand;
+		$columns['last_standing'] = $tickets_stands;
+		$columns['last_seat'] = $tickets_seats;
+		$columns['last_main_standing'] = $tickets_stands_grand;
+		$columns['last_main_seat'] = $tickets_seats_grand;
 		$columns['last_vip'] = $tickets_vip;
-		$fromTable = $websoccer->getConfig('db_prefix') . '_verein';
+		$fromTable = $websoccer->getConfig('db_prefix') . '_club';
 		$whereCondition = 'id = %d';
 		$db->queryUpdate($columns, $fromTable, $whereCondition, $match->homeTeam->id);
 		
 		// update match field
-		$mcolumns['zuschauer'] = $tickets_stands + $tickets_seats + $tickets_stands_grand + $tickets_seats_grand + $tickets_vip;
-		$fromTable = $websoccer->getConfig('db_prefix') . '_spiel';
+		$mcolumns['crowd'] = $tickets_stands + $tickets_seats + $tickets_stands_grand + $tickets_seats_grand + $tickets_vip;
+		$fromTable = $websoccer->getConfig('db_prefix') . '_match';
 		$db->queryUpdate($mcolumns, $fromTable, $whereCondition, $match->id);
 		
 		// compute and credit income
@@ -157,17 +157,17 @@ class SimulationAudienceCalculator {
 	}	
 	
 	private static function getHomeInfo($websoccer, $db, $teamId) {
-		$fromTable = $websoccer->getConfig('db_prefix') . '_verein AS T';
-		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_stadion AS S ON S.id = T.stadion_id';
-		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_liga AS L ON L.id = T.liga_id';
+		$fromTable = $websoccer->getConfig('db_prefix') . '_club AS T';
+		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_stadium AS S ON S.id = T.stadium_id';
+		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_league AS L ON L.id = T.league_id';
 		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') . '_user AS U ON U.id = T.user_id';
 		$whereCondition = 'T.id = %d';
 		
 		$columns['S.id'] = 'stadium_id';
-		$columns['S.p_steh'] = 'places_stands';
-		$columns['S.p_sitz'] = 'places_seats';
-		$columns['S.p_haupt_steh'] = 'places_stands_grand';
-		$columns['S.p_haupt_sitz'] = 'places_seats_grand';
+		$columns['S.p_standing'] = 'places_stands';
+		$columns['S.p_seat'] = 'places_seats';
+		$columns['S.p_main_standing'] = 'places_stands_grand';
+		$columns['S.p_main_seat'] = 'places_seats_grand';
 		$columns['S.p_vip'] = 'places_vip';
 		
 		$columns['S.level_pitch'] = 'level_pitch';
@@ -180,23 +180,23 @@ class SimulationAudienceCalculator {
 		$columns['S.maintenance_seatsquality'] = 'maintenance_seatsquality';
 		$columns['S.maintenance_vipquality'] = 'maintenance_vipquality';
 		
-		$columns['U.fanbeliebtheit'] = 'popularity';
+		$columns['U.popularity'] = 'popularity';
 		
-		$columns['T.preis_stehen'] = 'price_stands';
-		$columns['T.preis_sitz'] = 'price_seats';
-		$columns['T.preis_haupt_stehen'] = 'price_stands_grand';
-		$columns['T.preis_haupt_sitze'] = 'price_seats_grand';
-		$columns['T.preis_vip'] = 'price_vip';
+		$columns['T.price_stand'] = 'price_stands';
+		$columns['T.price_seat'] = 'price_seats';
+		$columns['T.price_main_stand'] = 'price_stands_grand';
+		$columns['T.price_main_seat'] = 'price_seats_grand';
+		$columns['T.price_vip'] = 'price_vip';
 		
-		$columns['L.p_steh'] = 'avg_sales_stands';
-		$columns['L.p_sitz'] = 'avg_sales_seats';
-		$columns['L.p_haupt_steh'] = 'avg_sales_stands_grand';
-		$columns['L.p_haupt_sitz'] = 'avg_sales_seats_grand';
+		$columns['L.p_standing'] = 'avg_sales_stands';
+		$columns['L.p_seat'] = 'avg_sales_seats';
+		$columns['L.p_main_standing'] = 'avg_sales_stands_grand';
+		$columns['L.p_main_seat'] = 'avg_sales_seats_grand';
 		$columns['L.p_vip'] = 'avg_sales_vip';
 		
-		$columns['L.preis_steh'] = 'avg_price_stands';
-		$columns['L.preis_sitz'] = 'avg_price_seats';
-		$columns['L.preis_vip'] = 'avg_price_vip';
+		$columns['L.price_standing'] = 'avg_price_stands';
+		$columns['L.price_seat'] = 'avg_price_seats';
+		$columns['L.price_vip'] = 'avg_price_vip';
 		
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $teamId);
 		$record = $result->fetch_array();
@@ -247,13 +247,13 @@ class SimulationAudienceCalculator {
 			}
 		}
 		
-		$db->queryUpdate($columns, $websoccer->getConfig('db_prefix') . '_stadion', 'id = %d', $homeInfo['stadium_id']);
+		$db->queryUpdate($columns, $websoccer->getConfig('db_prefix') . '_stadium', 'id = %d', $homeInfo['stadium_id']);
 	}
 	
 	private static function weakenPlayersDueToGrassQuality(WebSoccer $websoccer, $homeInfo, SimulationMatch $match) {
 		
 		$strengthChange = (5 - $homeInfo['level_pitch']) * $websoccer->getConfig('stadium_pitch_effect');
-		if ($strengthChange && $match->type != 'Freundschaft') {
+		if ($strengthChange && $match->type != 'friendly') {
 			$playersAndPositions = $match->homeTeam->positionsAndPlayers;
 			foreach ($playersAndPositions as $positions => $players) {
 				foreach ($players as $player) {

@@ -4,14 +4,14 @@
     <message id="results_navlabel">Ergebnisse und Spielplan</message>
     <message id="match_navlabel">Spieldetails</message>
     
-    <message id="matchtype_league">Ligaspiel</message>
-    <message id="matchtype_cup">Pokalspiel</message>
-    <message id="matchtype_friendly">Freundschaftsspiel</message>
+    <message id="matchtype_league">leaguematch</message>
+    <message id="matchtype_cup">cupmatch</message>
+    <message id="matchtype_friendly">friendlysspiel</message>
     
     <message id="last_match_block_title">Mein letztes Spiel</message>
     <message id="last_match_block_no_lastmatch">Ihr Team hat noch kein Spiel bestritten.</message>
     
-    <message id="match_details_date">Datum</message>
+    <message id="match_details_date">date</message>
     <message id="match_details_type">Typ</message>
     <message id="match_details_stadium">Austragungsort</message>
     
@@ -20,9 +20,9 @@
     
     
     <message id="match_details_notyetsimulated">Das Spiel wurde noch nicht ausgetragen.</message>
-    <message id="match_details_match_completed">Das Spiel ist beendet.</message>
+    <message id="match_details_match_completed">Das Spiel ist completed.</message>
     
-    <message id="match_details_noformation">%s hat keine Aufstellung abgegeben.</message>
+    <message id="match_details_noformation">%s hat keine formation abgegeben.</message>
     
     
     <message id="match_details_report_title">Spielbericht</message>
@@ -33,8 +33,8 @@
     
     <message id="match_details_nostatistics_available">Für dieses Spiel sind keine Statistiken verfügbar. Schauen Sie im Spielbericht nach.</message>
     
-    <message id="match_details_noplayersset">Keine Aufstellung vorhanden.</message>
-    <message id="match_details_no_players_on_bench">Es wurden keine Spieler auf die Ersatzbank gesetzt.</message>
+    <message id="match_details_noplayersset">Keine formation vorhanden.</message>
+    <message id="match_details_no_players_on_bench">Es wurden keine Spieler auf die Bench gesetzt.</message>
     
     <message id="match_details_commenttitle_penalty">Elfmeter</message>
     <message id="match_details_commenttitle_goal">Tor!</message>
@@ -45,7 +45,7 @@
     
     <message id="match_details_statistic_shoots">Schüsse</message>
     <message id="match_details_statistic_tackles">Zweikämpfe</message>
-    <message id="match_details_statistic_ballcontacts">Ballbesitz</message>
+    <message id="match_details_statistic_touches">Ballbesitz</message>
     <message id="match_details_statistic_successfulpasses">Passquote</message>
     
     <message id="results_tab_leagues">Ligen</message>
@@ -62,7 +62,7 @@
     <message id="player_redcard">Hat eine rote Karte erhalten</message>
     <message id="player_goalscorer">Ist Torschütze</message>
     <message id="player_assists">Ist Vorlagengeber</message>
-    <message id="player_injured">Hat sich verletzt</message>
+    <message id="player_injured">Hat sich injured</message>
     <message id="player_substitute_out">Musste das Spielfeld verlassen</message>
     <message id="player_substitute_in">Wurde eingewechselt</message>
     
@@ -79,7 +79,7 @@
     <message id="match-live-changes_navlabel">In das Spiel eingreifen</message>
     
     <message id="match_details_changes_max_help">Darf %d mal pro Spiel geändert werden.</message>
-    <message id="match_details_changes_too_late">Eine Auswechslung muss mindestens %d Minuten vorher platziert werden.</message>
+    <message id="match_details_changes_too_late">Eine Substitution muss mindestens %d Minuten vorher platziert werden.</message>
     <message id="match_details_changes_too_late_altered">Die Einwechslung Nr. %d wurde auf den nächst möglichen Zeitpunkt verschoben.</message>
 	<message id="match_details_changes_too_often">Die Taktik dürfen Sie nur %d mal während dem Spiel ändern.</message>
     
@@ -87,7 +87,7 @@
 	<message id="match_details_report_extension">Es geht in die Verlängerung! Zwischenstand: %s</message>
 	<message id="match_details_report_penaltyshooting">Entscheidung durch Elfmeter! Zwischenstand: %s</message>
 	
-	<message id="match_details_statistic_ballcontacts_player">Ballkontakte</message>
+	<message id="match_details_statistic_touches_player">Ballkontakte</message>
 	<message id="match_details_statistic_tackles_player">Gew. Zweikämpfe</message>
 	<message id="match_details_players_age">Alter</message>
 	

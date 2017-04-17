@@ -48,13 +48,13 @@ class TransfermarketOverviewModel implements IModel {
 		$positionInput = $this->_websoccer->getRequestParameter("position");
 		$positionFilter = null;
 		if ($positionInput == "goaly") {
-			$positionFilter = "Torwart";
+			$positionFilter = "Goalkeeper";
 		} else if ($positionInput == "defense") {
-			$positionFilter = "Abwehr";
+			$positionFilter = "Defender";
 		} else if ($positionInput == "midfield") {
-			$positionFilter = "Mittelfeld";
+			$positionFilter = "Midfielder";
 		} else if ($positionInput == "striker") {
-			$positionFilter = "Sturm";
+			$positionFilter = "Forward";
 		}
 		
 		$count = PlayersDataService::countPlayersOnTransferList($this->_websoccer, $this->_db, $positionFilter);

@@ -6,7 +6,7 @@
     <message id="userprofile_block_loggedin_as">Angemeldet als:</message>
     <message id="userprofile_block_link_logout">Abmelden</message>
     <message id="userprofile_block_link_profile">Profil bearbeiten</message>
-    <message id="userprofile_block_popularity">Fanbeliebtheit</message>
+    <message id="userprofile_block_popularity">popularity</message>
     <message id="userprofile_block_highscore">Highscore</message>
     <message id="userprofile_block_link_table">Tabelle</message>
     
@@ -16,21 +16,21 @@
     <message id="profile_title">Profil bearbeiten</message>
     
     <message id="profile_field_newemail">Neue E-Mail</message>
-    <message id="profile_field_newpassword">Neues Passwort</message>
+    <message id="profile_field_newpassword">Neues password</message>
     
     <message id="profile_changedemail_message_title">Bestätigen Sie die neue E-Mail-Adresse</message>
-    <message id="profile_changedemail_message_content">Ihr Benutzerkonto wurde vorübergehend gesperrt. Bitte rufen Sie Ihre E-Mails ab und folgen Sie den Anweisungen in der von uns versendeten E-Mail.</message>
+    <message id="profile_changedemail_message_content">Ihr Benutzerkonto wurde vorübergehend suspended. Bitte rufen Sie Ihre E-Mails ab und folgen Sie den Anweisungen in der von uns versendeten E-Mail.</message>
     
     <message id="activation_changedemail_subject">Aktivierung bei geänderter E-Mail-Adresse</message>
 	<message id="activation_changedemail_greeting">Guten Tag,</message>
 	<message id="activation_changedemail_introduction">zur Reakitiverung Ihres Benutzerkontos rufen Sie bitte folgende Internetadresse auf:</message>
 	<message id="activation_changedemail_ending">Wenn Sie sich nicht bei uns registriert haben und einen Missbrauch Ihrer E-Mail-Adresse vermuten, antworten Sie bitte auf diese E-Mail.</message>
 	
-	<message id="sendpassword_email_subject">Ihr neues Passwort</message>
+	<message id="sendpassword_email_subject">Ihr neues password</message>
 	<message id="sendpassword_email_greeting">Guten Tag,</message>
-	<message id="sendpassword_email_introduction">dies ist Ihr neues Passwort, das Sie über unsere Website angefordert haben und in Ihrem Profil ändern können und sollten:</message>
-	<message id="sendpassword_email_newpassword_label">Ihr neues Passwort:</message>
-	<message id="sendpassword_email_ending">Wenn Sie kein neues Passwort beantragt haben und einen Missbrauch Ihrer E-Mail-Adresse vermuten, antworten Sie bitte auf diese E-Mail. Beachten Sie, dass Ihr neues Passwort erst aktiv wird, sobald Sie sich zum ersten mal damit anmelden.</message>
+	<message id="sendpassword_email_introduction">dies ist Ihr neues password, das Sie über unsere Website angefordert haben und in Ihrem Profil ändern können und sollten:</message>
+	<message id="sendpassword_email_newpassword_label">Ihr neues password:</message>
+	<message id="sendpassword_email_ending">Wenn Sie kein neues password beantragt haben und einen Missbrauch Ihrer E-Mail-Adresse vermuten, antworten Sie bitte auf diese E-Mail. Beachten Sie, dass Ihr neues password erst aktiv wird, sobald Sie sich zum ersten mal damit anmelden.</message>
 	
 	<message id="enter-username_navlabel">Benutzernamen angeben</message>
 	<message id="enter-username_intro">Jetzt brauchen wir nur noch einen Namen, der Sie auf der Webseite identifiziert, und dann kann es losgehen!</message>

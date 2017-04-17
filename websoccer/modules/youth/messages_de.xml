@@ -15,7 +15,7 @@
     
     <message id="youthteam_min_age_info">Ein Spieler muss mindestens %d Jahre alt sein, um in den Profikader aufgenommen werden zu können.</message>
     
-    <message id="youthteam_action_make_professional">Profivertrag anbieten</message>
+    <message id="youthteam_action_make_professional">Proficontract anbieten</message>
     <message id="youthteam_action_sell">Auf dem Marktplatz anbieten</message>
     <message id="youthteam_action_fire">Entlassen</message>
     <message id="youthteam_action_removefrommarket">Steht zum Verkauf. Vom Marktplatz nehmen.</message>
@@ -66,10 +66,10 @@
 	
 	<message id="youthteam_scouting_schoosescout">Wählen Sie Ihren Scout</message>
 	<message id="youthteam_scouting_noscoutavailable">Im Moment steht Ihnen kein Scout zur Verfügung.</message>
-	<message id="youthteam_scouting_schoosecountry">In welchem Land soll nach Talenten gesucht werden?</message>
+	<message id="youthteam_scouting_schoosecountry">In welchem country soll nach Talenten gesucht werden?</message>
 	
 	<message id="youthteam_scouting_err_breakviolation">Sie können erst wieder scouten am: %s</message>
-	<message id="youthteam_scouting_err_invalidcountry">Für das ausgewählte Land können keine Spieler gescoutet werden. Bitte kontaktieren Sie den Administrator.</message>
+	<message id="youthteam_scouting_err_invalidcountry">Für das ausgewählte country können keine Spieler gescoutet werden. Bitte kontaktieren Sie den Administrator.</message>
 	<message id="youthteam_scouting_err_invalidscout">Der ausgewählte Scout existiert nicht (mehr).</message>
 	<message id="youthteam_scouting_err_notenoughbudget">Im Moment können Sie das Honorar des Scouts nicht bezahlen.</message>
 
@@ -85,10 +85,10 @@
 	<message id="youthteam_matchrequest_cancel">Zurückziehen</message>
 	
 	<message id="youth-matchrequests-create_navlabel">Jugendspielgesuch veröffentlichen</message>
-	<message id="youthteam_matchrequest_create_date">Datum und Zeit</message>
+	<message id="youthteam_matchrequest_create_date">date und Zeit</message>
 	<message id="youthteam_matchrequest_reward">Belohnung</message>
 	
-	<message id="youthteam_matchrequest_create_err_invaliddate">Das angegebene Datum ist ungültig. Wenn Sie das Formular ordnungsgemäss ausgefüllt haben, wenden Sie sich bitte an einen Administrator.</message>
+	<message id="youthteam_matchrequest_create_err_invaliddate">Das angegebene date ist ungültig. Wenn Sie das Formular ordnungsgemäss ausgefüllt haben, wenden Sie sich bitte an einen Administrator.</message>
 	<message id="youthteam_matchrequest_create_err_too_many_open_requests">Sie dürfen nur %d Spielgesuche offen haben. Ziehen Sie Ihre anderen Gesuche zurück oder warten Sie bis sie abgelaufen sind.</message>
 	<message id="youthteam_matchrequest_create_err_budgetnotenough">Ihr Budget reicht für die Belohnung nicht aus.</message>
 	<message id="youthteam_matchrequest_create_err_notenoughplayers">Sie haben nicht genügend Jugendspieler, um ein Spiel bestreiten zu können.</message>
@@ -103,7 +103,7 @@
 	<message id="youthteam_matchrequest_err_maxperday_violated">Man darf nur %d Jugendspiel(e) am Tag austragen.</message>
 	
 	<message id="youthteam_matchrequest_accept_success">Das Spiel wurde erfolgreich angesetzt!</message>
-	<message id="youthteam_matchrequest_accept_success_details">Setzen Sie nun die Aufstellung für das Spiel.</message>
+	<message id="youthteam_matchrequest_accept_success_details">Setzen Sie nun die formation für das Spiel.</message>
 	
 	<message id="youthteam_matchrequest_reward_subject">Belohnung für Antritt bei Jugendspiel</message>
 	<message id="youthteam_matchrequest_accept_notification">Das Team <strong>{team}</strong> hat Ihr Gesuch um ein Jugendfreundschaftsspiel am {date} angenommen.</message>
@@ -113,8 +113,8 @@
 	
 	<message id="youthmarketplace_no_players">Derzeit werden keine Jugendspieler zum Kauf angeboten.</message>
 	
-	<message id="youth-formation_navlabel">Aufstellung</message>
-	<message id="youthformation_err_matchexpired">Für das ausgewählte Spiel kann keine Aufstellung mehr abgegeben werden, da es bereits simuliert ist oder kurz vor der Simulation steht.</message>
+	<message id="youth-formation_navlabel">formation</message>
+	<message id="youthformation_err_matchexpired">Für das ausgewählte Spiel kann keine formation mehr abgegeben werden, da es bereits simuliert ist oder short vor der Simulation steht.</message>
 
 	<message id="youthteam_salarypayment_subject">Gehaltszahlung Jugendkader</message>
 	
@@ -125,7 +125,7 @@
 	<message id="ymreport_goal"><strong>Tor durch {scorer}!</strong></message>
 	<message id="ymreport_attempt">Torschuss durch {scorer}.</message>
 	<message id="ymreport_tackle">Zweikampf zwischen {winner} und {loser}. {winner} gewinnt!</message>
-	<message id="ymreport_injury">{player} hat sich verletzt und muss das Spielfeld verlassen.</message>
+	<message id="ymreport_injury">{player} hat sich injured und muss das Spielfeld verlassen.</message>
 	<message id="ymreport_card_yellowred">{player} bekommt die Gelb-Rote Karte.</message>
 	<message id="ymreport_card_yellow">{player} bekommt eine gelbe Karte.</message>
 	<message id="ymreport_card_red">{player} bekommt eine rote Karte und muss vom Platz.</message>

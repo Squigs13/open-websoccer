@@ -47,7 +47,7 @@ class CancelCampController implements IActionController {
 		$deleted = FALSE;
 		foreach ($existingBookings as $booking) {
 			if ($booking["id"] == $parameters["bookingid"]) {
-				$this->_db->queryDelete($this->_websoccer->getConfig("db_prefix") . "_trainingslager_belegung", "id = %d", $booking["id"]);
+				$this->_db->queryDelete($this->_websoccer->getConfig("db_prefix") . "_training_camp_booking", "id = %d", $booking["id"]);
 				$deleted = TRUE;
 			}
 		}

@@ -130,7 +130,7 @@ class TransferBidController implements IActionController {
 		
 		// check if budget is enough for all current highest bids of user.
 		$team = TeamsDataService::getTeamSummaryById($this->_websoccer, $this->_db, $clubId);
-		$result = $this->_db->querySelect('SUM(abloese) + SUM(handgeld) AS bidsamount', $this->_websoccer->getConfig('db_prefix') .'_transfer_angebot', 
+		$result = $this->_db->querySelect('SUM(transfer_fee) + SUM(signing_fee) AS bidsamount', $this->_websoccer->getConfig('db_prefix') .'_transfer_bid', 
 				'user_id = %d AND ishighest = \'1\'', $user->id);
 		$bids = $result->fetch_array();
 		$result->free();
@@ -143,7 +143,7 @@ class TransferBidController implements IActionController {
 		
 		// mark previous highest bid as outbidden
 		if (isset($highestBid['bid_id'])) {
-			$this->_db->queryUpdate(array('ishighest' => '0'), $this->_websoccer->getConfig('db_prefix') .'_transfer_angebot', 
+			$this->_db->queryUpdate(array('ishighest' => '0'), $this->_websoccer->getConfig('db_prefix') .'_transfer_bid', 
 					'id = %d', $highestBid['bid_id']);
 		}
 		
@@ -164,18 +164,18 @@ class TransferBidController implements IActionController {
 	
 	private function saveBid($playerId, $userId, $clubId, $parameters) {
 		
-		$columns['spieler_id'] = $playerId;
+		$columns['player_id'] = $playerId;
 		$columns['user_id'] = $userId;
-		$columns['datum'] = $this->_websoccer->getNowAsTimestamp();
-		$columns['abloese'] = $parameters['amount'];
-		$columns['handgeld'] = $parameters['handmoney'];
-		$columns['vertrag_spiele'] = $parameters['contract_matches'];
-		$columns['vertrag_gehalt'] = $parameters['contract_salary'];
-		$columns['vertrag_torpraemie'] = $parameters['contract_goal_bonus'];
-		$columns['verein_id'] = $clubId;
+		$columns['date'] = $this->_websoccer->getNowAsTimestamp();
+		$columns['transfer_fee'] = $parameters['amount'];
+		$columns['signing_fee'] = $parameters['handmoney'];
+		$columns['contract_matches'] = $parameters['contract_matches'];
+		$columns['contract_salary'] = $parameters['contract_salary'];
+		$columns['contract_goal_bonus'] = $parameters['contract_goal_bonus'];
+		$columns['club_id'] = $clubId;
 		$columns['ishighest'] = '1';
 		
-		$fromTable = $this->_websoccer->getConfig('db_prefix') .'_transfer_angebot';
+		$fromTable = $this->_websoccer->getConfig('db_prefix') .'_transfer_bid';
 		
 		$this->_db->queryInsert($columns, $fromTable);
 		

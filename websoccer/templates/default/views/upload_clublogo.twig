@@ -13,7 +13,7 @@
 	<form class="form-horizontal" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="MAX_FILE_SIZE" value="{{ env.getConfig("upload_clublogo_max_size") * 1024 }}" />
 		
-		{{ formelements.textfield('picture', i18n.getMessage('entity_club_bild'), env.getRequestParameter('picture'), true, validationMsg, 'file') }}
+		{{ formelements.textfield('picture', i18n.getMessage('entity_club_image'), env.getRequestParameter('picture'), true, validationMsg, 'file') }}
 		
 		<div class="form-actions">
 			<button type="submit" class="btn btn-primary">{{ i18n.getMessage('button_save') }}</button>

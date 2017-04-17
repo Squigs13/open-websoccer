@@ -113,7 +113,7 @@
 	
 	<message id="profile_validationerror_email">No E-Mail address entered.</message>
 	<message id="profile_validationerror_password_too_short">The password is too short.</message>
-	<message id="profile_validationerror_wrong_repeated_password">The repeated passwort is not equal to the first password.</message>
+	<message id="profile_validationerror_wrong_repeated_password">The repeated password is not equal to the first password.</message>
 
 	<message id="home_title">Welcome, %s!</message>
 	<message id="home_intro">Glad to see you at the <b>OpenWebSoccer-Sim</b> AdminCenter. Please do not forget to <a href="logout.php">logout</a> once you completed your session if you are not the only user of this computer.</message>

@@ -435,12 +435,12 @@ class DefaultSimulationStrategy implements ISimulationStrategy {
 		while ($shots <= 50) {
 			$shots++;
 			
-			// home team shoots
+			// home team shots
 			if ($this->_shootPenalty($match, $playersHome[$playerIndexHome])) {
 				$goalsHome++;
 			}
 			
-			// guest team shoots
+			// guest team shots
 			if ($this->_shootPenalty($match, $playersGuest[$playerIndexGuest])) {
 				$goalsGuest++;
 			}

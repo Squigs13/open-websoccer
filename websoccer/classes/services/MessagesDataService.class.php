@@ -28,7 +28,7 @@ class MessagesDataService {
 	
 	public static function getInboxMessages(WebSoccer $websoccer, DbConnection $db, $startIndex, $entries_per_page) {
 		
-		$whereCondition = "L.empfaenger_id = %d AND L.typ = 'eingang' ORDER BY L.datum DESC";
+		$whereCondition = "L.recipient_id = %d AND L.type = 'incoming' ORDER BY L.date DESC";
 		$parameters = $websoccer->getUser()->id;
 		
 		return self::getMessagesByCondition($websoccer, $db, $startIndex, $entries_per_page, $whereCondition, $parameters);
@@ -36,14 +36,14 @@ class MessagesDataService {
 	
 	public static function getOutboxMessages(WebSoccer $websoccer, DbConnection $db, $startIndex, $entries_per_page) {
 	
-		$whereCondition = "L.absender_id = %d AND L.typ = 'ausgang' ORDER BY L.datum DESC";
+		$whereCondition = "L.sender_id = %d AND L.type = 'outgoing' ORDER BY L.date DESC";
 		$parameters = $websoccer->getUser()->id;
 	
 		return self::getMessagesByCondition($websoccer, $db, $startIndex, $entries_per_page, $whereCondition, $parameters);
 	}
 	
 	public static function getMessageById(WebSoccer $websoccer, DbConnection $db, $id) {
-		$whereCondition = "(L.empfaenger_id = %d OR L.absender_id = %d) AND L.id = %d";
+		$whereCondition = "(L.recipient_id = %d OR L.sender_id = %d) AND L.id = %d";
 		$userId = $websoccer->getUser()->id;
 		$parameters = array($userId, $userId, $id);
 		
@@ -56,7 +56,7 @@ class MessagesDataService {
 	}
 	
 	public static function getLastMessageOfUserId(WebSoccer $websoccer, DbConnection $db, $userId) {
-		$whereCondition = "L.absender_id = %d ORDER BY L.datum DESC";
+		$whereCondition = "L.sender_id = %d ORDER BY L.date DESC";
 		$userId = $websoccer->getUser()->id;
 	
 		$messages = self::getMessagesByCondition($websoccer, $db, 0, 1, $whereCondition, $userId);
@@ -70,10 +70,10 @@ class MessagesDataService {
 	private static function getMessagesByCondition(WebSoccer $websoccer, DbConnection $db, $startIndex, $entries_per_page, $whereCondition, $parameters) {
 		
 		$columns["L.id"] = "message_id";
-		$columns["L.betreff"] = "subject";
-		$columns["L.nachricht"] = "content";
-		$columns["L.datum"] = "date";
-		$columns["L.gelesen"] = "seen";
+		$columns["L.subject"] = "subject";
+		$columns["L.message"] = "content";
+		$columns["L.date"] = "date";
+		$columns["L.msg_read"] = "seen";
 		
 		$columns["R.id"] = "recipient_id";
 		$columns["R.nick"] = "recipient_name";
@@ -81,9 +81,9 @@ class MessagesDataService {
 		$columns["S.id"] = "sender_id";
 		$columns["S.nick"] = "sender_name";
 		
-		$fromTable = $websoccer->getConfig("db_prefix") . "_briefe AS L";
-		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_user AS R ON R.id = L.empfaenger_id";
-		$fromTable .= " LEFT JOIN " . $websoccer->getConfig("db_prefix") . "_user AS S ON S.id = L.absender_id";
+		$fromTable = $websoccer->getConfig("db_prefix") . "_messages AS L";
+		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_user AS R ON R.id = L.recipient_id";
+		$fromTable .= " LEFT JOIN " . $websoccer->getConfig("db_prefix") . "_user AS S ON S.id = L.sender_id";
 		
 		$limit = $startIndex .",". $entries_per_page;
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters, $limit);
@@ -102,9 +102,9 @@ class MessagesDataService {
 		
 		$columns = "COUNT(*) AS hits";
 	
-		$fromTable = $websoccer->getConfig("db_prefix") . "_briefe AS L";
+		$fromTable = $websoccer->getConfig("db_prefix") . "_messages AS L";
 	
-		$whereCondition = "L.empfaenger_id = %d AND typ = 'eingang'";
+		$whereCondition = "L.recipient_id = %d AND type = 'incoming'";
 		
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $userId);
 		$letters = $result->fetch_array();
@@ -122,9 +122,9 @@ class MessagesDataService {
 	
 		$columns = "COUNT(*) AS hits";
 	
-		$fromTable = $websoccer->getConfig("db_prefix") . "_briefe AS L";
+		$fromTable = $websoccer->getConfig("db_prefix") . "_messages AS L";
 	
-		$whereCondition = "L.empfaenger_id = %d AND typ = 'eingang' AND gelesen = '0'";
+		$whereCondition = "L.recipient_id = %d AND type = 'incoming' AND msg_read = '0'";
 	
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $userId);
 		$letters = $result->fetch_array();
@@ -142,9 +142,9 @@ class MessagesDataService {
 	
 		$columns = "COUNT(*) AS hits";
 	
-		$fromTable = $websoccer->getConfig("db_prefix") . "_briefe AS L";
+		$fromTable = $websoccer->getConfig("db_prefix") . "_messages AS L";
 	
-		$whereCondition = "L.absender_id = %d AND typ = 'ausgang'";
+		$whereCondition = "L.sender_id = %d AND type = 'outgoing'";
 	
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $userId);
 		$letters = $result->fetch_array();

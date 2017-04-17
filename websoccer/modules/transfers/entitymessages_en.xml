@@ -2,8 +2,8 @@
 <!DOCTYPE module SYSTEM "../messages.dtd">
 <messages>
 	<message id="entity_transfers">Player Transfers</message>
-	<message id="entity_transfers_datum">Date</message>
-	<message id="entity_transfers_spieler_id">Player</message>
+	<message id="entity_transfers_date">Date</message>
+	<message id="entity_transfers_player_id">Player</message>
 	<message id="entity_transfers_seller_club_id">Seller</message>
 	<message id="entity_transfers_buyer_club_id">Buyer</message>
 	<message id="entity_transfers_bid_amount">Transfer Money (Auction)</message>

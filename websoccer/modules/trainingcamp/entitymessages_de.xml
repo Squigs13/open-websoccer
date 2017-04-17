@@ -3,11 +3,11 @@
 <messages>
     <message id="entity_trainingcamp">Trainingslager</message>
 	<message id="entity_trainingcamp_name">Name</message>
-	<message id="entity_trainingcamp_land">Land</message>
-	<message id="entity_trainingcamp_preis_spieler_tag">Kosten pro Spieler pro Tag</message>
-	<message id="entity_trainingcamp_p_staerke">Effekt Stärke</message>
-	<message id="entity_trainingcamp_p_technik">Effekt Technik</message>
-	<message id="entity_trainingcamp_p_kondition">Effekt Kondition</message>
-	<message id="entity_trainingcamp_p_frische">Effekt Frische</message>
-	<message id="entity_trainingcamp_p_zufriedenheit">Effekt Zufriedenheit</message>
+	<message id="entity_trainingcamp_country">country</message>
+	<message id="entity_trainingcamp_price_player_day">Kosten pro Spieler pro Tag</message>
+	<message id="entity_trainingcamp_p_strength">Effekt Stärke</message>
+	<message id="entity_trainingcamp_p_technique">Effekt Technik</message>
+	<message id="entity_trainingcamp_p_stamina">Effekt Kondition</message>
+	<message id="entity_trainingcamp_p_fitness">Effekt Frische</message>
+	<message id="entity_trainingcamp_p_morale">Effekt Zufriedenheit</message>
 </messages>

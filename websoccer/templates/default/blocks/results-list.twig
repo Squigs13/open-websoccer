@@ -6,9 +6,9 @@
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th>{{ i18n.getMessage("entity_match_datum") }}</th>
-				<th>{{ i18n.getMessage("entity_match_home_verein") }}</th>
-				<th>{{ i18n.getMessage("entity_match_gast_verein") }}</th>
+				<th>{{ i18n.getMessage("entity_match_date") }}</th>
+				<th>{{ i18n.getMessage("entity_match_home_club") }}</th>
+				<th>{{ i18n.getMessage("entity_match_guest_club") }}</th>
 				<th>{{ i18n.getMessage("match_result") }}</th>
 			</tr>
 		</thead>
@@ -16,12 +16,12 @@
 		{% for match in matches %}
 			<tr>
 				<td>
-					{% if match.type == "Ligaspiel" %}
-						<i class="icon-shield wstooltip" title="{{ i18n.getMessage("option_Ligaspiel") }}"></i>
-					{% elseif match.type == "Freundschaft" %}
-						<i class="icon-smile wstooltip" title="{{ i18n.getMessage("option_Freundschaft") }}"></i>
+					{% if match.type == "leaguematch" %}
+						<i class="icon-shield wstooltip" title="{{ i18n.getMessage("option_leaguematch") }}"></i>
+					{% elseif match.type == "friendly" %}
+						<i class="icon-smile wstooltip" title="{{ i18n.getMessage("option_friendly") }}"></i>
 					{% else %}
-						<i class="icon-trophy wstooltip" title="{{ i18n.getMessage("option_Pokalspiel") }} ({{ match.cup_name }}, {{ match.cup_round }})"></i>
+						<i class="icon-trophy wstooltip" title="{{ i18n.getMessage("option_cupmatch") }} ({{ match.cup_name }}, {{ match.cup_round }})"></i>
 					{% endif %}
 					{{ env.getFormattedDatetime(match.date, i18n) }}
 				</td>

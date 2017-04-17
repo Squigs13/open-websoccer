@@ -45,7 +45,7 @@ class MarkAsUnsellableController implements IActionController {
 		
 		$columns["unsellable"] = 1;
 		
-		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_spieler";
+		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_player";
 		$whereCondition = "id = %d";
 		$parameters = $parameters["id"];
 		

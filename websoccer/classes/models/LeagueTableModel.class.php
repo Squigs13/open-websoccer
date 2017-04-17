@@ -45,12 +45,12 @@ class LeagueTableModel implements IModel {
 		// pre-select user's league in case no other league selected
 		$clubId = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
 		if ($this->_leagueId == 0 && $clubId > 0) {
-			$result = $db->querySelect("liga_id", $this->_websoccer->getConfig("db_prefix") . "_verein", 
+			$result = $db->querySelect("league_id", $this->_websoccer->getConfig("db_prefix") . "_club", 
 					"id = %d", $clubId, 1);
 			$club = $result->fetch_array();
 			$result->free();
 			
-			$this->_leagueId = $club["liga_id"];
+			$this->_leagueId = $club["league_id"];
 		}
 	}
 	
@@ -68,14 +68,14 @@ class LeagueTableModel implements IModel {
 			$teams = TeamsDataService::getTeamsOfLeagueOrderedByTableCriteria($this->_websoccer, $this->_db, $this->_leagueId);
 			
 			// get table markers
-			$fromTable = $this->_websoccer->getConfig("db_prefix") ."_tabelle_markierung";
+			$fromTable = $this->_websoccer->getConfig("db_prefix") ."_table_marker";
 			
-			$columns["bezeichnung"] = "name";
-			$columns["farbe"] = "color";
-			$columns["platz_von"] = "place_from";
-			$columns["platz_bis"] = "place_to";
+			$columns["label"] = "name";
+			$columns["colour"] = "color";
+			$columns["positions_from"] = "place_from";
+			$columns["positions_to"] = "place_to";
 			
-			$whereCondition = "liga_id = %d ORDER BY place_from ASC";
+			$whereCondition = "league_id = %d ORDER BY place_from ASC";
 			
 			$result = $this->_db->querySelect($columns, $fromTable, $whereCondition, $this->_leagueId);
 			while ($marker = $result->fetch_array()) {
@@ -90,8 +90,8 @@ class LeagueTableModel implements IModel {
 			
 			// no season selected, so select current one
 			if ($this->_seasonId == null) {
-				$result = $this->_db->querySelect("id", $this->_websoccer->getConfig("db_prefix") ."_saison", 
-				"liga_id = %d AND beendet = '0' ORDER BY name DESC", $this->_leagueId, 1);
+				$result = $this->_db->querySelect("id", $this->_websoccer->getConfig("db_prefix") ."_season", 
+				"league_id = %d AND completed = '0' ORDER BY name DESC", $this->_leagueId, 1);
 				$season = $result->fetch_array();
 				$result->free();
 				
@@ -109,8 +109,8 @@ class LeagueTableModel implements IModel {
 		
 		// get completed seasons
 		$seasons = array();
-		$result = $this->_db->querySelect("id,name", $this->_websoccer->getConfig("db_prefix") ."_saison", 
-				"liga_id = %d AND beendet = '1' ORDER BY name DESC", $this->_leagueId);
+		$result = $this->_db->querySelect("id,name", $this->_websoccer->getConfig("db_prefix") ."_season", 
+				"league_id = %d AND completed = '1' ORDER BY name DESC", $this->_leagueId);
 		while ($season = $result->fetch_array()) {
 			$seasons[] = $season;
 		}

@@ -62,11 +62,11 @@ class ChooseAdditionalTeamController implements IActionController {
 		}
 		
 		// check maximum number of teams per user
-		$fromTable = $this->_websoccer->getConfig('db_prefix') .'_verein';
-		$result = $this->_db->querySelect('id,liga_id', $fromTable, 'user_id = %d', $user->id);
+		$fromTable = $this->_websoccer->getConfig('db_prefix') .'_club';
+		$result = $this->_db->querySelect('id,league_id', $fromTable, 'user_id = %d', $user->id);
 		$teamsOfUser = array();
 		while ($teamOfUser = $result->fetch_array()) {
-			$teamsOfUser[$teamOfUser['liga_id']][] = $teamOfUser['id'];
+			$teamsOfUser[$teamOfUser['league_id']][] = $teamOfUser['id'];
 		}
 		$result->free_result();
 		
@@ -77,7 +77,7 @@ class ChooseAdditionalTeamController implements IActionController {
 		$teamId = $parameters['teamId'];
 		
 		// check whether club still has no manager
-		$result = $this->_db->querySelect('id,user_id,liga_id,interimmanager', $fromTable, 'id = %d AND status = 1', $teamId);
+		$result = $this->_db->querySelect('id,user_id,league_id,interimmanager', $fromTable, 'id = %d AND status = 1', $teamId);
 		$club = $result->fetch_array();
 		$result->free();
 		
@@ -86,7 +86,7 @@ class ChooseAdditionalTeamController implements IActionController {
 		}
 		
 		// user may not pick a club from the same league
-		if (isset($teamsOfUser[$club['liga_id']])) {
+		if (isset($teamsOfUser[$club['league_id']])) {
 			throw new Exception($this->_i18n->getMessage('freeclubs_msg_error_no_club_from_same_league'));
 		}
 		

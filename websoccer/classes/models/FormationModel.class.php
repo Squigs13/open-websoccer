@@ -129,11 +129,11 @@ class FormationModel implements IModel {
 		if ($criteria !== NULL) {
 			
 			if ($criteria == 'strongest') {
-				$sortColumn = 'w_staerke';
+				$sortColumn = 'w_strength';
 			} elseif ($criteria == 'freshest') {
-				$sortColumn = 'w_frische';
+				$sortColumn = 'w_fitness';
 			} else {
-				$sortColumn = 'w_zufriedenheit';
+				$sortColumn = 'w_morale';
 			}
 
 			$proposedPlayers = FormationDataService::getFormationProposalForTeamId($this->_websoccer, $this->_db, $clubId, 

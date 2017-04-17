@@ -11,7 +11,7 @@
             id="transfer_offer"
             entity="transfer_offer"
             navcategory="league"
-            permissionrole="r_daten" >
+            permissionrole="r_data" >
 
             <entity dbtable="transfer_offer AS OfferTab" >
 
@@ -25,7 +25,7 @@
                     
                     <column
                         id="entity_transfer_offer_player_id"
-                        field="CONCAT(PlayerTab.vorname, ' ', IF(PlayerTab.kunstname IS NOT NULL, CONCAT('\'', PlayerTab.kunstname, '\' '), ''), PlayerTab.nachname)"
+                        field="CONCAT(PlayerTab.first_name, ' ', IF(PlayerTab.nickname IS NOT NULL, CONCAT('\'', PlayerTab.nickname, '\' '), ''), PlayerTab.last_name)"
                         type="text"
                         sort="true"
                         filter="true" />
@@ -52,14 +52,14 @@
                     
                     <column
                         id="entity_transfer_offer_offer_player1"
-                        field="CONCAT(ExPlayer1Tab.vorname, ' ', ExPlayer1Tab.nachname)"
+                        field="CONCAT(ExPlayer1Tab.first_name, ' ', ExPlayer1Tab.last_name)"
                         type="text"
                         sort="true"
                         filter="true" />
                     
                     <column
                         id="entity_transfer_offer_offer_player2"
-                        field="CONCAT(ExPlayer2Tab.vorname, ' ', ExPlayer2Tab.nachname)"
+                        field="CONCAT(ExPlayer2Tab.first_name, ' ', ExPlayer2Tab.last_name)"
                         type="text"
                         sort="true"
                         filter="true" />
@@ -78,22 +78,22 @@
                         filter="true"
                         converter="TransferOfferApprovalLinkConverter" />
 
-                    <join type="INNER" jointable="spieler AS PlayerTab" joincondition="OfferTab.player_id = PlayerTab.id" />
-                	<join type="INNER" jointable="verein AS ClubTab" joincondition="OfferTab.receiver_club_id = ClubTab.id" />
-                	<join type="INNER" jointable="verein AS SenderClubTab" 
+                    <join type="INNER" jointable="player AS PlayerTab" joincondition="OfferTab.player_id = PlayerTab.id" />
+                	<join type="INNER" jointable="club AS ClubTab" joincondition="OfferTab.receiver_club_id = ClubTab.id" />
+                	<join type="INNER" jointable="club AS SenderClubTab" 
                 	    joincondition="OfferTab.sender_club_id = SenderClubTab.id" />
-                	<join type="LEFT" jointable="spieler AS ExPlayer1Tab" joincondition="OfferTab.offer_player1 = ExPlayer1Tab.id" />
-                	<join type="LEFT" jointable="spieler AS ExPlayer2Tab" joincondition="OfferTab.offer_player2 = ExPlayer2Tab.id" />
+                	<join type="LEFT" jointable="player AS ExPlayer1Tab" joincondition="OfferTab.offer_player1 = ExPlayer1Tab.id" />
+                	<join type="LEFT" jointable="player AS ExPlayer2Tab" joincondition="OfferTab.offer_player2 = ExPlayer2Tab.id" />
                 </overview>
 
                 <editform>
                     <field id="submitted_date" type="timestamp" required="true" />
                     <field id="player_id" type="foreign_key" entity="player" 
-					    jointable="spieler" labelcolumns="nachname, vorname" required="true" />
+					    jointable="player" labelcolumns="last_name, first_name" required="true" />
 					<field id="receiver_club_id" type="foreign_key" entity="club" 
-					    jointable="verein" labelcolumns="name" required="true" />
+					    jointable="club" labelcolumns="name" required="true" />
 					<field id="sender_club_id" type="foreign_key" entity="club" 
-					    jointable="verein" labelcolumns="name" required="true" />
+					    jointable="club" labelcolumns="name" required="true" />
 					<field id="sender_user_id" type="foreign_key" entity="users" 
 					    jointable="user" labelcolumns="nick" required="true" />
 					
@@ -101,10 +101,10 @@
 					<field id="offer_message" type="textarea" required="false" />
 					
 					<field id="offer_player1" type="foreign_key" entity="player" 
-					    jointable="spieler" labelcolumns="nachname, vorname" required="false" />
+					    jointable="player" labelcolumns="last_name, first_name" required="false" />
 					
 					<field id="offer_player2" type="foreign_key" entity="player" 
-					    jointable="spieler" labelcolumns="nachname, vorname" required="false" />
+					    jointable="player" labelcolumns="last_name, first_name" required="false" />
 					
                 </editform>
             </entity>

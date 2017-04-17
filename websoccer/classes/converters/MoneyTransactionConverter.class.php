@@ -55,21 +55,21 @@ class MoneyTransactionConverter implements IConverter {
 
 		$amount = (int) $value;
 		
-		if (isset($_POST['verein_id']) && $_POST['verein_id']) {
+		if (isset($_POST['club_id']) && $_POST['club_id']) {
 			
 			// get current team budget
 			$db = DbConnection::getInstance();
-			$columns = 'finanz_budget';
-			$fromTable = $this->_websoccer->getConfig('db_prefix') .'_verein';
+			$columns = 'finance_budget';
+			$fromTable = $this->_websoccer->getConfig('db_prefix') .'_club';
 			$whereCondition = 'id = %d';
-			$result = $db->querySelect($columns, $fromTable, $whereCondition, $_POST['verein_id'], 1);
+			$result = $db->querySelect($columns, $fromTable, $whereCondition, $_POST['club_id'], 1);
 			$team = $result->fetch_array();
 			$result->free();
 			
 			// update budget in DB
-			$budget = $team['finanz_budget'] + $amount;
-			$updatecolumns = array('finanz_budget' => $budget);
-			$db->queryUpdate($updatecolumns, $fromTable, $whereCondition, $_POST['verein_id']);
+			$budget = $team['finance_budget'] + $amount;
+			$updatecolumns = array('finance_budget' => $budget);
+			$db->queryUpdate($updatecolumns, $fromTable, $whereCondition, $_POST['club_id']);
 		}
 		
 		return $amount;

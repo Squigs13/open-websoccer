@@ -46,12 +46,12 @@ class SimulationCupMatchHelper {
 		}
 		
 		// check if there was a first round
-		$columns['home_tore'] = 'home_goals';
-		$columns['gast_tore'] = 'guest_goals';
-		$columns['berechnet'] = 'is_simulated';
+		$columns['home_goals'] = 'home_goals';
+		$columns['guest_goals'] = 'guest_goals';
+		$columns['simulated'] = 'is_simulated';
 		
-		$whereCondition = 'home_verein = %d AND gast_verein = %d AND pokalname = \'%s\' AND pokalrunde = \'%s\'';
-		$result = $db->querySelect($columns, $websoccer->getConfig('db_prefix') . '_spiel', $whereCondition,
+		$whereCondition = 'home_club = %d AND guest_club = %d AND cup_name = \'%s\' AND cup_round = \'%s\'';
+		$result = $db->querySelect($columns, $websoccer->getConfig('db_prefix') . '_match', $whereCondition,
 				array($match->guestTeam->id, $match->homeTeam->id, $match->cupName, $match->cupRoundName), 1);
 		$otherRound = $result->fetch_array();
 		$result->free();
@@ -167,11 +167,11 @@ class SimulationCupMatchHelper {
 				'cup_cuproundaward_perround_subject', $cupName);
 		}
 		
-		$result = $db->querySelect('user_id', $websoccer->getConfig('db_prefix') . '_verein', 'id = %d', $winnerTeamId);
+		$result = $db->querySelect('user_id', $websoccer->getConfig('db_prefix') . '_club', 'id = %d', $winnerTeamId);
 		$winnerclub = $result->fetch_array();
 		$result->free();
 		
-		$result = $db->querySelect('user_id', $websoccer->getConfig('db_prefix') . '_verein', 'id = %d', $loserTeamId);
+		$result = $db->querySelect('user_id', $websoccer->getConfig('db_prefix') . '_club', 'id = %d', $loserTeamId);
 		$loserclub = $result->fetch_array();
 		$result->free();
 		
@@ -235,7 +235,7 @@ class SimulationCupMatchHelper {
 			}
 			
 			// get next round for loser
-			$result = $db->querySelect($columns, $fromTable, 'from_loosers_round_id = %d', $round['round_id'], 1);
+			$result = $db->querySelect($columns, $fromTable, 'from_loser_round_id = %d', $round['round_id'], 1);
 			$loserRound = $result->fetch_array();
 			$result->free();
 				
@@ -253,8 +253,8 @@ class SimulationCupMatchHelper {
 		}
 		
 		// check if there are any open matches in this round
-		$result = $db->querySelect('COUNT(*) AS hits', $websoccer->getConfig('db_prefix') . '_spiel', 
-				'berechnet = \'0\' AND pokalname = \'%s\' AND pokalrunde = \'%s\' AND id != %d',
+		$result = $db->querySelect('COUNT(*) AS hits', $websoccer->getConfig('db_prefix') . '_match', 
+				'simulated = \'0\' AND cup_name = \'%s\' AND cup_round = \'%s\' AND id != %d',
 				array($match->cupName, $match->cupRoundName, $match->id));
 		$openMatches = $result->fetch_array();
 		$result->free();
@@ -302,8 +302,8 @@ class SimulationCupMatchHelper {
 		}
 		
 		// create matches
-		$matchTable = $websoccer->getConfig('db_prefix') . '_spiel';
-		$type = 'Pokalspiel';
+		$matchTable = $websoccer->getConfig('db_prefix') . '_match';
+		$type = 'cupmatch';
 		
 		foreach ($nextRoundTeams as $nextRoundId => $teamIds) {
 			
@@ -324,23 +324,23 @@ class SimulationCupMatchHelper {
 				
 				// create first round
 				$db->queryInsert(array(
-						'spieltyp' => $type,
-						'pokalname' => $match->cupName,
-						'pokalrunde' => $roundInfo['name'],
-						'home_verein' => $homeTeam,
-						'gast_verein' => $guestTeam,
-						'datum' => $roundInfo['firstround_date']
+						'matchtype' => $type,
+						'cup_name' => $match->cupName,
+						'cup_round' => $roundInfo['name'],
+						'home_club' => $homeTeam,
+						'guest_club' => $guestTeam,
+						'date' => $roundInfo['firstround_date']
 				), $matchTable);
 					
 				// create second round
 				if ($roundInfo['secondround_date']) {
 					$db->queryInsert(array(
-							'spieltyp' => $type,
-							'pokalname' => $match->cupName,
-							'pokalrunde' => $roundInfo['name'],
-							'home_verein' => $guestTeam,
-							'gast_verein' => $homeTeam,
-							'datum' => $roundInfo['secondround_date']
+							'matchtype' => $type,
+							'cup_name' => $match->cupName,
+							'cup_round' => $roundInfo['name'],
+							'home_club' => $guestTeam,
+							'guest_club' => $homeTeam,
+							'date' => $roundInfo['secondround_date']
 					), $matchTable);
 				}
 			}
@@ -362,8 +362,8 @@ class SimulationCupMatchHelper {
 			$db->queryInsert(array('team_id' => $teamId, 'cup_round_id' => $roundId), $pendingTable);
 		} else {
 			
-			$matchTable = $websoccer->getConfig('db_prefix') . '_spiel';
-			$type = 'Pokalspiel';
+			$matchTable = $websoccer->getConfig('db_prefix') . '_match';
+			$type = 'cupmatch';
 			
 			// determine home team of first round (choose randomly)
 			if (SimulationHelper::selectItemFromProbabilities(array(1 => 50, 0 => 50))) {
@@ -376,23 +376,23 @@ class SimulationCupMatchHelper {
 			
 			// create first round
 			$db->queryInsert(array(
-					'spieltyp' => $type,
-					'pokalname' => $cupName,
-					'pokalrunde' => $cupRound,
-					'home_verein' => $homeTeam,
-					'gast_verein' => $guestTeam,
-					'datum' => $firstRoundDate
+					'matchtype' => $type,
+					'cup_name' => $cupName,
+					'cup_round' => $cupRound,
+					'home_club' => $homeTeam,
+					'guest_club' => $guestTeam,
+					'date' => $firstRoundDate
 				), $matchTable);
 			
 			// create second round
 			if ($secondRoundDate) {
 				$db->queryInsert(array(
-						'spieltyp' => $type,
-						'pokalname' => $cupName,
-						'pokalrunde' => $cupRound,
-						'home_verein' => $guestTeam,
-						'gast_verein' => $homeTeam,
-						'datum' => $secondRoundDate
+						'matchtype' => $type,
+						'cup_name' => $cupName,
+						'cup_round' => $cupRound,
+						'home_club' => $guestTeam,
+						'guest_club' => $homeTeam,
+						'date' => $secondRoundDate
 				), $matchTable);
 			}
 			

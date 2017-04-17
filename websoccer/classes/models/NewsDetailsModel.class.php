@@ -41,7 +41,7 @@ class NewsDetailsModel implements IModel {
 	public function getTemplateParameters() {
 		$tablePrefix = $this->_websoccer->getConfig("db_prefix") . "_";
 		$fromTable = $tablePrefix . "news AS NewsTab";
-		$fromTable .= " LEFT JOIN " . $tablePrefix . "admin AS AdminTab ON NewsTab.autor_id = AdminTab.id";
+		$fromTable .= " LEFT JOIN " . $tablePrefix . "admin AS AdminTab ON NewsTab.author_id = AdminTab.id";
 		$whereCondition = "NewsTab.id = %d AND status = 1";
 		$parameters = (int) $this->_websoccer->getRequestParameter("id");
 		
@@ -54,7 +54,7 @@ class NewsDetailsModel implements IModel {
 		}
 		
 		// convert message
-		$message = $item["nachricht"];
+		$message = $item["message"];
 		if ($item["c_br"]) {
 			$message = nl2br($message);
 		}
@@ -76,8 +76,8 @@ class NewsDetailsModel implements IModel {
 		}
 		
 		$article = array("id" => $item["id"],
-				"title" => $item["titel"],
-				"date" => $this->_websoccer->getFormattedDate($item["datum"]),
+				"title" => $item["title"],
+				"date" => $this->_websoccer->getFormattedDate($item["date"]),
 				"message" => $message,
 				"author_name" => $item["author_name"]);
 		

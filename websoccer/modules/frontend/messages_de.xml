@@ -20,14 +20,14 @@
     
     <message id="validation_error_not_a_number">muss eine Zahl sein.</message>
     <message id="validation_error_email">ist keine gültige E-Mail-Adresse.</message>
-    <message id="validation_error_password">ist zu unsicher. Das Passwort muss sowohl Zahlen als auch Buchstaben enthalten.</message>
+    <message id="validation_error_password">ist zu unsicher. Das password muss sowohl Zahlen als auch Buchstaben enthalten.</message>
     
     <message id="validation_error_not_a_url">muss ein gültiger URL sein (beginnend mit http://...).</message>
     <message id="validation_error_invaliddate">muss im Format '%s' sein</message>
     
     
     <message id="home_title">%s</message>
-	<message id="home_teaser">Werden Sie Manager eines virtuellen Fussballvereins und führen Sie Ihr Team gegen andere Benutzer zur Meisterschaft!</message>
+	<message id="home_teaser">Werden Sie Manager eines virtuellen Fussballclubs und führen Sie Ihr Team gegen andere Benutzer zur Meisterschaft!</message>
 	<message id="home_teaser_link_register">Jetzt anmelden</message>
 	
 	<message id="button_save">Speichern</message>

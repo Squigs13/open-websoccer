@@ -1,23 +1,23 @@
 CREATE TABLE ws3_admin (
   id SMALLINT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(40) NULL,
-  passwort VARCHAR(64) NULL,
-  passwort_neu VARCHAR(64) NULL,
-  passwort_neu_angefordert INT(11) NOT NULL DEFAULT 0,
-  passwort_salt VARCHAR(5) NULL,
+  password VARCHAR(64) NULL,
+  password_new VARCHAR(64) NULL,
+  password_new_requested INT(11) NOT NULL DEFAULT 0,
+  password_salt VARCHAR(5) NULL,
   email VARCHAR(100) NULL,
   lang VARCHAR(2) NULL,
   r_admin ENUM('1','0') NOT NULL DEFAULT '0',
   r_adminuser ENUM('1','0') NOT NULL DEFAULT '0',
   r_user ENUM('1','0') NOT NULL DEFAULT '0',
-  r_daten ENUM('1','0') NOT NULL DEFAULT '0',
-  r_staerken ENUM('1','0') NOT NULL DEFAULT '0',
-  r_spiele ENUM('1','0') NOT NULL DEFAULT '0',
+  r_data ENUM('1','0') NOT NULL DEFAULT '0',
+  r_attributes ENUM('1','0') NOT NULL DEFAULT '0',
+  r_matches ENUM('1','0') NOT NULL DEFAULT '0',
   r_news ENUM('1','0') NOT NULL DEFAULT '0',
   r_faq ENUM('1','0') NOT NULL DEFAULT '0',
-  r_umfrage ENUM('1','0') NOT NULL DEFAULT '0',
-  r_kalender ENUM('1','0') NOT NULL DEFAULT '0',
-  r_seiten ENUM('1','0') NOT NULL DEFAULT '0',
+  r_survey ENUM('1','0') NOT NULL DEFAULT '0',
+  r_calendar ENUM('1','0') NOT NULL DEFAULT '0',
+  r_pages ENUM('1','0') NOT NULL DEFAULT '0',
   r_design ENUM('1','0') NOT NULL DEFAULT '0',
   r_demo ENUM('1','0') NOT NULL DEFAULT '0'
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
@@ -25,23 +25,23 @@ CREATE TABLE ws3_admin (
 CREATE TABLE ws3_user (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   nick VARCHAR(50) NULL,
-  passwort VARCHAR(64) NULL,
-  passwort_neu VARCHAR(64) NULL,
-  passwort_neu_angefordert INT(11) NOT NULL DEFAULT 0,  
-  passwort_salt VARCHAR(5) NULL,
+  password VARCHAR(64) NULL,
+  password_new VARCHAR(64) NULL,
+  password_new_requested INT(11) NOT NULL DEFAULT 0,  
+  password_salt VARCHAR(5) NULL,
   tokenid VARCHAR(255) NULL,
   lang VARCHAR(2) DEFAULT 'de',
   email VARCHAR(150) NULL,
-  datum_anmeldung INT(11) NOT NULL DEFAULT 0,
-  schluessel VARCHAR(10) NULL,
-  wunschverein VARCHAR(250) NULL,
+  date_registered INT(11) NOT NULL DEFAULT 0,
+  activation_key VARCHAR(10) NULL,
+  desired_team VARCHAR(250) NULL,
   name VARCHAR(80) NULL,
-  wohnort VARCHAR(50) NULL,
-  land VARCHAR(40) NULL,
-  geburtstag DATE NULL,
-  beruf VARCHAR(50) NULL,
-  interessen VARCHAR(250) NULL,
-  lieblingsverein VARCHAR(100) NULL,
+  city VARCHAR(50) NULL,
+  country VARCHAR(40) NULL,
+  birthday DATE NULL,
+  occupation VARCHAR(50) NULL,
+  interests VARCHAR(250) NULL,
+  fav_club VARCHAR(100) NULL,
   homepage VARCHAR(250) NULL,
   icq VARCHAR(20) NULL,
   aim VARCHAR(30) NULL,
@@ -50,7 +50,7 @@ CREATE TABLE ws3_user (
   lastonline INT(11) NOT NULL DEFAULT 0,
   lastaction VARCHAR(150) NULL,
   highscore INT(10) NOT NULL DEFAULT 0,
-  fanbeliebtheit TINYINT(3) NOT NULL DEFAULT '50',
+  popularity TINYINT(3) NOT NULL DEFAULT '50',
   c_showemail ENUM('1','0') NOT NULL DEFAULT '0',
   email_transfers ENUM('1','0') NOT NULL DEFAULT '0',
   email_pn ENUM('1','0') NOT NULL DEFAULT '0',
@@ -69,31 +69,31 @@ CREATE TABLE ws3_user_inactivity (
   login TINYINT(3) NOT NULL DEFAULT '0',
   login_last INT(11) NOT NULL,
   login_check INT(11) NOT NULL,
-  aufstellung TINYINT(3) NOT NULL DEFAULT '0',
+  formation TINYINT(3) NOT NULL DEFAULT '0',
   transfer TINYINT(3) NOT NULL DEFAULT '0',
   transfer_check INT(11) NOT NULL,
-  vertragsauslauf TINYINT(3) NOT NULL DEFAULT '0'
+  contract_expiry TINYINT(3) NOT NULL DEFAULT '0'
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_briefe (
+CREATE TABLE ws3_messages (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  empfaenger_id INT(10) NOT NULL,
-  absender_id INT(10) NOT NULL,
-  absender_name VARCHAR(50) NULL,
-  datum INT(10) NOT NULL,
-  betreff VARCHAR(50) NULL,
-  nachricht TEXT NULL,
-  gelesen ENUM('1','0') NOT NULL DEFAULT '0',
-  typ ENUM('eingang','ausgang') NOT NULL DEFAULT 'eingang'
+  recipient_id INT(10) NOT NULL,
+  sender_id INT(10) NOT NULL,
+  sender_name VARCHAR(50) NULL,
+  date INT(10) NOT NULL,
+  subject VARCHAR(50) NULL,
+  message TEXT NULL,
+  msg_read ENUM('1','0') NOT NULL DEFAULT '0',
+  type ENUM('incoming','outgoing') NOT NULL DEFAULT 'incoming'
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
 CREATE TABLE ws3_news (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  datum INT(10) NOT NULL,
-  autor_id SMALLINT(5) NOT NULL,
-  bild_id INT(10) NOT NULL,
-  titel VARCHAR(100) NULL,
-  nachricht TEXT NULL,
+  date INT(10) NOT NULL,
+  author_id SMALLINT(5) NOT NULL,
+  image_id INT(10) NOT NULL,
+  title VARCHAR(100) NULL,
+  message TEXT NULL,
   linktext1 VARCHAR(100) NULL,
   linkurl1 VARCHAR(250) NULL,
   linktext2 VARCHAR(100) NULL,
@@ -106,82 +106,82 @@ CREATE TABLE ws3_news (
   status ENUM('1','2','0') NOT NULL DEFAULT '0'
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_liga (
+CREATE TABLE ws3_league (
   id SMALLINT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(50) NULL,
-  kurz VARCHAR(5) NULL,
-  land VARCHAR(25) NULL,
-  p_steh TINYINT(3) NOT NULL,
-  p_sitz TINYINT(3) NOT NULL,
-  p_haupt_steh TINYINT(3) NOT NULL,
-  p_haupt_sitz TINYINT(3) NOT NULL,
+  short VARCHAR(5) NULL,
+  country VARCHAR(25) NULL,
+  p_standing TINYINT(3) NOT NULL,
+  p_seat TINYINT(3) NOT NULL,
+  p_main_standing TINYINT(3) NOT NULL,
+  p_main_seat TINYINT(3) NOT NULL,
   p_vip TINYINT(3) NOT NULL,
-  preis_steh SMALLINT(5) NOT NULL,
-  preis_sitz SMALLINT(5) NOT NULL,
-  preis_vip SMALLINT(5) NOT NULL,
+  price_standing SMALLINT(5) NOT NULL,
+  price_seat SMALLINT(5) NOT NULL,
+  price_vip SMALLINT(5) NOT NULL,
   admin_id SMALLINT(5) NOT NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_tabelle_markierung (
+CREATE TABLE ws3_table_marker (
   id SMALLINT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  liga_id SMALLINT(5) NOT NULL,
-  bezeichnung VARCHAR(50) NULL,
-  farbe VARCHAR(10) NULL,
-  platz_von SMALLINT(5) NOT NULL,
-  platz_bis SMALLINT(5) NOT NULL,
+  league_id SMALLINT(5) NOT NULL,
+  label VARCHAR(50) NULL,
+  colour VARCHAR(10) NULL,
+  positions_from SMALLINT(5) NOT NULL,
+  positions_to SMALLINT(5) NOT NULL,
   target_league_id INT(10) NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_saison (
+CREATE TABLE ws3_season (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(20) NULL,
-  liga_id SMALLINT(5) NOT NULL,
-  platz_1_id INT(10) NOT NULL,
-  platz_2_id INT(10) NOT NULL,
-  platz_3_id INT(10) NOT NULL,
-  platz_4_id INT(10) NOT NULL,
-  platz_5_id INT(10) NOT NULL,
-  beendet ENUM('1','0') NOT NULL DEFAULT '0'
+  league_id SMALLINT(5) NOT NULL,
+  place_1_id INT(10) NOT NULL,
+  place_2_id INT(10) NOT NULL,
+  place_3_id INT(10) NOT NULL,
+  place_4_id INT(10) NOT NULL,
+  place_5_id INT(10) NOT NULL,
+  completed ENUM('1','0') NOT NULL DEFAULT '0'
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_verein (
+CREATE TABLE ws3_club (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(50) NULL,
-  kurz VARCHAR(5) NULL,
-  bild VARCHAR(100) NULL,
-  liga_id SMALLINT(5) NULL,
+  short VARCHAR(5) NULL,
+  image VARCHAR(100) NULL,
+  league_id SMALLINT(5) NULL,
   user_id INT(10) NULL,
-  stadion_id INT(10) NULL,
+  stadium_id INT(10) NULL,
   sponsor_id INT(10) NULL,
   training_id INT(5) NULL,
-  platz TINYINT(2) NULL,
-  sponsor_spiele SMALLINT(5) NOT NULL DEFAULT 0,
-  finanz_budget INT(11) NOT NULL,
-  preis_stehen SMALLINT(4) NOT NULL,
-  preis_sitz SMALLINT(4) NOT NULL,
-  preis_haupt_stehen SMALLINT(4) NOT NULL,
-  preis_haupt_sitze SMALLINT(4) NOT NULL,
-  preis_vip SMALLINT(4) NOT NULL,
-  last_steh INT(6) NOT NULL DEFAULT 0,
-  last_sitz INT(6) NOT NULL DEFAULT 0,
-  last_haupt_steh INT(6) NOT NULL DEFAULT 0,
-  last_haupt_sitz INT(6) NOT NULL DEFAULT 0,
+  place TINYINT(2) NULL,
+  sponsor_matches SMALLINT(5) NOT NULL DEFAULT 0,
+  finance_budget INT(11) NOT NULL,
+  price_stand SMALLINT(4) NOT NULL,
+  price_seat SMALLINT(4) NOT NULL,
+  price_main_stand SMALLINT(4) NOT NULL,
+  price_main_seat SMALLINT(4) NOT NULL,
+  price_vip SMALLINT(4) NOT NULL,
+  last_standing INT(6) NOT NULL DEFAULT 0,
+  last_seat INT(6) NOT NULL DEFAULT 0,
+  last_main_standing INT(6) NOT NULL DEFAULT 0,
+  last_main_seat INT(6) NOT NULL DEFAULT 0,
   last_vip INT(6) NOT NULL DEFAULT 0,
-  meisterschaften SMALLINT(4) NOT NULL DEFAULT 0,
-  st_tore INT(6) NOT NULL DEFAULT 0,
-  st_gegentore INT(6) NOT NULL DEFAULT 0,
-  st_spiele SMALLINT(5) NOT NULL DEFAULT 0,
-  st_siege SMALLINT(5) NOT NULL DEFAULT 0,
-  st_niederlagen SMALLINT(5) NOT NULL DEFAULT 0,
-  st_unentschieden SMALLINT(5) NOT NULL DEFAULT 0,
-  st_punkte INT(6) NOT NULL DEFAULT 0,
-  sa_tore INT(6) NOT NULL DEFAULT 0,
-  sa_gegentore INT(6) NOT NULL DEFAULT 0,
-  sa_spiele SMALLINT(5) NOT NULL DEFAULT 0,
-  sa_siege SMALLINT(5) NOT NULL DEFAULT 0,
-  sa_niederlagen SMALLINT(5) NOT NULL DEFAULT 0,
-  sa_unentschieden SMALLINT(5) NOT NULL DEFAULT 0,
-  sa_punkte INT(6) NOT NULL DEFAULT 0,
+  championships SMALLINT(4) NOT NULL DEFAULT 0,
+  st_goals INT(6) NOT NULL DEFAULT 0,
+  st_goals_conceded INT(6) NOT NULL DEFAULT 0,
+  st_matches SMALLINT(5) NOT NULL DEFAULT 0,
+  st_wins SMALLINT(5) NOT NULL DEFAULT 0,
+  st_losses SMALLINT(5) NOT NULL DEFAULT 0,
+  st_draws SMALLINT(5) NOT NULL DEFAULT 0,
+  st_points INT(6) NOT NULL DEFAULT 0,
+  sa_goals INT(6) NOT NULL DEFAULT 0,
+  sa_goals_conceded INT(6) NOT NULL DEFAULT 0,
+  sa_matches SMALLINT(5) NOT NULL DEFAULT 0,
+  sa_wins SMALLINT(5) NOT NULL DEFAULT 0,
+  sa_losses SMALLINT(5) NOT NULL DEFAULT 0,
+  sa_draws SMALLINT(5) NOT NULL DEFAULT 0,
+  sa_points INT(6) NOT NULL DEFAULT 0,
   min_target_rank SMALLINT(3) NOT NULL DEFAULT 0,
   history TEXT NULL,
   scouting_last_execution INT(11) NOT NULL DEFAULT 0,
@@ -193,82 +193,82 @@ CREATE TABLE ws3_verein (
   status ENUM('1','0') NOT NULL DEFAULT '0'
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_spieler (
+CREATE TABLE ws3_player (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  vorname VARCHAR(30) NULL,
-  nachname VARCHAR(30) NULL,
-  kunstname VARCHAR(30) NULL,
-  geburtstag DATE NOT NULL,
-  verein_id INT(10) NULL,
-  position ENUM('Torwart','Abwehr','Mittelfeld','Sturm') NOT NULL DEFAULT 'Mittelfeld',
+  first_name VARCHAR(30) NULL,
+  last_name VARCHAR(30) NULL,
+  nickname VARCHAR(30) NULL,
+  birthday DATE NOT NULL,
+  club_id INT(10) NULL,
+  position ENUM('Goalkeeper','Defender','Midfielder','Forward') NOT NULL DEFAULT 'Midfielder',
   position_main ENUM('T','LV','IV', 'RV', 'LM', 'DM', 'ZM', 'OM', 'RM', 'LS', 'MS', 'RS') NULL,
   position_second ENUM('T','LV','IV', 'RV', 'LM', 'DM', 'ZM', 'OM', 'RM', 'LS', 'MS', 'RS') NULL,
   nation VARCHAR(30) NULL,
   picture VARCHAR(128) NULL,
-  verletzt TINYINT(3) NOT NULL DEFAULT 0,
-  gesperrt TINYINT(3) NOT NULL DEFAULT 0,
-  gesperrt_cups TINYINT(3) NOT NULL DEFAULT 0,
-  gesperrt_nationalteam TINYINT(3) NOT NULL DEFAULT 0,
-  transfermarkt ENUM('1','0') NOT NULL DEFAULT '0',
+  injured TINYINT(3) NOT NULL DEFAULT 0,
+  suspended TINYINT(3) NOT NULL DEFAULT 0,
+  suspended_cups TINYINT(3) NOT NULL DEFAULT 0,
+  suspended_nationalteam TINYINT(3) NOT NULL DEFAULT 0,
+  transfer_listed ENUM('1','0') NOT NULL DEFAULT '0',
   transfer_start INT(11) NOT NULL DEFAULT 0,
-  transfer_ende INT(11) NOT NULL DEFAULT 0,
-  transfer_mindestgebot INT(11) NOT NULL DEFAULT 0,
-  w_staerke TINYINT(3) NOT NULL,
-  w_technik TINYINT(3) NOT NULL,
-  w_kondition TINYINT(3) NOT NULL,
-  w_frische TINYINT(3) NOT NULL,
-  w_zufriedenheit TINYINT(3) NOT NULL,
-  einzeltraining ENUM('1','0') NOT NULL DEFAULT '0',
-  note_last REAL(4,2) NOT NULL DEFAULT 0,
-  note_schnitt REAL(4,2) NOT NULL DEFAULT 0,
-  vertrag_gehalt INT(10) NOT NULL,
-  vertrag_spiele SMALLINT(5) NOT NULL,
-  vertrag_torpraemie INT(10) NOT NULL,
-  marktwert INT(10) NOT NULL DEFAULT 0,
-  st_tore INT(6) NOT NULL DEFAULT 0,
+  transfer_end INT(11) NOT NULL DEFAULT 0,
+  transfer_min_bid INT(11) NOT NULL DEFAULT 0,
+  w_strength TINYINT(3) NOT NULL,
+  w_technique TINYINT(3) NOT NULL,
+  w_stamina TINYINT(3) NOT NULL,
+  w_fitness TINYINT(3) NOT NULL,
+  w_morale TINYINT(3) NOT NULL,
+  single_training ENUM('1','0') NOT NULL DEFAULT '0',
+  rating_last REAL(4,2) NOT NULL DEFAULT 0,
+  rating_average REAL(4,2) NOT NULL DEFAULT 0,
+  contract_salary INT(10) NOT NULL,
+  contract_matches SMALLINT(5) NOT NULL,
+  contract_goal_bonus INT(10) NOT NULL,
+  value INT(10) NOT NULL DEFAULT 0,
+  st_goals INT(6) NOT NULL DEFAULT 0,
   st_assists INT(6) NOT NULL DEFAULT 0,
-  st_spiele SMALLINT(5) NOT NULL DEFAULT 0,
-  st_karten_gelb SMALLINT(5) NOT NULL DEFAULT 0,
-  st_karten_gelb_rot SMALLINT(5) NOT NULL DEFAULT 0,
-  st_karten_rot SMALLINT(5) NOT NULL DEFAULT 0,
-  sa_tore INT(6) NOT NULL DEFAULT 0,
+  st_matches SMALLINT(5) NOT NULL DEFAULT 0,
+  st_yellow_card SMALLINT(5) NOT NULL DEFAULT 0,
+  st_yellow_card_2nd SMALLINT(5) NOT NULL DEFAULT 0,
+  st_red_card SMALLINT(5) NOT NULL DEFAULT 0,
+  sa_goals INT(6) NOT NULL DEFAULT 0,
   sa_assists INT(6) NOT NULL DEFAULT 0,
-  sa_spiele SMALLINT(5) NOT NULL DEFAULT 0,
-  sa_karten_gelb SMALLINT(5) NOT NULL DEFAULT 0,
-  sa_karten_gelb_rot SMALLINT(5) NOT NULL DEFAULT 0,
-  sa_karten_rot SMALLINT(5) NOT NULL DEFAULT 0,
+  sa_matches SMALLINT(5) NOT NULL DEFAULT 0,
+  sa_yellow_card SMALLINT(5) NOT NULL DEFAULT 0,
+  sa_yellow_card_2nd SMALLINT(5) NOT NULL DEFAULT 0,
+  sa_red_card SMALLINT(5) NOT NULL DEFAULT 0,
   history TEXT NULL,
   unsellable ENUM('1','0') NOT NULL DEFAULT '0',
-  lending_fee INT(6) NOT NULL DEFAULT 0,
-  lending_matches TINYINT NOT NULL DEFAULT 0,
-  lending_owner_id INT(10) NULL,
+  loan_fee INT(6) NOT NULL DEFAULT 0,
+  loan_matches TINYINT NOT NULL DEFAULT 0,
+  loan_owner_id INT(10) NULL,
   age TINYINT(3) NULL,
   status ENUM('1','0') NOT NULL DEFAULT '0'
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_transfer_angebot (
+CREATE TABLE ws3_transfer_bid (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  spieler_id INT(10) NOT NULL,
-  verein_id INT(10) NULL,
+  player_id INT(10) NOT NULL,
+  club_id INT(10) NULL,
   user_id INT(10) NOT NULL,
-  datum INT(11) NOT NULL,
-  abloese INT(11) NOT NULL,
-  handgeld INT(11) NOT NULL DEFAULT 0,
-  vertrag_spiele SMALLINT(5) NOT NULL,
-  vertrag_gehalt INT(7) NOT NULL,
-  vertrag_torpraemie SMALLINT(5) NOT NULL DEFAULT 0,
+  date INT(11) NOT NULL,
+  transfer_fee INT(11) NOT NULL,
+  signing_fee INT(11) NOT NULL DEFAULT 0,
+  contract_matches SMALLINT(5) NOT NULL,
+  contract_salary INT(7) NOT NULL,
+  contract_goal_bonus SMALLINT(5) NOT NULL DEFAULT 0,
   ishighest ENUM('1','0') NOT NULL DEFAULT '0'
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_stadion (
+CREATE TABLE ws3_stadium (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(30) NULL,
-  stadt VARCHAR(30) NULL,
-  land VARCHAR(20) NULL,
-  p_steh INT(6) NOT NULL,
-  p_sitz INT(6) NOT NULL,
-  p_haupt_steh INT(6) NOT NULL,
-  p_haupt_sitz INT(6) NOT NULL,
+  city VARCHAR(30) NULL,
+  country VARCHAR(20) NULL,
+  p_standing INT(6) NOT NULL,
+  p_seat INT(6) NOT NULL,
+  p_main_standing INT(6) NOT NULL,
+  p_main_seat INT(6) NOT NULL,
   p_vip INT(6) NOT NULL,
   level_pitch TINYINT(2) NOT NULL DEFAULT 3,
   level_videowall TINYINT(2) NOT NULL DEFAULT 1,
@@ -281,88 +281,88 @@ CREATE TABLE ws3_stadion (
   picture VARCHAR(128) NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_konto (
+CREATE TABLE ws3_accounts (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  verein_id INT(10) NOT NULL,
-  absender VARCHAR(150) NULL,
-  betrag INT(10) NOT NULL,
-  datum INT(11) NOT NULL,
-  verwendung VARCHAR(200) NULL
+  club_id INT(10) NOT NULL,
+  sender VARCHAR(150) NULL,
+  amount INT(10) NOT NULL,
+  date INT(11) NOT NULL,
+  details VARCHAR(200) NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
 CREATE TABLE ws3_sponsor (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(30) NULL,
-  bild VARCHAR(100) NULL,
-  liga_id SMALLINT(5) NOT NULL,
-  b_spiel INT(10) NOT NULL,
-  b_heimzuschlag INT(10) NOT NULL,
-  b_sieg INT(10) NOT NULL,
-  b_meisterschaft INT(10) NOT NULL,
+  image VARCHAR(100) NULL,
+  league_id SMALLINT(5) NOT NULL,
+  b_match INT(10) NOT NULL,
+  b_home_match INT(10) NOT NULL,
+  b_win INT(10) NOT NULL,
+  b_championship INT(10) NOT NULL,
   max_teams SMALLINT(5) NOT NULL,
-  min_platz TINYINT(3) NOT NULL
+  min_place TINYINT(3) NOT NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
 CREATE TABLE ws3_training (
   id SMALLINT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(30) NULL,
-  w_staerke TINYINT(3) NOT NULL,
-  w_technik TINYINT(3) NOT NULL,
-  w_kondition TINYINT(3) NOT NULL,
-  w_frische TINYINT(3) NOT NULL,
-  w_zufriedenheit TINYINT(3) NOT NULL
+  w_strength TINYINT(3) NOT NULL,
+  w_technique TINYINT(3) NOT NULL,
+  w_stamina TINYINT(3) NOT NULL,
+  w_fitness TINYINT(3) NOT NULL,
+  w_morale TINYINT(3) NOT NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_trainingslager (
+CREATE TABLE ws3_training_camp (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(100) NULL,
-  land VARCHAR(30) NULL,
-  bild VARCHAR(100) NULL,
-  preis_spieler_tag INT(10) NOT NULL,
-  p_staerke TINYINT(3) NOT NULL,
-  p_technik TINYINT(3) NOT NULL,
-  p_kondition TINYINT(3) NOT NULL,
-  p_frische TINYINT(3) NOT NULL,
-  p_zufriedenheit TINYINT(3) NOT NULL
+  country VARCHAR(30) NULL,
+  image VARCHAR(100) NULL,
+  price_player_day INT(10) NOT NULL,
+  p_strength TINYINT(3) NOT NULL,
+  p_technique TINYINT(3) NOT NULL,
+  p_stamina TINYINT(3) NOT NULL,
+  p_fitness TINYINT(3) NOT NULL,
+  p_morale TINYINT(3) NOT NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_trainingslager_belegung (
+CREATE TABLE ws3_training_camp_booking (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  verein_id INT(10) NOT NULL,
-  lager_id INT(10) NOT NULL,
-  datum_start INT(10) NOT NULL,
-  datum_ende INT(10) NOT NULL
+  club_id INT(10) NOT NULL,
+  camp_id INT(10) NOT NULL,
+  date_start INT(10) NOT NULL,
+  date_end INT(10) NOT NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_aufstellung (
+CREATE TABLE ws3_tactics (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  verein_id INT(10) NOT NULL,
-  datum INT(11) NOT NULL,
+  club_id INT(10) NOT NULL,
+  date INT(11) NOT NULL,
   offensive TINYINT(3) NULL DEFAULT 50,
-  spieler1 INT(10) NOT NULL,
-  spieler2 INT(10) NOT NULL,
-  spieler3 INT(10) NOT NULL,
-  spieler4 INT(10) NOT NULL,
-  spieler5 INT(10) NOT NULL,
-  spieler6 INT(10) NOT NULL,
-  spieler7 INT(10) NOT NULL,
-  spieler8 INT(10) NOT NULL,
-  spieler9 INT(10) NOT NULL,
-  spieler10 INT(10) NOT NULL,
-  spieler11 INT(10) NOT NULL,
-  ersatz1 INT(10) NULL,
-  ersatz2 INT(10) NULL,
-  ersatz3 INT(10) NULL,
-  ersatz4 INT(10) NULL,
-  ersatz5 INT(10) NULL,
-  w1_raus INT(10) NULL,
-  w1_rein INT(10) NULL,
+  player1 INT(10) NOT NULL,
+  player2 INT(10) NOT NULL,
+  player3 INT(10) NOT NULL,
+  player4 INT(10) NOT NULL,
+  player5 INT(10) NOT NULL,
+  player6 INT(10) NOT NULL,
+  player7 INT(10) NOT NULL,
+  player8 INT(10) NOT NULL,
+  player9 INT(10) NOT NULL,
+  player10 INT(10) NOT NULL,
+  player11 INT(10) NOT NULL,
+  sub1 INT(10) NULL,
+  sub2 INT(10) NULL,
+  sub3 INT(10) NULL,
+  sub4 INT(10) NULL,
+  sub5 INT(10) NULL,
+  w1_out INT(10) NULL,
+  w1_in INT(10) NULL,
   w1_minute TINYINT(2) NULL,
-  w2_raus INT(10) NULL,
-  w2_rein INT(10) NULL,
+  w2_out INT(10) NULL,
+  w2_in INT(10) NULL,
   w2_minute TINYINT(2) NULL,
-  w3_raus INT(10) NULL,
-  w3_rein INT(10) NULL,
+  w3_out INT(10) NULL,
+  w3_in INT(10) NULL,
   w3_minute TINYINT(2) NULL,
   setup VARCHAR(16) NULL,
   w1_condition VARCHAR(16) NULL,
@@ -374,172 +374,172 @@ CREATE TABLE ws3_aufstellung (
   w1_position VARCHAR(4) NULL,
   w2_position VARCHAR(4) NULL,
   w3_position VARCHAR(4) NULL,
-  spieler1_position VARCHAR(4) NOT NULL,
-  spieler2_position VARCHAR(4) NOT NULL,
-  spieler3_position VARCHAR(4) NOT NULL,
-  spieler4_position VARCHAR(4) NOT NULL,
-  spieler5_position VARCHAR(4) NOT NULL,
-  spieler6_position VARCHAR(4) NOT NULL,
-  spieler7_position VARCHAR(4) NOT NULL,
-  spieler8_position VARCHAR(4) NOT NULL,
-  spieler9_position VARCHAR(4) NOT NULL,
-  spieler10_position VARCHAR(4) NOT NULL,
-  spieler11_position VARCHAR(4) NOT NULL,
-  match_id INT(10) NULL REFERENCES ws3_spiel(id) ON DELETE CASCADE,
+  player1_position VARCHAR(4) NOT NULL,
+  player2_position VARCHAR(4) NOT NULL,
+  player3_position VARCHAR(4) NOT NULL,
+  player4_position VARCHAR(4) NOT NULL,
+  player5_position VARCHAR(4) NOT NULL,
+  player6_position VARCHAR(4) NOT NULL,
+  player7_position VARCHAR(4) NOT NULL,
+  player8_position VARCHAR(4) NOT NULL,
+  player9_position VARCHAR(4) NOT NULL,
+  player10_position VARCHAR(4) NOT NULL,
+  player11_position VARCHAR(4) NOT NULL,
+  match_id INT(10) NULL REFERENCES ws3_match(id) ON DELETE CASCADE,
   templatename VARCHAR(24) NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_spiel (
+CREATE TABLE ws3_match (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  spieltyp ENUM('Ligaspiel','Pokalspiel','Freundschaft') NOT NULL DEFAULT 'Ligaspiel',
-  elfmeter ENUM('1','0') NOT NULL DEFAULT '0',
-  pokalname VARCHAR(30) NULL,
-  pokalrunde VARCHAR(30) NULL,
-  pokalgruppe VARCHAR(64) NULL,
-  liga_id SMALLINT(5) NULL,
-  saison_id INT(10) NULL,
-  spieltag TINYINT(3) NULL,
-  datum INT(10) NOT NULL,
-  stadion_id INT(10) NULL,
+  matchtype ENUM('leaguematch','cupmatch','friendly') NOT NULL DEFAULT 'leaguematch',
+  penalty_kicks ENUM('1','0') NOT NULL DEFAULT '0',
+  cup_name VARCHAR(30) NULL,
+  cup_round VARCHAR(30) NULL,
+  cup_group VARCHAR(64) NULL,
+  league_id SMALLINT(5) NULL,
+  season_id INT(10) NULL,
+  matchday TINYINT(3) NULL,
+  date INT(10) NOT NULL,
+  stadium_id INT(10) NULL,
   minutes TINYINT(3) NULL,
   player_with_ball INT(10) NULL,
   prev_player_with_ball INT(10) NULL,
-  home_verein INT(10) NOT NULL,
+  home_club INT(10) NOT NULL,
   home_noformation ENUM('1','0') DEFAULT '0',
   home_offensive TINYINT(3) NULL,
   home_offensive_changed TINYINT(2) NOT NULL DEFAULT 0,
-  home_tore TINYINT(2) NULL,
-  home_spieler1 INT(10) NULL,
-  home_spieler2 INT(10) NULL,
-  home_spieler3 INT(10) NULL,
-  home_spieler4 INT(10) NULL,
-  home_spieler5 INT(10) NULL,
-  home_spieler6 INT(10) NULL,
-  home_spieler7 INT(10) NULL,
-  home_spieler8 INT(10) NULL,
-  home_spieler9 INT(10) NULL,
-  home_spieler10 INT(10) NULL,
-  home_spieler11 INT(10) NULL,
-  home_ersatz1 INT(10) NULL,
-  home_ersatz2 INT(10) NULL,
-  home_ersatz3 INT(10) NULL,
-  home_ersatz4 INT(10) NULL,
-  home_ersatz5 INT(10) NULL,
-  home_w1_raus INT(10) NULL,
-  home_w1_rein INT(10) NULL,
+  home_goals TINYINT(2) NULL,
+  home_player1 INT(10) NULL,
+  home_player2 INT(10) NULL,
+  home_player3 INT(10) NULL,
+  home_player4 INT(10) NULL,
+  home_player5 INT(10) NULL,
+  home_player6 INT(10) NULL,
+  home_player7 INT(10) NULL,
+  home_player8 INT(10) NULL,
+  home_player9 INT(10) NULL,
+  home_player10 INT(10) NULL,
+  home_player11 INT(10) NULL,
+  home_sub1 INT(10) NULL,
+  home_sub2 INT(10) NULL,
+  home_sub3 INT(10) NULL,
+  home_sub4 INT(10) NULL,
+  home_sub5 INT(10) NULL,
+  home_w1_out INT(10) NULL,
+  home_w1_in INT(10) NULL,
   home_w1_minute TINYINT(2) NULL,
-  home_w2_raus INT(10) NULL,
-  home_w2_rein INT(10) NULL,
+  home_w2_out INT(10) NULL,
+  home_w2_in INT(10) NULL,
   home_w2_minute TINYINT(2) NULL,
-  home_w3_raus INT(10) NULL,
-  home_w3_rein INT(10) NULL,
+  home_w3_out INT(10) NULL,
+  home_w3_in INT(10) NULL,
   home_w3_minute TINYINT(2) NULL,
-  gast_verein INT(10) NOT NULL,
-  gast_tore TINYINT(2) NULL,
+  guest_club INT(10) NOT NULL,
+  guest_goals TINYINT(2) NULL,
   guest_noformation ENUM('1','0') DEFAULT '0',
-  gast_offensive TINYINT(3) NULL,
-  gast_offensive_changed TINYINT(2) NOT NULL DEFAULT 0,
-  gast_spieler1 INT(10) NULL,
-  gast_spieler2 INT(10) NULL,
-  gast_spieler3 INT(10) NULL,
-  gast_spieler4 INT(10) NULL,
-  gast_spieler5 INT(10) NULL,
-  gast_spieler6 INT(10) NULL,
-  gast_spieler7 INT(10) NULL,
-  gast_spieler8 INT(10) NULL,
-  gast_spieler9 INT(10) NULL,
-  gast_spieler10 INT(10) NULL,
-  gast_spieler11 INT(10) NULL,
-  gast_ersatz1 INT(10) NULL,
-  gast_ersatz2 INT(10) NULL,
-  gast_ersatz3 INT(10) NULL,
-  gast_ersatz4 INT(10) NULL,
-  gast_ersatz5 INT(10) NULL,
-  gast_w1_raus INT(10) NULL,
-  gast_w1_rein INT(10) NULL,
-  gast_w1_minute TINYINT(2) NULL,
-  gast_w2_raus INT(10) NULL,
-  gast_w2_rein INT(10) NULL,
-  gast_w2_minute TINYINT(2) NULL,
-  gast_w3_raus INT(10) NULL,
-  gast_w3_rein INT(10) NULL,
-  gast_w3_minute TINYINT(2) NULL,
-  bericht TEXT NULL,
-  zuschauer INT(6) NULL,
-  berechnet ENUM('1','0') NOT NULL DEFAULT '0',
+  guest_offensive TINYINT(3) NULL,
+  guest_offensive_changed TINYINT(2) NOT NULL DEFAULT 0,
+  guest_player1 INT(10) NULL,
+  guest_player2 INT(10) NULL,
+  guest_player3 INT(10) NULL,
+  guest_player4 INT(10) NULL,
+  guest_player5 INT(10) NULL,
+  guest_player6 INT(10) NULL,
+  guest_player7 INT(10) NULL,
+  guest_player8 INT(10) NULL,
+  guest_player9 INT(10) NULL,
+  guest_player10 INT(10) NULL,
+  guest_player11 INT(10) NULL,
+  guest_sub1 INT(10) NULL,
+  guest_sub2 INT(10) NULL,
+  guest_sub3 INT(10) NULL,
+  guest_sub4 INT(10) NULL,
+  guest_sub5 INT(10) NULL,
+  guest_w1_out INT(10) NULL,
+  guest_w1_in INT(10) NULL,
+  guest_w1_minute TINYINT(2) NULL,
+  guest_w2_out INT(10) NULL,
+  guest_w2_in INT(10) NULL,
+  guest_w2_minute TINYINT(2) NULL,
+  guest_w3_out INT(10) NULL,
+  guest_w3_in INT(10) NULL,
+  guest_w3_minute TINYINT(2) NULL,
+  report TEXT NULL,
+  crowd INT(6) NULL,
+  simulated ENUM('1','0') NOT NULL DEFAULT '0',
   soldout ENUM('1','0') NOT NULL DEFAULT '0',
   home_setup VARCHAR(16) NULL,
   home_w1_condition VARCHAR(16) NULL,
   home_w2_condition VARCHAR(16) NULL,
   home_w3_condition VARCHAR(16) NULL,
-  gast_setup VARCHAR(16) NULL,
-  gast_w1_condition VARCHAR(16) NULL,
-  gast_w2_condition VARCHAR(16) NULL,
-  gast_w3_condition VARCHAR(16) NULL,
+  guest_setup VARCHAR(16) NULL,
+  guest_w1_condition VARCHAR(16) NULL,
+  guest_w2_condition VARCHAR(16) NULL,
+  guest_w3_condition VARCHAR(16) NULL,
   home_longpasses ENUM('1', '0') NOT NULL DEFAULT '0',
   home_counterattacks ENUM('1', '0') NOT NULL DEFAULT '0',
-  gast_longpasses ENUM('1', '0') NOT NULL DEFAULT '0',
-  gast_counterattacks ENUM('1', '0') NOT NULL DEFAULT '0',
+  guest_longpasses ENUM('1', '0') NOT NULL DEFAULT '0',
+  guest_counterattacks ENUM('1', '0') NOT NULL DEFAULT '0',
   home_morale TINYINT(3) NOT NULL DEFAULT 0,
-  gast_morale TINYINT(3) NOT NULL DEFAULT 0,
+  guest_morale TINYINT(3) NOT NULL DEFAULT 0,
   home_user_id INT(10) NULL,
-  gast_user_id INT(10) NULL,
+  guest_user_id INT(10) NULL,
   home_freekickplayer INT(10) NULL,
   home_w1_position VARCHAR(4) NULL,
   home_w2_position VARCHAR(4) NULL,
   home_w3_position VARCHAR(4) NULL,
-  gast_freekickplayer INT(10) NULL,
-  gast_w1_position VARCHAR(4) NULL,
-  gast_w2_position VARCHAR(4) NULL,
-  gast_w3_position VARCHAR(4) NULL,
+  guest_freekickplayer INT(10) NULL,
+  guest_w1_position VARCHAR(4) NULL,
+  guest_w2_position VARCHAR(4) NULL,
+  guest_w3_position VARCHAR(4) NULL,
   blocked ENUM('1', '0') NOT NULL DEFAULT '0'
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_spiel_berechnung (
+CREATE TABLE ws3_match_simulation (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  spiel_id INT(10) NOT NULL,
-  spieler_id INT(10) NOT NULL,
+  match_id INT(10) NOT NULL,
+  player_id INT(10) NOT NULL,
   team_id INT(10) NOT NULL,
   position VARCHAR(20) NULL,
-  note REAL(4,2) NOT NULL,
-  minuten_gespielt TINYINT(2) NOT NULL DEFAULT 0,
-  karte_gelb TINYINT(1) NOT NULL DEFAULT 0,
-  karte_rot TINYINT(1) NOT NULL DEFAULT 0,
-  verletzt TINYINT(2) NOT NULL DEFAULT 0,
-  gesperrt TINYINT(2) NOT NULL DEFAULT 0,
-  tore TINYINT(2) NOT NULL DEFAULT 0,
-  feld ENUM('1','Ersatzbank','Ausgewechselt') NOT NULL DEFAULT '1',
+  rating REAL(4,2) NOT NULL,
+  minutes_played TINYINT(2) NOT NULL DEFAULT 0,
+  yellow_card TINYINT(1) NOT NULL DEFAULT 0,
+  red_card TINYINT(1) NOT NULL DEFAULT 0,
+  injured TINYINT(2) NOT NULL DEFAULT 0,
+  suspended TINYINT(2) NOT NULL DEFAULT 0,
+  goals TINYINT(2) NOT NULL DEFAULT 0,
+  field ENUM('1','Bench','Substituted') NOT NULL DEFAULT '1',
   position_main VARCHAR(5) NULL,
   age TINYINT(2) NULL,
-  w_staerke TINYINT(3) NULL,
-  w_technik TINYINT(3) NULL,
-  w_kondition TINYINT(3) NULL,
-  w_frische TINYINT(3) NULL,
-  w_zufriedenheit TINYINT(3) NULL,
-  ballcontacts TINYINT(3) NULL,
+  w_strength TINYINT(3) NULL,
+  w_technique TINYINT(3) NULL,
+  w_stamina TINYINT(3) NULL,
+  w_fitness TINYINT(3) NULL,
+  w_morale TINYINT(3) NULL,
+  touches TINYINT(3) NULL,
   wontackles TINYINT(3) NULL,
-  shoots TINYINT(3) NULL,
-  passes_successed TINYINT(3) NULL,
+  shots TINYINT(3) NULL,
+  passes_successful TINYINT(3) NULL,
   passes_failed TINYINT(3) NULL,
   assists TINYINT(3) NULL,
   name VARCHAR(128) NULL,
   losttackles TINYINT(3) NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_spiel_text (
+CREATE TABLE ws3_match_text (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  aktion ENUM(  'Tor',  'Auswechslung',  'Zweikampf_gewonnen',  'Zweikampf_verloren',  'Pass_daneben',  'Torschuss_daneben',  'Torschuss_auf_Tor',  'Karte_gelb',  'Karte_rot',  'Karte_gelb_rot',  'Verletzung', 'Elfmeter_erfolg',  'Elfmeter_verschossen', 'Taktikaenderung', 'Ecke', 'Freistoss_daneben', 'Freistoss_treffer', 'Tor_mit_vorlage' ),
-  nachricht VARCHAR(250) NULL
+  action ENUM(  'Goal',  'Substitution',  'Tackle_won',  'Tackle_lost',  'Pass_missed',  'Shot_missed',  'Shot_on_target',  'Yellow_card',  'Red_card',  'Yellow_card_2nd',  'Injury', 'Penalty_scored',  'Penalty_missed', 'Tactics_changed', 'Corner', 'Freekick_missed', 'Freekick_scored', 'Goal_with_assist' ),
+  message VARCHAR(250) NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
 CREATE TABLE ws3_transfer (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  spieler_id INT(10) NOT NULL,
+  player_id INT(10) NOT NULL,
   seller_user_id INT(10) NULL,
   seller_club_id INT(10) NULL,
   buyer_user_id INT(10) NULL,
   buyer_club_id INT(10) NOT NULL,
-  datum INT(11) NOT NULL,
+  date INT(11) NOT NULL,
   bid_id INT(11) NOT NULL DEFAULT 0,
   directtransfer_amount INT(10) NOT NULL,
   directtransfer_player1 INT(10) NOT NULL DEFAULT 0,
@@ -596,7 +596,7 @@ CREATE TABLE ws3_cup_round (
   cup_id INT(10) NOT NULL,
   name VARCHAR(64) NOT NULL,
   from_winners_round_id INT(10) NULL,
-  from_loosers_round_id INT(10) NULL,
+  from_loser_round_id INT(10) NULL,
   firstround_date INT(11) NOT NULL,
   secondround_date INT(11) NULL,
   finalround ENUM('1','0') NOT NULL DEFAULT '0',
@@ -615,7 +615,7 @@ CREATE TABLE ws3_cup_round_group (
   name VARCHAR(64) NOT NULL,
   tab_points INT(4) NOT NULL DEFAULT 0,
   tab_goals INT(4) NOT NULL DEFAULT 0,
-  tab_goalsreceived INT(4) NOT NULL DEFAULT 0,
+  tab_goals_conceded INT(4) NOT NULL DEFAULT 0,
   tab_wins INT(4) NOT NULL DEFAULT 0,
   tab_draws INT(4) NOT NULL DEFAULT 0,
   tab_losses INT(4) NOT NULL DEFAULT 0,
@@ -635,21 +635,21 @@ CREATE TABLE ws3_team_league_statistics (
   season_id INT(10) NOT NULL,
   total_points INT(6) NOT NULL DEFAULT 0,
   total_goals INT(6) NOT NULL DEFAULT 0,
-  total_goalsreceived INT(6) NOT NULL DEFAULT 0,
+  total_goals_conceded INT(6) NOT NULL DEFAULT 0,
   total_goalsdiff INT(6) NOT NULL DEFAULT 0,
   total_wins INT(6) NOT NULL DEFAULT 0,
   total_draws INT(6) NOT NULL DEFAULT 0,
   total_losses INT(6) NOT NULL DEFAULT 0,
   home_points INT(6) NOT NULL DEFAULT 0,
   home_goals INT(6) NOT NULL DEFAULT 0,
-  home_goalsreceived INT(6) NOT NULL DEFAULT 0,
+  home_goals_conceded INT(6) NOT NULL DEFAULT 0,
   home_goalsdiff INT(6) NOT NULL DEFAULT 0,
   home_wins INT(6) NOT NULL DEFAULT 0,
   home_draws INT(6) NOT NULL DEFAULT 0,
   home_losses INT(6) NOT NULL DEFAULT 0,
   guest_points INT(6) NOT NULL DEFAULT 0,
   guest_goals INT(6) NOT NULL DEFAULT 0,
-  guest_goalsreceived INT(6) NOT NULL DEFAULT 0,
+  guest_goals_conceded INT(6) NOT NULL DEFAULT 0,
   guest_goalsdiff INT(6) NOT NULL DEFAULT 0,
   guest_wins INT(6) NOT NULL DEFAULT 0,
   guest_draws INT(6) NOT NULL DEFAULT 0,
@@ -684,7 +684,7 @@ CREATE TABLE ws3_notification (
   target_pageid VARCHAR(128) NULL,
   target_querystr VARCHAR(255) NULL,
   seen ENUM('1','0') NOT NULL DEFAULT '0',
-  team_id INT(10) NULL REFERENCES ws3_verein(id) ON DELETE CASCADE
+  team_id INT(10) NULL REFERENCES ws3_club(id) ON DELETE CASCADE
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
 CREATE TABLE ws3_youthplayer (
@@ -693,7 +693,7 @@ CREATE TABLE ws3_youthplayer (
   firstname VARCHAR(32) NOT NULL,
   lastname VARCHAR(32) NOT NULL,
   age TINYINT NOT NULL,
-  position ENUM('Torwart','Abwehr','Mittelfeld','Sturm') NOT NULL,
+  position ENUM('Goalkeeper','Defender','Midfielder','Forward') NOT NULL,
   nation VARCHAR(32) NULL,
   strength TINYINT(3) NOT NULL,
   strength_last_change TINYINT(3) NOT NULL DEFAULT 0,
@@ -711,7 +711,7 @@ CREATE TABLE ws3_youthscout (
   name VARCHAR(32) NOT NULL,
   expertise TINYINT(3) NOT NULL,
   fee INT(10) NOT NULL,
-  speciality ENUM('Torwart','Abwehr','Mittelfeld','Sturm') NULL
+  speciality ENUM('Goalkeeper','Defender','Midfielder','Forward') NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
 CREATE TABLE ws3_youthmatch_request (
@@ -775,12 +775,12 @@ CREATE TABLE ws3_youthmatch_player (
   card_yellow TINYINT(1) NOT NULL DEFAULT 0,
   card_red TINYINT(1) NOT NULL DEFAULT 0,
   goals TINYINT(2) NOT NULL DEFAULT 0,
-  state ENUM('1','Ersatzbank','Ausgewechselt') NOT NULL DEFAULT '1',
+  state ENUM('1','Bench','Substituted') NOT NULL DEFAULT '1',
   strength TINYINT(3) NOT NULL,
-  ballcontacts TINYINT(3) NOT NULL DEFAULT 0,
+  touches TINYINT(3) NOT NULL DEFAULT 0,
   wontackles TINYINT(3) NOT NULL DEFAULT 0,
-  shoots TINYINT(3) NOT NULL DEFAULT 0,
-  passes_successed TINYINT(3) NOT NULL DEFAULT 0,
+  shots TINYINT(3) NOT NULL DEFAULT 0,
+  passes_successful TINYINT(3) NOT NULL DEFAULT 0,
   passes_failed TINYINT(3) NOT NULL DEFAULT 0,
   assists TINYINT(3) NOT NULL DEFAULT 0,
   name VARCHAR(128) NOT NULL,
@@ -818,10 +818,10 @@ CREATE TABLE ws3_stadium_construction (
   builder_id INT(10) NOT NULL,
   started INT(11) NOT NULL,
   deadline INT(11) NOT NULL,
-  p_steh INT(6) NOT NULL DEFAULT 0,
-  p_sitz INT(6) NOT NULL DEFAULT 0,
-  p_haupt_steh INT(6) NOT NULL DEFAULT 0,
-  p_haupt_sitz INT(6) NOT NULL DEFAULT 0,
+  p_standing INT(6) NOT NULL DEFAULT 0,
+  p_seat INT(6) NOT NULL DEFAULT 0,
+  p_main_standing INT(6) NOT NULL DEFAULT 0,
+  p_main_seat INT(6) NOT NULL DEFAULT 0,
   p_vip INT(6) NOT NULL DEFAULT 0,
   FOREIGN KEY (builder_id) REFERENCES ws3_stadium_builder(id) ON DELETE RESTRICT
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
@@ -872,7 +872,7 @@ CREATE TABLE ws3_shoutmessage (
   created_date INT(11) NOT NULL,
   match_id INT(10) NOT NULL,
   FOREIGN KEY (user_id) REFERENCES ws3_user(id) ON DELETE CASCADE,
-  FOREIGN KEY (match_id) REFERENCES ws3_spiel(id) ON DELETE CASCADE
+  FOREIGN KEY (match_id) REFERENCES ws3_match(id) ON DELETE CASCADE
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
 CREATE TABLE ws3_userabsence (
@@ -891,8 +891,8 @@ CREATE TABLE ws3_leaguehistory (
   user_id INT(10) NULL,
   matchday TINYINT(3) NULL,
   rank TINYINT(3) NULL,
-  FOREIGN KEY (team_id) REFERENCES ws3_verein(id) ON DELETE CASCADE,
-  FOREIGN KEY (season_id) REFERENCES ws3_saison(id) ON DELETE CASCADE,
+  FOREIGN KEY (team_id) REFERENCES ws3_club(id) ON DELETE CASCADE,
+  FOREIGN KEY (season_id) REFERENCES ws3_season(id) ON DELETE CASCADE,
   FOREIGN KEY (user_id) REFERENCES ws3_user(id) ON DELETE SET NULL,
   PRIMARY KEY(team_id, season_id, matchday)
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
@@ -900,7 +900,7 @@ CREATE TABLE ws3_leaguehistory (
 CREATE TABLE ws3_randomevent (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   message VARCHAR(255) NULL,
-  effect ENUM('money', 'player_injured', 'player_blocked', 'player_happiness', 'player_fitness', 'player_stamina') NOT NULL,
+  effect ENUM('money', 'player_injured', 'player_suspended', 'player_happiness', 'player_fitness', 'player_stamina') NOT NULL,
   effect_money_amount INT(10) NOT NULL DEFAULT 0,
   effect_blocked_matches INT(10) NOT NULL DEFAULT 0,
   effect_skillchange TINYINT(3) NOT NULL DEFAULT 0,
@@ -912,7 +912,7 @@ CREATE TABLE ws3_randomevent_occurrence (
   team_id INT(10) NOT NULL,
   event_id INT(10) NOT NULL,
   occurrence_date INT(10) NOT NULL,
-  FOREIGN KEY (team_id) REFERENCES ws3_verein(id) ON DELETE CASCADE,
+  FOREIGN KEY (team_id) REFERENCES ws3_club(id) ON DELETE CASCADE,
   FOREIGN KEY (user_id) REFERENCES ws3_user(id) ON DELETE CASCADE,
   FOREIGN KEY (event_id) REFERENCES ws3_randomevent(id) ON DELETE CASCADE,
   PRIMARY KEY(user_id, team_id, occurrence_date)
@@ -937,73 +937,73 @@ CREATE TABLE ws3_badge_user (
 CREATE TABLE ws3_achievement (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   user_id INT(10) NOT NULL REFERENCES ws3_user(id) ON DELETE CASCADE,
-  team_id INT(10) NOT NULL REFERENCES ws3_verein(id) ON DELETE CASCADE,
-  season_id INT(10) NULL REFERENCES ws3_saison(id) ON DELETE CASCADE,
+  team_id INT(10) NOT NULL REFERENCES ws3_club(id) ON DELETE CASCADE,
+  season_id INT(10) NULL REFERENCES ws3_season(id) ON DELETE CASCADE,
   cup_round_id INT(10) NULL REFERENCES ws3_cup_round(id) ON DELETE CASCADE,
   rank TINYINT(3) NULL,
   date_recorded INT(10) NOT NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
 ALTER TABLE ws3_user_inactivity ADD CONSTRAINT ws3_user_inactivity_user_id_fk FOREIGN KEY (user_id) REFERENCES ws3_user(id) ON DELETE CASCADE;
-ALTER TABLE ws3_briefe ADD CONSTRAINT ws3_briefe_user_id_fk FOREIGN KEY (absender_id) REFERENCES ws3_user(id) ON DELETE CASCADE;
-ALTER TABLE ws3_verein ADD CONSTRAINT ws3_verein_user_id_fk FOREIGN KEY (user_id) REFERENCES ws3_user(id) ON DELETE SET NULL;
-ALTER TABLE ws3_verein ADD CONSTRAINT ws3_verein_stadion_id_fk FOREIGN KEY (stadion_id) REFERENCES ws3_stadion(id) ON DELETE SET NULL;
-ALTER TABLE ws3_verein ADD CONSTRAINT ws3_verein_sponsor_id_fk FOREIGN KEY (sponsor_id) REFERENCES ws3_sponsor(id) ON DELETE SET NULL;
-ALTER TABLE ws3_verein ADD CONSTRAINT ws3_verein_liga_id_fk FOREIGN KEY (liga_id) REFERENCES ws3_liga(id) ON DELETE CASCADE;
-ALTER TABLE ws3_spieler ADD CONSTRAINT ws3_spieler_verein_id_fk FOREIGN KEY (verein_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_konto ADD CONSTRAINT ws3_konto_verein_id_fk FOREIGN KEY (verein_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_transfer_angebot ADD CONSTRAINT ws3_transfer_angebot_user_id_fk FOREIGN KEY (user_id) REFERENCES ws3_user(id) ON DELETE CASCADE;
-ALTER TABLE ws3_trainingslager_belegung ADD CONSTRAINT ws3_trainingslager_belegung_fk FOREIGN KEY (lager_id) REFERENCES ws3_trainingslager(id) ON DELETE CASCADE;
-ALTER TABLE ws3_trainingslager_belegung ADD CONSTRAINT ws3_trainingslager_verein_fk FOREIGN KEY (verein_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_aufstellung ADD CONSTRAINT ws3_aufstellung_verein_id_fk FOREIGN KEY (verein_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_spiel ADD CONSTRAINT ws3_spiel_saison_id_fk FOREIGN KEY (saison_id) REFERENCES ws3_saison(id) ON DELETE CASCADE;
-ALTER TABLE ws3_spiel ADD CONSTRAINT ws3_spiel_home_id_fk FOREIGN KEY (home_verein) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_spiel ADD CONSTRAINT ws3_spiel_gast_id_fk FOREIGN KEY (gast_verein) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_spiel_berechnung ADD CONSTRAINT ws3_berechnung_spiel_id_fk FOREIGN KEY (spiel_id) REFERENCES ws3_spiel(id) ON DELETE CASCADE;
-ALTER TABLE ws3_spiel_berechnung ADD CONSTRAINT ws3_berechnung_spieler_id_fk FOREIGN KEY (spieler_id) REFERENCES ws3_spieler(id) ON DELETE CASCADE;
-ALTER TABLE ws3_transfer ADD CONSTRAINT ws3_transfer_spieler_id_fk FOREIGN KEY (spieler_id) REFERENCES ws3_spieler(id) ON DELETE CASCADE;
+ALTER TABLE ws3_messages ADD CONSTRAINT ws3_messages_user_id_fk FOREIGN KEY (sender_id) REFERENCES ws3_user(id) ON DELETE CASCADE;
+ALTER TABLE ws3_club ADD CONSTRAINT ws3_club_user_id_fk FOREIGN KEY (user_id) REFERENCES ws3_user(id) ON DELETE SET NULL;
+ALTER TABLE ws3_club ADD CONSTRAINT ws3_club_stadium_id_fk FOREIGN KEY (stadium_id) REFERENCES ws3_stadium(id) ON DELETE SET NULL;
+ALTER TABLE ws3_club ADD CONSTRAINT ws3_club_sponsor_id_fk FOREIGN KEY (sponsor_id) REFERENCES ws3_sponsor(id) ON DELETE SET NULL;
+ALTER TABLE ws3_club ADD CONSTRAINT ws3_club_league_id_fk FOREIGN KEY (league_id) REFERENCES ws3_league(id) ON DELETE CASCADE;
+ALTER TABLE ws3_player ADD CONSTRAINT ws3_player_club_id_fk FOREIGN KEY (club_id) REFERENCES ws3_club(id) ON DELETE CASCADE;
+ALTER TABLE ws3_accounts ADD CONSTRAINT ws3_accounts_club_id_fk FOREIGN KEY (club_id) REFERENCES ws3_club(id) ON DELETE CASCADE;
+ALTER TABLE ws3_transfer_bid ADD CONSTRAINT ws3_transfer_bid_user_id_fk FOREIGN KEY (user_id) REFERENCES ws3_user(id) ON DELETE CASCADE;
+ALTER TABLE ws3_training_camp_booking ADD CONSTRAINT ws3_training_camp_booking_fk FOREIGN KEY (camp_id) REFERENCES ws3_training_camp(id) ON DELETE CASCADE;
+ALTER TABLE ws3_training_camp_booking ADD CONSTRAINT ws3_training_camp_club_fk FOREIGN KEY (club_id) REFERENCES ws3_club(id) ON DELETE CASCADE;
+ALTER TABLE ws3_tactics ADD CONSTRAINT ws3_tactics_club_id_fk FOREIGN KEY (club_id) REFERENCES ws3_club(id) ON DELETE CASCADE;
+ALTER TABLE ws3_match ADD CONSTRAINT ws3_match_season_id_fk FOREIGN KEY (season_id) REFERENCES ws3_season(id) ON DELETE CASCADE;
+ALTER TABLE ws3_match ADD CONSTRAINT ws3_match_home_id_fk FOREIGN KEY (home_club) REFERENCES ws3_club(id) ON DELETE CASCADE;
+ALTER TABLE ws3_match ADD CONSTRAINT ws3_match_guest_id_fk FOREIGN KEY (guest_club) REFERENCES ws3_club(id) ON DELETE CASCADE;
+ALTER TABLE ws3_match_simulation ADD CONSTRAINT ws3_simulation_match_id_fk FOREIGN KEY (match_id) REFERENCES ws3_match(id) ON DELETE CASCADE;
+ALTER TABLE ws3_match_simulation ADD CONSTRAINT ws3_simulation_player_id_fk FOREIGN KEY (player_id) REFERENCES ws3_player(id) ON DELETE CASCADE;
+ALTER TABLE ws3_transfer ADD CONSTRAINT ws3_transfer_matchesr_id_fk FOREIGN KEY (player_id) REFERENCES ws3_player(id) ON DELETE CASCADE;
 ALTER TABLE ws3_transfer ADD CONSTRAINT ws3_transfer_selleruser_fk FOREIGN KEY (seller_user_id) REFERENCES ws3_user(id) ON DELETE SET NULL;
-ALTER TABLE ws3_transfer ADD CONSTRAINT ws3_transfer_sellerclub_fk FOREIGN KEY (seller_club_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
+ALTER TABLE ws3_transfer ADD CONSTRAINT ws3_transfer_sellerclub_fk FOREIGN KEY (seller_club_id) REFERENCES ws3_club(id) ON DELETE CASCADE;
 ALTER TABLE ws3_transfer ADD CONSTRAINT ws3_transfer_buyeruser_fk FOREIGN KEY (buyer_user_id) REFERENCES ws3_user(id) ON DELETE SET NULL;
-ALTER TABLE ws3_transfer ADD CONSTRAINT ws3_transfer_buyerclub_fk FOREIGN KEY (buyer_club_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_matchreport ADD CONSTRAINT ws3_matchreport_spiel_id_fk FOREIGN KEY (match_id) REFERENCES ws3_spiel(id) ON DELETE CASCADE;
-ALTER TABLE ws3_matchreport ADD CONSTRAINT ws3_matchreport_message_id_fk FOREIGN KEY (message_id) REFERENCES ws3_spiel_text(id) ON DELETE CASCADE;
-ALTER TABLE ws3_training_unit ADD CONSTRAINT ws3_training_verein_id_fk FOREIGN KEY (team_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_cup ADD CONSTRAINT ws3_cup_winner_id_fk FOREIGN KEY (winner_id) REFERENCES ws3_verein(id) ON DELETE SET NULL;
+ALTER TABLE ws3_transfer ADD CONSTRAINT ws3_transfer_buyerclub_fk FOREIGN KEY (buyer_club_id) REFERENCES ws3_club(id) ON DELETE CASCADE;
+ALTER TABLE ws3_matchreport ADD CONSTRAINT ws3_matchreport_match_id_fk FOREIGN KEY (match_id) REFERENCES ws3_match(id) ON DELETE CASCADE;
+ALTER TABLE ws3_matchreport ADD CONSTRAINT ws3_matchreport_message_id_fk FOREIGN KEY (message_id) REFERENCES ws3_match_text(id) ON DELETE CASCADE;
+ALTER TABLE ws3_training_unit ADD CONSTRAINT ws3_training_club_id_fk FOREIGN KEY (team_id) REFERENCES ws3_club(id) ON DELETE CASCADE;
+ALTER TABLE ws3_cup ADD CONSTRAINT ws3_cup_winner_id_fk FOREIGN KEY (winner_id) REFERENCES ws3_club(id) ON DELETE SET NULL;
 ALTER TABLE ws3_cup_round ADD CONSTRAINT ws3_cupround_cup_id_fk FOREIGN KEY (cup_id) REFERENCES ws3_cup(id) ON DELETE CASCADE;
 ALTER TABLE ws3_cup_round ADD CONSTRAINT ws3_cupround_fromwinners_id_fk FOREIGN KEY (from_winners_round_id) REFERENCES ws3_cup_round(id) ON DELETE CASCADE;
-ALTER TABLE ws3_cup_round ADD CONSTRAINT ws3_cupround_fromloosers_id_fk FOREIGN KEY (from_loosers_round_id) REFERENCES ws3_cup_round(id) ON DELETE CASCADE;
-ALTER TABLE ws3_cup_round_pending ADD CONSTRAINT ws3_cuproundpending_team_id_fk FOREIGN KEY (team_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
+ALTER TABLE ws3_cup_round ADD CONSTRAINT ws3_cupround_fromloser_id_fk FOREIGN KEY (from_loser_round_id) REFERENCES ws3_cup_round(id) ON DELETE CASCADE;
+ALTER TABLE ws3_cup_round_pending ADD CONSTRAINT ws3_cuproundpending_team_id_fk FOREIGN KEY (team_id) REFERENCES ws3_club(id) ON DELETE CASCADE;
 ALTER TABLE ws3_cup_round_pending ADD CONSTRAINT ws3_cuproundpending_round_fk FOREIGN KEY (cup_round_id) REFERENCES ws3_cup_round(id) ON DELETE CASCADE;
-ALTER TABLE ws3_cup_round_group ADD CONSTRAINT ws3_cupgroup_team_id_fk FOREIGN KEY (team_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
+ALTER TABLE ws3_cup_round_group ADD CONSTRAINT ws3_cupgroup_team_id_fk FOREIGN KEY (team_id) REFERENCES ws3_club(id) ON DELETE CASCADE;
 ALTER TABLE ws3_cup_round_group_next ADD CONSTRAINT ws3_groupnext_round_fk FOREIGN KEY (cup_round_id) REFERENCES ws3_cup_round(id) ON DELETE CASCADE;
 ALTER TABLE ws3_cup_round_group_next ADD CONSTRAINT ws3_groupnext_tagetround_fk FOREIGN KEY (target_cup_round_id) REFERENCES ws3_cup_round(id) ON DELETE CASCADE;
-ALTER TABLE ws3_team_league_statistics ADD CONSTRAINT ws3_statistics_team_id_fk FOREIGN KEY (team_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_team_league_statistics ADD CONSTRAINT ws3_statistics_season_id_fk FOREIGN KEY (season_id) REFERENCES ws3_saison(id) ON DELETE CASCADE;
-ALTER TABLE ws3_transfer_offer ADD CONSTRAINT ws3_toffer_spieler_id_fk FOREIGN KEY (player_id) REFERENCES ws3_spieler(id) ON DELETE CASCADE;
+ALTER TABLE ws3_team_league_statistics ADD CONSTRAINT ws3_statistics_team_id_fk FOREIGN KEY (team_id) REFERENCES ws3_club(id) ON DELETE CASCADE;
+ALTER TABLE ws3_team_league_statistics ADD CONSTRAINT ws3_statistics_season_id_fk FOREIGN KEY (season_id) REFERENCES ws3_season(id) ON DELETE CASCADE;
+ALTER TABLE ws3_transfer_offer ADD CONSTRAINT ws3_toffer_matchesr_id_fk FOREIGN KEY (player_id) REFERENCES ws3_player(id) ON DELETE CASCADE;
 ALTER TABLE ws3_transfer_offer ADD CONSTRAINT ws3_toffer_selleruser_fk FOREIGN KEY (sender_user_id) REFERENCES ws3_user(id) ON DELETE CASCADE;
-ALTER TABLE ws3_transfer_offer ADD CONSTRAINT ws3_toffer_sellerclub_fk FOREIGN KEY (sender_club_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_transfer_offer ADD CONSTRAINT ws3_toffer_buyerclub_fk FOREIGN KEY (receiver_club_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
+ALTER TABLE ws3_transfer_offer ADD CONSTRAINT ws3_toffer_sellerclub_fk FOREIGN KEY (sender_club_id) REFERENCES ws3_club(id) ON DELETE CASCADE;
+ALTER TABLE ws3_transfer_offer ADD CONSTRAINT ws3_toffer_buyerclub_fk FOREIGN KEY (receiver_club_id) REFERENCES ws3_club(id) ON DELETE CASCADE;
 ALTER TABLE ws3_notification ADD CONSTRAINT ws3_notification_user_id_fk FOREIGN KEY (user_id) REFERENCES ws3_user(id) ON DELETE CASCADE;
-ALTER TABLE ws3_youthplayer ADD CONSTRAINT ws3_youthplayer_team_id_fk FOREIGN KEY (team_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_youthmatch_request ADD CONSTRAINT ws3_youthrequest_team_id_fk FOREIGN KEY (team_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_youthmatch ADD CONSTRAINT ws3_youthmatch_home_id_fk FOREIGN KEY (home_team_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_youthmatch ADD CONSTRAINT ws3_youthmatch_guest_id_fk FOREIGN KEY (guest_team_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_youthmatch_player ADD CONSTRAINT ws3_ymatchplayer_team_id_fk FOREIGN KEY (team_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
+ALTER TABLE ws3_youthplayer ADD CONSTRAINT ws3_youthplayer_team_id_fk FOREIGN KEY (team_id) REFERENCES ws3_club(id) ON DELETE CASCADE;
+ALTER TABLE ws3_youthmatch_request ADD CONSTRAINT ws3_youthrequest_team_id_fk FOREIGN KEY (team_id) REFERENCES ws3_club(id) ON DELETE CASCADE;
+ALTER TABLE ws3_youthmatch ADD CONSTRAINT ws3_youthmatch_home_id_fk FOREIGN KEY (home_team_id) REFERENCES ws3_club(id) ON DELETE CASCADE;
+ALTER TABLE ws3_youthmatch ADD CONSTRAINT ws3_youthmatch_guest_id_fk FOREIGN KEY (guest_team_id) REFERENCES ws3_club(id) ON DELETE CASCADE;
+ALTER TABLE ws3_youthmatch_player ADD CONSTRAINT ws3_ymatchplayer_team_id_fk FOREIGN KEY (team_id) REFERENCES ws3_club(id) ON DELETE CASCADE;
 ALTER TABLE ws3_youthmatch_player ADD CONSTRAINT ws3_ymatchplayer_player_id_fk FOREIGN KEY (player_id) REFERENCES ws3_youthplayer(id) ON DELETE CASCADE;
 ALTER TABLE ws3_youthmatch_player ADD CONSTRAINT ws3_ymatchplayer_match_id_fk FOREIGN KEY (match_id) REFERENCES ws3_youthmatch(id) ON DELETE CASCADE;
 ALTER TABLE ws3_youthmatch_reportitem ADD CONSTRAINT ws3_ymatchreport_match_id_fk FOREIGN KEY (match_id) REFERENCES ws3_youthmatch(id) ON DELETE CASCADE;
-ALTER TABLE ws3_stadium_construction ADD CONSTRAINT ws3_construction_team_id_fk FOREIGN KEY (team_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
+ALTER TABLE ws3_stadium_construction ADD CONSTRAINT ws3_construction_team_id_fk FOREIGN KEY (team_id) REFERENCES ws3_club(id) ON DELETE CASCADE;
 ALTER TABLE ws3_stadium_construction ADD CONSTRAINT ws3_construction_builder_id_fk FOREIGN KEY (builder_id) REFERENCES ws3_stadium_builder(id) ON DELETE CASCADE;
-ALTER TABLE ws3_teamoftheday ADD CONSTRAINT ws3_teamofday_season_id_fk FOREIGN KEY (season_id) REFERENCES ws3_saison(id) ON DELETE CASCADE;
-ALTER TABLE ws3_teamoftheday ADD CONSTRAINT ws3_teamofday_player_id_fk FOREIGN KEY (player_id) REFERENCES ws3_spieler(id) ON DELETE CASCADE;
-ALTER TABLE ws3_nationalplayer ADD CONSTRAINT ws3_nationalp_player_id_fk FOREIGN KEY (player_id) REFERENCES ws3_spieler(id) ON DELETE CASCADE;
-ALTER TABLE ws3_nationalplayer ADD CONSTRAINT ws3_nationalp_team_id_fk FOREIGN KEY (team_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
+ALTER TABLE ws3_teamoftheday ADD CONSTRAINT ws3_teamofday_season_id_fk FOREIGN KEY (season_id) REFERENCES ws3_season(id) ON DELETE CASCADE;
+ALTER TABLE ws3_teamoftheday ADD CONSTRAINT ws3_teamofday_player_id_fk FOREIGN KEY (player_id) REFERENCES ws3_player(id) ON DELETE CASCADE;
+ALTER TABLE ws3_nationalplayer ADD CONSTRAINT ws3_nationalp_player_id_fk FOREIGN KEY (player_id) REFERENCES ws3_player(id) ON DELETE CASCADE;
+ALTER TABLE ws3_nationalplayer ADD CONSTRAINT ws3_nationalp_team_id_fk FOREIGN KEY (team_id) REFERENCES ws3_club(id) ON DELETE CASCADE;
 ALTER TABLE ws3_premiumstatement ADD CONSTRAINT ws3_premium_user_id_fk FOREIGN KEY (user_id) REFERENCES ws3_user(id) ON DELETE CASCADE;
 ALTER TABLE ws3_premiumpayment ADD CONSTRAINT ws3_premiumpayment_user_id_fk FOREIGN KEY (user_id) REFERENCES ws3_user(id) ON DELETE CASCADE;
-ALTER TABLE ws3_verein ADD CONSTRAINT ws3_verein_original_user_id_fk FOREIGN KEY (user_id_actual) REFERENCES ws3_user(id) ON DELETE SET NULL;
-ALTER TABLE ws3_spiel ADD CONSTRAINT ws3_match_home_user_id_fk FOREIGN KEY (home_user_id) REFERENCES ws3_user(id) ON DELETE SET NULL;
-ALTER TABLE ws3_spiel ADD CONSTRAINT ws3_match_guest_user_id_fk FOREIGN KEY (gast_user_id) REFERENCES ws3_user(id) ON DELETE SET NULL;
+ALTER TABLE ws3_club ADD CONSTRAINT ws3_club_original_user_id_fk FOREIGN KEY (user_id_actual) REFERENCES ws3_user(id) ON DELETE SET NULL;
+ALTER TABLE ws3_match ADD CONSTRAINT ws3_match_home_user_id_fk FOREIGN KEY (home_user_id) REFERENCES ws3_user(id) ON DELETE SET NULL;
+ALTER TABLE ws3_match ADD CONSTRAINT ws3_match_guest_user_id_fk FOREIGN KEY (guest_user_id) REFERENCES ws3_user(id) ON DELETE SET NULL;
 
 CREATE TABLE ws3_stadiumbuilding (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1028,55 +1028,55 @@ CREATE TABLE ws3_buildings_of_team (
   team_id INT(10) NOT NULL,
   construction_deadline INT(11) NULL,
   FOREIGN KEY (building_id) REFERENCES ws3_stadiumbuilding(id) ON DELETE CASCADE,
-  FOREIGN KEY (team_id) REFERENCES ws3_verein(id) ON DELETE CASCADE,
+  FOREIGN KEY (team_id) REFERENCES ws3_club(id) ON DELETE CASCADE,
   PRIMARY KEY (building_id, team_id)
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-INSERT INTO ws3_spiel_text (aktion, nachricht) VALUES
-('Tor', '<b>Tor von {sp1}!</b>'),
-('Tor', '<b>{sp1} schießt..... TOR!</b>'),
-('Tor', '<b>TOR - wunderschön gemacht von {sp1}</b>'),
-('Tor', '<b>{sp1} schießt auf das Tor... und der Ball ist drin!</b>'),
-('Auswechslung', '<i>{sp1} kommt für {sp2}.</i>'),
-('Zweikampf_gewonnen', '{sp1} geht auf seinen Gegenspieler zu und gewinnt den Zweikampf!'),
-('Zweikampf_gewonnen', '{sp1} in einem Zweikampf.... gewonnen!'),
-('Zweikampf_gewonnen', '{sp1} läuft mit dem Ball am Fuß auf seinen Gegenspieler zu... und gewinnt den Zweikampf.'),
-('Zweikampf_gewonnen', '{sp1} nimmt seinem Gegenspieler gekonnt den Ball von den Füßen.'),
-('Zweikampf_verloren', '{sp1} geht auf {sp2} zu... und verliert den Zweikampf.'),
-('Zweikampf_verloren', '{sp1} in einem Zweikampf.... und verliert ihn.'),
-('Zweikampf_verloren', '{sp1} geht mit dem Ball am Fuß auf seinen Gegenspieler zu... und verliert ihn.'),
-('Zweikampf_verloren', '{sp1} sieht seinen Gegenspieler gegenüber und lässt sich den Ball abnehmen.'),
-('Pass_daneben', 'Flanke von {sp1}... in die Wolken!'),
-('Pass_daneben', '{sp1} passt den Ball in die Mitte... genau auf die Füße des Gegners.'),
-('Pass_daneben', '{sp1} passt den Ball steil nach vorne... Abschlag!'),
-('Pass_daneben', 'Pass von {sp1}... ins Seitenaus.'),
-('Torschuss_daneben', '{sp1} hat freie Bahn und schießt... weit über das Tor.'),
-('Torschuss_daneben', '{sp1} schießt..... daneben.'),
-('Torschuss_daneben', '{sp1} schießt auf das Tor... aber genau auf den Torwart.'),
-('Torschuss_daneben', 'Kopfball {sp1}... daneben.'),
-('Torschuss_daneben', '{sp1} haut mit aller Kraft auf den Ball... Abschlag.'),
-('Torschuss_daneben', '{sp1} schießt..... in die Wolken.'),
-('Torschuss_auf_Tor', '{sp1} schießt..... Glanzparade des Torwarts!'),
-('Torschuss_auf_Tor', '{sp1} schießt auf das Tor... aber der Torwart macht einen Hechtsprung und hat den Ball.'),
-('Torschuss_auf_Tor', '{sp1} hat freie Bahn und schießt... aber der Torwart kann den Ball gerade noch so um den Pfosten drehen.'),
-('Torschuss_auf_Tor', '{sp1} kommt zum Kopfball... ganz knapp daneben.'),
-('Tor', '<b>{sp1} kommt zum Kopfball... und da flattert der Ball im Netz!</b>'),
-('Karte_gelb', '{sp1} bekommt nach einem Foul die gelbe Karte.'),
-('Karte_gelb', '{sp1} sieht die gelbe Karte.'),
-('Karte_gelb', '{sp1} haut seinen Gegenspieler um und bekommt dafür die gelbe Karte.'),
-('Karte_rot', '<i>{sp1} springt von hinten in die Beine seines Gegenspielers und sieht sofort die Rote Karte.</i>'),
-('Karte_rot', '<i>{sp1} haut seinen Gegenspieler um und sieht dafür die Rote Karte.</i>'),
-('Karte_rot', '<i>{sp1} bekommt die Rote Karte wegen Prügelei.</i>'),
-('Karte_gelb_rot', '<i>{sp1} sieht die Gelb-Rote Karte und muss vom Platz.</i>'),
-('Karte_gelb_rot', '<i>{sp1} haut seinen Gegenspieler um und bekommt dafür die Gelb-Rote Karte.</i>'),
-('Karte_rot', '<i>{sp1} sieht nach einem bösen Foul die Rote Karte und muss vom Platz.</i>'),
-('Verletzung', '<i>{sp1} ist verletzt und muss vom Spielfeld getragen werden.</i>'),
-('Verletzung', '<i>{sp1} hat sich verletzt und kann nicht mehr weiterspielen.</i>'),
-('Elfmeter_erfolg', '{sp1} tritt an: Und trifft!'),
-('Elfmeter_verschossen', '{sp1} tritt an: Aber {sp2} hält den Ball!!'),
-('Elfmeter_verschossen', '{sp1} legt sich den Ball zurecht. Etwas unsicherer Anlauf... und haut den Ball über das Tor.'),
-('Taktikaenderung', '{sp1} ändert die Taktik.'),
-('Ecke', 'Ecke für {ma1}. {sp1} spielt auf {sp2}...'),
-('Freistoss_daneben', 'Freistoß für {ma1}! {sp1} schießt, aber zu ungenau.'),
-('Freistoss_treffer', '{sp1} tritt den direkten Freistoß und trifft!'),
-('Tor_mit_vorlage', 'Tooor für {ma1}! {sp2} legt auf {sp1} ab, der nur noch einschieben muss.');
+INSERT INTO ws3_match_text (action, message) VALUES
+('Goal', '<b>Tor von {sp1}!</b>'),
+('Goal', '<b>{sp1} schießt..... TOR!</b>'),
+('Goal', '<b>TOR - wunderschön gemacht von {sp1}</b>'),
+('Goal', '<b>{sp1} schießt auf das Tor... und der Ball ist drin!</b>'),
+('Substitution', '<i>{sp1} kommt für {sp2}.</i>'),
+('Tackle_won', '{sp1} geht auf seinen Gegenspieler zu und gewinnt den Zweikampf!'),
+('Tackle_won', '{sp1} in einem Zweikampf.... gewonnen!'),
+('Tackle_won', '{sp1} läuft mit dem Ball am Fuß auf seinen Gegenspieler zu... und gewinnt den Zweikampf.'),
+('Tackle_won', '{sp1} nimmt seinem Gegenspieler gekonnt den Ball von den Füßen.'),
+('Tackle_lost', '{sp1} geht auf {sp2} zu... und verliert den Zweikampf.'),
+('Tackle_lost', '{sp1} in einem Zweikampf.... und verliert ihn.'),
+('Tackle_lost', '{sp1} geht mit dem Ball am Fuß auf seinen Gegenspieler zu... und verliert ihn.'),
+('Tackle_lost', '{sp1} sieht seinen Gegenspieler gegenüber und lässt sich den Ball abnehmen.'),
+('Pass_missed', 'Flanke von {sp1}... in die Wolken!'),
+('Pass_missed', '{sp1} passt den Ball in die Mitte... genau auf die Füße des Gegners.'),
+('Pass_missed', '{sp1} passt den Ball steil nach vorne... Abschlag!'),
+('Pass_missed', 'Pass von {sp1}... ins Seitenaus.'),
+('Shot_missed', '{sp1} hat freie Bahn und schießt... weit über das Tor.'),
+('Shot_missed', '{sp1} schießt..... daneben.'),
+('Shot_missed', '{sp1} schießt auf das Tor... aber genau auf den Goalkeeper.'),
+('Shot_missed', 'Kopfball {sp1}... daneben.'),
+('Shot_missed', '{sp1} haut mit aller Kraft auf den Ball... Abschlag.'),
+('Shot_missed', '{sp1} schießt..... in die Wolken.'),
+('Shot_on_target', '{sp1} schießt..... Glanzparade des Torwarts!'),
+('Shot_on_target', '{sp1} schießt auf das Tor... aber der Goalkeeper macht einen Hechtsprung und hat den Ball.'),
+('Shot_on_target', '{sp1} hat freie Bahn und schießt... aber der Goalkeeper kann den Ball gerade noch so um den Pfosten drehen.'),
+('Shot_on_target', '{sp1} kommt zum Kopfball... ganz knapp daneben.'),
+('Goal', '<b>{sp1} kommt zum Kopfball... und da flattert der Ball im Netz!</b>'),
+('Yellow_card', '{sp1} bekommt nach einem Foul die gelbe Karte.'),
+('Yellow_card', '{sp1} sieht die gelbe Karte.'),
+('Yellow_card', '{sp1} haut seinen Gegenspieler um und bekommt dafür die gelbe Karte.'),
+('Red_card', '<i>{sp1} springt von hinten in die Beine seines Gegenspielers und sieht sofort die Rote Karte.</i>'),
+('Red_card', '<i>{sp1} haut seinen Gegenspieler um und sieht dafür die Rote Karte.</i>'),
+('Red_card', '<i>{sp1} bekommt die Rote Karte wegen Prügelei.</i>'),
+('Yellow_card_2nd', '<i>{sp1} sieht die Gelb-Rote Karte und muss vom Platz.</i>'),
+('Yellow_card_2nd', '<i>{sp1} haut seinen Gegenspieler um und bekommt dafür die Gelb-Rote Karte.</i>'),
+('Red_card', '<i>{sp1} sieht nach einem bösen Foul die Rote Karte und muss vom Platz.</i>'),
+('Injury', '<i>{sp1} ist injured und muss vom Spielfeld getragen werden.</i>'),
+('Injury', '<i>{sp1} hat sich injured und kann nicht mehr weiterspielen.</i>'),
+('Penalty_scored', '{sp1} tritt an: Und trifft!'),
+('Penalty_missed', '{sp1} tritt an: Aber {sp2} hält den Ball!!'),
+('Penalty_missed', '{sp1} legt sich den Ball zurecht. Etwas unsicherer Anlauf... und haut den Ball über das Tor.'),
+('Tactics_changed', '{sp1} ändert die Taktik.'),
+('Corner', 'Corner für {ma1}. {sp1} spielt auf {sp2}...'),
+('Freekick_missed', 'Freistoß für {ma1}! {sp1} schießt, aber zu ungenau.'),
+('Freekick_scored', '{sp1} tritt den direkten Freistoß und trifft!'),
+('Goal_with_assist', 'Tooor für {ma1}! {sp2} legt auf {sp1} ab, der nur noch einschieben muss.');

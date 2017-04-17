@@ -74,21 +74,21 @@ if (!$show) {
 		$columns = array(
 			'C.id' => 'team_id',	
 			'C.name' => 'team_name',	
-			'C.finanz_budget' => 'team_budget',
-			'(SELECT COUNT(*) FROM '. $website->getConfig('db_prefix') . '_spieler AS PlayerTab WHERE PlayerTab.verein_id = C.id AND status = \'1\')' => 'team_players',
+			'C.finance_budget' => 'team_budget',
+			'(SELECT COUNT(*) FROM '. $website->getConfig('db_prefix') . '_player AS PlayerTab WHERE PlayerTab.club_id = C.id AND status = \'1\')' => 'team_players',
 			'U.id' => 'user_id',
 			'U.nick' => 'user_nick',
 			'U.lastonline' => 'user_lastonline'
 		);
 
-		$fromTable = $website->getConfig('db_prefix') . '_verein AS C';
+		$fromTable = $website->getConfig('db_prefix') . '_club AS C';
 		$fromTable .= ' INNER JOIN ' . $website->getConfig('db_prefix') . '_user AS U ON U.id = C.user_id';
 		
 		$whereCondition = 'C.status = \'1\' AND (1=0';
 		$parameters = array();
 		
 		if (!empty($_POST['maxbudget'])) {
-			$whereCondition .= ' OR C.finanz_budget < %d';
+			$whereCondition .= ' OR C.finance_budget < %d';
 			$parameters[] = $_POST['maxbudget'];
 		}
 		
@@ -98,7 +98,7 @@ if (!$show) {
 		}
 		
 		if (!empty($_POST['maxplayers'])) {
-			$whereCondition .= ' OR (SELECT COUNT(*) FROM '. $website->getConfig('db_prefix') . '_spieler AS PlayerTab WHERE PlayerTab.verein_id = C.id AND status = \'1\') < %d';
+			$whereCondition .= ' OR (SELECT COUNT(*) FROM '. $website->getConfig('db_prefix') . '_player AS PlayerTab WHERE PlayerTab.club_id = C.id AND status = \'1\') < %d';
 			$parameters[] = $_POST['maxplayers'];
 		}
 		
@@ -124,7 +124,7 @@ if (!$show) {
 							<th><?php echo $i18n->getMessage('entity_club'); ?></th>
 							<th><?php echo $i18n->getMessage('entity_users'); ?></th>
 							<th><?php echo $i18n->getMessage('entity_users_lastonline'); ?></th>
-							<th><?php echo $i18n->getMessage('entity_club_finanz_budget'); ?></th>
+							<th><?php echo $i18n->getMessage('entity_club_finance_budget'); ?></th>
 							<th><?php echo $i18n->getMessage('entity_player'); ?></th>
 						</tr>
 					</thead>
@@ -227,14 +227,14 @@ elseif ($show == 'selectoptions') {
 	
 	$formFields['player_age_deviation'] = array('type' => 'number', 'value' => 3);
 	
-	$formFields['entity_player_vertrag_gehalt'] = array('type' => 'number', 'value' => 10000);
-	$formFields['entity_player_vertrag_spiele'] = array('type' => 'number', 'value' => 60);
+	$formFields['entity_player_contract_salary'] = array('type' => 'number', 'value' => 10000);
+	$formFields['entity_player_contract_matches'] = array('type' => 'number', 'value' => 60);
 	
-	$formFields['entity_player_w_staerke'] = array('type' => 'percent', 'value' => 50);
-	$formFields['entity_player_w_technik'] = array('type' => 'percent', 'value' => 50);
-	$formFields['entity_player_w_kondition'] = array('type' => 'percent', 'value' => 70);
-	$formFields['entity_player_w_frische'] = array('type' => 'percent', 'value' => 80);
-	$formFields['entity_player_w_zufriedenheit'] = array('type' => 'percent', 'value' => 80);
+	$formFields['entity_player_w_strength'] = array('type' => 'percent', 'value' => 50);
+	$formFields['entity_player_w_technique'] = array('type' => 'percent', 'value' => 50);
+	$formFields['entity_player_w_stamina'] = array('type' => 'percent', 'value' => 70);
+	$formFields['entity_player_w_fitness'] = array('type' => 'percent', 'value' => 80);
+	$formFields['entity_player_w_morale'] = array('type' => 'percent', 'value' => 80);
 	
 	$formFields['playersgenerator_label_deviation'] = array('type' => 'percent', 'value' => 10);
 	
@@ -267,11 +267,11 @@ elseif ($show == 'dismiss') {
   else {
 
 	// strengths for player generation
-	$strengths['strength'] = $_POST['entity_player_w_staerke'];
-	$strengths['technique'] = $_POST['entity_player_w_technik'];
-	$strengths['stamina'] = $_POST['entity_player_w_kondition'];
-	$strengths['freshness'] = $_POST['entity_player_w_frische'];
-	$strengths['satisfaction'] = $_POST['entity_player_w_zufriedenheit'];
+	$strengths['strength'] = $_POST['entity_player_w_strength'];
+	$strengths['technique'] = $_POST['entity_player_w_technique'];
+	$strengths['stamina'] = $_POST['entity_player_w_stamina'];
+	$strengths['freshness'] = $_POST['entity_player_w_fitness'];
+	$strengths['satisfaction'] = $_POST['entity_player_w_morale'];
 
 	$teamIds = explode(',', $_POST['teamids']);
 	foreach($teamIds as $teamId) {
@@ -283,9 +283,9 @@ elseif ($show == 'dismiss') {
 		$teamcolumns = array(
 			'user_id' => '',
 			'captain_id' => '',
-			'finanz_budget' => (!empty($_POST['minbudget'])) ? max($_POST['minbudget'], $team['team_budget']) : $team['team_budget']	
+			'finance_budget' => (!empty($_POST['minbudget'])) ? max($_POST['minbudget'], $team['team_budget']) : $team['team_budget']	
 		);
-		$db->queryUpdate($teamcolumns, $website->getConfig('db_prefix') . '_verein', 'id = %d', $teamId);
+		$db->queryUpdate($teamcolumns, $website->getConfig('db_prefix') . '_club', 'id = %d', $teamId);
 		
 		// disable user
 		if (isset($_POST['disableusers']) && $_POST['disableusers']) {
@@ -295,13 +295,13 @@ elseif ($show == 'dismiss') {
 		// send message to user
 		if (!empty($_POST['message_subject']) && !empty($_POST['message_content'])) {
 			$db->queryInsert(array(
-					'empfaenger_id' => $team['user_id'],
-					'absender_name' => $website->getConfig('projectname'),
-					'absender_id' => '',
-					'datum' => $website->getNowAsTimestamp(),
-					'betreff' => trim($_POST['message_subject']),
-					'nachricht' => trim($_POST['message_content'])
-				), $website->getConfig('db_prefix') . '_briefe');
+					'recipient_id' => $team['user_id'],
+					'sender_name' => $website->getConfig('projectname'),
+					'sender_id' => '',
+					'date' => $website->getNowAsTimestamp(),
+					'subject' => trim($_POST['message_subject']),
+					'message' => trim($_POST['message_content'])
+				), $website->getConfig('db_prefix') . '_messages');
 		}
 		
 		// count and update players
@@ -319,30 +319,30 @@ elseif ($show == 'dismiss') {
 		$positionsCount['MS'] = 0;
 		$positionsCount['RS'] = 0;
 		
-		$result = $db->querySelect('id, position_main, w_kondition, w_frische, w_zufriedenheit, vertrag_spiele', $website->getConfig('db_prefix') . '_spieler', 
-			'verein_id = %d AND status = \'1\'', $teamId);
+		$result = $db->querySelect('id, position_main, w_stamina, w_fitness, w_morale, contract_matches', $website->getConfig('db_prefix') . '_player', 
+			'club_id = %d AND status = \'1\'', $teamId);
 		while ($player = $result->fetch_array()) {
 			$updateRequired = FALSE;
 			
-			$freshness = $player['w_frische'];
+			$freshness = $player['w_fitness'];
 			if (!empty($_POST['strength_min_freshness']) && $_POST['strength_min_freshness'] > $freshness) {
 				$updateRequired = TRUE;
 				$freshness = $_POST['strength_min_freshness'];
 			}
 			
-			$stamina = $player['w_kondition'];
+			$stamina = $player['w_stamina'];
 			if (!empty($_POST['strength_min_stamina']) && $_POST['strength_min_stamina'] > $stamina) {
 				$updateRequired = TRUE;
 				$stamina = $_POST['strength_min_stamina'];
 			}
 			
-			$satisfaction = $player['w_zufriedenheit'];
+			$satisfaction = $player['w_morale'];
 			if (!empty($_POST['strength_min_satisfaction']) && $_POST['strength_min_satisfaction'] > $satisfaction) {
 				$updateRequired = TRUE;
 				$satisfaction = $_POST['strength_min_satisfaction'];
 			}
 			
-			$contractMatches = $player['vertrag_spiele'];
+			$contractMatches = $player['contract_matches'];
 			if (!empty($_POST['mincontractmatches']) && $_POST['mincontractmatches'] > $contractMatches) {
 				$updateRequired = TRUE;
 				$contractMatches = $_POST['mincontractmatches'];
@@ -350,11 +350,11 @@ elseif ($show == 'dismiss') {
 			
 			// update this guy
 			$db->queryUpdate(array(
-					'w_frische' => $freshness,
-					'w_kondition' => $stamina,
-					'w_zufriedenheit' => $satisfaction,
-					'vertrag_spiele' => $contractMatches
-				), $website->getConfig('db_prefix') . '_spieler', 'id = %d', $player['id']);
+					'w_fitness' => $freshness,
+					'w_stamina' => $stamina,
+					'w_morale' => $satisfaction,
+					'contract_matches' => $contractMatches
+				), $website->getConfig('db_prefix') . '_player', 'id = %d', $player['id']);
 
 			// increase position count
 			if (strlen($player['position_main'])) {
@@ -389,7 +389,7 @@ elseif ($show == 'dismiss') {
 		
 		if ($playersToGenerate) {
 			DataGeneratorService::generatePlayers($website, $db, $teamId, $_POST['player_age'], $_POST['player_age_deviation'],
-				$_POST['entity_player_vertrag_gehalt'], $_POST['entity_player_vertrag_spiele'], $strengths, $positions, $_POST['playersgenerator_label_deviation']);
+				$_POST['entity_player_contract_salary'], $_POST['entity_player_contract_matches'], $strengths, $positions, $_POST['playersgenerator_label_deviation']);
 		}
 	}
     

@@ -112,7 +112,7 @@ class ExecuteTrainingController implements IActionController {
 		// freshness decrease for stamina and technique training
 		$freshnessDecrease = round(1 + $unit["intensity"] / 100 * 5);
 		
-		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_spieler";
+		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_player";
 		$whereCondition = "id = %d";
 		
 		$trainingEffects = array();
@@ -188,10 +188,10 @@ class ExecuteTrainingController implements IActionController {
 			
 			// update player
 			$columns = array(
-					"w_frische" => min(100, max(1, $player["strength_freshness"] + $effectFreshness)),
-					"w_technik" => min(100, max(1, $player["strength_technic"] + $effectTechnique)),
-					"w_kondition" => min(100, max(1, $player["strength_stamina"] + $effectStamina)),
-					"w_zufriedenheit" => min(100, max(1, $player["strength_satisfaction"] + $effectSatisfaction))
+					"w_fitness" => min(100, max(1, $player["strength_freshness"] + $effectFreshness)),
+					"w_technique" => min(100, max(1, $player["strength_technic"] + $effectTechnique)),
+					"w_stamina" => min(100, max(1, $player["strength_stamina"] + $effectStamina)),
+					"w_morale" => min(100, max(1, $player["strength_satisfaction"] + $effectSatisfaction))
 					);
 			$this->_db->queryUpdate($columns, $fromTable, $whereCondition, $player["id"]);
 			

@@ -54,7 +54,7 @@ if ($inputUser or $inputPassword) {
 	if (count($errors) == 0) {
 		
 		// correct Pwd?
-		$columns = array('id', 'passwort', 'passwort_salt', 'passwort_neu', 'name');
+		$columns = array('id', 'password', 'password_salt', 'password_new', 'name');
 		$fromTable = $conf['db_prefix'] .'_admin';
 		$whereCondition = 'name = \'%s\'';
 		$parameters = $inputUser;
@@ -66,15 +66,15 @@ if ($inputUser or $inputPassword) {
 		} else {
 			$admin = $result->fetch_array();
 			
-			$hashedPw = SecurityUtil::hashPassword($inputPassword, $admin['passwort_salt']);
-			if ($admin['passwort'] == $hashedPw || $admin['passwort_neu'] == $hashedPw) {
+			$hashedPw = SecurityUtil::hashPassword($inputPassword, $admin['password_salt']);
+			if ($admin['password'] == $hashedPw || $admin['password_new'] == $hashedPw) {
 				session_regenerate_id();
 				$_SESSION['valid'] = 1;
 				$_SESSION['userid'] = $admin['id'];
 				
 				// update new PW
-				if ($admin['passwort_neu'] == $hashedPw) {
-					$columns = array('passwort' => $hashedPw, 'passwort_neu_angefordert' => 0, 'passwort_neu' => '');
+				if ($admin['password_new'] == $hashedPw) {
+					$columns = array('password' => $hashedPw, 'password_new_requested' => 0, 'password_new' => '');
 					$fromTable = $conf['db_prefix'] .'_admin';
 					$whereCondition = 'id = %d';
 					$parameter = $admin['id'];

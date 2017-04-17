@@ -57,7 +57,7 @@ class SendPasswordController implements IActionController {
 		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_user";
 		
 		// get user
-		$columns = "id, passwort_salt, passwort_neu_angefordert";
+		$columns = "id, password_salt, password_new_requested";
 		$wherePart = "UPPER(email) = '%s' AND status = 1";
 		$result = $this->_db->querySelect($columns, $fromTable, $wherePart, strtoupper($email));
 		$userdata = $result->fetch_array();
@@ -71,12 +71,12 @@ class SendPasswordController implements IActionController {
 		$now = $this->_websoccer->getNowAsTimestamp();
 		
 		$timeBoundary = $now - 24 * 3600;
-		if ($userdata["passwort_neu_angefordert"] > $timeBoundary) {
+		if ($userdata["password_new_requested"] > $timeBoundary) {
 			throw new Exception($this->_i18n->getMessage("forgot-password_already-sent"));
 		}
 		
 		// create new password
-		$salt = $userdata["passwort_salt"];
+		$salt = $userdata["password_salt"];
 		if (!strlen($salt)) {
 			$salt = SecurityUtil::generatePasswordSalt();
 		}
@@ -84,7 +84,7 @@ class SendPasswordController implements IActionController {
 		$hashedPassword = SecurityUtil::hashPassword($password, $salt);
 		
 		// update user
-		$columns = array("passwort_salt" => $salt, "passwort_neu_angefordert" => $now, "passwort_neu" => $hashedPassword);
+		$columns = array("password_salt" => $salt, "password_new_requested" => $now, "password_new" => $hashedPassword);
 		$whereCondition = "id = %d";
 		$parameter = $userdata["id"];
 		$this->_db->queryUpdate($columns, $fromTable, $whereCondition, $parameter);

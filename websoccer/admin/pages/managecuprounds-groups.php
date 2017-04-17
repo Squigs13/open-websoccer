@@ -24,7 +24,7 @@ $mainTitle = $i18n->getMessage("managecuprounds_groups_navlabel");
 
 echo "<h1>$mainTitle</h1>";
 
-if (!$admin["r_admin"] && !$admin["r_demo"] && !$admin["r_spiele"]) {
+if (!$admin["r_admin"] && !$admin["r_demo"] && !$admin["r_matches"]) {
 	throw new Exception($i18n->getMessage("error_access_denied"));
 }
 
@@ -44,8 +44,8 @@ echo "<h2>". $i18n->getMessage("entity_cup") . " - " . escapeOutput($round["roun
 echo "<p><a href=\"?site=managecuprounds&cup=". $round["cup_id"] . "\" class=\"btn\">" . $i18n->getMessage("managecuprounds_groups_back") ."</a></p>";
 
 // get teams for team selection
-$result = $db->querySelect("T.id AS team_id,T.name AS team_name,L.name AS league_name,L.land AS league_country",
-		$website->getConfig("db_prefix") . "_verein AS T INNER JOIN " . $website->getConfig("db_prefix") . "_liga AS L ON L.id = T.liga_id",
+$result = $db->querySelect("T.id AS team_id,T.name AS team_name,L.name AS league_name,L.country AS league_country",
+		$website->getConfig("db_prefix") . "_club AS T INNER JOIN " . $website->getConfig("db_prefix") . "_league AS L ON L.id = T.league_id",
 		"1=1 ORDER BY team_name ASC");
 $teams = array();
 while ($team = $result->fetch_array()) {
@@ -127,7 +127,7 @@ if ($action == "create") {
 		$db->queryUpdate(array("groupname" => $_REQUEST["groupname"]), $website->getConfig("db_prefix") . "_cup_round_group_next", "cup_round_id = %d AND groupname = '%s'",
 				array($roundid, $_REQUEST["group"]));
 		
-		$db->queryUpdate(array("pokalgruppe" => $_REQUEST["groupname"]), $website->getConfig("db_prefix") . "_spiel", "pokalname = '%s' AND pokalrunde = '%s' AND pokalgruppe = '%s'",
+		$db->queryUpdate(array("cup_group" => $_REQUEST["groupname"]), $website->getConfig("db_prefix") . "_match", "cup_name = '%s' AND cup_round = '%s' AND cup_group = '%s'",
 				array($round["cup_name"], $round["round_name"], $_REQUEST["group"]));
 		
 		echo createSuccessMessage($i18n->getMessage("alert_save_success"), "");
@@ -210,7 +210,7 @@ if ($action == "create") {
 // query existing groups
 $columns = "G.name AS group_name, C.name AS team_name, C.id AS team_id";
 $fromTable = $website->getConfig("db_prefix") . "_cup_round_group AS G";
-$fromTable .= " INNER JOIN " . $website->getConfig("db_prefix") . "_verein AS C ON C.id = G.team_id";
+$fromTable .= " INNER JOIN " . $website->getConfig("db_prefix") . "_club AS C ON C.id = G.team_id";
 
 $whereCondition = "G.cup_round_id = %d ORDER BY G.name ASC, C.name ASC";
 $result = $db->querySelect($columns, $fromTable, $whereCondition, $roundid);
@@ -300,7 +300,7 @@ if (count($groups)) {
 				<input type="hidden" name="group" value="<?php echo escapeOutput($groupName); ?>">
 				
 				<?php 
-				FormBuilder::createForeignKeyField($i18n, "teamid", array("entity" => "club", "jointable" => "verein", "labelcolumns" => "name"), "");
+				FormBuilder::createForeignKeyField($i18n, "teamid", array("entity" => "club", "jointable" => "club", "labelcolumns" => "name"), "");
 				?>
 				
 				<input type="submit" class="btn btn-small" value="<?php echo $i18n->getMessage("managecuprounds_groups_addteam"); ?>">
@@ -359,13 +359,13 @@ if (count($groups)) {
 				$_POST["firstmatchday_date"] .", ". $_POST["firstmatchday_time"]);
 		$timeBreakSeconds = 3600 * 24 * $_POST['timebreak'];
 		
-		$dbTable = $website->getConfig("db_prefix") . "_spiel";
+		$dbTable = $website->getConfig("db_prefix") . "_match";
 		
 		// create a separate schedule for every group
 		foreach($groups as $groupName => $groupItems) {
 
 			// delete existing matches
-			$db->queryDelete($dbTable, "pokalname = '%s' AND pokalrunde = '%s' AND pokalgruppe = '%s' AND berechnet = '0'", 
+			$db->queryDelete($dbTable, "cup_name = '%s' AND cup_round = '%s' AND cup_group = '%s' AND simulated = '0'", 
 					array($round["cup_name"], $round["round_name"], $groupName));
 
 			$teamIds = array();
@@ -401,13 +401,13 @@ if (count($groups)) {
 					$guestTeam = $match[1];
 						
 					$matchcolumns = array();
-					$matchcolumns["spieltyp"] = "Pokalspiel";
-					$matchcolumns["pokalname"] = $round["cup_name"];
-					$matchcolumns["pokalrunde"] = $round["round_name"];
-					$matchcolumns["pokalgruppe"] = $groupName;
-					$matchcolumns["home_verein"] = $homeTeam;
-					$matchcolumns["gast_verein"] = $guestTeam;
-					$matchcolumns["datum"] = $matchTimestamp;
+					$matchcolumns["matchtype"] = "cupmatch";
+					$matchcolumns["cup_name"] = $round["cup_name"];
+					$matchcolumns["cup_round"] = $round["round_name"];
+					$matchcolumns["cup_group"] = $groupName;
+					$matchcolumns["home_club"] = $homeTeam;
+					$matchcolumns["guest_club"] = $guestTeam;
+					$matchcolumns["date"] = $matchTimestamp;
 						
 					$db->queryInsert($matchcolumns, $dbTable);
 				}
@@ -421,14 +421,14 @@ if (count($groups)) {
 	}
 	
 	// count matches
-	$result = $db->querySelect("COUNT(*) AS hits", $website->getConfig("db_prefix") . "_spiel", 
-					"pokalname = '%s' AND pokalrunde = '%s'", array($round["cup_name"], $round["round_name"]));
+	$result = $db->querySelect("COUNT(*) AS hits", $website->getConfig("db_prefix") . "_match", 
+					"cup_name = '%s' AND cup_round = '%s'", array($round["cup_name"], $round["round_name"]));
 	$matches = $result->fetch_array();
 	$result->free();
 	
 	$matchesUrl = "?site=manage&entity=match&" . http_build_query(array(
-			"entity_match_pokalname" => escapeOutput($round["cup_name"]),
-			"entity_match_pokalrunde" => escapeOutput($round["round_name"])));
+			"entity_match_cup_name" => escapeOutput($round["cup_name"]),
+			"entity_match_cup_round" => escapeOutput($round["round_name"])));
 	
 	?>
 	

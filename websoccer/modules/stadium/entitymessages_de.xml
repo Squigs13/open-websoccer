@@ -3,21 +3,21 @@
 <messages>
     <message id="entity_stadium">Stadion</message>
 	<message id="entity_stadium_name">Name</message>
-	<message id="entity_stadium_verein">Verein</message>
-	<message id="entity_stadium_stadt">Stadt</message>
-	<message id="entity_stadium_land">Land</message>
+	<message id="entity_stadium_club">Verein</message>
+	<message id="entity_stadium_city">Stadt</message>
+	<message id="entity_stadium_country">country</message>
 	<message id="entity_stadium_picture">Bild</message>
-	<message id="entity_stadium_p_steh">Stehplätze</message>
-	<message id="entity_stadium_p_sitz">Sitzplätze</message>
-	<message id="entity_stadium_p_haupt_steh">Stehplätze (Haupttribüne)</message>
-	<message id="entity_stadium_p_haupt_sitz">Sitzplätze (Haupttribüne)</message>
+	<message id="entity_stadium_p_standing">Stehplätze</message>
+	<message id="entity_stadium_p_seat">Sitzplätze</message>
+	<message id="entity_stadium_p_main_standing">Stehplätze (Haupttribüne)</message>
+	<message id="entity_stadium_p_main_seat">Sitzplätze (Haupttribüne)</message>
     <message id="entity_stadium_p_vip">VIP Logen</message>
     
     <message id="entity_stadiumbuilder">Stadionbauträger</message>
     <message id="entity_stadiumbuilder_name">Name</message>
     <message id="entity_stadiumbuilder_picture">Firmenlogo</message>
     <message id="entity_stadiumbuilder_fixedcosts">Fixkosten</message>
-    <message id="entity_stadiumbuilder_fixedcosts_help">Kosten, die unabhäng von der Anzahl zu bauender Plätze berechnet werden.</message>
+    <message id="entity_stadiumbuilder_fixedcosts_help">Kosten, die unabhäng von der Anzahl zu bauender Plätze simulated werden.</message>
     <message id="entity_stadiumbuilder_cost_per_seat">Kosten pro Platz</message>
     <message id="entity_stadiumbuilder_cost_per_seat_help">Werden zu den in "Einstellungen" konfigurierten Kosten addiert. Kann auch negativ sein.</message>
     <message id="entity_stadiumbuilder_construction_time_days">Bauzeit pro 5000 Plätze</message>
@@ -37,10 +37,10 @@
 	<message id="entity_stadiumconstruction_builder_id">Bauträger</message>
 	<message id="entity_stadiumconstruction_started">Auftrag erteilt</message>
 	<message id="entity_stadiumconstruction_deadline">Geplante Fertigstellung</message>
-	<message id="entity_stadiumconstruction_p_steh">Anzahl Stehplätze</message>
-	<message id="entity_stadiumconstruction_p_sitz">Anzahl Sitzplätze</message>
-	<message id="entity_stadiumconstruction_p_haupt_steh">Anzahl Stehplätze (Haupttribüne)</message>
-	<message id="entity_stadiumconstruction_p_haupt_sitz">Anzahl Sitzplätze (Haupttribüne)</message>
+	<message id="entity_stadiumconstruction_p_standing">Anzahl Stehplätze</message>
+	<message id="entity_stadiumconstruction_p_seat">Anzahl Sitzplätze</message>
+	<message id="entity_stadiumconstruction_p_main_standing">Anzahl Stehplätze (Haupttribüne)</message>
+	<message id="entity_stadiumconstruction_p_main_seat">Anzahl Sitzplätze (Haupttribüne)</message>
 	<message id="entity_stadiumconstruction_p_vip">Anzahl VIP-Logen</message>
 	
 	<message id="entity_stadium_level_pitch">Rasenzustand</message>

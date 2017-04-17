@@ -18,11 +18,11 @@
 		
 		{% for player in players %}
 			
-			{% if player.position == "Torwart" %}
+			{% if player.position == "Goalkeeper" %}
 				{% set positionId = "goaly" %}
-			{% elseif player.position == "Abwehr" %}
+			{% elseif player.position == "Defender" %}
 				{% set positionId = "defense" %}
-			{% elseif player.position == "Mittelfeld" %}
+			{% elseif player.position == "Midfielder" %}
 				{% set positionId = "midfield" %}
 			{% else %}
 				{% set positionId = "striker" %}

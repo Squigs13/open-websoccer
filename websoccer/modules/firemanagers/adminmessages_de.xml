@@ -25,7 +25,7 @@
 	
 	<message id="firemanagers_dismiss_label">Optionen zur Managerkündigung</message>
 	<message id="firemanagers_dismiss_disableusers">Benutzerkonten deaktivieren</message>
-	<message id="firemanagers_dismiss_minbudget">Mindestvereinsbudget</message>
+	<message id="firemanagers_dismiss_minbudget">Mindestclubsbudget</message>
 	<message id="firemanagers_dismiss_minbudget_help">Hat der Verein eines gekündigten Managers ein niedrigeres Budget, wird es aufgestockt.</message>
 	<message id="firemanagers_dismiss_message_subject">Nachricht an Benutzer: Betreff</message>
 	<message id="firemanagers_dismiss_message_subject_help">Falls dem Benutzer eine private Nachricht zugesendet werden soll. Beachten Sie, dass deaktivierte Benutzer diese Nachricht nicht abrufen können.</message>
@@ -35,7 +35,7 @@
 	<message id="firemanagers_dismiss_strength_min_freshness">Mindeststärke: Frische</message>
 	<message id="firemanagers_dismiss_strength_min_stamina">Mindeststärke: Kondition</message>
 	<message id="firemanagers_dismiss_strength_min_satisfaction">Mindeststärke: Zufriedenheit</message>
-	<message id="firemanagers_dismiss_mincontractmatches">Mindestvertragslaufzeit</message>
+	<message id="firemanagers_dismiss_mincontractmatches">Mindestcontractslaufzeit</message>
 	
 	<message id="firemanagers_dismiss_label_minteamsize">Mindestkadergrösse: Aufstockung des Kaders</message>
 	<message id="firemanagers_dismiss_label_minteamsize_intro">Existieren weniger Spieler auf einer Position wie unten angegeben, werden automatisch neue Spieler generiert.</message>

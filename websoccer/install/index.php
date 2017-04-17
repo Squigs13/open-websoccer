@@ -324,10 +324,10 @@ function actionSaveConfig() {
 	$filecontent = "<?php" . PHP_EOL;
 	$filecontent .= "\$conf['db_host'] = \"". $_POST["db_host"] . "\";" . PHP_EOL;
 	$filecontent .= "\$conf['db_user'] = \"". $_POST["db_user"] . "\";" . PHP_EOL;
-	$filecontent .= "\$conf['db_passwort'] = \"". $_POST["db_password"] . "\";" . PHP_EOL;
+	$filecontent .= "\$conf['db_password'] = \"". $_POST["db_password"] . "\";" . PHP_EOL;
 	$filecontent .= "\$conf['db_name'] = \"". $_POST["db_name"] . "\";" . PHP_EOL;
 	$filecontent .= "\$conf['db_prefix'] = \"". $prefix . "\";" . PHP_EOL;
-	$filecontent .= "\$conf['supported_languages'] = \"de,en\";" . PHP_EOL;
+	$filecontent .= "\$conf['supported_languages'] = \"en\";" . PHP_EOL;
 	$filecontent .= "\$conf['homepage'] = \"". $_POST["url"] . "\";" . PHP_EOL;
 	$filecontent .= "\$conf['context_root'] = \"". $_POST["context_root"] . "\";" . PHP_EOL;
 	$filecontent .= "\$conf['projectname'] = \"". $_POST["projectname"] . "\";" . PHP_EOL;
@@ -374,7 +374,7 @@ function actionCreateDb() {
 	include(CONFIGFILE);
 	
 	$db = DbConnection::getInstance();
-	$db->connect($conf["db_host"], $conf["db_user"], $conf["db_passwort"], $conf["db_name"]);
+	$db->connect($conf["db_host"], $conf["db_user"], $conf["db_password"], $conf["db_name"]);
 	
 	try {
 		if ($_POST["install"] == "new") {
@@ -479,15 +479,15 @@ function actionSaveUser() {
 	$password = SecurityUtil::hashPassword($_POST["password"], $salt);
 	
 	$columns["name"] = $_POST["name"];
-	$columns["passwort"] = $password;
-	$columns["passwort_salt"] = $salt;
+	$columns["password"] = $password;
+	$columns["password_salt"] = $salt;
 	$columns["email"] = $_POST["email"];
 	$columns["r_admin"] = "1";
 	
 	include(CONFIGFILE);
 	
 	$db = DbConnection::getInstance();
-	$db->connect($conf["db_host"], $conf["db_user"], $conf["db_passwort"], $conf["db_name"]);
+	$db->connect($conf["db_host"], $conf["db_user"], $conf["db_password"], $conf["db_name"]);
 	
 	$db->queryInsert($columns, $conf["db_prefix"] . "_admin");
 	

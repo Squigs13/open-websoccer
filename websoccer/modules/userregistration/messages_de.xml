@@ -4,12 +4,12 @@
     <message id="register_navlabel">Registrieren</message>
     <message id="registration_disabled">Die Benutzeranmeldung ist derzeit durch den Administrator deaktiviert.</message>
     <message id="registration_title">Als Benutzer registrieren</message>
-    <message id="registration_password_repeat">Passwort wiederholen</message>
+    <message id="registration_password_repeat">password wiederholen</message>
     <message id="registration_email_repeat">E-Mail wiederholen</message>
     <message id="registration_submit_button">Registrieren</message>
     
     <message id="registration_illegal_username">Der angegebene Benutzername ist nicht erlaubt.</message>
-    <message id="registration_repeated_password_notmatching">Das wiederholte Passwort stimmt nicht mit dem zuerst eingegebenen Passwort überein.</message>
+    <message id="registration_repeated_password_notmatching">Das wiederholte password stimmt nicht mit dem zuerst eingegebenen password überein.</message>
     <message id="registration_repeated_email_notmatching">Die wiederholte E-Mail-Adresse stimmt nicht mit der zuerst eingegebenen Adresse überein.</message>
     <message id="registration_user_exists">Der Benutzername oder die E-Mail-Adresse ist bereits vergeben.</message>
     <message id="registration_max_number_users_exceeded">Im Moment können sich keine weiteren Benutzer registrieren.</message>

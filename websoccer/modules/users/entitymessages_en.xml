@@ -7,18 +7,18 @@
 	<message id="entity_users_lastaction">Last Action</message>
 	<message id="entity_users_highscore">Highscore</message>
 	<message id="entity_users_clubname">Club</message>
-	<message id="entity_users_datum_anmeldung">Registration Date</message>
+	<message id="entity_users_date_registered">Registration Date</message>
 	<message id="entity_users_email">E-Mail</message>
 	
-    <message id="entity_users_passwort">Password</message>
-    <message id="entity_users_wunschverein">Wished Clubs</message>
+    <message id="entity_users_password">Password</message>
+    <message id="entity_users_desired_team">Wished Clubs</message>
     <message id="entity_users_name">Name</message>
-    <message id="entity_users_wohnort">Residence</message>
-    <message id="entity_users_land">Country</message>
-    <message id="entity_users_geburtstag">Birthday</message>
+    <message id="entity_users_city">Residence</message>
+    <message id="entity_users_country">Country</message>
+    <message id="entity_users_birthday">Birthday</message>
     <message id="entity_users_beruf">Occupation</message>
     <message id="entity_users_interessen">Interests</message>
-    <message id="entity_users_lieblingsverein">Favorite Club</message>
+    <message id="entity_users_lieblingsclub">Favorite Club</message>
     <message id="entity_users_homepage">Website</message>
     <message id="entity_users_fanbeliebtheit">Popularity</message>
     <message id="entity_users_history">History</message>
@@ -32,8 +32,8 @@
 	
 	<message id="entity_user_inactivity">Inactivity</message>
 	<message id="entity_user_inactivity_login">Logins</message>
-   	<message id="entity_user_inactivity_aufstellung">Submitted tactics</message>
+   	<message id="entity_user_inactivity_tactics">Submitted tactics</message>
    	<message id="entity_user_inactivity_transfer">Player transers</message>
-   	<message id="entity_user_inactivity_vertragsauslauf">Extended player contracts</message>
+   	<message id="entity_user_inactivity_contractsauslauf">Extended player contracts</message>
    	<message id="entity_user_inactivity_transfer_check">Last action on %s</message>
 </messages>

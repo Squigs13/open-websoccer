@@ -56,7 +56,7 @@ class UserPasswordConverter implements IConverter {
 		// use salt only when updating
 		if (isset($_POST['id']) && $_POST['id']) {
 			$db = DbConnection::getInstance();
-			$columns = 'passwort, passwort_salt';
+			$columns = 'password, password_salt';
 			$fromTable = $this->_websoccer->getConfig('db_prefix') .'_user';
 			$whereCondition = 'id = %d';
 			$result = $db->querySelect($columns, $fromTable, $whereCondition, $_POST['id'], 1);
@@ -64,15 +64,15 @@ class UserPasswordConverter implements IConverter {
 			$result->free();
 			
 			if (strlen($value)) {
-				$passwort = SecurityUtil::hashPassword($value, $user['passwort_salt']);
+				$password = SecurityUtil::hashPassword($value, $user['password_salt']);
 			} else {
-				$passwort = $user['passwort'];
+				$password = $user['password'];
 			}
 		} else {
-			$passwort = SecurityUtil::hashPassword($value, '');
+			$password = SecurityUtil::hashPassword($value, '');
 		}
 		
-		return $passwort;
+		return $password;
 	}
 	
 }

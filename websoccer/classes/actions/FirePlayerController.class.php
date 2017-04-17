@@ -88,10 +88,10 @@ class FirePlayerController implements IActionController {
 	
 	private function updatePlayer($playerId) {
 		
-		$columns["verein_id"] = "";
-		$columns["vertrag_spiele"] = 0;
+		$columns["club_id"] = "";
+		$columns["contract_matches"] = 0;
 		
-		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_spieler";
+		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_player";
 		$whereCondition = "id = %d";
 		$parameters = $playerId;
 		
@@ -101,8 +101,8 @@ class FirePlayerController implements IActionController {
 	private function getTeamSize($clubId) {
 		$columns = "COUNT(*) AS number";
 		
-		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_spieler";
-		$whereCondition = "verein_id = %d AND status = 1 AND transfermarkt != 1";
+		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_player";
+		$whereCondition = "club_id = %d AND status = 1 AND transfer_listed != 1";
 		$parameters = $clubId;
 		
 		$result = $this->_db->querySelect($columns, $fromTable, $whereCondition, $parameters);

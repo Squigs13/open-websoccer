@@ -45,7 +45,7 @@ if ($inputEmail) {
 	if (count($errors) == 0) {
 		
 		// correct Pwd?
-		$columns = array('id', 'passwort_neu_angefordert', 'name', 'passwort_salt');
+		$columns = array('id', 'password_new_requested', 'name', 'password_salt');
 		$fromTable = $conf['db_prefix'] .'_admin';
 		$whereCondition = 'email = \'%s\'';
 		$parameters = $inputEmail;
@@ -54,15 +54,15 @@ if ($inputEmail) {
 		
 		if($result->num_rows < 1) {
 			$errors['inputEmail'] = $i18n->getMessage('sendpassword_admin_usernotfound');
-		} elseif ($admin['passwort_neu_angefordert'] > ($now-120*60)) {
+		} elseif ($admin['password_new_requested'] > ($now-120*60)) {
 			$errors['inputEmail'] = $i18n->getMessage('sendpassword_admin_alreadysent');
 		} else {
 			$newPassword = SecurityUtil::generatePassword();
-			$hashedPw = SecurityUtil::hashPassword($newPassword, $admin['passwort_salt']);
+			$hashedPw = SecurityUtil::hashPassword($newPassword, $admin['password_salt']);
 			
 			// store new PW
-			$columns = array('passwort_neu' => $hashedPw, 
-							'passwort_neu_angefordert' => $now);
+			$columns = array('password_new' => $hashedPw, 
+							'password_new_requested' => $now);
 			$fromTable = $conf['db_prefix'] .'_admin';
 			$whereCondition = 'id = %d';
 			$parameter = $admin['id'];

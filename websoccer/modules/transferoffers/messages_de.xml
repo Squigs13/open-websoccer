@@ -72,6 +72,6 @@
 	<message id="directtransfer_subject">Spielertransfer</message>
 	
 	<message id="transferoffer_notification_offerreceived"><strong>{sendername}</strong> hat Ihnen ein Spielerkaufangebot gemacht.</message>
-	<message id="transferoffer_notification_executed">Der vereinbarte Transfer des Spielers <strong>{playername}</strong> wurde durchgeführt.</message>
+	<message id="transferoffer_notification_executed">Der clubbarte Transfer des Spielers <strong>{playername}</strong> wurde durchgeführt.</message>
 	<message id="transferoffer_notification_rejected"><strong>{receivername}</strong> hat Ihr Kaufangebot für den Spieler <strong>{playername}</strong> abgelehnt.</message>
 </messages>

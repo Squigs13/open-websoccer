@@ -11,9 +11,9 @@
             id="trainingcamp"
             entity="trainingcamp"
             navcategory="league"
-            permissionrole="r_daten" >
+            permissionrole="r_data" >
 
-            <entity dbtable="trainingslager" >
+            <entity dbtable="training_camp" >
 
                 <overview delete="true" edit="true" >
 
@@ -25,45 +25,45 @@
                         filter="true" />
                     
                     <column
-                        id="entity_trainingcamp_land"
-                        field="land"
+                        id="entity_trainingcamp_country"
+                        field="country"
                         type="text"
                         sort="true"
                         filter="true" />
                     
                     <column
-                        id="entity_trainingcamp_preis_spieler_tag"
-                        field="preis_spieler_tag"
+                        id="entity_trainingcamp_price_player_day"
+                        field="price_player_day"
                         type="number"
                         sort="true" />
                     
                     <column
-                        id="entity_trainingcamp_p_staerke"
-                        field="p_staerke"
+                        id="entity_trainingcamp_p_strength"
+                        field="p_strength"
                         type="number"
                         sort="true" />
                     
                     <column
-                        id="entity_trainingcamp_p_technik"
-                        field="p_technik"
+                        id="entity_trainingcamp_p_technique"
+                        field="p_technique"
                         type="number"
                         sort="true" />
                     
                     <column
-                        id="entity_trainingcamp_p_kondition"
-                        field="p_kondition"
+                        id="entity_trainingcamp_p_stamina"
+                        field="p_stamina"
                         type="number"
                         sort="true" />
                     
                     <column
-                        id="entity_trainingcamp_p_frische"
-                        field="p_frische"
+                        id="entity_trainingcamp_p_fitness"
+                        field="p_fitness"
                         type="number"
                         sort="true" />
                     
                     <column
-                        id="entity_trainingcamp_p_zufriedenheit"
-                        field="p_zufriedenheit"
+                        id="entity_trainingcamp_p_morale"
+                        field="p_morale"
                         type="number"
                         sort="true" />
                     
@@ -72,13 +72,13 @@
                 <editform>
                     
                     <field id="name" type="text" required="true" />
-                    <field id="land" type="text" required="true" />
-					<field id="preis_spieler_tag" type="number" required="true" />
-					<field id="p_staerke" type="number" required="true" />
-					<field id="p_technik" type="number" required="true" />
-					<field id="p_kondition" type="number" required="true" />
-					<field id="p_frische" type="number" required="true" />
-					<field id="p_zufriedenheit" type="number" required="true" />
+                    <field id="country" type="text" required="true" />
+					<field id="price_player_day" type="number" required="true" />
+					<field id="p_strength" type="number" required="true" />
+					<field id="p_technique" type="number" required="true" />
+					<field id="p_stamina" type="number" required="true" />
+					<field id="p_fitness" type="number" required="true" />
+					<field id="p_morale" type="number" required="true" />
                 </editform>
             </entity>
         </adminpage>

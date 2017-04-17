@@ -64,9 +64,9 @@ class UserHistoryModel implements IModel {
 		$tablePrefix = $this->_websoccer->getConfig('db_prefix');
 		
 		$fromTable = $tablePrefix . '_achievement AS A';
-		$fromTable .= ' INNER JOIN ' . $tablePrefix . '_verein AS TEAM ON TEAM.id = A.team_id';
-		$fromTable .= ' LEFT JOIN ' . $tablePrefix . '_saison AS SEASON ON SEASON.id = A.season_id';
-		$fromTable .= ' LEFT JOIN ' . $tablePrefix . '_liga AS L ON SEASON.liga_id = L.id';
+		$fromTable .= ' INNER JOIN ' . $tablePrefix . '_club AS TEAM ON TEAM.id = A.team_id';
+		$fromTable .= ' LEFT JOIN ' . $tablePrefix . '_season AS SEASON ON SEASON.id = A.season_id';
+		$fromTable .= ' LEFT JOIN ' . $tablePrefix . '_league AS L ON SEASON.league_id = L.id';
 		$fromTable .= ' LEFT JOIN ' . $tablePrefix . '_cup_round AS CUPROUND ON CUPROUND.id = A.cup_round_id';
 		$fromTable .= ' LEFT JOIN ' . $tablePrefix . '_cup AS CUP ON CUP.id = CUPROUND.cup_id';
 		

@@ -42,11 +42,11 @@ class MatchReportSimulatorObserver implements ISimulatorObserver {
 		$this->_db = $db;
 		
 		// get available text messages
-		$fromTable = $websoccer->getConfig('db_prefix') . '_spiel_text';
-		$columns = 'id, aktion AS actiontype';
+		$fromTable = $websoccer->getConfig('db_prefix') . '_match_text';
+		$columns = 'id, action AS actiontype';
 		
 		// only load text messages for substitutions, because this observer does not observes anything else
-		$whereCondition = 'aktion = \'Auswechslung\'';
+		$whereCondition = 'action = \'Substitution\'';
 		
 		$result = $db->querySelect($columns, $fromTable, $whereCondition);
 		while ($text = $result->fetch_array()) {
@@ -59,7 +59,7 @@ class MatchReportSimulatorObserver implements ISimulatorObserver {
 	 * @see ISimulatorObserver::onSubstitution()
 	 */
 	public function onSubstitution(SimulationMatch $match, SimulationSubstitution $substitution) {
-		$this->_createMessage($match, 'Auswechslung', array($substitution->playerIn->name, $substitution->playerOut->name), 
+		$this->_createMessage($match, 'Substitution', array($substitution->playerIn->name, $substitution->playerOut->name), 
 				($substitution->playerIn->team->id == $match->homeTeam->id));
 	}
 	

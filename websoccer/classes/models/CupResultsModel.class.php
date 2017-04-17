@@ -59,12 +59,12 @@ class CupResultsModel implements IModel {
 		$columns['R.finalround'] = 'is_finalround';
 		$columns['R.groupmatches'] = 'is_groupround';
 		$columns['PREVWINNERS.name'] = 'prev_round_winners';
-		$columns['PREVLOOSERS.name'] = 'prev_round_loosers';
+		$columns['PREVLOOSERS.name'] = 'prev_round_loser';
 		
 		$fromTable = $this->_websoccer->getConfig('db_prefix') . '_cup_round AS R';
 		$fromTable .= ' INNER JOIN ' . $this->_websoccer->getConfig('db_prefix') . '_cup AS C ON C.id = R.cup_id';
 		$fromTable .= ' LEFT JOIN ' . $this->_websoccer->getConfig('db_prefix') . '_cup_round AS PREVWINNERS ON PREVWINNERS.id = R.from_winners_round_id';
-		$fromTable .= ' LEFT JOIN ' . $this->_websoccer->getConfig('db_prefix') . '_cup_round AS PREVLOOSERS ON PREVLOOSERS.id = R.from_loosers_round_id';
+		$fromTable .= ' LEFT JOIN ' . $this->_websoccer->getConfig('db_prefix') . '_cup_round AS PREVLOOSERS ON PREVLOOSERS.id = R.from_loser_round_id';
 		
 		$result = $this->_db->querySelect($columns, $fromTable, 
 				'C.name = \'%s\' AND R.name = \'%s\'', array($cupName, $cupRound), 1);

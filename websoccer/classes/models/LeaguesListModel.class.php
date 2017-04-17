@@ -41,12 +41,12 @@ class LeaguesListModel implements IModel {
 	public function getTemplateParameters() {
 		
 		// get table markers
-		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_liga";
-		$whereCondition = "1=1 ORDER BY land ASC, name ASC";
+		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_league";
+		$whereCondition = "1=1 ORDER BY country ASC, name ASC";
 		
 		$leagues = array();
 		
-		$result = $this->_db->querySelect("id, land AS country, name", $fromTable, $whereCondition, array());
+		$result = $this->_db->querySelect("id, country AS country, name", $fromTable, $whereCondition, array());
 		while ($league = $result->fetch_array()) {
 			$leagues[$league["country"]][] = $league;
 		}

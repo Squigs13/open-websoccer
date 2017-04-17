@@ -22,7 +22,7 @@
 
 echo "<h1>".  $i18n->getMessage("match_manage_playerstatistics") . "</h1>";
 
-if (!$admin["r_admin"] && !$admin["r_demo"] && !$admin["r_spiele"]) {
+if (!$admin["r_admin"] && !$admin["r_demo"] && !$admin["r_matches"]) {
 	throw new Exception($i18n->getMessage("error_access_denied"));
 }
 
@@ -31,7 +31,7 @@ echo "<p><a href=\"?site=manage&entity=match\" class=\"btn\">". $i18n->getMessag
 $matchId = (isset($_REQUEST["match"]) && is_numeric($_REQUEST["match"])) ? $_REQUEST["match"] : 0;
 
 $teamPrefixes = array("home", "guest");
-$formFields = array("minuten_gespielt", "note", "tore", "assists", "karte_gelb", "karte_rot", "verletzt", "gesperrt", "ballcontacts", "wontackles", "shoots", "passes_successed", "passes_failed");
+$formFields = array("minutes_played", "rating", "goals", "assists", "yellow_card", "red_card", "injured", "suspended", "touches", "wontackles", "shots", "passes_successful", "passes_failed");
 
 
 // ******** action: delete player from match
@@ -41,7 +41,7 @@ if ($action == "delete") {
 	}
 	
 	$playerId = (int) $_REQUEST["player"];
-	$db->queryDelete($website->getConfig("db_prefix") . "_spiel_berechnung", "spiel_id = %d AND spieler_id = %d", array($matchId, $playerId));
+	$db->queryDelete($website->getConfig("db_prefix") . "_match_simulation", "match_id = %d AND player_id = %d", array($matchId, $playerId));
 	echo createSuccessMessage($i18n->getMessage("manage_success_delete"), "");
 }
 // ******** action: update player statistics
@@ -50,15 +50,15 @@ elseif ($action == "update") {
 		throw new Exception($i18n->getMessage("validationerror_no_changes_as_demo"));
 	}
 	
-	$updateTable = $website->getConfig("db_prefix") . "_spiel_berechnung";
-	$matchUpdateTable = $website->getConfig("db_prefix") . "_spiel";
+	$updateTable = $website->getConfig("db_prefix") . "_match_simulation";
+	$matchUpdateTable = $website->getConfig("db_prefix") . "_match";
 	foreach ($teamPrefixes as $teamPrefix) {
 		if (!isset($_REQUEST[$teamPrefix . "_players"])) {
 			continue;
 		}
 		
 		// update tactics
-		$columnsPrefix = ($teamPrefix == "guest") ? "gast" : "home";
+		$columnsPrefix = ($teamPrefix == "guest") ? "guest" : "home";
 		$matchColumns = array(
 				$columnsPrefix . "_offensive" => (isset($_POST[$teamPrefix . "_offensive"])) ? $_POST[$teamPrefix . "_offensive"] : 0,
 				$columnsPrefix . "_longpasses" => (isset($_POST[$teamPrefix . "_longpasses"])) ? $_POST[$teamPrefix . "_longpasses"] : 0,
@@ -67,8 +67,8 @@ elseif ($action == "update") {
 		
 		// update substitutions
 		for ($subNo = 1; $subNo <= 3; $subNo++) {
-			$matchColumns[$columnsPrefix . "_w". $subNo . "_raus"] = $_POST[$teamPrefix . "_sub". $subNo . "_out"];
-			$matchColumns[$columnsPrefix . "_w". $subNo . "_rein"] = $_POST[$teamPrefix . "_sub". $subNo . "_in"];
+			$matchColumns[$columnsPrefix . "_w". $subNo . "_out"] = $_POST[$teamPrefix . "_sub". $subNo . "_out"];
+			$matchColumns[$columnsPrefix . "_w". $subNo . "_in"] = $_POST[$teamPrefix . "_sub". $subNo . "_in"];
 			$matchColumns[$columnsPrefix . "_w". $subNo . "_minute"] = $_POST[$teamPrefix . "_sub". $subNo . "_minute"];
 			$matchColumns[$columnsPrefix . "_w". $subNo . "_condition"] = $_POST[$teamPrefix . "_sub". $subNo . "_condition"];
 		}
@@ -79,14 +79,14 @@ elseif ($action == "update") {
 		foreach ($playerIds as $playerId) {
 			$columns = array(
 					"position" => $_POST["pl" . $playerId . "_pos"],
-					"feld" => $_POST["pl" . $playerId . "_feld"]
+					"field" => $_POST["pl" . $playerId . "_feld"]
 					);
 			foreach ($formFields as $formField) {
 				$columns[$formField] = $_POST["pl" . $playerId . "_" . $formField];
 			}
 			
 			// update player record
-			$db->queryUpdate($columns, $updateTable, "spiel_id = %d AND spieler_id = %d", array($matchId, $playerId));
+			$db->queryUpdate($columns, $updateTable, "match_id = %d AND player_id = %d", array($matchId, $playerId));
 		}
 	}
 	
@@ -107,13 +107,13 @@ elseif ($action == "create") {
 		$playerName = (strlen($player["player_pseudonym"])) ? $player["player_pseudonym"] : $player["player_firstname"] . " " . $player["player_lastname"];
 		
 		$db->queryInsert(array(
-				"spiel_id" => $matchId,
-				"spieler_id" => $playerId,
+				"match_id" => $matchId,
+				"player_id" => $playerId,
 				"team_id" => $teamId,
 				"position_main" => $position,
-				"note" => 3.0,
+				"rating" => 3.0,
 				"name" => $playerName
-				), $website->getConfig("db_prefix") . "_spiel_berechnung");
+				), $website->getConfig("db_prefix") . "_match_simulation");
 	}
 }
 // ******** action: generate player records out of current formation
@@ -139,18 +139,18 @@ elseif ($action == "generate") {
 			"setup" => $teamPrefix . "_formation_setup"
 			);
 	for ($playerNo = 1; $playerNo <= 11; $playerNo++) {
-		$formationcolumns["spieler" . $playerNo] = $teamPrefix . "_formation_player" . $playerNo;
+		$formationcolumns["player" . $playerNo] = $teamPrefix . "_formation_player" . $playerNo;
 	}
 	for ($playerNo = 1; $playerNo <= 5; $playerNo++) {
-		$formationcolumns["ersatz" . $playerNo] = $teamPrefix . "_formation_bench" . $playerNo;
+		$formationcolumns["sub" . $playerNo] = $teamPrefix . "_formation_bench" . $playerNo;
 	}
 	for ($subNo = 1; $subNo <= 3; $subNo++) {
-		$formationcolumns["w" . $subNo . "_raus"] = $teamPrefix . "_sub" . $subNo . "_out";
-		$formationcolumns["w" . $subNo . "_rein"] = $teamPrefix . "_sub" . $subNo . "_in";
+		$formationcolumns["w" . $subNo . "_out"] = $teamPrefix . "_sub" . $subNo . "_out";
+		$formationcolumns["w" . $subNo . "_in"] = $teamPrefix . "_sub" . $subNo . "_in";
 		$formationcolumns["w" . $subNo . "_minute"] = $teamPrefix . "_sub" . $subNo . "_minute";
 		$formationcolumns["w" . $subNo . "_condition"] = $teamPrefix . "_sub" . $subNo . "_condition";
 	}
-	$result = $db->querySelect($formationcolumns, $website->getConfig("db_prefix") . "_aufstellung", "verein_id = %d", $team->id, 1);
+	$result = $db->querySelect($formationcolumns, $website->getConfig("db_prefix") . "_tactics", "club_id = %d", $team->id, 1);
 	$formation = $result->fetch_array();
 	$result->free();
 	if (!$formation) {
@@ -161,7 +161,7 @@ elseif ($action == "generate") {
 	$formation["type"] = $match["match_type"];
 	
 	// update tactical parameters in match table
-	$columnsPrefix = ($teamPrefix == "guest") ? "gast" : "home";
+	$columnsPrefix = ($teamPrefix == "guest") ? "guest" : "home";
 	
 	$matchColumns = array(
 			$columnsPrefix . "_offensive" => $formation["offensive"],
@@ -171,13 +171,13 @@ elseif ($action == "generate") {
 	
 	// update substitutions
 	for ($subNo = 1; $subNo <= 3; $subNo++) {
-		$matchColumns[$columnsPrefix . "_w". $subNo . "_raus"] = $formation[$teamPrefix . "_sub". $subNo . "_out"];
-		$matchColumns[$columnsPrefix . "_w". $subNo . "_rein"] = $formation[$teamPrefix . "_sub". $subNo . "_in"];
+		$matchColumns[$columnsPrefix . "_w". $subNo . "_out"] = $formation[$teamPrefix . "_sub". $subNo . "_out"];
+		$matchColumns[$columnsPrefix . "_w". $subNo . "_in"] = $formation[$teamPrefix . "_sub". $subNo . "_in"];
 		$matchColumns[$columnsPrefix . "_w". $subNo . "_minute"] = $formation[$teamPrefix . "_sub". $subNo . "_minute"];
 		$matchColumns[$columnsPrefix . "_w". $subNo . "_condition"] = $formation[$teamPrefix . "_sub". $subNo . "_condition"];
 	}
 	
-	$db->queryUpdate($matchColumns, $website->getConfig("db_prefix") . "_spiel", "id = %d", array($matchId));
+	$db->queryUpdate($matchColumns, $website->getConfig("db_prefix") . "_match", "id = %d", array($matchId));
 	
 	// create player records
 	MatchSimulationExecutor::addPlayers($website, $db, $team, $formation, $teamPrefix);
@@ -199,7 +199,7 @@ echo "<input type=\"hidden\" name=\"match\" value=\"$matchId\">";
 echo "<fieldset><legend>". $i18n->getMessage("match_manage_createplayer_title") ."</legend>";
 
 echo "<div class=\"control-group\">";
-echo "<label class=\"control-label\" for=\"team_id\">". $i18n->getMessage("entity_player_verein_id") . "</label>";
+echo "<label class=\"control-label\" for=\"team_id\">". $i18n->getMessage("entity_player_club_id") . "</label>";
 echo "<div class=\"controls\">";
 echo "<select name=\"team_id\" id=\"team_id\">";
 echo "<option value=\"". $match["match_home_id"] . "\">". escapeOutput($match["match_home_name"]) . "</option>";
@@ -209,9 +209,9 @@ echo "</div>";
 echo "</div>";
 
 echo FormBuilder::createFormGroup($i18n, "playerid", array("type" => "foreign_key", 
-		"jointable" => "spieler", 
+		"jointable" => "player", 
 		"entity" => "player",
-		"labelcolumns" => "vorname,nachname,kunstname"), "", "match_manage_createplayer_label_");
+		"labelcolumns" => "first_name,last_name,nickname"), "", "match_manage_createplayer_label_");
 
 echo "<div class=\"control-group\">";
 echo "<label class=\"control-label\" for=\"position\">". $i18n->getMessage("entity_player_position_main") . "</label>";
@@ -251,10 +251,10 @@ foreach ($teamPrefixes as $teamPrefix) {
 	echo "</div>";
 	
 	// get existing players
-	$playerTable = $website->getConfig("db_prefix") . "_spiel_berechnung SB";
-	$playerTable .= " INNER JOIN " . $website->getConfig("db_prefix") . "_spieler S ON S.id = SB.spieler_id";
+	$playerTable = $website->getConfig("db_prefix") . "_match_simulation SB";
+	$playerTable .= " INNER JOIN " . $website->getConfig("db_prefix") . "_player S ON S.id = SB.player_id";
 	
-	$result = $db->querySelect("SB.*", $playerTable, "spiel_id = %d AND team_id = %d ORDER BY feld ASC, field(SB.position_main, 'T', 'LV', 'IV', 'RV', 'DM', 'LM', 'ZM', 'RM', 'OM', 'LS', 'MS', 'RS')", array($matchId, $match["match_". $teamPrefix . "_id"]));
+	$result = $db->querySelect("SB.*", $playerTable, "match_id = %d AND team_id = %d ORDER BY field ASC, field(SB.position_main, 'T', 'LV', 'IV', 'RV', 'DM', 'LM', 'ZM', 'RM', 'OM', 'LS', 'MS', 'RS')", array($matchId, $match["match_". $teamPrefix . "_id"]));
 	$playersCount = $result->num_rows;
 	
 	// no player records
@@ -262,7 +262,7 @@ foreach ($teamPrefixes as $teamPrefix) {
 		echo createInfoMessage("", $i18n->getMessage("match_manage_playerstatistics_noitems"));
 		
 		// check if any formation is available
-		$fresult = $db->querySelect("COUNT(*) AS hits", $website->getConfig("db_prefix") . "_aufstellung", "verein_id = %d", $match["match_". $teamPrefix . "_id"]);
+		$fresult = $db->querySelect("COUNT(*) AS hits", $website->getConfig("db_prefix") . "_tactics", "club_id = %d", $match["match_". $teamPrefix . "_id"]);
 		$formationCount = $fresult->fetch_array();
 		$fresult->free();
 		if ($formationCount && $formationCount["hits"]) {
@@ -290,10 +290,10 @@ foreach ($teamPrefixes as $teamPrefix) {
 		
 		$playerIds = array();
 		while ($player = $result->fetch_array()) {
-			$playerIds[] = $player["spieler_id"];
-			$players[$player["spieler_id"]] = $player["name"];
+			$playerIds[] = $player["player_id"];
+			$players[$player["player_id"]] = $player["name"];
 			
-			$fieldPrefix = "pl" . $player["spieler_id"];
+			$fieldPrefix = "pl" . $player["player_id"];
 			
 			echo "<tr>";
 			
@@ -309,21 +309,21 @@ foreach ($teamPrefixes as $teamPrefix) {
 			echo "</select><br/>";
 			echo "<select name=\"" . $fieldPrefix . "_feld\" class=\"input-medium\">";
 			echo "<option value=\"1\"";
-			if ($player["feld"] === "1") echo " selected";
+			if ($player["field"] === "1") echo " selected";
 			echo ">". $i18n->getMessage("match_manage_position_field_1") . "</option>";
 			
-			echo "<option value=\"Ersatzbank\"";
-			if ($player["feld"] === "Ersatzbank") echo " selected";
+			echo "<option value=\"Bench\"";
+			if ($player["field"] === "Bench") echo " selected";
 			echo ">". $i18n->getMessage("match_manage_position_field_bench") . "</option>";
 			
-			echo "<option value=\"Ausgewechselt\"";
-			if ($player["feld"] === "Ausgewechselt") echo " selected";
+			echo "<option value=\"Substituted\"";
+			if ($player["field"] === "Substituted") echo " selected";
 			echo ">". $i18n->getMessage("match_manage_position_field_substituted") . "</option>";
 			echo "</select></td>";
 			
 			// name
 			echo "<td>". $player["name"];
-			echo " <a href=\"?site=$site&action=delete&match=$matchId&player=". $player["spieler_id"] . "\" title=\"". $i18n->getMessage("manage_delete") . "\" class=\"deleteLink\"><i class=\"icon-trash\"></i></a>";
+			echo " <a href=\"?site=$site&action=delete&match=$matchId&player=". $player["player_id"] . "\" title=\"". $i18n->getMessage("manage_delete") . "\" class=\"deleteLink\"><i class=\"icon-trash\"></i></a>";
 			echo "</td>";
 			
 			// statistics

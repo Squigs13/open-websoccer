@@ -121,10 +121,10 @@ class ExtendStadiumController implements IActionController {
 				"builder_id" => $builderId,
 				"started" => $this->_websoccer->getNowAsTimestamp(),
 				"deadline" => $offer["deadline"],
-				"p_steh" => ($parameters["side_standing"]) ? $parameters["side_standing"] : 0,
-				"p_sitz" => ($parameters["side_seats"]) ? $parameters["side_seats"] : 0,
-				"p_haupt_steh" => ($parameters["grand_standing"]) ? $parameters["grand_standing"] : 0,
-				"p_haupt_sitz" => ($parameters["grand_seats"]) ? $parameters["grand_seats"] : 0,
+				"p_standing" => ($parameters["side_standing"]) ? $parameters["side_standing"] : 0,
+				"p_seat" => ($parameters["side_seats"]) ? $parameters["side_seats"] : 0,
+				"p_main_standing" => ($parameters["grand_standing"]) ? $parameters["grand_standing"] : 0,
+				"p_main_seat" => ($parameters["grand_seats"]) ? $parameters["grand_seats"] : 0,
 				"p_vip" => ($parameters["vip"]) ? $parameters["vip"] : 0
 				), $this->_websoccer->getConfig("db_prefix") . "_stadium_construction");
 		

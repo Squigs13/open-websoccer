@@ -28,7 +28,7 @@
 	<message id="entity_youthscout_speciality">Spezialgebiet</message>
 	
 	<message id="entity_youthmatch">Jugendspiel</message>
-	<message id="entity_youthmatch_matchdate">Datum</message>
+	<message id="entity_youthmatch_matchdate">date</message>
 	<message id="entity_youthmatch_home_team_id">Heimmannschaft</message>
 	<message id="entity_youthmatch_guest_team_id">Gastmannschaft</message>
 	<message id="entity_youthmatch_simulated">Berechnet</message>

@@ -474,27 +474,27 @@ the specific language governing permissions and limitations under the Apache Lic
                 return;
             }
 
-            process = function(datum, collection) {
+            process = function(date, collection) {
                 var group, attr;
-                datum = datum[0];
-                if (datum.children) {
+                date = date[0];
+                if (date.children) {
                     group = {};
-                    for (attr in datum) {
-                        if (datum.hasOwnProperty(attr)) group[attr]=datum[attr];
+                    for (attr in date) {
+                        if (date.hasOwnProperty(attr)) group[attr]=date[attr];
                     }
                     group.children=[];
-                    $(datum.children).each2(function(i, childDatum) { process(childDatum, group.children); });
-                    if (group.children.length || query.matcher(t, text(group), datum)) {
+                    $(date.children).each2(function(i, childDatum) { process(childDatum, group.children); });
+                    if (group.children.length || query.matcher(t, text(group), date)) {
                         collection.push(group);
                     }
                 } else {
-                    if (query.matcher(t, text(datum), datum)) {
-                        collection.push(datum);
+                    if (query.matcher(t, text(date), date)) {
+                        collection.push(date);
                     }
                 }
             };
 
-            $(data().results).each2(function(i, datum) { process(datum, filtered.results); });
+            $(data().results).each2(function(i, date) { process(date, filtered.results); });
             query.callback(filtered);
         };
     }

@@ -28,7 +28,7 @@
 					<td><a href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}" target="_blank" title="{{ i18n.getMessage("player_navlabel") }}">{{ playerName }}</a> ({{ player.grade }})</td>
 					<td>
 						<input type="hidden" name="player{{ loop.index }}" class="playerField" value="{{ formation['player' ~ loop.index] }}">
-						{% if player.match_position == "Torwart" %}
+						{% if player.match_position == "Goalkeeper" %}
 							<input type="hidden" name="player{{ loop.index }}_pos" value="T">
 							{{ i18n.getMessage("option_T") }}
 						{% else %}

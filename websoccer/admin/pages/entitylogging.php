@@ -35,7 +35,7 @@ if (!$show) {
 
   <p><?php echo $i18n->getMessage('entitylogging_intro'); ?></p>
   
-  <code>&lt;overview delete=&quot;true&quot; edit=&quot;true&quot; <strong>logging=&quot;true&quot; loggingcolumns=&quot;name,liga_id&quot;</strong>&gt;</code>
+  <code>&lt;overview delete=&quot;true&quot; edit=&quot;true&quot; <strong>logging=&quot;true&quot; loggingcolumns=&quot;name,league_id&quot;</strong>&gt;</code>
 
   <?php
 

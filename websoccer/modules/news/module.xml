@@ -6,17 +6,17 @@
 	<adminpage id="news" permissionrole="r_news" navcategory="website" entity="news">
 		<entity dbtable="news AS NewsTab">
 		    <overview edit="true" delete="true">
-		    	<column id="entity_news_titel" type="text" field="NewsTab.titel" filter="true" sort="true" />
-		    	<column id="entity_news_datum" type="timestamp" field="NewsTab.datum" sort="true"/>    
+		    	<column id="entity_news_title" type="text" field="NewsTab.title" filter="true" sort="true" />
+		    	<column id="entity_news_date" type="timestamp" field="NewsTab.date" sort="true"/>    
 		    	<column id="entity_admin_name" type="text" field="AdminTab.name" filter="true" sort="true" />   
 		    	<column id="entity_news_status" type="boolean" field="NewsTab.status" />   
-		    	<join type="LEFT" jointable="admin AS AdminTab" joincondition="AdminTab.id = NewsTab.autor_id" />
+		    	<join type="LEFT" jointable="admin AS AdminTab" joincondition="AdminTab.id = NewsTab.author_id" />
 		    </overview>
 		    <editform>
-		        <field id="autor_id" type="foreign_key" jointable="admin" labelcolumns="name" required="true"/>
-				<field id="titel" type="text" required="true" />
-				<field id="datum" type="timestamp" required="true"/>
-				<field id="nachricht" type="textarea" required="true" />
+		        <field id="author_id" type="foreign_key" jointable="admin" labelcolumns="name" required="true"/>
+				<field id="title" type="text" required="true" />
+				<field id="date" type="timestamp" required="true"/>
+				<field id="message" type="textarea" required="true" />
 				<field id="linktext1" type="text" />
 				<field id="linkurl1" type="url" />
 				<field id="linktext2" type="text" />

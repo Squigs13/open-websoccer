@@ -11,65 +11,65 @@
             id="match"
             entity="match"
             navcategory="season"
-            permissionrole="r_spiele" >
+            permissionrole="r_matches" >
 
-            <entity dbtable="spiel As MatchTab" >
+            <entity dbtable="match As MatchTab" >
 
                 <overview
                     delete="true"
                     edit="true" >
 
                     <column
-                        id="entity_match_datum"
-                        field="MatchTab.datum"
+                        id="entity_match_date"
+                        field="MatchTab.date"
                         type="timestamp"
                         sort="true" />
 
                     <column
-                        id="entity_match_home_verein"
+                        id="entity_match_home_club"
                         field="HomeTab.name"
                         type="text"
                         sort="true"
                         filter="true" />
                     
                     <column
-                        id="entity_match_gast_verein"
+                        id="entity_match_guest_club"
                         field="GuestTab.name"
                         type="text"
                         sort="true"
                         filter="true" />
                     
                     <column
-                        id="entity_match_saison_id"
+                        id="entity_match_season_id"
                         field="SeasonTab.name"
                         type="text"
                         sort="true"
                         filter="true" />
                     
                     <column
-                        id="entity_match_spieltag"
-                        field="MatchTab.spieltag"
+                        id="entity_match_matchday"
+                        field="MatchTab.matchday"
                         type="number"
                         sort="true"
                         filter="true" />
                     
                     <column
-                        id="entity_match_pokalname"
-                        field="MatchTab.pokalname"
+                        id="entity_match_cup_name"
+                        field="MatchTab.cup_name"
                         type="text"
                         sort="true"
                         filter="true" />
                     
                     <column
-                        id="entity_match_pokalrunde"
-                        field="MatchTab.pokalrunde"
+                        id="entity_match_cup_round"
+                        field="MatchTab.cup_round"
                         type="text"
                         sort="true"
                         filter="true" />
                     
                     <column
-                        id="entity_match_berechnet"
-                        field="MatchTab.berechnet"
+                        id="entity_match_simulated"
+                        field="MatchTab.simulated"
                         type="boolean"
                         sort="true"
                         filter="true" />
@@ -80,46 +80,46 @@
                         type="number"
                         converter="MatchReportLinkConverter"  />
                     
-                    <join type="INNER" jointable="verein AS HomeTab" joincondition="HomeTab.id = MatchTab.home_verein" />
-                    <join type="INNER" jointable="verein AS GuestTab" joincondition="GuestTab.id = MatchTab.gast_verein" />
-                    <join type="LEFT" jointable="saison AS SeasonTab" joincondition="SeasonTab.id = MatchTab.saison_id" />
+                    <join type="INNER" jointable="club AS HomeTab" joincondition="HomeTab.id = MatchTab.home_club" />
+                    <join type="INNER" jointable="club AS GuestTab" joincondition="GuestTab.id = MatchTab.guest_club" />
+                    <join type="LEFT" jointable="season AS SeasonTab" joincondition="SeasonTab.id = MatchTab.season_id" />
                 </overview>
 
                 <editform>
 
-                    <field id="datum" type="timestamp" required="true"  />
+                    <field id="date" type="timestamp" required="true"  />
 
-                    <field id="spieltyp" type="select" selection="Ligaspiel,Pokalspiel,Freundschaft" required="true"  />
+                    <field id="matchtype" type="select" selection="leaguematch,cupmatch,friendly" required="true"  />
                     
-                    <field id="saison_id" type="foreign_key" entity="season" jointable="saison" cascade="delete" labelcolumns="id,name" />
+                    <field id="season_id" type="foreign_key" entity="season" jointable="season" cascade="delete" labelcolumns="id,name" />
                     
-                    <field id="spieltag" type="number" />
+                    <field id="matchday" type="number" />
                     
-                    <field id="pokalname" type="text" />
+                    <field id="cup_name" type="text" />
                     
-                    <field id="pokalrunde" type="text" />
+                    <field id="cup_round" type="text" />
                     
-                    <field id="pokalgruppe" type="text" />
+                    <field id="cup_group" type="text" />
                     
-                    <field id="elfmeter" type="boolean" />
+                    <field id="penalty_kicks" type="boolean" />
                     
-                    <field id="home_verein" type="foreign_key" entity="club" jointable="verein" cascade="delete" labelcolumns="name" />
+                    <field id="home_club" type="foreign_key" entity="club" jointable="club" cascade="delete" labelcolumns="name" />
                     
-                    <field id="gast_verein" type="foreign_key" entity="club" jointable="verein" cascade="delete" labelcolumns="name" />
+                    <field id="guest_club" type="foreign_key" entity="club" jointable="club" cascade="delete" labelcolumns="name" />
                     
-                    <field id="stadion_id" type="foreign_key" entity="stadium" jointable="stadion" labelcolumns="id,name" />
+                    <field id="stadium_id" type="foreign_key" entity="stadium" jointable="stadium" labelcolumns="id,name" />
                     
-                    <field id="berechnet" type="boolean" />
+                    <field id="simulated" type="boolean" />
                     
-                    <field id="home_tore" type="number" />
+                    <field id="home_goals" type="number" />
                     
-                    <field id="gast_tore" type="number" />
+                    <field id="guest_goals" type="number" />
                     
-                    <field id="zuschauer" type="number" />
+                    <field id="crowd" type="number" />
                     
                     <field id="soldout" type="boolean" />
                     
-                    <field id="bericht" type="textarea" />
+                    <field id="report" type="textarea" />
                     
                     <field id="blocked" type="boolean" />
                 </editform>
@@ -130,23 +130,23 @@
             id="matchtext"
             entity="matchtext"
             navcategory="season"
-            permissionrole="r_daten" >
+            permissionrole="r_data" >
 
-            <entity dbtable="spiel_text" >
+            <entity dbtable="match_text" >
 
                 <overview
                     delete="true"
                     edit="true" >
 
                     <column
-                        id="entity_matchtext_aktion"
-                        field="aktion"
+                        id="entity_matchtext_action"
+                        field="action"
                         type="text"
                         sort="true" />
                     
                     <column
-                        id="entity_matchtext_nachricht"
-                        field="nachricht"
+                        id="entity_matchtext_message"
+                        field="message"
                         type="text"
                         filter="true" />
 
@@ -155,13 +155,13 @@
                 <editform>
 
                     <field
-                        id="aktion"
+                        id="action"
                         type="select"
-                        selection="Tor,Tor_mit_vorlage,Auswechslung,Zweikampf_gewonnen,Zweikampf_verloren,Pass_daneben,Torschuss_daneben,Torschuss_auf_Tor,Karte_gelb,Karte_rot,Karte_gelb_rot,Verletzung,Elfmeter_erfolg,Elfmeter_verschossen,Ecke,Freistoss_daneben,Freistoss_treffer,Taktikaenderung"
+                        selection="Goal,Goal_with_assist,Substitution,Tackle_won,Tackle_lost,Pass_missed,Shot_missed,Shot_on_target,Yellow_card,Red_card,Yellow_card_2nd,Injury,Penalty_scored,Penalty_missed,Corner,Freekick_missed,Freekick_scored,Tactics_changed"
                         required="true"  />
 
                     <field
-                        id="nachricht"
+                        id="message"
                         type="text"
                         required="true"  />
                     

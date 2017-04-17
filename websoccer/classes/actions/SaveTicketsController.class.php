@@ -40,13 +40,13 @@ class SaveTicketsController implements IActionController {
 			return null;
 		}
 		
-		$columns["preis_stehen"] = $parameters["p_stands"];
-		$columns["preis_sitz"] = $parameters["p_seats"];
-		$columns["preis_haupt_stehen"] = $parameters["p_stands_grand"];
-		$columns["preis_haupt_sitze"] = $parameters["p_seats_grand"];
-		$columns["preis_vip"] = $parameters["p_vip"];
+		$columns["price_stand"] = $parameters["p_stands"];
+		$columns["price_seat"] = $parameters["p_seats"];
+		$columns["price_main_stand"] = $parameters["p_stands_grand"];
+		$columns["price_main_seat"] = $parameters["p_seats_grand"];
+		$columns["price_vip"] = $parameters["p_vip"];
 		
-		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_verein";
+		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_club";
 		$whereCondition = "id = %d";
 		$parameters = $clubId;
 		

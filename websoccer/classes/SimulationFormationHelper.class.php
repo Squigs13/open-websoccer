@@ -43,17 +43,17 @@ class SimulationFormationHelper {
 		$columns['id'] = 'id';
 		$columns['position'] = 'position';
 		$columns['position_main'] = 'mainPosition';
-		$columns['vorname'] = 'firstName';
-		$columns['nachname'] = 'lastName';
-		$columns['kunstname'] = 'pseudonym';
-		$columns['w_staerke'] = 'strength';
-		$columns['w_technik'] = 'technique';
-		$columns['w_kondition'] = 'stamina';
-		$columns['w_frische'] = 'freshness';
-		$columns['w_zufriedenheit'] = 'satisfaction';
+		$columns['first_name'] = 'firstName';
+		$columns['last_name'] = 'lastName';
+		$columns['nickname'] = 'pseudonym';
+		$columns['w_strength'] = 'strength';
+		$columns['w_technique'] = 'technique';
+		$columns['w_stamina'] = 'stamina';
+		$columns['w_fitness'] = 'freshness';
+		$columns['w_morale'] = 'satisfaction';
 		
 		if ($websoccer->getConfig('players_aging') == 'birthday') {
-			$ageColumn = 'TIMESTAMPDIFF(YEAR,geburtstag,CURDATE())';
+			$ageColumn = 'TIMESTAMPDIFF(YEAR,birthday,CURDATE())';
 		} else {
 			$ageColumn = 'age';
 		}
@@ -61,8 +61,8 @@ class SimulationFormationHelper {
 		
 		// get players from usual team
 		if (!$team->isNationalTeam) {
-			$fromTable = $websoccer->getConfig('db_prefix') . '_spieler';
-			$whereCondition = 'verein_id = %d AND verletzt = 0 AND gesperrt = 0 AND status = 1 ORDER BY w_frische DESC';
+			$fromTable = $websoccer->getConfig('db_prefix') . '_player';
+			$whereCondition = 'club_id = %d AND injured = 0 AND suspended = 0 AND status = 1 ORDER BY w_fitness DESC';
 			$parameters = $team->id;
 			$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
 		} else {
@@ -82,10 +82,10 @@ class SimulationFormationHelper {
 			
 			$nation = $db->connection->escape_string($team->name);
 			$dbPrefix = $websoccer->getConfig('db_prefix');
-			$queryStr = '(SELECT ' . $columnsStr . ' FROM ' . $dbPrefix . '_spieler WHERE nation = \''. $nation . '\' AND position = \'Torwart\' ORDER BY w_staerke DESC, w_frische DESC LIMIT 1)';
-			$queryStr .= ' UNION ALL (SELECT ' . $columnsStr . ' FROM ' . $dbPrefix . '_spieler WHERE nation = \''. $nation . '\' AND position = \'Abwehr\' ORDER BY w_staerke DESC, w_frische DESC LIMIT 4)';
-			$queryStr .= ' UNION ALL (SELECT ' . $columnsStr . ' FROM ' . $dbPrefix . '_spieler WHERE nation = \''. $nation . '\' AND position = \'Mittelfeld\' ORDER BY w_staerke DESC, w_frische DESC LIMIT 4)';
-			$queryStr .= ' UNION ALL (SELECT ' . $columnsStr . ' FROM ' . $dbPrefix . '_spieler WHERE nation = \''. $nation . '\' AND position = \'Sturm\' ORDER BY w_staerke DESC, w_frische DESC LIMIT 2)';
+			$queryStr = '(SELECT ' . $columnsStr . ' FROM ' . $dbPrefix . '_player WHERE nation = \''. $nation . '\' AND position = \'Goalkeeper\' ORDER BY w_strength DESC, w_fitness DESC LIMIT 1)';
+			$queryStr .= ' UNION ALL (SELECT ' . $columnsStr . ' FROM ' . $dbPrefix . '_player WHERE nation = \''. $nation . '\' AND position = \'Defender\' ORDER BY w_strength DESC, w_fitness DESC LIMIT 4)';
+			$queryStr .= ' UNION ALL (SELECT ' . $columnsStr . ' FROM ' . $dbPrefix . '_player WHERE nation = \''. $nation . '\' AND position = \'Midfielder\' ORDER BY w_strength DESC, w_fitness DESC LIMIT 4)';
+			$queryStr .= ' UNION ALL (SELECT ' . $columnsStr . ' FROM ' . $dbPrefix . '_player WHERE nation = \''. $nation . '\' AND position = \'Forward\' ORDER BY w_strength DESC, w_fitness DESC LIMIT 2)';
 			$result = $db->executeQuery($queryStr);
 		}
 		

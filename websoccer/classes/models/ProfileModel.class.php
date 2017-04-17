@@ -53,12 +53,12 @@ class ProfileModel implements IModel {
 		
 		// select
 		$columns["name"] = "realname";
-		$columns["wohnort"] = "place";
-		$columns["land"] = "country";
-		$columns["geburtstag"] = "birthday";
-		$columns["beruf"] = "occupation";
-		$columns["interessen"] = "interests";
-		$columns["lieblingsverein"] = "favorite_club";
+		$columns["city"] = "place";
+		$columns["country"] = "country";
+		$columns["birthday"] = "birthday";
+		$columns["occupation"] = "occupation";
+		$columns["interests"] = "interests";
+		$columns["fav_club"] = "favorite_club";
 		$columns["homepage"] = "homepage";
 		$columns["c_hideinonlinelist"] = "c_hideinonlinelist";
 		

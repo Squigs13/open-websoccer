@@ -22,19 +22,19 @@
 
 <dl class="dl-horizontal">
 
-	<dt>{{ i18n.getMessage("entity_player_transfer_mindestgebot") }}</dt>
+	<dt>{{ i18n.getMessage("entity_player_transfer_min_bid") }}</dt>
   <dd>{{ player.transfer_min_bid|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</dd>
 
-  <dt>{{ i18n.getMessage("entity_player_marktwert") }}</dt>
+  <dt>{{ i18n.getMessage("entity_player_value") }}</dt>
   <dd>{{ player.player_marketvalue|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</dd>
 
-  <dt>{{ i18n.getMessage("entity_player_vertrag_gehalt") }}</dt>
+  <dt>{{ i18n.getMessage("entity_player_contract_salary") }}</dt>
   <dd>{{ player.player_contract_salary|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</dd>
   
-  <dt>{{ i18n.getMessage("entity_player_vertrag_torpraemie") }}</dt>
+  <dt>{{ i18n.getMessage("entity_player_contract_goal_bonus") }}</dt>
   <dd>{{ player.player_contract_goalbonus|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</dd>
   
-  <dt>{{ i18n.getMessage("entity_player_vertrag_spiele") }}</dt>
+  <dt>{{ i18n.getMessage("entity_player_contract_matches") }}</dt>
   <dd>{{ player.player_contract_matches  }} {{ i18n.getMessage("player_details_unit_matches") }}</dd>
 </dl>
 

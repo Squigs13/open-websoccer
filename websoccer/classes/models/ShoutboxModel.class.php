@@ -51,10 +51,10 @@ class ShoutboxModel implements IModel {
 		$tablePrefix = $this->_websoccer->getConfig('db_prefix');
 		$fromTable = $tablePrefix . '_shoutmessage AS MESSAGE';
 		$fromTable .= ' INNER JOIN ' . $tablePrefix . '_user AS U ON U.id = MESSAGE.user_id';
-		$fromTable .= ' INNER JOIN ' . $tablePrefix . '_spiel AS M ON M.id = MESSAGE.match_id';
-		$fromTable .= ' INNER JOIN ' . $tablePrefix . '_verein AS HOME ON HOME.id = M.home_verein';
-		$fromTable .= ' INNER JOIN ' . $tablePrefix . '_verein AS GUEST ON GUEST.id = M.gast_verein';
-		$fromTable .= ' INNER JOIN ' . $tablePrefix . '_spiel AS REFERENCE ON (M.saison_id IS NOT NULL AND M.saison_id = REFERENCE.saison_id OR M.pokalname IS NOT NULL AND M.pokalname != \'\' AND  M.pokalname = REFERENCE.pokalname OR REFERENCE.spieltyp = \'Freundschaft\' AND M.spieltyp = REFERENCE.spieltyp)';
+		$fromTable .= ' INNER JOIN ' . $tablePrefix . '_match AS M ON M.id = MESSAGE.match_id';
+		$fromTable .= ' INNER JOIN ' . $tablePrefix . '_club AS HOME ON HOME.id = M.home_club';
+		$fromTable .= ' INNER JOIN ' . $tablePrefix . '_club AS GUEST ON GUEST.id = M.guest_club';
+		$fromTable .= ' INNER JOIN ' . $tablePrefix . '_match AS REFERENCE ON (M.season_id IS NOT NULL AND M.season_id = REFERENCE.season_id OR M.cup_name IS NOT NULL AND M.cup_name != \'\' AND  M.cup_name = REFERENCE.cup_name OR REFERENCE.matchtype = \'friendly\' AND M.matchtype = REFERENCE.matchtype)';
 		
 		$whereCondition = 'REFERENCE.id = %d ORDER BY MESSAGE.created_date DESC';
 		

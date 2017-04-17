@@ -7,15 +7,15 @@
     </dependencies>
     
     <admin>
-        <adminpage id="schedulegenerator" permissionrole="r_spiele" navcategory="season" filename="schedulegenerator"/>
+        <adminpage id="schedulegenerator" permissionrole="r_matches" navcategory="season" filename="schedulegenerator"/>
         
         <adminpage
             id="season"
             entity="season"
             navcategory="season"
-            permissionrole="r_spiele" >
+            permissionrole="r_matches" >
 
-            <entity dbtable="saison AS SeasonTab" >
+            <entity dbtable="season AS SeasonTab" >
 
                 <overview delete="true" edit="true" >
 
@@ -27,33 +27,33 @@
                         filter="true" />
                     
                     <column
-                        id="entity_season_liga_id"
+                        id="entity_season_league_id"
                         field="LeagueTab.name"
                         type="text"
                         sort="true"
                         filter="true" />
                     
                     <column
-                        id="entity_season_beendet"
-                        field="SeasonTab.beendet"
+                        id="entity_season_completed"
+                        field="SeasonTab.completed"
                         type="boolean"
                         filter="true" />
                     
                     
-                	<join type="LEFT" jointable="liga AS LeagueTab" joincondition="LeagueTab.id = SeasonTab.liga_id" />
+                	<join type="LEFT" jointable="league AS LeagueTab" joincondition="LeagueTab.id = SeasonTab.league_id" />
                 </overview>
 
                 <editform>
                     
                     <field id="name" type="text" required="true" />
-                    <field id="liga_id" type="foreign_key" entity="league" jointable="liga" cascade="delete" labelcolumns="land, name" required="true" />
-                    <field id="beendet" type="boolean" />
+                    <field id="league_id" type="foreign_key" entity="league" jointable="league" cascade="delete" labelcolumns="country, name" required="true" />
+                    <field id="completed" type="boolean" />
                     
-                    <field id="platz_1_id" type="foreign_key" entity="club" jointable="verein" labelcolumns="name" />
-                    <field id="platz_2_id" type="foreign_key" entity="club" jointable="verein" labelcolumns="name" />
-                    <field id="platz_3_id" type="foreign_key" entity="club" jointable="verein" labelcolumns="name" />
-                    <field id="platz_4_id" type="foreign_key" entity="club" jointable="verein" labelcolumns="name" />
-                    <field id="platz_5_id" type="foreign_key" entity="club" jointable="verein" labelcolumns="name" />
+                    <field id="place_1_id" type="foreign_key" entity="club" jointable="club" labelcolumns="name" />
+                    <field id="place_2_id" type="foreign_key" entity="club" jointable="club" labelcolumns="name" />
+                    <field id="place_3_id" type="foreign_key" entity="club" jointable="club" labelcolumns="name" />
+                    <field id="place_4_id" type="foreign_key" entity="club" jointable="club" labelcolumns="name" />
+                    <field id="place_5_id" type="foreign_key" entity="club" jointable="club" labelcolumns="name" />
 					
                 </editform>
             </entity>
@@ -63,7 +63,7 @@
             id="complete-season"
             filename="season-complete"
             navcategory="season"
-            permissionrole="r_spiele" />
+            permissionrole="r_matches" />
     </admin>
     
     <blocks>

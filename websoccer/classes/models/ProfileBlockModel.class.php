@@ -44,7 +44,7 @@ class ProfileBlockModel implements IModel {
 		$user = $this->_websoccer->getUser();
 		
 		// select general information
-		$columns = "fanbeliebtheit AS user_popularity, highscore AS user_highscore";
+		$columns = "popularity AS user_popularity, highscore AS user_highscore";
 		$whereCondition = "id = %d";
 		$result = $this->_db->querySelect($columns, $fromTable, $whereCondition, $user->id, 1);
 		$userinfo = $result->fetch_array();

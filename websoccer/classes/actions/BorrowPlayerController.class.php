@@ -36,7 +36,7 @@ class BorrowPlayerController implements IActionController {
 	
 	public function executeAction($parameters) {
 		// check if feature is enabled
-		if (!$this->_websoccer->getConfig("lending_enabled")) {
+		if (!$this->_websoccer->getConfig("loan_enabled")) {
 			return NULL;
 		}
 		
@@ -52,62 +52,62 @@ class BorrowPlayerController implements IActionController {
 		// check if it is already own player
 		$player = PlayersDataService::getPlayerById($this->_websoccer, $this->_db, $parameters["id"]);
 		if ($clubId == $player["team_id"]) {
-			throw new Exception($this->_i18n->getMessage("lending_hire_err_ownplayer"));
+			throw new Exception($this->_i18n->getMessage("loan_hire_err_ownplayer"));
 		}
 		
 		// check if player is borrowed by any user
-		if ($player["lending_owner_id"] > 0) {
-			throw new Exception($this->_i18n->getMessage("lending_hire_err_borrowed_player"));
+		if ($player["loan_owner_id"] > 0) {
+			throw new Exception($this->_i18n->getMessage("loan_hire_err_borrowed_player"));
 		}
 		
 		// check if player is offered for lending
-		if ($player["lending_fee"] == 0) {
-			throw new Exception($this->_i18n->getMessage("lending_hire_err_notoffered"));
+		if ($player["loan_fee"] == 0) {
+			throw new Exception($this->_i18n->getMessage("loan_hire_err_notoffered"));
 		}
 		
 		// check if player is on transfermarket
 		if ($player["player_transfermarket"] > 0) {
-			throw new Exception($this->_i18n->getMessage("lending_err_on_transfermarket"));
+			throw new Exception($this->_i18n->getMessage("loan_err_on_transfermarket"));
 		}
 		
 		// check min and max duration
-		if ($parameters["matches"] < $this->_websoccer->getConfig("lending_matches_min")
-				|| $parameters["matches"] > $this->_websoccer->getConfig("lending_matches_max")) {
-			throw new Exception(sprintf($this->_i18n->getMessage("lending_hire_err_illegalduration"), 
-					$this->_websoccer->getConfig("lending_matches_min"), $this->_websoccer->getConfig("lending_matches_max")));
+		if ($parameters["matches"] < $this->_websoccer->getConfig("loan_matches_min")
+				|| $parameters["matches"] > $this->_websoccer->getConfig("loan_matches_max")) {
+			throw new Exception(sprintf($this->_i18n->getMessage("loan_hire_err_illegalduration"), 
+					$this->_websoccer->getConfig("loan_matches_min"), $this->_websoccer->getConfig("loan_matches_max")));
 		}
 			
 		// check player's contract length
 		if ($parameters["matches"] >= $player["player_contract_matches"]) {
-			throw new Exception($this->_i18n->getMessage("lending_hire_err_contractendingtoosoon", $player["player_contract_matches"]));
+			throw new Exception($this->_i18n->getMessage("loan_hire_err_contractendingtoosoon", $player["player_contract_matches"]));
 		}
 		
 		// check if team can pay fee and salary
-		$fee = $parameters["matches"] * $player["lending_fee"];
+		$fee = $parameters["matches"] * $player["loan_fee"];
 		// team should have the money for at least 5 matches to pay him
 		$minBudget = $fee + 5 * $player["player_contract_salary"];
 		$team = TeamsDataService::getTeamSummaryById($this->_websoccer, $this->_db, $clubId);
 		if ($team["team_budget"] < $minBudget) {
-			throw new Exception($this->_i18n->getMessage("lending_hire_err_budget_too_low"));
+			throw new Exception($this->_i18n->getMessage("loan_hire_err_budget_too_low"));
 		}
 		
 		// deduct and credit fee
-		BankAccountDataService::debitAmount($this->_websoccer, $this->_db, $clubId, $fee, "lending_fee_subject", $player["team_name"]);
-		BankAccountDataService::creditAmount($this->_websoccer, $this->_db, $player["team_id"], $fee, "lending_fee_subject", $team["team_name"]);
+		BankAccountDataService::debitAmount($this->_websoccer, $this->_db, $clubId, $fee, "loan_fee_subject", $player["team_name"]);
+		BankAccountDataService::creditAmount($this->_websoccer, $this->_db, $player["team_id"], $fee, "loan_fee_subject", $team["team_name"]);
 		
 		$this->updatePlayer($player["player_id"], $player["team_id"], $clubId, $parameters["matches"]);
 		
 		// create notification for owner
 		$playerName = (strlen($player["player_pseudonym"])) ? $player["player_pseudonym"] : $player["player_firstname"] . " " . $player["player_lastname"];
 		if ($player["team_user_id"]) {
-			NotificationsDataService::createNotification($this->_websoccer, $this->_db, $player["team_user_id"], "lending_notification_lent",
+			NotificationsDataService::createNotification($this->_websoccer, $this->_db, $player["team_user_id"], "loan_notification_lent",
 				array("player" => $playerName, "matches" => $parameters["matches"], "newteam" => $team["team_name"]), 
-				"lending_lent", "player", "id=" . $player["player_id"]);
+				"loan_lent", "player", "id=" . $player["player_id"]);
 		}
 		
 		// success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS, 
-				$this->_i18n->getMessage("lending_hire_success"),
+				$this->_i18n->getMessage("loan_hire_success"),
 				""));
 		
 		return "myteam";
@@ -115,9 +115,9 @@ class BorrowPlayerController implements IActionController {
 	
 	private function updatePlayer($playerId, $ownerId, $clubId, $matches) {
 		
-		$columns = array("lending_matches" => $matches, "lending_owner_id" => $ownerId, "verein_id" => $clubId);
+		$columns = array("loan_matches" => $matches, "loan_owner_id" => $ownerId, "club_id" => $clubId);
 		
-		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_spieler";
+		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_player";
 		$whereCondition = "id = %d";
 		
 		$this->_db->queryUpdate($columns, $fromTable, $whereCondition, $playerId);

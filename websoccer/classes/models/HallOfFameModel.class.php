@@ -54,16 +54,16 @@ class HallOfFameModel implements IModel {
 		// get seasons
 		$columns = array(
 				'L.name' => 'league_name',
-				'L.land' => 'league_country',
+				'L.country' => 'league_country',
 				'S.name' => 'season_name',
 				'C.id' => 'team_id',
 				'C.name' => 'team_name',
-				'C.bild' => 'team_picture'
+				'C.image' => 'team_picture'
 				);
-		$fromTable = $this->_websoccer->getConfig('db_prefix') . '_saison AS S';
-		$fromTable .= ' INNER JOIN ' . $this->_websoccer->getConfig('db_prefix') . '_liga AS L ON L.id = S.liga_id';
-		$fromTable .= ' INNER JOIN ' . $this->_websoccer->getConfig('db_prefix') . '_verein AS C ON C.id = S.platz_1_id';
-		$whereCondition = 'S.beendet = \'1\' ORDER BY L.land ASC, L.name ASC, S.id DESC';
+		$fromTable = $this->_websoccer->getConfig('db_prefix') . '_season AS S';
+		$fromTable .= ' INNER JOIN ' . $this->_websoccer->getConfig('db_prefix') . '_league AS L ON L.id = S.league_id';
+		$fromTable .= ' INNER JOIN ' . $this->_websoccer->getConfig('db_prefix') . '_club AS C ON C.id = S.place_1_id';
+		$whereCondition = 'S.completed = \'1\' ORDER BY L.country ASC, L.name ASC, S.id DESC';
 		$result = $this->_db->querySelect($columns, $fromTable, $whereCondition);
 		while ($season = $result->fetch_array()) {
 			$leagues[$season['league_name']][] = $season;
@@ -75,10 +75,10 @@ class HallOfFameModel implements IModel {
 				'CUP.name' => 'cup_name',
 				'C.id' => 'team_id',
 				'C.name' => 'team_name',
-				'C.bild' => 'team_picture'
+				'C.image' => 'team_picture'
 		);
 		$fromTable = $this->_websoccer->getConfig('db_prefix') . '_cup AS CUP';
-		$fromTable .= ' INNER JOIN ' . $this->_websoccer->getConfig('db_prefix') . '_verein AS C ON C.id = CUP.winner_id';
+		$fromTable .= ' INNER JOIN ' . $this->_websoccer->getConfig('db_prefix') . '_club AS C ON C.id = CUP.winner_id';
 		$whereCondition = 'CUP.winner_id IS NOT NULL ORDER BY CUP.id DESC';
 		$result = $this->_db->querySelect($columns, $fromTable, $whereCondition);
 		while ($cup = $result->fetch_array()) {

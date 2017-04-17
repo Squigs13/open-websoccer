@@ -79,7 +79,7 @@ class MatchDetailsModel implements IModel {
 		$guestStrikerMessages = array();
 		foreach ($reportmessages as $reportMessage) {
 			$type = $reportMessage['type'];
-			if ($type == 'Tor' || $type == 'Tor_mit_vorlage' || $type == 'Elfmeter_erfolg' || $type == 'Freistoss_treffer') {
+			if ($type == 'Goal' || $type == 'Goal_with_assist' || $type == 'Penalty_scored' || $type == 'Freekick_scored') {
 				if ($reportMessage['active_home']) {
 					array_unshift($homeStrikerMessages, $reportMessage);
 				} else {

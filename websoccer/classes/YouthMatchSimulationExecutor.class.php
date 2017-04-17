@@ -149,7 +149,7 @@ class YouthMatchSimulationExecutor {
 			$player->name = $name;
 			
 			// bench player
-			if ($playerinfo['state'] == 'Ersatzbank') {
+			if ($playerinfo['state'] == 'Bench') {
 				$team->playersOnBench[$playerinfo['id']] = $player;
 				
 				// field player
@@ -157,7 +157,7 @@ class YouthMatchSimulationExecutor {
 				
 				// first player must be always goalkeeper
 				if ($addedFieldPlayers == 0) {
-					$player->position = 'Torwart';
+					$player->position = 'Goalkeeper';
 					$player->mainPosition = 'T';
 				} else {
 					$player->position = $playerinfo['match_position'];

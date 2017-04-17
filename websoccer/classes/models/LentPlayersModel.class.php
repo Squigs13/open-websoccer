@@ -52,31 +52,31 @@ class LentPlayersModel implements IModel {
 
 		$columns = array(
 				"P.id" => "id",
-				"vorname" => "firstname",
-				"nachname" => "lastname",
-				"kunstname" => "pseudonym",
+				"first_name" => "firstname",
+				"last_name" => "lastname",
+				"nickname" => "pseudonym",
 				"position" => "position",
 				"position_main" => "position_main",
 				"position_second" => "position_second",
 				"nation" => "player_nationality",
-				"lending_matches" => "lending_matches",
-				"lending_fee" => "lending_fee",
+				"loan_matches" => "loan_matches",
+				"loan_fee" => "loan_fee",
 				"C.id" => "team_id",
 				"C.name" => "team_name"
 		);
 		
 		if ($this->_websoccer->getConfig('players_aging') == 'birthday') {
-			$ageColumn = 'TIMESTAMPDIFF(YEAR,geburtstag,CURDATE())';
+			$ageColumn = 'TIMESTAMPDIFF(YEAR,birthday,CURDATE())';
 		} else {
 			$ageColumn = 'age';
 		}
 		$columns[$ageColumn] = 'age';
 		
 		$dbPrefix = $this->_websoccer->getConfig("db_prefix");
-		$fromTable = $dbPrefix . "_spieler P INNER JOIN " . $dbPrefix . "_verein C ON C.id = P.verein_id";
-		$whereCondition = "P.status = 1 AND lending_owner_id = %d";
+		$fromTable = $dbPrefix . "_player P INNER JOIN " . $dbPrefix . "_club C ON C.id = P.club_id";
+		$whereCondition = "P.status = 1 AND loan_owner_id = %d";
 		
-		$whereCondition .= " ORDER BY lending_matches ASC, position ASC, position_main ASC, nachname ASC, vorname ASC";
+		$whereCondition .= " ORDER BY loan_matches ASC, position ASC, position_main ASC, last_name ASC, first_name ASC";
 		
 		$result = $this->_db->querySelect($columns, $fromTable, $whereCondition, $teamId, 50);
 		

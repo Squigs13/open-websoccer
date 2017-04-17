@@ -21,7 +21,7 @@
 				<th>{{ i18n.getMessage("playertable_head_name") }}</th>
 				<th>{{ i18n.getMessage("playertable_head_age") }}</th>
 				<th>{{ i18n.getMessage("playertable_head_strength") }}</th>
-				<th>{{ i18n.getMessage("entity_player_vertrag_gehalt") }}</th>
+				<th>{{ i18n.getMessage("entity_player_contract_salary") }}</th>
 				<th>{{ i18n.getMessage("entity_youthplayer_st_matches") }}</th>
 			</tr>
 		</thead>
@@ -29,11 +29,11 @@
 		
 		{% for player in players %}
 			
-			{% if player.position == "Torwart" %}
+			{% if player.position == "Goalkeeper" %}
 				{% set positionId = "goaly" %}
-			{% elseif player.position == "Abwehr" %}
+			{% elseif player.position == "Defender" %}
 				{% set positionId = "defense" %}
-			{% elseif player.position == "Mittelfeld" %}
+			{% elseif player.position == "Midfielder" %}
 				{% set positionId = "midfield" %}
 			{% else %}
 				{% set positionId = "striker" %}

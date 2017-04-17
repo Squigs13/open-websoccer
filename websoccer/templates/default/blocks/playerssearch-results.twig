@@ -11,11 +11,11 @@
 			<tr>
 				<th><abbr title="{{ i18n.getMessage("playertable_head_position") }}">{{ i18n.getMessage("playertable_head_position_abbr") }}</abbr></th>
 				<th>{{ i18n.getMessage("playertable_head_name") }}</th>
-				<th>{{ i18n.getMessage("entity_player_verein_id") }}</th>
+				<th>{{ i18n.getMessage("entity_player_club_id") }}</th>
 				{% if env.getConfig("hide_strength_attributes") != "1" %}
 					<th>{{ i18n.getMessage("playertable_head_strength") }}</th>
 				{% endif %}
-				<th>{{ i18n.getMessage("entity_player_vertrag_gehalt") }}</th>
+				<th>{{ i18n.getMessage("entity_player_contract_salary") }}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -31,15 +31,15 @@
 				<td><p><a href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}">{{ player.firstname }} {% if player.pseudonym|length > 0 %}"{{ player.pseudonym }}" {% endif %}{{ player.lastname }}</a>
 				{% if player.unsellable %}
 					<i class="icon-eye-close" title="{{ i18n.getMessage("entity_player_unsellable") }}"></i>
-				{% elseif player.lending_owner_id == 0 and player.lending_fee > 0 and env.getConfig("lending_enabled") %}
-					<i class="icon-share-alt" title="{{ i18n.getMessage("lending_player_marker_lendable") }}"></i>
+				{% elseif player.loan_owner_id == 0 and player.loan_fee > 0 and env.getConfig("loan_enabled") %}
+					<i class="icon-share-alt" title="{{ i18n.getMessage("loan_player_marker_lendable") }}"></i>
 				{% endif %}</p></td>
 				<td>
 				{% if player.team_id > 0 %}
 				<a href="{{ env.getInternalUrl("team", "id=" ~ player.team_id) }}">{{ player.team_name }}</a>
 				
-					{% if player.lending_owner_id > 0 %}
-						<i class="icon-star-empty" title="{{ i18n.getMessage("lending_player_marker_tooltip") }}"></i></em>
+					{% if player.loan_owner_id > 0 %}
+						<i class="icon-star-empty" title="{{ i18n.getMessage("loan_player_marker_tooltip") }}"></i></em>
 					{% endif %}
 				{% else %}
 				-

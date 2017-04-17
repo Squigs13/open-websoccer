@@ -12,7 +12,7 @@
 	<message id="settings_label_transfermarket_computed_marketvalue">Marktwert automatisch berechnen. Der Marktwert richtet sich nach der tatsächlichen Stärke des Spielers.</message>
 	
 	<message id="settings_label_transfermarket_value_per_strength">Marktwert pro Stärkepunkt</message>
-	<message id="settings_label_transfermarket_value_per_strength_help">falls der Marktwert automatisch berechnet werden soll.</message>
+	<message id="settings_label_transfermarket_value_per_strength_help">falls der Marktwert automatisch simulated werden soll.</message>
 
 	<message id="settings_label_transfermarket_min_teamsize">Mindestkadergrösse</message>
 	<message id="settings_label_transfermarket_min_teamsize_help">Anzahl an Spieler, die mindestens im Team sind. Spieler können nicht verkauft werden, wenn die Mindestgrösse unterschritten wird.</message>

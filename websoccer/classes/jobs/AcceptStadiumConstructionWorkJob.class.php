@@ -73,12 +73,12 @@ class AcceptStadiumConstructionWorkJob extends AbstractJob {
 				// update stadium
 				$stadium = StadiumsDataService::getStadiumByTeamId($this->_websoccer, $this->_db, $construction['team_id']);
 				$columns = array();
-				$columns['p_steh'] = $stadium['places_stands'] + $construction['p_steh'];
-				$columns['p_sitz'] = $stadium['places_seats'] + $construction['p_sitz'];
-				$columns['p_haupt_steh'] = $stadium['places_stands_grand'] + $construction['p_haupt_steh'];
-				$columns['p_haupt_sitz'] = $stadium['places_seats_grand'] + $construction['p_haupt_sitz'];
+				$columns['p_standing'] = $stadium['places_stands'] + $construction['p_standing'];
+				$columns['p_seat'] = $stadium['places_seats'] + $construction['p_seat'];
+				$columns['p_main_standing'] = $stadium['places_stands_grand'] + $construction['p_main_standing'];
+				$columns['p_main_seat'] = $stadium['places_seats_grand'] + $construction['p_main_seat'];
 				$columns['p_vip'] = $stadium['places_vip'] + $construction['p_vip'];
-				$this->_db->queryUpdate($columns, $this->_websoccer->getConfig('db_prefix') . '_stadion', 'id = %d',
+				$this->_db->queryUpdate($columns, $this->_websoccer->getConfig('db_prefix') . '_stadium', 'id = %d',
 						$stadium['stadium_id']);
 					
 				// delete order
@@ -96,23 +96,23 @@ class AcceptStadiumConstructionWorkJob extends AbstractJob {
 	
 	private function checkTrainingCamps() {
 		
-		$fromTable = $this->_websoccer->getConfig('db_prefix') . '_trainingslager_belegung AS B';
-		$fromTable .= ' INNER JOIN ' . $this->_websoccer->getConfig('db_prefix') . '_trainingslager AS C ON C.id = B.lager_id';
+		$fromTable = $this->_websoccer->getConfig('db_prefix') . '_training_camp_booking AS B';
+		$fromTable .= ' INNER JOIN ' . $this->_websoccer->getConfig('db_prefix') . '_training_camp AS C ON C.id = B.camp_id';
 		
 		$columns['B.id'] = 'id';
-		$columns['B.datum_start'] = 'date_start';
-		$columns['B.datum_ende'] = 'date_end';
-		$columns['B.verein_id'] = 'team_id';
+		$columns['B.date_start'] = 'date_start';
+		$columns['B.date_end'] = 'date_end';
+		$columns['B.club_id'] = 'team_id';
 		$columns['C.name'] = 'name';
-		$columns['C.land'] = 'country';
-		$columns['C.preis_spieler_tag'] = 'costs';
-		$columns['C.p_staerke'] = 'effect_strength';
-		$columns['C.p_technik'] = 'effect_strength_technique';
-		$columns['C.p_kondition'] = 'effect_strength_stamina';
-		$columns['C.p_frische'] = 'effect_strength_freshness';
-		$columns['C.p_zufriedenheit'] = 'effect_strength_satisfaction';
+		$columns['C.country'] = 'country';
+		$columns['C.price_player_day'] = 'costs';
+		$columns['C.p_strength'] = 'effect_strength';
+		$columns['C.p_technique'] = 'effect_strength_technique';
+		$columns['C.p_stamina'] = 'effect_strength_stamina';
+		$columns['C.p_fitness'] = 'effect_strength_freshness';
+		$columns['C.p_morale'] = 'effect_strength_satisfaction';
 		
-		$whereCondition = 'B.datum_ende < %d';
+		$whereCondition = 'B.date_end < %d';
 		
 		$result = $this->_db->querySelect($columns, $fromTable, $whereCondition, $this->_websoccer->getNowAsTimestamp());
 		while ($booking = $result->fetch_array()) {

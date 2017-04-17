@@ -43,15 +43,15 @@ class TopNewsListModel implements IModel {
 		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_news";
 		
 		// select
-		$columns = "id, titel, datum";
-		$whereCondition = "status = 1 ORDER BY datum DESC";
+		$columns = "id, title, date";
+		$whereCondition = "status = 1 ORDER BY date DESC";
 		$result = $this->_db->querySelect($columns, $fromTable, $whereCondition, array(), NUMBER_OF_TOP_NEWS);
 		
 		$articles = array();
 		while ($article = $result->fetch_array()) {
 			$articles[] = array("id" => $article["id"],
-								"title" => $article["titel"],
-								"date" => $this->_websoccer->getFormattedDate($article["datum"]));
+								"title" => $article["title"],
+								"date" => $this->_websoccer->getFormattedDate($article["date"]));
 		}
 		$result->free();
 		

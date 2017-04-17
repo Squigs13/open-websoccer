@@ -42,13 +42,13 @@ if (!$show) {
   			<option></option>
   			
   			<?php 
-  			$columns = "id,land,name";
-  			$fromTable = $website->getConfig("db_prefix") . "_liga";
-  			$result = $db->querySelect($columns, $fromTable, "1 ORDER BY land ASC, name ASC", array());
+  			$columns = "id,country,name";
+  			$fromTable = $website->getConfig("db_prefix") . "_league";
+  			$result = $db->querySelect($columns, $fromTable, "1 ORDER BY country ASC, name ASC", array());
   			while ($league = $result->fetch_array()) {
 				echo "<option value=\"". $league["id"] . "\"";
 				if ($leagueid == $league["id"]) echo " selected";
-				echo ">". $league["land"] . " - " . $league["name"] . "</option>";
+				echo ">". $league["country"] . " - " . $league["name"] . "</option>";
 			}
 			$result->free();
   			?>
@@ -67,10 +67,10 @@ if (!$show) {
 	  $columns = array();
 	  $columns["T1.id"] = "id";
 	  $columns["T1.name"] = "name";
-	  $columns["(SELECT COUNT(*) FROM " . $conf['db_prefix'] . "_spieler AS S WHERE S.verein_id = T1.id)"] = "playerscount";
+	  $columns["(SELECT COUNT(*) FROM " . $conf['db_prefix'] . "_player AS S WHERE S.club_id = T1.id)"] = "playerscount";
 	  
-	  $fromTable = $conf['db_prefix'] . "_verein AS T1";
-	  $whereCondition = "T1.liga_id = %d ORDER BY T1.name ASC";
+	  $fromTable = $conf['db_prefix'] . "_club AS T1";
+	  $whereCondition = "T1.league_id = %d ORDER BY T1.name ASC";
 	  $result = $db->querySelect($columns, $fromTable, $whereCondition, $leagueid);
 	  
 	  if (!$result->num_rows) {
@@ -135,14 +135,14 @@ elseif ($show == "generateform") {
 	
 	$formFields["player_age_deviation"] = array("type" => "number", "value" => 3);
 	
-	$formFields["entity_player_vertrag_gehalt"] = array("type" => "number", "value" => 10000);
-	$formFields["entity_player_vertrag_spiele"] = array("type" => "number", "value" => 60);
+	$formFields["entity_player_contract_salary"] = array("type" => "number", "value" => 10000);
+	$formFields["entity_player_contract_matches"] = array("type" => "number", "value" => 60);
 	
-	$formFields["entity_player_w_staerke"] = array("type" => "percent", "value" => 50);
-	$formFields["entity_player_w_technik"] = array("type" => "percent", "value" => 50);
-	$formFields["entity_player_w_kondition"] = array("type" => "percent", "value" => 70);
-	$formFields["entity_player_w_frische"] = array("type" => "percent", "value" => 80);
-	$formFields["entity_player_w_zufriedenheit"] = array("type" => "percent", "value" => 80);
+	$formFields["entity_player_w_strength"] = array("type" => "percent", "value" => 50);
+	$formFields["entity_player_w_technique"] = array("type" => "percent", "value" => 50);
+	$formFields["entity_player_w_stamina"] = array("type" => "percent", "value" => 70);
+	$formFields["entity_player_w_fitness"] = array("type" => "percent", "value" => 80);
+	$formFields["entity_player_w_morale"] = array("type" => "percent", "value" => 80);
 	
 	$formFields["playersgenerator_label_deviation"] = array("type" => "percent", "value" => 10);
 	
@@ -188,11 +188,11 @@ elseif ($show == "generate") {
   //##### Abspeichern #####
   else {
 
-	$strengths["strength"] = $_POST['entity_player_w_staerke'];
-	$strengths["technique"] = $_POST['entity_player_w_technik'];
-	$strengths["stamina"] = $_POST['entity_player_w_kondition'];
-	$strengths["freshness"] = $_POST['entity_player_w_frische'];
-	$strengths["satisfaction"] = $_POST['entity_player_w_zufriedenheit'];
+	$strengths["strength"] = $_POST['entity_player_w_strength'];
+	$strengths["technique"] = $_POST['entity_player_w_technique'];
+	$strengths["stamina"] = $_POST['entity_player_w_stamina'];
+	$strengths["freshness"] = $_POST['entity_player_w_fitness'];
+	$strengths["satisfaction"] = $_POST['entity_player_w_morale'];
 	
 	$positions["T"] = $_POST["option_T"];
 	$positions["LV"] = $_POST["option_LV"];
@@ -210,24 +210,24 @@ elseif ($show == "generate") {
 	// generate for specific team
 	if ($teamid > 0) {
 		DataGeneratorService::generatePlayers($website, $db, $teamid, $_POST['player_age'], $_POST['player_age_deviation'],
-$_POST['entity_player_vertrag_gehalt'], $_POST['entity_player_vertrag_spiele'], $strengths, $positions, $_POST["playersgenerator_label_deviation"]);
+$_POST['entity_player_contract_salary'], $_POST['entity_player_contract_matches'], $strengths, $positions, $_POST["playersgenerator_label_deviation"]);
 	} elseif ($leagueid > 0) {
 		// generate for all teams of league
 		
 		$columns = "id";
-		$fromTable = $conf['db_prefix'] . "_verein";
-		$whereCondition = "liga_id = %d";
+		$fromTable = $conf['db_prefix'] . "_club";
+		$whereCondition = "league_id = %d";
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $leagueid);
 		while ($team = $result->fetch_array()) {
 			DataGeneratorService::generatePlayers($website, $db, $team["id"], $_POST['player_age'], $_POST['player_age_deviation'],
-$_POST['entity_player_vertrag_gehalt'], $_POST['entity_player_vertrag_spiele'], $strengths, $positions, $_POST["playersgenerator_label_deviation"]);
+$_POST['entity_player_contract_salary'], $_POST['entity_player_contract_matches'], $strengths, $positions, $_POST["playersgenerator_label_deviation"]);
 		}
 		$result->free();
 
 	} else {
 		// generate for transfer market
 		DataGeneratorService::generatePlayers($website, $db, 0, $_POST['player_age'], $_POST['player_age_deviation'],
-$_POST['entity_player_vertrag_gehalt'], $_POST['entity_player_vertrag_spiele'], $strengths, $positions, $_POST["playersgenerator_label_deviation"], $_POST['entity_player_nation']);
+$_POST['entity_player_contract_salary'], $_POST['entity_player_contract_matches'], $strengths, $positions, $_POST["playersgenerator_label_deviation"], $_POST['entity_player_nation']);
 	}
 
 	echo createSuccessMessage($i18n->getMessage("generator_success"), "");

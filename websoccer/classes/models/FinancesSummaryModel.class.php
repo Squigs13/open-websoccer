@@ -42,13 +42,13 @@ class FinancesSummaryModel implements IModel {
 		$minDate = $this->_websoccer->getNowAsTimestamp() - 365 * 3600 * 24;
 		
 		$columns = array(
-				'verwendung' => 'subject',
-				'SUM(betrag)' => 'balance',
-				'AVG(betrag)' => 'avgAmount'
+				'details' => 'subject',
+				'SUM(amount)' => 'balance',
+				'AVG(amount)' => 'avgAmount'
 				);
 		$result = $this->_db->querySelect($columns, 
-				$this->_websoccer->getConfig('db_prefix') . '_konto', 
-				'verein_id = %d AND datum > %d GROUP BY verwendung HAVING COUNT(*) > 5', array($this->_teamId, $minDate));
+				$this->_websoccer->getConfig('db_prefix') . '_accounts', 
+				'club_id = %d AND date > %d GROUP BY details HAVING COUNT(*) > 5', array($this->_teamId, $minDate));
 		$majorPositions = array();
 		while ($position = $result->fetch_array()) {
 			$majorPositions[] = $position;

@@ -62,10 +62,10 @@ class RemovePlayerFromTransfermarketController implements IActionController {
 		}
 		
 		$this->_db->queryUpdate(array(
-				'transfermarkt' => '0',
+				'transfer_listed' => '0',
 				'transfer_start' => 0,
-				'transfer_ende' => 0
-				), $this->_websoccer->getConfig('db_prefix') . '_spieler', 'id = %d', $parameters['id']);
+				'transfer_end' => 0
+				), $this->_websoccer->getConfig('db_prefix') . '_player', 'id = %d', $parameters['id']);
 		
 		// success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS, 

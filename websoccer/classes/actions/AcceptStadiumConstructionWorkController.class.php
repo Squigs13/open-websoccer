@@ -73,12 +73,12 @@ class AcceptStadiumConstructionWorkController implements IActionController {
 			// update stadium
 			$stadium = StadiumsDataService::getStadiumByTeamId($this->_websoccer, $this->_db, $clubId);
 			$columns = array();
-			$columns["p_steh"] = $stadium["places_stands"] + $construction["p_steh"];
-			$columns["p_sitz"] = $stadium["places_seats"] + $construction["p_sitz"];
-			$columns["p_haupt_steh"] = $stadium["places_stands_grand"] + $construction["p_haupt_steh"];
-			$columns["p_haupt_sitz"] = $stadium["places_seats_grand"] + $construction["p_haupt_sitz"];
+			$columns["p_standing"] = $stadium["places_stands"] + $construction["p_standing"];
+			$columns["p_seat"] = $stadium["places_seats"] + $construction["p_seat"];
+			$columns["p_main_standing"] = $stadium["places_stands_grand"] + $construction["p_main_standing"];
+			$columns["p_main_seat"] = $stadium["places_seats_grand"] + $construction["p_main_seat"];
 			$columns["p_vip"] = $stadium["places_vip"] + $construction["p_vip"];
-			$this->_db->queryUpdate($columns, $this->_websoccer->getConfig("db_prefix") . "_stadion", "id = %d", 
+			$this->_db->queryUpdate($columns, $this->_websoccer->getConfig("db_prefix") . "_stadium", "id = %d", 
 					$stadium["stadium_id"]);
 			
 			// delete order

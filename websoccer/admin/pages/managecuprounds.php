@@ -28,7 +28,7 @@ echo "<h1>$mainTitle</h1>";
 
 echo "<p><a href=\"?site=manage&entity=cup\" class=\"btn\">" . $i18n->getMessage("button_cancel") ."</a></p>";
 
-if (!$admin["r_admin"] && !$admin["r_demo"] && !$admin["r_spiele"]) {
+if (!$admin["r_admin"] && !$admin["r_demo"] && !$admin["r_matches"]) {
 	throw new Exception($i18n->getMessage("error_access_denied"));
 }
 
@@ -104,8 +104,8 @@ if ($action == "create") {
 			
 			if ($_POST["round_generation"] == "winners_from") {
 				$columns["from_winners_round_id"] = $_POST["from_round_id"];
-			} elseif ($_POST["round_generation"] == "loosers_from") {
-				$columns["from_loosers_round_id"] = $_POST["from_round_id"];
+			} elseif ($_POST["round_generation"] == "loser_from") {
+				$columns["from_loser_round_id"] = $_POST["from_round_id"];
 			}
 			
 		}
@@ -138,8 +138,8 @@ while ($round = $result->fetch_array()) {
 		$hierarchy[$round["from_winners_round_id"]]["winnerround"] = $round["id"];
 		$isRoot = FALSE;
 	}
-	if ($round["from_loosers_round_id"] > 0) {
-		$hierarchy[$round["from_loosers_round_id"]]["looserround"] = $round["id"];
+	if ($round["from_loser_round_id"] > 0) {
+		$hierarchy[$round["from_loser_round_id"]]["looserround"] = $round["id"];
 		$isRoot = FALSE;
 	}
 	
@@ -202,7 +202,7 @@ function renderRound($roundNode) {
 		
 		// name has changed, so also update already existing matches
 		if ($roundNode["round"]["name"] !== $_POST["name"]) {
-			$db->queryUpdate(array("pokalrunde" => $_POST["name"]), $website->getConfig("db_prefix") . "_spiel", "pokalname = '%s' AND pokalrunde = '%s'", 
+			$db->queryUpdate(array("cup_round" => $_POST["name"]), $website->getConfig("db_prefix") . "_match", "cup_name = '%s' AND cup_round = '%s'", 
 					array($cup["name"], $roundNode["round"]["name"]));
 		}
 		
@@ -274,17 +274,17 @@ function renderRound($roundNode) {
 		
 		// show matches link
 		$matchesUrl = "?site=manage&entity=match&" . http_build_query(array(
-				"entity_match_pokalname" => escapeOutput($cup["name"]),
-				"entity_match_pokalrunde" => escapeOutput($roundNode["round"]["name"])));
+				"entity_match_cup_name" => escapeOutput($cup["name"]),
+				"entity_match_cup_round" => escapeOutput($roundNode["round"]["name"])));
 		echo "<li><a href=\"$matchesUrl\">". $i18n->getMessage("managecuprounds_show_matches") . "</a></li>";
 		
 		echo "</ul>";
 		
 		// add matches links
 		$addMatchUrl = "?site=manage&entity=match&show=add&" . http_build_query(array(
-				"pokalname" => escapeOutput($cup["name"]),
-				"pokalrunde" => escapeOutput($roundNode["round"]["name"]),
-				"spieltyp" => "Pokalspiel"));
+				"cup_name" => escapeOutput($cup["name"]),
+				"cup_round" => escapeOutput($roundNode["round"]["name"]),
+				"matchtype" => "cupmatch"));
 
 		if (!$roundNode["round"]["groupmatches"]) {
 			echo "<p><a href=\"$addMatchUrl\" class=\"btn btn-mini\"><i class=\"icon-plus-sign\"></i> ". $i18n->getMessage("managecuprounds_add_match") . "</a>";
@@ -301,7 +301,7 @@ function renderRound($roundNode) {
 		}
 		
 		if (isset($roundNode["looserround"])) {
-				echo "<p><em>". $i18n->getMessage("managecuprounds_next_round_loosers") . ":</em></p>\n";
+				echo "<p><em>". $i18n->getMessage("managecuprounds_next_round_loser") . ":</em></p>\n";
 				renderRound($hierarchy[$roundNode["looserround"]]);
 		}
 	}
@@ -329,7 +329,7 @@ function renderRound($roundNode) {
 	<?php 
 	echo FormBuilder::createFormGroup($i18n, "round_generation", array(
 			"type" => "select",
-			"selection" => "self,winners_from,loosers_from,generate_from_groups",
+			"selection" => "self,winners_from,loser_from,generate_from_groups",
 			"value" => "",
 			"required" => "true"
 		), $fieldInfo["value"], "managecuprounds_label_");

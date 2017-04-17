@@ -60,7 +60,7 @@ class UserDetailsModel implements IModel {
 		}
 		
 		// get teams of user
-		$fromTable = $this->_websoccer->getConfig('db_prefix') . '_verein';
+		$fromTable = $this->_websoccer->getConfig('db_prefix') . '_club';
 		$whereCondition = 'user_id = %d AND status = \'1\' AND nationalteam != \'1\' ORDER BY name ASC';
 		$result = $this->_db->querySelect('id,name', $fromTable, $whereCondition, $userId);		
 		
@@ -73,7 +73,7 @@ class UserDetailsModel implements IModel {
 		// get national team of user
 		if ($this->_websoccer->getConfig('nationalteams_enabled')) {
 			$columns = 'id,name';
-			$fromTable = $this->_websoccer->getConfig('db_prefix') . '_verein';
+			$fromTable = $this->_websoccer->getConfig('db_prefix') . '_club';
 			$whereCondition = 'user_id = %d AND nationalteam = \'1\'';
 			$result = $this->_db->querySelect($columns, $fromTable, $whereCondition, $userId, 1);
 			$nationalteam = $result->fetch_array();

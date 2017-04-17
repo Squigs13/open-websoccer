@@ -153,10 +153,10 @@ class SaveFormationController implements IActionController {
 	}
 	
 	private function saveFormation($teamId, $matchId, $parameters, $validSubstitutions) {
-		$fromTable = $this->_websoccer->getConfig('db_prefix') .'_aufstellung';
+		$fromTable = $this->_websoccer->getConfig('db_prefix') .'_tactics';
 		
-		$columns['verein_id'] = $teamId;
-		$columns['datum'] = $this->_websoccer->getNowAsTimestamp();
+		$columns['club_id'] = $teamId;
+		$columns['date'] = $this->_websoccer->getNowAsTimestamp();
 		$columns['offensive'] = $parameters['offensive'];
 		$columns['setup'] = $parameters['setup'];
 		$columns['longpasses'] = $parameters['longpasses'];
@@ -164,24 +164,24 @@ class SaveFormationController implements IActionController {
 		$columns['freekickplayer'] = $parameters['freekickplayer'];
 		
 		for ($playerNo = 1; $playerNo <= 11; $playerNo++) {
-			$columns['spieler' . $playerNo] = $parameters['player' . $playerNo];
-			$columns['spieler' . $playerNo . '_position'] = $parameters['player' . $playerNo . '_pos'];
+			$columns['player' . $playerNo] = $parameters['player' . $playerNo];
+			$columns['player' . $playerNo . '_position'] = $parameters['player' . $playerNo . '_pos'];
 		}
 		
 		for ($playerNo = 1; $playerNo <= 5; $playerNo++) {
-			$columns['ersatz' . $playerNo] = $parameters['bench' . $playerNo];
+			$columns['sub' . $playerNo] = $parameters['bench' . $playerNo];
 		}
 		
 		for ($subNo = 1; $subNo <= 3; $subNo++) {
 			if (in_array($subNo, $validSubstitutions)) {
-				$columns['w'. $subNo . '_raus'] = $parameters['sub' . $subNo .'_out'];
-				$columns['w'. $subNo . '_rein'] = $parameters['sub' . $subNo .'_in'];
+				$columns['w'. $subNo . '_out'] = $parameters['sub' . $subNo .'_out'];
+				$columns['w'. $subNo . '_in'] = $parameters['sub' . $subNo .'_in'];
 				$columns['w'. $subNo . '_minute'] = $parameters['sub' . $subNo .'_minute'];
 				$columns['w'. $subNo . '_condition'] = $parameters['sub' . $subNo .'_condition'];
 				$columns['w'. $subNo . '_position'] = $parameters['sub' . $subNo .'_position'];
 			} else {
-				$columns['w'. $subNo . '_raus'] = '';
-				$columns['w'. $subNo . '_rein'] = '';
+				$columns['w'. $subNo . '_out'] = '';
+				$columns['w'. $subNo . '_in'] = '';
 				$columns['w'. $subNo . '_minute'] = '';
 				$columns['w'. $subNo . '_condition'] = '';
 				$columns['w'. $subNo . '_position'] = '';
@@ -189,7 +189,7 @@ class SaveFormationController implements IActionController {
 		}
 		
 		// update or insert?
-		$result = $this->_db->querySelect('id', $fromTable, 'verein_id = %d AND match_id = %d', array($teamId, $matchId));
+		$result = $this->_db->querySelect('id', $fromTable, 'club_id = %d AND match_id = %d', array($teamId, $matchId));
 		$existingFormation = $result->fetch_array();
 		$result->free();
 		
@@ -204,7 +204,7 @@ class SaveFormationController implements IActionController {
 		if (strlen($parameters['templatename'])) {
 			
 			// count existing templates in order to stay below boundary
-			$result = $this->_db->querySelect('COUNT(*) AS templates', $fromTable, 'verein_id = %d AND templatename IS NOT NULL', $teamId);
+			$result = $this->_db->querySelect('COUNT(*) AS templates', $fromTable, 'club_id = %d AND templatename IS NOT NULL', $teamId);
 			$existingTemplates = $result->fetch_array();
 			$result->free();
 			

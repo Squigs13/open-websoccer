@@ -13,10 +13,10 @@
   		<label for="position">{{ i18n.getMessage("transfermarket_filter_by_position") }}</label>
   		<select name="position" id="position">
   			<option></option>
-  			<option value="Torwart"{% if env.getRequestParameter("position") == "Torwart" %} selected{% endif %}>{{ i18n.getMessage("option_Torwart") }}</option>
-  			<option value="Abwehr"{% if env.getRequestParameter("position") == "Abwehr" %} selected{% endif %}>{{ i18n.getMessage("option_Abwehr") }}</option>
-  			<option value="Mittelfeld"{% if env.getRequestParameter("position") == "Mittelfeld" %} selected{% endif %}>{{ i18n.getMessage("option_Mittelfeld") }}</option>
-  			<option value="Sturm"{% if env.getRequestParameter("position") == "Sturm" %} selected{% endif %}>{{ i18n.getMessage("option_Sturm") }}</option>
+  			<option value="Goalkeeper"{% if env.getRequestParameter("position") == "Goalkeeper" %} selected{% endif %}>{{ i18n.getMessage("option_Goalkeeper") }}</option>
+  			<option value="Defender"{% if env.getRequestParameter("position") == "Defender" %} selected{% endif %}>{{ i18n.getMessage("option_Defender") }}</option>
+  			<option value="Midfielder"{% if env.getRequestParameter("position") == "Midfielder" %} selected{% endif %}>{{ i18n.getMessage("option_Midfielder") }}</option>
+  			<option value="Forward"{% if env.getRequestParameter("position") == "Forward" %} selected{% endif %}>{{ i18n.getMessage("option_Forward") }}</option>
   		</select>
 	  	<button type="submit" class="btn btn-primary">{{ i18n.getMessage("button_display") }}</button>
 	  	<a href="{{ env.getInternalUrl("youth-marketplace") }}" class="btn">{{ i18n.getMessage("button_reset") }}</a>
@@ -41,11 +41,11 @@
 		
 		{% for player in players %}
 			
-			{% if player.position == "Torwart" %}
+			{% if player.position == "Goalkeeper" %}
 				{% set positionId = "goaly" %}
-			{% elseif player.position == "Abwehr" %}
+			{% elseif player.position == "Defender" %}
 				{% set positionId = "defense" %}
-			{% elseif player.position == "Mittelfeld" %}
+			{% elseif player.position == "Midfielder" %}
 				{% set positionId = "midfield" %}
 			{% else %}
 				{% set positionId = "striker" %}
@@ -115,7 +115,7 @@
 				</td>
 				<td>
 					{{ player.transfer_fee|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}<br>
-					<small><em>{{ i18n.getMessage("entity_player_vertrag_gehalt") }}:</em><br>
+					<small><em>{{ i18n.getMessage("entity_player_contract_salary") }}:</em><br>
 					{{ (player.strength * env.getConfig("youth_salary_per_strength"))|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</small>
 				</td>
 			</tr>

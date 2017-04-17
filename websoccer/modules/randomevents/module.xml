@@ -11,7 +11,7 @@
             id="randomevent"
             entity="randomevent"
             navcategory="league"
-            permissionrole="r_daten" >
+            permissionrole="r_data" >
 
             <entity dbtable="randomevent AS EventTab" >
 
