@@ -534,7 +534,7 @@ class MatchesDataService {
 		$columns['R.playernames'] = 'playerNames';
 		$columns['R.goals'] = 'goals';
 		$columns['T.message'] = 'message';
-		$columns['T.action'] = 'type';
+		$columns['T.action_type'] = 'type';
 		$columns['R.active_home'] = 'active_home';
 		
 		$whereCondition = 'R.match_id = %d ORDER BY R.minute DESC, R.id DESC';

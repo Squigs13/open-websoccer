@@ -43,10 +43,10 @@ class MatchReportSimulatorObserver implements ISimulatorObserver {
 		
 		// get available text messages
 		$fromTable = $websoccer->getConfig('db_prefix') . '_match_text';
-		$columns = 'id, action AS actiontype';
+		$columns = 'id, action_type AS actiontype';
 		
 		// only load text messages for substitutions, because this observer does not observes anything else
-		$whereCondition = 'action = \'Substitution\'';
+		$whereCondition = 'action_type = \'Substitution\'';
 		
 		$result = $db->querySelect($columns, $fromTable, $whereCondition);
 		while ($text = $result->fetch_array()) {

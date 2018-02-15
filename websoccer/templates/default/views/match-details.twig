@@ -142,7 +142,7 @@
 						{% endif %}
 							<tr>
 								<td style="text-align: center">
-								{% if reportmessage.type == "Tor" or reportmessage.type == "Penalty_scored" or reportmessage.type == "Goal_with_assist" or reportmessage.type == "Freekick_scored"  %}
+								{% if reportmessage.type == "Goal" or reportmessage.type == "Penalty_scored" or reportmessage.type == "Goal_with_assist" or reportmessage.type == "Freekick_scored"  %}
 									<i class="websoccericon-goal"></i>
 								{% elseif reportmessage.type == "Yellow_card" %}
 									<i class="websoccericon-yellowcard"></i>
@@ -150,7 +150,7 @@
 									<i class="websoccericon-redcard"></i>
 								{% elseif reportmessage.type == "Substitution" %}
 									<i class="websoccericon-substitution"></i>
-								{% elseif reportmessage.type == "Verletzung" %}
+								{% elseif reportmessage.type == "Injury" %}
 									<i class="websoccericon-injury"></i>
 								{% elseif reportmessage.type == "Shot_missed" %}
 									<i class="websoccericon-shoot"></i>
@@ -168,10 +168,10 @@
 									{% set teamMarkerClass = (reportmessage.active_home) ? "report_team_home" : "report_team_guest" %}
 									<div class="report_minute {{ teamMarkerClass }}">{{ i18n.getMessage("match_report_minute", reportmessage.minute) }}
 									{% if reportmessage.type == "Penalty_scored" or reportmessage.type == "Penalty_missed" %} - {{ i18n.getMessage("match_details_commenttitle_penalty") }}
-									{% elseif reportmessage.type == "Tor" or reportmessage.type == "Goal_with_assist" %} - {{ i18n.getMessage("match_details_commenttitle_goal") }}
+									{% elseif reportmessage.type == "Goal" or reportmessage.type == "Goal_with_assist" %} - {{ i18n.getMessage("match_details_commenttitle_goal") }}
 									{% endif %}
 									</div>
-									{% if (reportmessage.type == "Penalty_scored" or reportmessage.type == "Penalty_missed" or reportmessage.type == "Tor" or reportmessage.type == "Goal_with_assist" or reportmessage.type == "Freekick_scored") and reportmessage.goals|length > 0 %}
+									{% if (reportmessage.type == "Penalty_scored" or reportmessage.type == "Penalty_missed" or reportmessage.type == "Goal" or reportmessage.type == "Goal_with_assist" or reportmessage.type == "Freekick_scored") and reportmessage.goals|length > 0 %}
 									<div class="report_comment">{{ reportmessage.goals }}</div>
 									{% endif %}
 									<div class="report_comment">{{ reportmessage.message|raw }}</div>

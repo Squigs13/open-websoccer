@@ -15,7 +15,7 @@
 	<message id="entity_match_simulated">Ist simuliert</message>
 	
 	<message id="entity_match_matchtyp">Typ</message>
-	<message id="entity_match_elfmeter">Elfmeterschiessen bei Unentschieden</message>
+	<message id="entity_match_penalty_kicks">Elfmeterschiessen bei Unentschieden</message>
 	<message id="entity_match_home_goals">Tore (Heim)</message>
 	<message id="entity_match_guest_goals">Tore (Gast)</message>
 	<message id="entity_matchcrowd">Zuschauer</message>

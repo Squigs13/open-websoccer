@@ -139,8 +139,8 @@
                     edit="true" >
 
                     <column
-                        id="entity_matchtext_action"
-                        field="action"
+                        id="entity_matchtext_action_type"
+                        field="action_type"
                         type="text"
                         sort="true" />
                     
@@ -155,7 +155,7 @@
                 <editform>
 
                     <field
-                        id="action"
+                        id="action_type"
                         type="select"
                         selection="Goal,Goal_with_assist,Substitution,Tackle_won,Tackle_lost,Pass_missed,Shot_missed,Shot_on_target,Yellow_card,Red_card,Yellow_card_2nd,Injury,Penalty_scored,Penalty_missed,Corner,Freekick_missed,Freekick_scored,Tactics_changed"
                         required="true"  />

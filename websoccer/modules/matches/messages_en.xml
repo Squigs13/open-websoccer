@@ -57,8 +57,8 @@
     <message id="match_report_minute">Minute %d</message>
     
     <message id="player_yellowcard">Got a yellow card</message>
-    <message id="player_yellowredcard">Got a yellow-red card</message>
-    <message id="player_yellowcard">Got a red card</message>
+    <message id="player_yellowredcard">Got a 2nd yellow card</message>
+    <message id="player_redcard">Got a red card</message>
     <message id="player_goalscorer">Is Goal Scorer</message>
     <message id="player_assists">Assist</message>
     <message id="player_injured">Got injured</message>

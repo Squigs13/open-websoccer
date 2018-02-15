@@ -43,7 +43,7 @@ class MatchReportSimulationObserver implements ISimulationObserver {
 		
 		// get available text messages
 		$fromTable = $websoccer->getConfig('db_prefix') . '_match_text';
-		$columns = 'id, action AS actiontype';
+		$columns = 'id, action_type AS actiontype';
 		$result = $db->querySelect($columns, $fromTable, '1=1');
 		while ($text = $result->fetch_array()) {
 			$this->_availableTexts[$text['actiontype']][] = $text['id'];
@@ -81,12 +81,12 @@ class MatchReportSimulationObserver implements ISimulationObserver {
 	/**
 	 * @see ISimulationObserver::onAfterTackle()
 	 */
-	public function onAfterTackle(SimulationMatch $match, SimulationPlayer $winner, SimulationPlayer $looser) {
+	public function onAfterTackle(SimulationMatch $match, SimulationPlayer $winner, SimulationPlayer $loser, $outcome) {
 		
-		if (SimulationHelper::getMagicNumber(0, 1)) {
-			$this->_createMessage($match, 'Tackle_won', array($winner->name, $looser->name), ($winner->team->id == $match->homeTeam->id));
+		if ($outcome) {
+			$this->_createMessage($match, 'Tackle_won', array($winner->name, $loser->name), ($winner->team->id == $match->homeTeam->id));
 		} else {
-			$this->_createMessage($match, 'Tackle_lost', array($looser->name, $winner->name), ($looser->team->id == $match->homeTeam->id));
+			$this->_createMessage($match, 'Tackle_lost', array($loser->name, $winner->name), ($loser->team->id == $match->homeTeam->id));
 		}
 		
 	}

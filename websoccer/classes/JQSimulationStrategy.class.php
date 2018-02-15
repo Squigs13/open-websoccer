@@ -208,7 +208,7 @@ class JQSimulationStrategy implements ISimulationStrategy {
 		$result = SimulationHelper::selectItemFromProbabilities($pWin);
 		
 		foreach ($this->_observers as $observer) {
-			$observer->onAfterTackle($match, ($result) ? $player : $opponent, ($result) ? $opponent : $player);
+			$observer->onAfterTackle($match, ($result) ? $player : $opponent, ($result) ? $opponent : $player, $result);
 		}
 		
 		// player can keep the ball.

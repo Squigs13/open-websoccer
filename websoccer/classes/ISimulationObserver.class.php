@@ -50,15 +50,16 @@ interface ISimulationObserver {
 	public function onShootFailure(SimulationMatch $match, SimulationPlayer $scorer, SimulationPlayer $goaly);
 	
 	/**
-	 * A tackle happened. Every tackle has a looser and winner. 
+	 * A tackle happened. Every tackle has a loser and winner. 
 	 * Hint: Use SimulationMatch->getPlayerWithBall() in order to find out whether the winner is the player who has had already the ball and just could
-	 * defend himself or if he gained the ball from the opponent player (=$looser).
+	 * defend himself or if he gained the ball from the opponent player (=$loser).
 	 * 
 	 * @param SimulationMatch $match Affected match.
 	 * @param SimulationPlayer $winner tackler winner.
-	 * @param SimulationPlayer $looser tackle looser.
+	 * @param SimulationPlayer $loser tackle loser.
+	 * @param boolean $outcome TRUE if possession was retained, FALSE if player was tackled.
 	 */
-	public function onAfterTackle(SimulationMatch $match, SimulationPlayer $winner, SimulationPlayer $looser);
+	public function onAfterTackle(SimulationMatch $match, SimulationPlayer $winner, SimulationPlayer $loser, $outcome);
 	
 	/**
 	 * The ball has been passed successfully by the specified player. Use SimulationMatch->getPlayerWithBall() in order to find out who

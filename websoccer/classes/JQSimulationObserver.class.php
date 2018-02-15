@@ -36,7 +36,7 @@ define('MARK_IMPROVE_BALLPASS_SUCCESS', 0.1);
  * 
  * @author Ingo Hofmann
  */
-class DefaultSimulationObserver implements ISimulationObserver {
+class JQSimulationObserver implements ISimulationObserver {
 
 	/**
 	 * @see ISimulationObserver::onGoal()
@@ -82,19 +82,19 @@ class DefaultSimulationObserver implements ISimulationObserver {
 	/**
 	 * @see ISimulationObserver::onAfterTackle()
 	 */
-	public function onAfterTackle(SimulationMatch $match, SimulationPlayer $winner, SimulationPlayer $looser) {
+	public function onAfterTackle(SimulationMatch $match, SimulationPlayer $winner, SimulationPlayer $loser, $outcome) {
 		
 		// show mercy when player already is a hero
-		if ($looser->getGoals() > 0 && $looser->getGoals() < 3 && $looser->getAssists() > 0 && $looser->getAssists() < 3) {
-			$looser->downgradeMark(MARK_DOWNGRADE_TACKLE_LOOSER * 0.5);
-		} elseif ($looser->getGoals() < 3 && $looser->getAssists() < 3) {
-			$looser->downgradeMark(MARK_DOWNGRADE_TACKLE_LOOSER);
+		if ($loser->getGoals() > 0 && $loser->getGoals() < 3 && $loser->getAssists() > 0 && $loser->getAssists() < 3) {
+			$loser->downgradeMark(MARK_DOWNGRADE_TACKLE_LOOSER * 0.5);
+		} elseif ($loser->getGoals() < 3 && $loser->getAssists() < 3) {
+			$loser->downgradeMark(MARK_DOWNGRADE_TACKLE_LOOSER);
 		}
 		
 		$winner->improveMark(MARK_IMPROVE_TACKLE_WINNER);
 		
 		$winner->setWonTackles($winner->getWonTackles() + 1);
-		$looser->setLostTackles($winner->getLostTackles() + 1);
+		$loser->setLostTackles($winner->getLostTackles() + 1);
 	}
 	
 	/**
