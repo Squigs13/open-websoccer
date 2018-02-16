@@ -21,10 +21,9 @@
 ******************************************************/
 
 /**
- * Fancy skin with football/soccer elements.
- * Designed by Schedio Art (http://www.schedioart.in/).
+ * Dark skin.
  * 
- * @author Ingo Hofmann
+ * @author James Quigley
  */
 class DarkThemeSkin extends DefaultBootstrapSkin {
 	
