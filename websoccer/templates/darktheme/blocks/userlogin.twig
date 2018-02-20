@@ -1,0 +1,51 @@
+{% extends "box.twig" %}
+{% import "macros/formelements.twig" as formelements %}
+
+{% block box_title %}
+{{ i18n.getMessage('formlogin_block_title') }}
+{% endblock %}
+
+{% block box_content %}
+
+<form method="post">
+
+	{%  if env.getConfig("login_type") == "email" %}
+	  <div class="form-group">
+    	<label for="loginstr">{{ i18n.getMessage('entity_users_email') }}</label>
+    	<input class="form-control" type="email" id="loginstr" name="loginstr" placeholder="{{ i18n.getMessage('entity_users_email') }}" required>
+    </div>
+ 	{% else %}
+ 		<div class="form-group">
+ 			<label for="loginstr">{{ i18n.getMessage('entity_users_nick') }}</label>
+    	<input class="form-control" type="text" id="loginstr" name="loginstr" placeholder="{{ i18n.getMessage('entity_users_nick') }}" required>
+    </div>
+ 	{% endif %}
+ 		<div class="form-group">
+    	<label for="loginpassword">{{ i18n.getMessage('entity_users_password') }}</label>
+    	<input class="form-control" type="password" id="loginpassword" name="loginpassword" placeholder="{{ i18n.getMessage('entity_users_password') }}" required>
+    </div>
+    <div class="checkbox">
+	    <label class="checkbox">
+	      <input type="checkbox" id="rememberme" name="rememberme" value="1"> {{ i18n.getMessage('formlogin_option_rememberme') }}
+	    </label>
+    </div>
+    
+	<button type="submit" class="btn btn-primary">{{ i18n.getMessage('formlogin_submit_button') }}</button>
+	<input type="hidden" name="page" value="login"/>
+	<input type="hidden" name="action" value="login"/>
+</form>
+
+	{% if env.getConfig("allow_userregistration") or env.getConfig("login_allow_sendingpassword") or env.getConfig("registration_url")|length > 0 %}
+		<div class="login_links">
+			{% if env.getConfig("allow_userregistration") or env.getConfig("registration_url")|length > 0 %}
+				{% set registerUrl = env.getInternalUrl("register") %}
+				{% if env.getConfig("registration_url")|length > 0 %}
+					{% set registerUrl = env.getConfig("registration_url") %}
+				{% endif %}
+				<a href="{{ registerUrl }}">{{ i18n.getMessage('formlogin_link_register') }}</a>
+			{% endif %} 
+			{% if (env.getConfig("allow_userregistration") or env.getConfig("registration_url")|length > 0) and env.getConfig("login_allow_sendingpassword") %} | {% endif %}
+			{% if env.getConfig("login_allow_sendingpassword") %}<a href="{{ env.getInternalUrl("forgot-password") }}">{{ i18n.getMessage('formlogin_link_forgot_password') }}</a>{% endif %}
+		</div>
+	{% endif %}
+{% endblock %}

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Lato:400,700,900,400italic");
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 /* Websoccer-theme by Squigs (squigs13@gmail.com)
    Bootstrap 2.3.2
    -----------------------------------------------------
@@ -18,6 +18,7 @@ body {
     background-color: #2a2a2a;
     color: #ececec;
     margin-top: 60px;
+    font-family: 'Roboto', sans-serif;
 }
 a {
   color: #6c6c6c;
@@ -29,23 +30,32 @@ a:focus {
   text-decoration: underline;
 }
 
-.hero-unit {
+.jumbotron {
     background-color: #373737;
     box-shadow: 0px 1px 5px 1px rgba(0, 0, 0, 0.4);
 }
 
-.navbar-inner {
+.login_links {
+    padding-top: 10px;
+    margin-top: 10px;
+    border-top: solid 1px #eee;
+}
+
+.navbar {
   background-color: #090909;
   background-image: none;
   border: none;
   box-shadow: 0px 1px 5px 1px rgba(0, 0, 0, 0.4) !important;
+}
+.navbar-default .navbar-brand:focus,
+.navbar-default .navbar-brand:hover {
+    color: #eee;
 }
 .navbar .nav > li > a {
   float: none;
   padding: 15px 15px 15px;
   color: #6c6c6c;
   text-decoration: none;
-  /*text-shadow: 0 1px 0 #5b5b5b;*/
 }
 .navbar .nav > li > a:focus,
 .navbar .nav > li > a:hover {
@@ -71,7 +81,7 @@ a:focus {
 .navbar .nav li.dropdown.open > .dropdown-toggle,
 .navbar .nav li.dropdown.active > .dropdown-toggle,
 .navbar .nav li.dropdown.open.active > .dropdown-toggle {
-  /*background-color: rgba(0, 0, 0, 0.2);*/
+  background-color: rgba(0, 0, 0, 0.2);
   color: #eee;
 }
 .navbar .nav li.dropdown.open > .dropdown-toggle .caret,
@@ -165,11 +175,17 @@ a:focus {
 .btn,
 .btn-primary {
     background-color: #6c6c6c;
+    border-color: #5c5c5c;
+    color: #eee;
 }
 
 .btn-primary:hover,
-.btn:hover{
+.btn-primary:active,
+.btn-primary:focus,
+.btn-primary:active:focus {
     background-color: #1f1f1f;
+    border-color: #5c5c5c;
+    outline-color: #5c5c5c
 }
 
 @media (max-width: 767px) {

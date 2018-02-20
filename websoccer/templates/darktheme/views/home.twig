@@ -1,0 +1,76 @@
+{% extends "base.twig" %}
+
+{% import "macros/messagebox.twig" as msgbox %}
+
+
+{% block browser_title %}
+{{ i18n.getMessage("home_title", env.getConfig("projectname")) }}
+{% endblock %}
+
+{% block page_header %}
+
+{% if env.user.id == null %}
+<div class="jumbotron">
+  <h1>{{ block("browser_title") }}</h1>
+  <p>{{ i18n.getMessage("home_teaser") }}</p>
+  
+  	{% if env.getConfig("allow_userregistration") or env.getConfig("registration_url")|length > 0 %}
+		{% set registerUrl = env.getInternalUrl("register") %}
+		{% if env.getConfig("registration_url")|length > 0 %}
+			{% set registerUrl = env.getConfig("registration_url") %}
+		{% endif %}
+		<div style="text-align:center;"><a href="{{ registerUrl }}" class="btn btn-primary btn-large">{{ i18n.getMessage("home_teaser_link_register") }}</a></div>
+	{% endif %} 
+  
+</div>
+{% endif %}
+
+{% if blocks.content_top is defined %}
+	{% for uiBlock in blocks.content_top %}
+		<div id="{{ uiBlock.id }}_block">
+		{{ viewHandler.renderBlock(uiBlock.id, uiBlock)|raw }}
+		</div>
+	{% endfor %}
+{% endif %}
+
+<div id="messages">
+{% if frontMessages is defined %}
+	{% for message in frontMessages %}
+		{{ msgbox.box(message.title, message.message, message.type) }}
+	{% endfor %}
+{% endif %}
+</div>
+
+<div class="row">
+	<div class="col-md-4">
+		{{ viewHandler.renderBlock('news')|raw }}
+		
+		{{ viewHandler.renderBlock('projectstatistics')|raw }}
+	</div>
+	<div class="col-md-4">
+		{{ viewHandler.renderBlock('latest-results-summary')|raw }}
+		
+		{{ viewHandler.renderBlock('user-activities-all')|raw }}
+	</div>
+		
+	<div class="col-md-4">
+		{% if blocks.sidebar is defined %}
+			{% for uiBlock in blocks.sidebar %}
+				{{ viewHandler.renderBlock(uiBlock.id, uiBlock)|raw }}
+			{% endfor %}
+		{% endif %}
+	</div>
+</div>
+
+{% if blocks.content_bottom is defined %}
+	{% for uiBlock in blocks.content_bottom %}
+		<div id="{{ uiBlock.id }}_block">
+		{{ viewHandler.renderBlock(uiBlock.id, uiBlock)|raw }}
+		</div>
+	{% endfor %}
+{% endif %}
+
+{% endblock %}
+
+{% block page_columns %}
+{% endblock %}

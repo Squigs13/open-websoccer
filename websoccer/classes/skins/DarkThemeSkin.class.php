@@ -42,16 +42,35 @@ class DarkThemeSkin extends DefaultBootstrapSkin {
 		$dir = $this->_websoccer->getConfig('context_root') . '/css/';
 		
 		if (true) {
-			$files[] = $dir . 'darktheme/bootstrap.css';
+			$files[] = '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css';
+			// $files[] = $dir . 'darktheme/bootstrap.css';
 			$files[] = $dir . 'darktheme/darktheme.css';
 			$files[] = $dir . 'websoccer.css';
-			$files[] = $dir . 'bootstrap-responsive.min.css';
+			// $files[] = $dir . 'bootstrap-responsive.min.css';
 		} else {
 			$files[] = $dir . 'schedioart/theme.min.css';
 		}
 		
 		$files[] = '//use.fontawesome.com/releases/v5.0.6/css/all.css';
 	
+		return $files;
+	}
+	
+		/**
+	 * @see ISkin::getJavaScriptSources()
+	 */
+	public function getJavaScriptSources() {
+		$dir = $this->_websoccer->getConfig('context_root') . '/js/';
+		$files[] = '//code.jquery.com/jquery-3.3.1.min.js';
+		
+		if (true) {
+			$files[] = '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js';
+			$files[] = $dir . 'jquery.blockUI.js';
+			// $files[] = $dir . 'wsbase.js';
+		} else {
+			$files[] = $dir . 'websoccer.min.js';
+		}
+		
 		return $files;
 	}
 }
