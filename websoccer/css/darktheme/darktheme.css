@@ -193,6 +193,12 @@ a:focus {
         margin-top: 10px;
     }
 }
+.table-striped>tbody>tr:nth-of-type(odd) {
+    background-color: #3d3d3d;
+}
+#free-clubs-table a {
+    color: #ececec;
+}
 footer {
     padding: 20px 0 10px 0;
     background-color: #373737;

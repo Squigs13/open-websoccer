@@ -66,7 +66,7 @@ class DarkThemeSkin extends DefaultBootstrapSkin {
 		if (true) {
 			$files[] = '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js';
 			$files[] = $dir . 'jquery.blockUI.js';
-			// $files[] = $dir . 'wsbase.js';
+			$files[] = $dir . 'wsbase.js';
 		} else {
 			$files[] = $dir . 'websoccer.min.js';
 		}

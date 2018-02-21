@@ -45,12 +45,18 @@
 	<div class="col-md-4">
 		{{ viewHandler.renderBlock('news')|raw }}
 		
-		{{ viewHandler.renderBlock('projectstatistics')|raw }}
+		<div class="ajaxLoadedBlock" id="projectStatisticsBlock" 
+			data-ajaxblock="projectstatistics" data-ignoreemptymessages="true">
+		</div>
 	</div>
 	<div class="col-md-4">
-		{{ viewHandler.renderBlock('latest-results-summary')|raw }}
+		<div class="ajaxLoadedBlock" id="latestResultsBlock" 
+				data-ajaxblock="latest-results-summary" data-ignoreemptymessages="true">
+		</div>
 		
-		{{ viewHandler.renderBlock('user-activities-all')|raw }}
+		<div class="ajaxLoadedBlock" id="latestActivitiesBlock" 
+				data-ajaxblock="user-activities-all" data-ignoreemptymessages="true" data-refreshperiod="10">
+		</div>
 	</div>
 		
 	<div class="col-md-4">

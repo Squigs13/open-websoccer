@@ -39,7 +39,7 @@ $(function() {
 	var initComponents = function() {
 		$(".wstooltip").tooltip();
 		$(".wspopover").popover();
-		initAutoComplete();
+		// initAutoComplete();
 	};
 	
 	/**
