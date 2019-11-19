@@ -29,13 +29,13 @@
 					<td>
 						<input type="hidden" name="player{{ loop.index }}" class="playerField" value="{{ formation['player' ~ loop.index] }}">
 						{% if player.match_position == "Goalkeeper" %}
-							<input type="hidden" name="player{{ loop.index }}_pos" value="T">
-							{{ i18n.getMessage("option_T") }}
+							<input type="hidden" name="player{{ loop.index }}_pos" value="GK">
+							{{ i18n.getMessage("option_GK") }}
 						{% else %}
 							{% set playerPos = formation['player' ~ loop.index ~ '_pos'] %}
 							<select name="player{{ loop.index }}_pos">
 								<option value=""></option>
-								{% for mainPos in ["LV", "IV", "RV", "DM", "LM", "ZM", "RM", "OM", "LS", "MS", "RS"] %}
+								{% for mainPos in ["LB", "CB", "RB", "DM", "LM", "CM", "RM", "AM", "LW", "CF", "RW"] %}
 									<option value="{{ mainPos }}"{% if playerPos == mainPos %} selected{% endif %}>{{ i18n.getMessage("option_" ~ mainPos) }}</option>
 								{% endfor %}
 							</select>
@@ -94,7 +94,7 @@
 						
 							<select name="sub{{ subsNo }}_position" class="span2"{% if subIsDisabled %} disabled{% endif %}>
 								<option value="">{{ i18n.getMessage("formation_substitutions_position_default") }}</option>
-								{% for subPosition in ['T','LV','IV', 'RV', 'LM', 'DM', 'ZM', 'OM', 'RM', 'LS', 'MS', 'RS'] %}
+								{% for subPosition in ['GK','LB','CB', 'RB', 'LM', 'DM', 'CM', 'AM', 'RM', 'LW', 'CF', 'RW'] %}
 									<option value="{{ subPosition }}"{% if subPosition == formation["sub" ~  subsNo ~ "_position"] %} selected{% endif %}>{{ i18n.getMessage("option_" ~ subPosition) }}</option>
 								{% endfor %}
 							</select>

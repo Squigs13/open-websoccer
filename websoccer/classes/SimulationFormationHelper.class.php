@@ -117,57 +117,57 @@ class SimulationFormationHelper {
 			
 			
 			$mainPosition = $playerinfo['mainPosition'];
-			//prevent double LV/RV/LM/RM
-			if ($mainPosition == 'LV') {
+			//prevent double LB/RB/LM/RM
+			if ($mainPosition == 'LB') {
 				if ($lvExists) {
-					$mainPosition = 'IV';
+					$mainPosition = 'CB';
 					$ivPlayers++;
 					if ($ivPlayers == 3) {
-						$mainPosition = 'RV';
+						$mainPosition = 'RB';
 						$rvExists = TRUE;
 					}
 				} else {
 					$lvExists = TRUE;
 				}
-			} elseif ($mainPosition == 'RV') {
+			} elseif ($mainPosition == 'RB') {
 				if ($rvExists) {
-					$mainPosition = 'IV';
+					$mainPosition = 'CB';
 					$ivPlayers++;
 					if ($ivPlayers == 3) {
-						$mainPosition = 'LV';
+						$mainPosition = 'LB';
 						$lvExists = TRUE;
 					}
 				} else {
 					$rvExists = TRUE;
 				}
-			} elseif ($mainPosition == 'IV') {
+			} elseif ($mainPosition == 'CB') {
 				$ivPlayers++;
 				if ($ivPlayers == 3) {
 					if (!$rvExists) {
-						$mainPosition = 'RV';
+						$mainPosition = 'RB';
 						$rvExists = TRUE;
 					} else {
-						$mainPosition = 'LV';
+						$mainPosition = 'LB';
 						$lvExists = TRUE;
 					}
 				}
 			} elseif ($mainPosition == 'LM') {
 				if ($lmExists) {
-					$mainPosition = 'ZM';
+					$mainPosition = 'CM';
 					$zmPlayers++;
 				} else {
 					$lmExists = TRUE;
 				}
 			} elseif ($mainPosition == 'RM') {
 				if ($rmExists) {
-					$mainPosition = 'ZM';
+					$mainPosition = 'CM';
 					$zmPlayers++;
 				} else {
 					$rmExists = TRUE;
 				}
-			} elseif ($mainPosition == 'LS' || $mainPosition == 'RS') {
-				$mainPosition = 'MS';
-			} elseif ($mainPosition == 'ZM') {
+			} elseif ($mainPosition == 'LW' || $mainPosition == 'RW') {
+				$mainPosition = 'CF';
+			} elseif ($mainPosition == 'CM') {
 				$zmPlayers++;
 				if ($zmPlayers > 2) {
 					$mainPosition = 'DM';

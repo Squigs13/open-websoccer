@@ -134,53 +134,53 @@ class FormationDataService {
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $teamId);
 
 		// determine open positions
-		$openPositions['T'] = 1;
+		$openPositions['GK'] = 1;
 		
 		// defense positions
 		if ($setupDefense < 4) {
-			$openPositions['IV'] = $setupDefense;
-			$openPositions['LV'] = 0;
-			$openPositions['RV'] = 0;
+			$openPositions['CB'] = $setupDefense;
+			$openPositions['LB'] = 0;
+			$openPositions['RB'] = 0;
 		} else {
-			$openPositions['LV'] = 1;
-			$openPositions['RV'] = 1;
-			$openPositions['IV'] = $setupDefense - 2;
+			$openPositions['LB'] = 1;
+			$openPositions['RB'] = 1;
+			$openPositions['CB'] = $setupDefense - 2;
 		}
 		
 		// defensive midfield positions
 		$openPositions['DM'] = $setupDM;
-		$openPositions['OM'] = $setupOM;
+		$openPositions['AM'] = $setupOM;
 		
 		// midfield positions
 		if ($setupMidfield == 1) {
-			$openPositions['ZM'] = 1;
+			$openPositions['CM'] = 1;
 		} else if ($setupMidfield == 2) {
 			$openPositions['LM'] = 1;
 			$openPositions['RM'] = 1;
 		} else if ($setupMidfield == 3) {
 			$openPositions['LM'] = 1;
-			$openPositions['ZM'] = 1;
+			$openPositions['CM'] = 1;
 			$openPositions['RM'] = 1;
 		} else if ($setupMidfield >= 4) {
 			$openPositions['LM'] = 1;
-			$openPositions['ZM'] = $setupMidfield - 2;
+			$openPositions['CM'] = $setupMidfield - 2;
 			$openPositions['RM'] = 1;
 		} else {
 			$openPositions['LM'] = 0;
-			$openPositions['ZM'] = 0;
+			$openPositions['CM'] = 0;
 			$openPositions['RM'] = 0;
 		}
 		
 		// strikers
-		$openPositions['MS'] = $setupStriker;
+		$openPositions['CF'] = $setupStriker;
 		
 		// outside forward
 		if ($setupOutsideforward == 2) {
-			$openPositions['LS'] = 1;
-			$openPositions['RS'] = 1;
+			$openPositions['LW'] = 1;
+			$openPositions['RW'] = 1;
 		} else {
-			$openPositions['LS'] = 0;
-			$openPositions['RS'] = 0;
+			$openPositions['LW'] = 0;
+			$openPositions['RW'] = 0;
 		}
 		
 		$players = array();
@@ -193,13 +193,13 @@ class FormationDataService {
 			if (!strlen($player['position_main'])) {
 				
 				if ($player['position'] == 'Goalkeeper') {
-					$possiblePositions = array('T');
+					$possiblePositions = array('GK');
 				} elseif ($player['position'] == 'Defender') {
-					$possiblePositions = array('LV', 'IV', 'RV');
+					$possiblePositions = array('LB', 'CB', 'RB');
 				} elseif ($player['position'] == 'Midfielder') {
-					$possiblePositions = array('RM', 'ZM', 'LM', 'RM', 'DM', 'OM');
+					$possiblePositions = array('RM', 'CM', 'LM', 'RM', 'DM', 'AM');
 				} else {
-					$possiblePositions = array('LS', 'MS', 'RS');
+					$possiblePositions = array('LW', 'CF', 'RW');
 				}
 				
 				foreach($possiblePositions as $possiblePosition) {

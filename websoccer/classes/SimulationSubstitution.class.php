@@ -51,7 +51,7 @@ class SimulationSubstitution {
 	public $condition;
 	
 	/**
-	 * @var string target position identifier (T, LV, IV, ...).
+	 * @var string target position identifier (GK, LB, CB, ...).
 	 */
 	public $position;
 	
@@ -61,7 +61,7 @@ class SimulationSubstitution {
 	 * @param SimulationPlayer $playerIn player to come.
 	 * @param SimulationPlayer $playerOut player to substitute. He must be present on the pitch, otherwise substitution will not be executed.
 	 * @param string $condition constraint name which shall limit the execution on a condition. Value must be: null|Tie|Leading|Deficit
-	 * @param string $position target position identifier (T, LV, IV, ...).
+	 * @param string $position target position identifier (GK, LB, CB, ...).
 	 */
     public function __construct($minute, $playerIn, $playerOut, $condition = null, $position = null) {
     	$this->minute = $minute;

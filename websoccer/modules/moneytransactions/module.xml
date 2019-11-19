@@ -13,7 +13,7 @@
             navcategory="league"
             permissionrole="r_data" >
 
-            <entity dbtable="konto AS TransactionTab" >
+            <entity dbtable="transactions AS TransactionTab" >
 
                 <overview delete="true" edit="false" >
 

@@ -63,13 +63,13 @@
 			{% endfor %}
 		</select>
 		<span>-</span>
-		<select class="input-mini wstooltip" name="formation_offensivemidfield" title="{{ i18n.getMessage("option_OM") }}">
+		<select class="input-mini wstooltip" name="formation_offensivemidfield" title="{{ i18n.getMessage("option_AM") }}">
 			{% for i in 0..3 %}
 				<option value="{{ i }}"{% if setup.om == i %} selected{% endif %}>{{ i }}</option>
 			{% endfor %}
 		</select>
 		<span>-</span>
-		<select class="input-mini wstooltip" name="formation_forward" title="{{ i18n.getMessage("option_MS") }}">
+		<select class="input-mini wstooltip" name="formation_forward" title="{{ i18n.getMessage("option_CF") }}">
 			{% for i in 0..2 %}
 				<option value="{{ i }}"{% if setup.striker == i %} selected{% endif %}>{{ i }}</option>
 			{% endfor %}

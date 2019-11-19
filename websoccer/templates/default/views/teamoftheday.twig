@@ -60,36 +60,36 @@
 				
 					{% set frontPosition = player.position_main %}
 					
-					{% if frontPosition == "IV" %}
+					{% if frontPosition == "CB" %}
 						{% if ivSet %}
-							{% set frontPosition = "IV rightPos" %}
+							{% set frontPosition = "CB rightPos" %}
 						{% else %}
-							{% set frontPosition = "IV leftPos" %}
+							{% set frontPosition = "CB leftPos" %}
 							{% set ivSet = TRUE %}
 						{% endif %}
 					{% elseif frontPosition == "DM" %}
 						{% if dmSet %}
-							{% set frontPosition = "ZM" %}
+							{% set frontPosition = "CM" %}
 						{% else %}
 							{% set dmSet = TRUE %}
 						{% endif %}
-					{% elseif frontPosition == "ZM" %}
+					{% elseif frontPosition == "CM" %}
 						{% if zmSet %}
-							{% set frontPosition = "OM" %}
+							{% set frontPosition = "AM" %}
 						{% else %}
 							{% set zmSet = TRUE %}
 						{% endif %}
-					{% elseif frontPosition == "OM" %}
+					{% elseif frontPosition == "AM" %}
 						{% if omSet %}
-							{% set frontPosition = "ZM" %}
+							{% set frontPosition = "CM" %}
 						{% else %}
 							{% set omSet = TRUE %}
 						{% endif %}
-					{% elseif frontPosition == "LS" or frontPosition == "MS" or frontPosition == "RS" %}
+					{% elseif frontPosition == "LW" or frontPosition == "CF" or frontPosition == "RW" %}
 						{% if forwardSet %}
-							{% set frontPosition = "MS rightPos" %}
+							{% set frontPosition = "CF rightPos" %}
 						{% else %}
-							{% set frontPosition = "MS leftPos" %}
+							{% set frontPosition = "CF leftPos" %}
 							{% set forwardSet = TRUE %}
 						{% endif %}
 					{% endif %}

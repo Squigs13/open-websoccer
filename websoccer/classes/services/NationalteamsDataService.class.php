@@ -116,7 +116,7 @@ class NationalteamsDataService {
 	 * @param string $firstName first name.
 	 * @param string $lastName surname or pseudonym.
 	 * @param string $position position as in DB (Goalkeeper|Defender|Midfielder|Forward)
-	 * @param string $mainPosition main position as in DB (T, LV, IV, ...)
+	 * @param string $mainPosition main position as in DB (GK, LB, CB, ...)
 	 * @return int number of found players.
 	 */
 	public static function findPlayersCount(WebSoccer $websoccer, DbConnection $db, $nationality, $teamId,
@@ -144,7 +144,7 @@ class NationalteamsDataService {
 	 * @param string $firstName first name.
 	 * @param string $lastName surname or pseudonym.
 	 * @param string $position position as in DB (Goalkeeper|Defender|Midfielder|Forward)
-	 * @param string $mainPosition main position as in DB (T, LV, IV, ...)
+	 * @param string $mainPosition main position as in DB (GK, LB, CB, ...)
 	 * @param int $startIndex fetch start index.
 	 * @param int $entries_per_page number of entries per pae.
 	 * @return array list of found players.

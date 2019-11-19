@@ -62,13 +62,13 @@ class MoveYouthPlayerToProfessionalController implements IActionController {
 		
 		// validate main position (must be in compliance with general position)
 		if ($player["position"] == "Goalkeeper") {
-			$validPositions = array("T");
+			$validPositions = array("GK");
 		} elseif ($player["position"] == "Defender") {
-			$validPositions = array("LV", "IV", "RV");
+			$validPositions = array("LB", "CB", "RB");
 		} elseif ($player["position"] == "Midfielder") {
-			$validPositions = array("LM", "RM", "DM", "OM", "ZM");
+			$validPositions = array("LM", "RM", "DM", "AM", "CM");
 		} else {
-			$validPositions = array("LS", "RS", "MS");
+			$validPositions = array("LW", "RW", "CF");
 		}
 		if (!in_array($parameters["mainposition"], $validPositions)) {
 			throw new Exception($this->_i18n->getMessage("youthteam_makeprofessional_err_invalidmainposition"));

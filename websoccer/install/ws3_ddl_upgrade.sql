@@ -16,9 +16,9 @@ ALTER TABLE ws3_user ADD picture VARCHAR(255) NULL;
 ALTER TABLE ws3_transfer_bid ADD club_id INT(10);
 
 ALTER TABLE ws3_player ADD unsellable ENUM('1','0') NOT NULL DEFAULT '0';
-ALTER TABLE ws3_player ADD position_main ENUM('T','LV','IV', 'RV', 'LM', 'DM', 'ZM', 'OM', 'RM', 'LS', 'MS', 'RS') NULL;
+ALTER TABLE ws3_player ADD position_main ENUM('GK','LB','CB', 'RB', 'LM', 'DM', 'CM', 'AM', 'RM', 'LW', 'CF', 'RW') NULL;
 ALTER TABLE ws3_player ADD picture VARCHAR(128) NULL;
-ALTER TABLE ws3_player ADD position_second ENUM('T','LV','IV', 'RV', 'LM', 'DM', 'ZM', 'OM', 'RM', 'LS', 'MS', 'RS') NULL;
+ALTER TABLE ws3_player ADD position_second ENUM('GK','LB','CB', 'RB', 'LM', 'DM', 'CM', 'AM', 'RM', 'LW', 'CF', 'RW') NULL;
 ALTER TABLE ws3_player ADD loan_fee INT(6) NOT NULL DEFAULT 0;
 ALTER TABLE ws3_player ADD loan_matches TINYINT NOT NULL DEFAULT 0;
 ALTER TABLE ws3_player ADD loan_owner_id INT(10) NOT NULL DEFAULT 0;

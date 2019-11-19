@@ -188,7 +188,7 @@ if (!count($match)) {
 	throw new Exception("illegal match id");
 }
 
-$positions = array('T','LV','IV', 'RV', 'LM', 'DM', 'ZM', 'OM', 'RM', 'LS', 'MS', 'RS');
+$positions = array('GK','LB','CB', 'RB', 'LM', 'DM', 'CM', 'AM', 'RM', 'LW', 'CF', 'RW');
 
 // ******** form for adding players
 echo "<form action=\"". $_SERVER['PHP_SELF'] . "\" class=\"form-horizontal\" method=\"post\">";
@@ -254,7 +254,7 @@ foreach ($teamPrefixes as $teamPrefix) {
 	$playerTable = $website->getConfig("db_prefix") . "_match_simulation SB";
 	$playerTable .= " INNER JOIN " . $website->getConfig("db_prefix") . "_player S ON S.id = SB.player_id";
 	
-	$result = $db->querySelect("SB.*", $playerTable, "match_id = %d AND team_id = %d ORDER BY field ASC, field(SB.position_main, 'T', 'LV', 'IV', 'RV', 'DM', 'LM', 'ZM', 'RM', 'OM', 'LS', 'MS', 'RS')", array($matchId, $match["match_". $teamPrefix . "_id"]));
+	$result = $db->querySelect("SB.*", $playerTable, "match_id = %d AND team_id = %d ORDER BY field ASC, field(SB.position_main, 'GK', 'LB', 'CB', 'RB', 'DM', 'LM', 'CM', 'RM', 'AM', 'LW', 'CF', 'RW')", array($matchId, $match["match_". $teamPrefix . "_id"]));
 	$playersCount = $result->num_rows;
 	
 	// no player records

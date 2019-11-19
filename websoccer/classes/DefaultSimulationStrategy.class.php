@@ -536,9 +536,9 @@ class DefaultSimulationStrategy implements ISimulationStrategy {
 				$mfStrength = $player->getTotalStrength($this->_websoccer, $match);
 				
 				// add 30% for attacking midfielders, reduce 30% if defensive
-				if ($player->mainPosition == 'OM') {
+				if ($player->mainPosition == 'AM') {
 					$omPlayers++;
-					// only up to 3 OMs are effective. Else, players in defense are missing for building attacks
+					// only up to 3 AMs are effective. Else, players in defense are missing for building attacks
 					if ($omPlayers <= 3) {
 						$mfStrength = $mfStrength * 1.3;
 					} else {
@@ -582,7 +582,7 @@ class DefaultSimulationStrategy implements ISimulationStrategy {
 			$mfStrength = $player->getTotalStrength($this->_websoccer, $match);
 			
 			// add 30% for defensive midfielders, reduce 30% if attacking
-			if ($player->mainPosition == 'OM') {
+			if ($player->mainPosition == 'AM') {
 				$mfStrength = $mfStrength * 0.7;
 			} else if ($player->mainPosition == 'DM') {
 				$mfStrength = $mfStrength * 1.3;

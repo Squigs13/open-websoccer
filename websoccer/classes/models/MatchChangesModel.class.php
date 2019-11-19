@@ -106,17 +106,17 @@ class MatchChangesModel extends FormationModel {
 				'om' => 3,
 				'striker' => 2,
 				'outsideforward' => 2);
-		$setupMainMapping = array('LV' => 'defense',
-				'RV' => 'defense',
-				'IV' => 'defense',
+		$setupMainMapping = array('LB' => 'defense',
+				'RB' => 'defense',
+				'CB' => 'defense',
 				'DM' => 'dm',
 				'LM' => 'midfield',
-				'ZM' => 'midfield',
+				'CM' => 'midfield',
 				'RM' => 'midfield',
-				'OM' => 'om',
-				'LS' => 'outsideforward',
-				'MS' => 'striker',
-				'RS' => 'outsideforward');
+				'AM' => 'om',
+				'LW' => 'outsideforward',
+				'CF' => 'striker',
+				'RW' => 'outsideforward');
 		$setupPosMapping = array('Defender' => 'defense',
 				'Midfielder' => 'midfield',
 				'Forward' => 'striker');

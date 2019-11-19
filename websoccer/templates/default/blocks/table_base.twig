@@ -25,7 +25,8 @@
 				<th><abbr title="{{ i18n.getMessage("leaguetable_head_wins") }}">{{ i18n.getMessage("leaguetable_head_wins_abbr") }}</abbr></th>
 				<th><abbr title="{{ i18n.getMessage("leaguetable_head_draws") }}">{{ i18n.getMessage("leaguetable_head_draws_abbr") }}</abbr></th>
 				<th><abbr title="{{ i18n.getMessage("leaguetable_head_defeats") }}">{{ i18n.getMessage("leaguetable_head_defeats_abbr") }}</abbr></th>
-				<th>{{ i18n.getMessage("leaguetable_head_goals") }}</th>
+				<th>{{ i18n.getMessage("leaguetable_head_goals_for") }}</th>
+				<th>{{ i18n.getMessage("leaguetable_head_goals_against") }}</th>
 				<th><abbr title="{{ i18n.getMessage("leaguetable_head_goalsdiff") }}">{{ i18n.getMessage("leaguetable_head_goalsdiff_abbr") }}</abbr></th>
 				<th>{{ i18n.getMessage("leaguetable_head_score") }}</th>
 			</tr>
@@ -67,7 +68,8 @@
 					<td>{{ team.wins }}</td>
 					<td>{{ team.draws }}</td>
 					<td>{{ team.defeats }}</td>
-					<td>{{ team.goals }}:{{ team.goals_received }}</td>
+					<td>{{ team.goals }}</td>
+					<td>{{ team.goals_received }}</td>
 					<td>{{ team.goals_diff }}</td>
 					<td>{{ team.score }}
 					{% if team.previous_rank is defined and team.previous_rank > 0 %}

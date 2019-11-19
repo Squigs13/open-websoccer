@@ -460,7 +460,7 @@ class MatchesDataService {
 		$columns['M.age'] = 'age';
 		$columns['M.w_strength'] = 'strength';
 		
-		$order = 'field(M.position_main, \'T\', \'LV\', \'IV\', \'RV\', \'DM\', \'LM\', \'ZM\', \'RM\', \'OM\', \'LS\', \'MS\', \'RS\')';
+		$order = 'field(M.position_main, \'GK\', \'LB\', \'CB\', \'RB\', \'DM\', \'LM\', \'CM\', \'RM\', \'AM\', \'LW\', \'CF\', \'RW\')';
 		$whereCondition = 'M.match_id = %d AND M.team_id = %d AND M.field != \'Bench\' ORDER BY ' . $order . ', M.id ASC';
 		$parameters = array($matchId, $teamId);
 		
@@ -508,7 +508,7 @@ class MatchesDataService {
 		}
 		$columns[$ageColumn] = 'age';
 		
-		$whereCondition = 'M.match_id = %d AND M.team_id = %d AND M.field != \'Substituted\' ORDER BY field(M.position_main, \'T\', \'LV\', \'IV\', \'RV\', \'DM\', \'LM\', \'ZM\', \'RM\', \'OM\', \'LS\', \'MS\', \'RS\'), M.id ASC';
+		$whereCondition = 'M.match_id = %d AND M.team_id = %d AND M.field != \'Substituted\' ORDER BY field(M.position_main, \'GK\', \'LB\', \'CB\', \'RB\', \'DM\', \'LM\', \'CM\', \'RM\', \'AM\', \'LW\', \'CF\', \'RW\'), M.id ASC';
 		$parameters = array($matchId, $teamId);
 		
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);

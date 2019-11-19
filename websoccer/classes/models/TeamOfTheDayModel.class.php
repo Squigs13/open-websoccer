@@ -133,14 +133,14 @@ class TeamOfTheDayModel implements IModel {
 		
 		// get team of the season
 		if ($matchday == -1) {
-			$this->findPlayersForTeamOfSeason($seasonId, array("T"), 1, $players);
-			$this->findPlayersForTeamOfSeason($seasonId, array("LV"), 1, $players);
-			$this->findPlayersForTeamOfSeason($seasonId, array("IV"), 2, $players);
-			$this->findPlayersForTeamOfSeason($seasonId, array("RV"), 1, $players);
+			$this->findPlayersForTeamOfSeason($seasonId, array("GK"), 1, $players);
+			$this->findPlayersForTeamOfSeason($seasonId, array("LB"), 1, $players);
+			$this->findPlayersForTeamOfSeason($seasonId, array("CB"), 2, $players);
+			$this->findPlayersForTeamOfSeason($seasonId, array("RB"), 1, $players);
 			$this->findPlayersForTeamOfSeason($seasonId, array("LM"), 1, $players);
-			$this->findPlayersForTeamOfSeason($seasonId, array("DM", "ZM", "OM"), 2, $players);
+			$this->findPlayersForTeamOfSeason($seasonId, array("DM", "CM", "AM"), 2, $players);
 			$this->findPlayersForTeamOfSeason($seasonId, array("RM"), 1, $players);
-			$this->findPlayersForTeamOfSeason($seasonId, array("LS", "MS", "RS"), 2, $players);
+			$this->findPlayersForTeamOfSeason($seasonId, array("LW", "CF", "RW"), 2, $players);
 			return;
 		}
 		
@@ -173,14 +173,14 @@ class TeamOfTheDayModel implements IModel {
 		
 		// find from DB
 		if (!count($players)) {
-			$this->findPlayers($columns, $seasonId, $matchday, array("T"), 1, $players);
-			$this->findPlayers($columns, $seasonId, $matchday, array("LV"), 1, $players);
-			$this->findPlayers($columns, $seasonId, $matchday, array("IV"), 2, $players);
-			$this->findPlayers($columns, $seasonId, $matchday, array("RV"), 1, $players);
+			$this->findPlayers($columns, $seasonId, $matchday, array("GK"), 1, $players);
+			$this->findPlayers($columns, $seasonId, $matchday, array("LB"), 1, $players);
+			$this->findPlayers($columns, $seasonId, $matchday, array("CB"), 2, $players);
+			$this->findPlayers($columns, $seasonId, $matchday, array("RB"), 1, $players);
 			$this->findPlayers($columns, $seasonId, $matchday, array("LM"), 1, $players);
-			$this->findPlayers($columns, $seasonId, $matchday, array("DM", "ZM", "OM"), 2, $players);
+			$this->findPlayers($columns, $seasonId, $matchday, array("DM", "CM", "AM"), 2, $players);
 			$this->findPlayers($columns, $seasonId, $matchday, array("RM"), 1, $players);
-			$this->findPlayers($columns, $seasonId, $matchday, array("LS", "MS", "RS"), 2, $players);
+			$this->findPlayers($columns, $seasonId, $matchday, array("LW", "CF", "RW"), 2, $players);
 		}
 	}
 	

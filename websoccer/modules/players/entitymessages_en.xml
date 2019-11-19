@@ -76,17 +76,17 @@
     <message id="option_Midfielder">Midfield</message>
     <message id="option_Forward">Forward</message>
     
-    <message id="option_T">Goalkeeper</message>
-    <message id="option_LV">Left Back</message>
-    <message id="option_RV">Right Back</message>
-    <message id="option_IV">Centre Back</message>
+    <message id="option_GK">Goalkeeper</message>
+    <message id="option_LB">Left Back</message>
+    <message id="option_RB">Right Back</message>
+    <message id="option_CB">Centre Back</message>
     <message id="option_LM">Left Midfield</message>
     <message id="option_RM">Right Midfield</message>
-    <message id="option_ZM">Centre Midfield</message>
-    <message id="option_LS">Left Wing</message>
-    <message id="option_MS">Centre Forward</message>
-    <message id="option_RS">Right Wing</message>
-    <message id="option_OM">Attacking Midfield</message>
+    <message id="option_CM">Centre Midfield</message>
+    <message id="option_LW">Left Wing</message>
+    <message id="option_CF">Centre Forward</message>
+    <message id="option_RW">Right Wing</message>
+    <message id="option_AM">Attacking Midfield</message>
     <message id="option_DM">Defensive Midfield</message>
     
     <message id="option_Deutschland">Germany</message>

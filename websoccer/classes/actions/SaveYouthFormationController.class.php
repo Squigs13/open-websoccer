@@ -139,23 +139,23 @@ class SaveYouthFormationController implements IActionController {
 			throw new Exception("illegal formation setup");
 		}
 		
-// 		$mainPositionMapping = array(1 => "T");
+// 		$mainPositionMapping = array(1 => "GK");
 		
 // 		// defense
 // 		if ($setupParts[0] == 1) {
-// 			$mainPositionMapping[2] = "IV";
+// 			$mainPositionMapping[2] = "CB";
 // 		} elseif ($setupParts[0] == 2) {
-// 			$mainPositionMapping[2] = "IV";
-// 			$mainPositionMapping[3] = "IV";
+// 			$mainPositionMapping[2] = "CB";
+// 			$mainPositionMapping[3] = "CB";
 // 		} elseif ($setupParts[0] == 3) {
-// 			$mainPositionMapping[2] = "LV";
-// 			$mainPositionMapping[3] = "IV";
-// 			$mainPositionMapping[4] = "RV";
+// 			$mainPositionMapping[2] = "LB";
+// 			$mainPositionMapping[3] = "CB";
+// 			$mainPositionMapping[4] = "RB";
 // 		} else {
-// 			$mainPositionMapping[2] = "LV";
-// 			$mainPositionMapping[3] = "IV";
-// 			$mainPositionMapping[4] = "IV";
-// 			$mainPositionMapping[5] = "RV";
+// 			$mainPositionMapping[2] = "LB";
+// 			$mainPositionMapping[3] = "CB";
+// 			$mainPositionMapping[4] = "CB";
+// 			$mainPositionMapping[5] = "RB";
 				
 // 			$setupParts[0] = 4; // set a valid number in case an invalid one had been set
 // 		}
@@ -172,18 +172,18 @@ class SaveYouthFormationController implements IActionController {
 		
 // 		// midfield
 // 		if ($setupParts[2] == 1) {
-// 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + 2] = "ZM";
+// 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + 2] = "CM";
 // 		} elseif ($setupParts[2] == 2) {
 // 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + 2] = "LM";
 // 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + 3] = "RM";
 // 		} elseif ($setupParts[2] == 3) {
 // 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + 2] = "LM";
-// 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + 3] = "ZM";
+// 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + 3] = "CM";
 // 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + 4] = "RM";
 // 		} elseif ($setupParts[2] == 4) {
 // 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + 2] = "LM";
-// 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + 3] = "ZM";
-// 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + 4] = "ZM";
+// 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + 3] = "CM";
+// 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + 4] = "CM";
 // 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + 5] = "RM";
 // 		} else {
 // 			$setupParts[2] = 0;
@@ -191,39 +191,39 @@ class SaveYouthFormationController implements IActionController {
 		
 // 		// offensive midfield
 // 		if ($setupParts[3] == 1) {
-// 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + $setupParts[2] + 2] = "OM";
+// 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + $setupParts[2] + 2] = "AM";
 // 		} elseif ($setupParts[3] == 2) {
-// 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + $setupParts[2] + 2] = "OM";
-// 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + $setupParts[2] + 3] = "OM";
+// 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + $setupParts[2] + 2] = "AM";
+// 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + $setupParts[2] + 3] = "AM";
 // 		} else {
 // 			$setupParts[3] = 0;
 // 		}
 		
 // 		// striker
 // 		if ($setupParts[4] == 1) {
-// 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + $setupParts[2] + $setupParts[3] + 2] = "MS";
+// 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + $setupParts[2] + $setupParts[3] + 2] = "CF";
 // 		} elseif ($setupParts[4] == 2) {
-// 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + $setupParts[2] + $setupParts[3] + 2] = "MS";
-// 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + $setupParts[2] + $setupParts[3] + 3] = "MS";
+// 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + $setupParts[2] + $setupParts[3] + 2] = "CF";
+// 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + $setupParts[2] + $setupParts[3] + 3] = "CF";
 // 		} elseif ($setupParts[4] == 3) {
-// 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + $setupParts[2] + $setupParts[3] + 2] = "LS";
-// 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + $setupParts[2] + $setupParts[3] + 3] = "MS";
-// 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + $setupParts[2] + $setupParts[3] + 4] = "RS";
+// 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + $setupParts[2] + $setupParts[3] + 2] = "LW";
+// 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + $setupParts[2] + $setupParts[3] + 3] = "CF";
+// 			$mainPositionMapping[$setupParts[0] + $setupParts[1] + $setupParts[2] + $setupParts[3] + 4] = "RW";
 // 		}
 		
 		$positionMapping = array(
-				"T" => "Goalkeeper",
-				"LV" => "Defender",
-				"IV" => "Defender",
-				"RV" => "Defender",
+				"GK" => "Goalkeeper",
+				"LB" => "Defender",
+				"CB" => "Defender",
+				"RB" => "Defender",
 				"DM" => "Midfielder",
-				"OM" => "Midfielder",
-				"ZM" => "Midfielder",
+				"AM" => "Midfielder",
+				"CM" => "Midfielder",
 				"LM" => "Midfielder",
 				"RM" => "Midfielder",
-				"LS" => "Forward",
-				"MS" => "Forward",
-				"RS" => "Forward"
+				"LW" => "Forward",
+				"CF" => "Forward",
+				"RW" => "Forward"
 		);
 		
 		// create field players

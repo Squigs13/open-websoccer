@@ -201,8 +201,8 @@ CREATE TABLE ws3_player (
   birthday DATE NOT NULL,
   club_id INT(10) NULL,
   position ENUM('Goalkeeper','Defender','Midfielder','Forward') NOT NULL DEFAULT 'Midfielder',
-  position_main ENUM('T','LV','IV', 'RV', 'LM', 'DM', 'ZM', 'OM', 'RM', 'LS', 'MS', 'RS') NULL,
-  position_second ENUM('T','LV','IV', 'RV', 'LM', 'DM', 'ZM', 'OM', 'RM', 'LS', 'MS', 'RS') NULL,
+  position_main ENUM('GK','LB','CB', 'RB', 'LM', 'DM', 'CM', 'AM', 'RM', 'LW', 'CF', 'RW') NULL,
+  position_second ENUM('GK','LB','CB', 'RB', 'LM', 'DM', 'CM', 'AM', 'RM', 'LW', 'CF', 'RW') NULL,
   nation VARCHAR(30) NULL,
   picture VARCHAR(128) NULL,
   injured TINYINT(3) NOT NULL DEFAULT 0,
@@ -281,7 +281,7 @@ CREATE TABLE ws3_stadium (
   picture VARCHAR(128) NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_accounts (
+CREATE TABLE ws3_transactions (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   club_id INT(10) NOT NULL,
   sender VARCHAR(150) NULL,

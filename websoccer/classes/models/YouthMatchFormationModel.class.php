@@ -230,7 +230,7 @@ class YouthMatchFormationModel implements IModel {
 				} elseif ($position == "Midfielder") {
 					if ($mainPosition == "DM") {
 						$setup["dm"] = $setup["dm"] + 1;
-					} elseif ($mainPosition == "OM") {
+					} elseif ($mainPosition == "AM") {
 						$setup["om"] = $setup["om"] + 1;
 					} else {
 						$setup["midfield"] = $setup["midfield"] + 1;

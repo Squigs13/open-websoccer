@@ -87,8 +87,8 @@
 					<field id="birthday" type="date"  />
 					<field id="age" type="number"  />
 					<field id="position" type="select" selection="Goalkeeper,Defender,Midfielder,Forward" required="true"  />
-					<field id="position_main" type="select" selection="T,LV,IV,RV,LM,ZM,DM,OM,RM,LS,MS,RS" required="false"  />
-					<field id="position_second" type="select" selection="T,LV,IV,RV,LM,ZM,DM,OM,RM,LS,MS,RS" required="false"  />
+					<field id="position_main" type="select" selection="GK,LB,CB,RB,LM,CM,DM,AM,RM.LW,CF,RW" required="false"  />
+					<field id="position_second" type="select" selection="GK,LB,CB,RB,LM,CM,DM,AM,RM.LW,CF,RW" required="false"  />
 					<field id="nation" type="text" required="true"  />
 					
 					<field id="picture" type="file"  />

@@ -212,18 +212,18 @@ class SaveMatchChangesController implements IActionController {
 		$whereCondition = 'id = %d';
 		
 		$setupMainMapping = array(
-				'T' => 'Goalkeeper',
-				'LV' => 'Defender',
-				'RV' => 'Defender',
-				'IV' => 'Defender',
+				'GK' => 'Goalkeeper',
+				'LB' => 'Defender',
+				'RB' => 'Defender',
+				'CB' => 'Defender',
 				'DM' => 'Midfielder',
 				'LM' => 'Midfielder',
-				'ZM' => 'Midfielder',
+				'CM' => 'Midfielder',
 				'RM' => 'Midfielder',
-				'OM' => 'Midfielder',
-				'LS' => 'Forward',
-				'MS' => 'Forward',
-				'RS' => 'Forward');
+				'AM' => 'Midfielder',
+				'LW' => 'Forward',
+				'CF' => 'Forward',
+				'RW' => 'Forward');
 		
 		foreach ($playersOnField as $player) {
 			if (isset($submittedPositions[$player['id']])) {

@@ -146,18 +146,18 @@ elseif ($show == "generateform") {
 	
 	$formFields["playersgenerator_label_deviation"] = array("type" => "percent", "value" => 10);
 	
-	$formFields["option_T"] = array("type" => "number", "value" => 2);
-	$formFields["option_LV"] = array("type" => "number", "value" => 2);
-	$formFields["option_IV"] = array("type" => "number", "value" => 4);
-	$formFields["option_RV"] = array("type" => "number", "value" => 2);
+	$formFields["option_GK"] = array("type" => "number", "value" => 2);
+	$formFields["option_LB"] = array("type" => "number", "value" => 2);
+	$formFields["option_CB"] = array("type" => "number", "value" => 4);
+	$formFields["option_RB"] = array("type" => "number", "value" => 2);
 	$formFields["option_LM"] = array("type" => "number", "value" => 2);
 	$formFields["option_DM"] = array("type" => "number", "value" => 2);
-	$formFields["option_ZM"] = array("type" => "number", "value" => 1);
-	$formFields["option_OM"] = array("type" => "number", "value" => 2);
+	$formFields["option_CM"] = array("type" => "number", "value" => 1);
+	$formFields["option_AM"] = array("type" => "number", "value" => 2);
 	$formFields["option_RM"] = array("type" => "number", "value" => 2);
-	$formFields["option_LS"] = array("type" => "number", "value" => 1);
-	$formFields["option_MS"] = array("type" => "number", "value" => 2);
-	$formFields["option_RS"] = array("type" => "number", "value" => 1);
+	$formFields["option_LW"] = array("type" => "number", "value" => 1);
+	$formFields["option_CF"] = array("type" => "number", "value" => 2);
+	$formFields["option_RW"] = array("type" => "number", "value" => 1);
 	
 	foreach ($formFields as $fieldId => $fieldInfo) {
 		echo FormBuilder::createFormGroup($i18n, $fieldId, $fieldInfo, $fieldInfo["value"], "");
@@ -194,18 +194,18 @@ elseif ($show == "generate") {
 	$strengths["freshness"] = $_POST['entity_player_w_fitness'];
 	$strengths["satisfaction"] = $_POST['entity_player_w_morale'];
 	
-	$positions["T"] = $_POST["option_T"];
-	$positions["LV"] = $_POST["option_LV"];
-	$positions["IV"] = $_POST["option_IV"];
-	$positions["RV"] = $_POST["option_RV"];
+	$positions["GK"] = $_POST["option_GK"];
+	$positions["LB"] = $_POST["option_LB"];
+	$positions["CB"] = $_POST["option_CB"];
+	$positions["RB"] = $_POST["option_RB"];
 	$positions["LM"] = $_POST["option_LM"];
-	$positions["ZM"] = $_POST["option_ZM"];
+	$positions["CM"] = $_POST["option_CM"];
 	$positions["RM"] = $_POST["option_RM"];
 	$positions["DM"] = $_POST["option_DM"];
-	$positions["OM"] = $_POST["option_OM"];
-	$positions["LS"] = $_POST["option_LS"];
-	$positions["MS"] = $_POST["option_MS"];
-	$positions["RS"] = $_POST["option_RS"];
+	$positions["AM"] = $_POST["option_AM"];
+	$positions["LW"] = $_POST["option_LW"];
+	$positions["CF"] = $_POST["option_CF"];
+	$positions["RW"] = $_POST["option_RW"];
 
 	// generate for specific team
 	if ($teamid > 0) {

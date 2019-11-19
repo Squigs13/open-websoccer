@@ -57,17 +57,17 @@
     <message id="player_details_avaiable_on_transfermarket">Der Spieler steht derzeit zum Verkauf auf dem Transfermarkt.</message>
     <message id="player_details_unsellable">Der Manager des Vereins hat den Spieler als unverkäuflich markiert.</message>
     
-    <message id="player_mainposition_T">TO</message>
-    <message id="player_mainposition_LV">LV</message>
-    <message id="player_mainposition_RV">RV</message>
-    <message id="player_mainposition_IV">IV</message>
+    <message id="player_mainposition_GK">TO</message>
+    <message id="player_mainposition_LB">LV</message>
+    <message id="player_mainposition_RB">RV</message>
+    <message id="player_mainposition_CB">IV</message>
     <message id="player_mainposition_LM">LM</message>
     <message id="player_mainposition_RM">RM</message>
-    <message id="player_mainposition_ZM">ZM</message>
-    <message id="player_mainposition_LS">LA</message>
-    <message id="player_mainposition_MS">MS</message>
-    <message id="player_mainposition_RS">RA</message>
-    <message id="player_mainposition_OM">OM</message>
+    <message id="player_mainposition_CM">ZM</message>
+    <message id="player_mainposition_LW">LA</message>
+    <message id="player_mainposition_CF">MS</message>
+    <message id="player_mainposition_RW">RA</message>
+    <message id="player_mainposition_AM">OM</message>
     <message id="player_mainposition_DM">DM</message>
     
     <message id="player_button_to_pitch">Aufstellen</message>

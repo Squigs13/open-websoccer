@@ -74,16 +74,16 @@
     <message id="player_position_field">Feldspieler</message>
     <message id="player_position_bench">Bench</message>
     
-    <message id="option_T">Goalkeeper</message>
-    <message id="option_LV">Linker Verteidiger</message>
-    <message id="option_RV">Rechter Verteidiger</message>
-    <message id="option_IV">Innenverteidiger</message>
+    <message id="option_GK">Goalkeeper</message>
+    <message id="option_LB">Linker Verteidiger</message>
+    <message id="option_RB">Rechter Verteidiger</message>
+    <message id="option_CB">Innenverteidiger</message>
     <message id="option_LM">Linkes Midfielder</message>
     <message id="option_RM">Rechtes Midfielder</message>
-    <message id="option_ZM">Zentrales Midfielder</message>
-    <message id="option_LS">Linksaußen</message>
-    <message id="option_MS">Mittelstürmer</message>
-    <message id="option_RS">Rechtsaußen</message>
-    <message id="option_OM">Offensives Midfielder</message>
+    <message id="option_CM">Zentrales Midfielder</message>
+    <message id="option_LW">Linksaußen</message>
+    <message id="option_CF">Mittelstürmer</message>
+    <message id="option_RW">Rechtsaußen</message>
+    <message id="option_AM">Offensives Midfielder</message>
     <message id="option_DM">Defensives Midfielder</message>
 </messages>

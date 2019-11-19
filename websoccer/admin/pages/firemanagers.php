@@ -211,17 +211,17 @@ elseif ($show == 'selectoptions') {
 	$formFields = array();
 	
 	$formFields['option_T'] = array('type' => 'number', 'value' => 2);
-	$formFields['option_LV'] = array('type' => 'number', 'value' => 1);
-	$formFields['option_IV'] = array('type' => 'number', 'value' => 2);
-	$formFields['option_RV'] = array('type' => 'number', 'value' => 1);
+	$formFields['option_LB'] = array('type' => 'number', 'value' => 1);
+	$formFields['option_CB'] = array('type' => 'number', 'value' => 2);
+	$formFields['option_RB'] = array('type' => 'number', 'value' => 1);
 	$formFields['option_LM'] = array('type' => 'number', 'value' => 1);
 	$formFields['option_DM'] = array('type' => 'number', 'value' => 1);
-	$formFields['option_ZM'] = array('type' => 'number', 'value' => 1);
-	$formFields['option_OM'] = array('type' => 'number', 'value' => 1);
+	$formFields['option_CM'] = array('type' => 'number', 'value' => 1);
+	$formFields['option_AM'] = array('type' => 'number', 'value' => 1);
 	$formFields['option_RM'] = array('type' => 'number', 'value' => 1);
-	$formFields['option_LS'] = array('type' => 'number', 'value' => 1);
-	$formFields['option_MS'] = array('type' => 'number', 'value' => 1);
-	$formFields['option_RS'] = array('type' => 'number', 'value' => 1);
+	$formFields['option_LW'] = array('type' => 'number', 'value' => 1);
+	$formFields['option_CF'] = array('type' => 'number', 'value' => 1);
+	$formFields['option_RW'] = array('type' => 'number', 'value' => 1);
 	
 	$formFields['player_age'] = array('type' => 'number', 'value' => 25);
 	
@@ -306,18 +306,18 @@ elseif ($show == 'dismiss') {
 		
 		// count and update players
 		$positionsCount = array();
-		$positionsCount['T'] = 0;
-		$positionsCount['LV'] = 0;
-		$positionsCount['IV'] = 0;
-		$positionsCount['RV'] = 0;
+		$positionsCount['GK'] = 0;
+		$positionsCount['LB'] = 0;
+		$positionsCount['CB'] = 0;
+		$positionsCount['RB'] = 0;
 		$positionsCount['LM'] = 0;
-		$positionsCount['ZM'] = 0;
+		$positionsCount['CM'] = 0;
 		$positionsCount['RM'] = 0;
 		$positionsCount['DM'] = 0;
-		$positionsCount['OM'] = 0;
-		$positionsCount['LS'] = 0;
-		$positionsCount['MS'] = 0;
-		$positionsCount['RS'] = 0;
+		$positionsCount['AM'] = 0;
+		$positionsCount['LW'] = 0;
+		$positionsCount['CF'] = 0;
+		$positionsCount['RW'] = 0;
 		
 		$result = $db->querySelect('id, position_main, w_stamina, w_fitness, w_morale, contract_matches', $website->getConfig('db_prefix') . '_player', 
 			'club_id = %d AND status = \'1\'', $teamId);
@@ -366,18 +366,18 @@ elseif ($show == 'dismiss') {
 		
 		// generate players
 		$positions = array();
-		$positions['T'] = (!empty($_POST['option_T'])) ? max(0, $_POST['option_T'] - $positionsCount['T']) : 0;
-		$positions['LV'] = (!empty($_POST['option_LV'])) ? max(0, $_POST['option_LV'] - $positionsCount['LV']) : 0;
-		$positions['IV'] = (!empty($_POST['option_IV'])) ? max(0, $_POST['option_IV'] - $positionsCount['IV']) : 0;
-		$positions['RV'] = (!empty($_POST['option_RV'])) ? max(0, $_POST['option_RV'] - $positionsCount['RV']) : 0;
+		$positions['GK'] = (!empty($_POST['option_T'])) ? max(0, $_POST['option_T'] - $positionsCount['GK']) : 0;
+		$positions['LB'] = (!empty($_POST['option_LB'])) ? max(0, $_POST['option_LB'] - $positionsCount['LB']) : 0;
+		$positions['CB'] = (!empty($_POST['option_CB'])) ? max(0, $_POST['option_CB'] - $positionsCount['CB']) : 0;
+		$positions['RB'] = (!empty($_POST['option_RB'])) ? max(0, $_POST['option_RB'] - $positionsCount['RB']) : 0;
 		$positions['LM'] = (!empty($_POST['option_LM'])) ? max(0, $_POST['option_LM'] - $positionsCount['LM']) : 0;
-		$positions['ZM'] = (!empty($_POST['option_ZM'])) ? max(0, $_POST['option_ZM'] - $positionsCount['ZM']) : 0;
+		$positions['CM'] = (!empty($_POST['option_CM'])) ? max(0, $_POST['option_CM'] - $positionsCount['CM']) : 0;
 		$positions['RM'] = (!empty($_POST['option_RM'])) ? max(0, $_POST['option_RM'] - $positionsCount['RM']) : 0;
 		$positions['DM'] = (!empty($_POST['option_DM'])) ? max(0, $_POST['option_DM'] - $positionsCount['DM']) : 0;
-		$positions['OM'] = (!empty($_POST['option_OM'])) ? max(0, $_POST['option_OM'] - $positionsCount['OM']) : 0;
-		$positions['LS'] = (!empty($_POST['option_LS'])) ? max(0, $_POST['option_LS'] - $positionsCount['LS']) : 0;
-		$positions['MS'] = (!empty($_POST['option_MS'])) ? max(0, $_POST['option_MS'] - $positionsCount['MS']) : 0;
-		$positions['RS'] = (!empty($_POST['option_RS'])) ? max(0, $_POST['option_RS'] - $positionsCount['RS']) : 0;
+		$positions['AM'] = (!empty($_POST['option_AM'])) ? max(0, $_POST['option_AM'] - $positionsCount['AM']) : 0;
+		$positions['LW'] = (!empty($_POST['option_LW'])) ? max(0, $_POST['option_LW'] - $positionsCount['LW']) : 0;
+		$positions['CF'] = (!empty($_POST['option_CF'])) ? max(0, $_POST['option_CF'] - $positionsCount['CF']) : 0;
+		$positions['RW'] = (!empty($_POST['option_RW'])) ? max(0, $_POST['option_RW'] - $positionsCount['RW']) : 0;
 		
 		$playersToGenerate = FALSE;
 		foreach($positions as $posCount) {

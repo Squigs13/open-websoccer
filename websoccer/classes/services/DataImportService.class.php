@@ -84,18 +84,18 @@ class DataImportService {
 		}
 		
 		/* map main position to parent position
-		$mainPositions['T'] = 'Goalkeeper';
-		$mainPositions['LV'] = 'Defender';
-		$mainPositions['IV'] = 'Defender';
-		$mainPositions['RV'] = 'Defender';
+		$mainPositions['GK'] = 'Goalkeeper';
+		$mainPositions['LB'] = 'Defender';
+		$mainPositions['CB'] = 'Defender';
+		$mainPositions['RB'] = 'Defender';
 		$mainPositions['LM'] = 'Midfielder';
-		$mainPositions['ZM'] = 'Midfielder';
-		$mainPositions['OM'] = 'Midfielder';
+		$mainPositions['CM'] = 'Midfielder';
+		$mainPositions['AM'] = 'Midfielder';
 		$mainPositions['DM'] = 'Midfielder';
 		$mainPositions['RM'] = 'Midfielder';
-		$mainPositions['LS'] = 'Forward';
-		$mainPositions['MS'] = 'Forward';
-		$mainPositions['RS'] = 'Forward';
+		$mainPositions['LW'] = 'Forward';
+		$mainPositions['CF'] = 'Forward';
+		$mainPositions['RW'] = 'Forward';
 		
 		// create players for all positions
 		foreach($positions as $mainPosition => $numberOfPlayers) {

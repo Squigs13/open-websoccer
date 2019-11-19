@@ -57,17 +57,17 @@
     <message id="player_details_avaiable_on_transfermarket">The player is currently available on the transfer market.</message>
     <message id="player_details_unsellable">The manager of the player's club marked the player as unsellable.</message>
     
-    <message id="player_mainposition_T">GK</message>
-    <message id="player_mainposition_LV">LB</message>
-    <message id="player_mainposition_RV">RB</message>
-    <message id="player_mainposition_IV">CB</message>
+    <message id="player_mainposition_GK">GK</message>
+    <message id="player_mainposition_LB">LB</message>
+    <message id="player_mainposition_RB">RB</message>
+    <message id="player_mainposition_CB">CB</message>
     <message id="player_mainposition_LM">LM</message>
     <message id="player_mainposition_RM">RM</message>
-    <message id="player_mainposition_ZM">CM</message>
-    <message id="player_mainposition_LS">LW</message>
-    <message id="player_mainposition_MS">CF</message>
-    <message id="player_mainposition_RS">RW</message>
-    <message id="player_mainposition_OM">AM</message>
+    <message id="player_mainposition_CM">CM</message>
+    <message id="player_mainposition_LW">LW</message>
+    <message id="player_mainposition_CF">CF</message>
+    <message id="player_mainposition_RW">RW</message>
+    <message id="player_mainposition_AM">AM</message>
     <message id="player_mainposition_DM">DM</message>
     
     <message id="player_button_to_pitch">Pitch</message>

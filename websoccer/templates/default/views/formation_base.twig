@@ -45,42 +45,42 @@
 	
 		<div id="pitch">
 		
-			<div class="position T freePosition" data-position="goaly" data-mainposition="T">
-				<div class="positionLabel">{{ i18n.getMessage("player_mainposition_T") }}</div>
+			<div class="position GK freePosition" data-position="goaly" data-mainposition="GK">
+				<div class="positionLabel">{{ i18n.getMessage("player_mainposition_GK") }}</div>
 			</div>
 			
 			{% if setup.defense > 3 %}
-				<div class="position LV freePosition{% if setup.defense > 4 %} goalyRow{% endif %}" data-position="defense" data-mainposition="LV">
-					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_LV") }}</div>
+				<div class="position LB freePosition{% if setup.defense > 4 %} goalyRow{% endif %}" data-position="defense" data-mainposition="LB">
+					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_LB") }}</div>
 				</div>
 			{% endif %}
 			
 			{% if setup.defense == 4 or setup.defense == 2 %}
-				<div class="position IV leftPos freePosition" data-position="defense" data-mainposition="IV.leftPos">
-					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_IV") }}</div>
+				<div class="position CB leftPos freePosition" data-position="defense" data-mainposition="IV.leftPos">
+					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_CB") }}</div>
 				</div>
-				<div class="position IV rightPos freePosition" data-position="defense" data-mainposition="IV.rightPos">
-					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_IV") }}</div>
+				<div class="position CB rightPos freePosition" data-position="defense" data-mainposition="IV.rightPos">
+					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_CB") }}</div>
 				</div>
 			{% elseif setup.defense == 3 or setup.defense > 4 %}
-				<div class="position IV leftWing freePosition" data-position="defense" data-mainposition="IV.leftWing">
-					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_IV") }}</div>
+				<div class="position CB leftWing freePosition" data-position="defense" data-mainposition="IV.leftWing">
+					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_CB") }}</div>
 				</div>
-				<div class="position IV centre freePosition" data-position="defense" data-mainposition="IV.centre">
-					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_IV") }}</div>
+				<div class="position CB centre freePosition" data-position="defense" data-mainposition="IV.centre">
+					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_CB") }}</div>
 				</div>
-				<div class="position IV rightWing freePosition" data-position="defense" data-mainposition="IV.rightWing">
-					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_IV") }}</div>
+				<div class="position CB rightWing freePosition" data-position="defense" data-mainposition="IV.rightWing">
+					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_CB") }}</div>
 				</div>
 			{% else %}
-				<div class="position IV freePosition" data-position="defense" data-mainposition="IV">
-					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_IV") }}</div>
+				<div class="position CB freePosition" data-position="defense" data-mainposition="CB">
+					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_CB") }}</div>
 				</div>
 			{% endif %}
 			
 			{% if setup.defense > 3 %}
-				<div class="position RV freePosition{% if setup.defense > 4 %} goalyRow{% endif %}" data-position="defense" data-mainposition="RV">
-					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_RV") }}</div>
+				<div class="position RB freePosition{% if setup.defense > 4 %} goalyRow{% endif %}" data-position="defense" data-mainposition="RB">
+					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_RB") }}</div>
 				</div>
 			{% endif %}
 			
@@ -114,15 +114,15 @@
 			{% endif %}
 			
 			{% if setup.midfield == 4 %}
-				<div class="position ZM leftPos freePosition" data-position="midfield" data-mainposition="ZM.leftPos">
-					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_ZM") }}</div>
+				<div class="position CM leftPos freePosition" data-position="midfield" data-mainposition="CM.leftPos">
+					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_CM") }}</div>
 				</div>
-				<div class="position ZM rightPos freePosition" data-position="midfield" data-mainposition="ZM.rightPos">
-					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_ZM") }}</div>
+				<div class="position CM rightPos freePosition" data-position="midfield" data-mainposition="CM.rightPos">
+					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_CM") }}</div>
 				</div>
 			{% elseif setup.midfield != 2 and setup.midfield != 0 %}
-				<div class="position ZM freePosition" data-position="midfield" data-mainposition="ZM">
-					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_ZM") }}</div>
+				<div class="position CM freePosition" data-position="midfield" data-mainposition="CM">
+					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_CM") }}</div>
 				</div>
 			{% endif %}
 			
@@ -133,57 +133,57 @@
 			{% endif %}
 			
 			{% if setup.om == 2 %}
-				<div class="position OM leftPos freePosition" data-position="midfield" data-mainposition="OM.leftPos">
-					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_OM") }}</div>
+				<div class="position AM leftPos freePosition" data-position="midfield" data-mainposition="AM.leftPos">
+					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_AM") }}</div>
 				</div>
-				<div class="position OM rightPos freePosition" data-position="midfield" data-mainposition="OM.rightPos">
-					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_OM") }}</div>
+				<div class="position AM rightPos freePosition" data-position="midfield" data-mainposition="AM.rightPos">
+					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_AM") }}</div>
 				</div>
 			{% elseif setup.om == 1 %}
-				<div class="position OM freePosition" data-position="midfield" data-mainposition="OM">
-					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_OM") }}</div>
+				<div class="position AM freePosition" data-position="midfield" data-mainposition="AM">
+					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_AM") }}</div>
 				</div>
 			{% elseif setup.om == 3 %}
-				<div class="position OM leftOuterPos freePosition" data-position="midfield" data-mainposition="OM.leftOuterPos">
-					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_OM") }}</div>
+				<div class="position AM leftOuterPos freePosition" data-position="midfield" data-mainposition="AM.leftOuterPos">
+					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_AM") }}</div>
 				</div>
-				<div class="position OM innerPos freePosition" data-position="midfield" data-mainposition="OM.innerPos">
-					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_OM") }}</div>
+				<div class="position AM innerPos freePosition" data-position="midfield" data-mainposition="AM.innerPos">
+					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_AM") }}</div>
 				</div>
-				<div class="position OM rightOuterPos freePosition" data-position="midfield" data-mainposition="OM.rightOuterPos">
-					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_OM") }}</div>
+				<div class="position AM rightOuterPos freePosition" data-position="midfield" data-mainposition="AM.rightOuterPos">
+					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_AM") }}</div>
 				</div>
 			{% endif %}
 			
 			{% if setup.striker == 1 %}
-				<div class="position MS freePosition" data-position="striker" data-mainposition="MS">
-					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_MS") }}</div>
+				<div class="position CF freePosition" data-position="striker" data-mainposition="CF">
+					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_CF") }}</div>
 				</div>
 			{% elseif setup.striker == 2 %}
-				<div class="position MS leftPos freePosition" data-position="striker" data-mainposition="MS.leftPos">
-					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_MS") }}</div>
+				<div class="position CF leftPos freePosition" data-position="striker" data-mainposition="CF.leftPos">
+					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_CF") }}</div>
 				</div>
-				<div class="position MS rightPos freePosition" data-position="striker" data-mainposition="MS.rightPos">
-					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_MS") }}</div>
+				<div class="position CF rightPos freePosition" data-position="striker" data-mainposition="CF.rightPos">
+					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_CF") }}</div>
 				</div>
 			{% elseif setup.striker == 3 %}
-				<div class="position LS freePosition" data-position="striker" data-mainposition="LS">
-					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_LS") }}</div>
+				<div class="position LW freePosition" data-position="striker" data-mainposition="LW">
+					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_LW") }}</div>
 				</div>
-				<div class="position MS freePosition" data-position="striker" data-mainposition="MS">
-					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_MS") }}</div>
+				<div class="position CF freePosition" data-position="striker" data-mainposition="CF">
+					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_CF") }}</div>
 				</div>
-				<div class="position RS freePosition" data-position="striker" data-mainposition="RS">
-					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_RS") }}</div>
+				<div class="position RW freePosition" data-position="striker" data-mainposition="RW">
+					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_RW") }}</div>
 				</div>
 			{% endif %}
 			
 			{% if setup.outsideforward is defined and setup.outsideforward == 2 %}
-				<div class="position LS freePosition" data-position="striker" data-mainposition="LS">
-					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_LS") }}</div>
+				<div class="position LW freePosition" data-position="striker" data-mainposition="LW">
+					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_LW") }}</div>
 				</div>
-				<div class="position RS freePosition" data-position="striker" data-mainposition="RS">
-					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_RS") }}</div>
+				<div class="position RW freePosition" data-position="striker" data-mainposition="RW">
+					<div class="positionLabel">{{ i18n.getMessage("player_mainposition_RW") }}</div>
 				</div>
 			{% endif %}
 		
@@ -243,7 +243,7 @@
 									<div class="controls">
 										<select name="sub_position{{ benchNo }}" id="sub_position{{ benchNo }}">
 											<option value="">{{ i18n.getMessage("formation_substitutions_position_default") }}</option>
-											{% for subPosition in ['T','LV','IV', 'RV', 'LM', 'DM', 'ZM', 'OM', 'RM', 'LS', 'MS', 'RS'] %}
+											{% for subPosition in ['GK','LB','CB', 'RB', 'LM', 'DM', 'CM', 'AM', 'RM', 'LW', 'CF', 'RW'] %}
 												<option value="{{ subPosition }}">{{ i18n.getMessage("option_" ~ subPosition) }}</option>
 											{% endfor %}
 										</select>
@@ -322,21 +322,21 @@
 											<div class="playerinfoIcons text-right ">
 													<a id="addLink{{ player.id }}" href="#" data-toggle="dropdown" class="btn btn-mini dropdown-toggle playerAddToPitchLink"><i class="icon-plus-sign"></i> {{ i18n.getMessage("player_button_to_pitch") }}</a>
 													<ul class="dropdown-menu text-left" role="menu" aria-labelledby="addLink{{ player.id }}">
-														<li><a href="#" class="playerAddToPitchLinkItem" data-target="T" >{{ i18n.getMessage("option_T") }}</a></li>
+														<li><a href="#" class="playerAddToPitchLinkItem" data-target="GK" >{{ i18n.getMessage("option_GK") }}</a></li>
 														<li class="divider"></li>
-														<li><a href="#" class="playerAddToPitchLinkItem" data-target="LV" >{{ i18n.getMessage("option_LV") }}</a></li>
-														<li><a href="#" class="playerAddToPitchLinkItem" data-target="IV" >{{ i18n.getMessage("option_IV") }}</a></li>
-														<li><a href="#" class="playerAddToPitchLinkItem" data-target="RV" >{{ i18n.getMessage("option_RV") }}</a></li>
+														<li><a href="#" class="playerAddToPitchLinkItem" data-target="LB" >{{ i18n.getMessage("option_LB") }}</a></li>
+														<li><a href="#" class="playerAddToPitchLinkItem" data-target="CB" >{{ i18n.getMessage("option_CB") }}</a></li>
+														<li><a href="#" class="playerAddToPitchLinkItem" data-target="RB" >{{ i18n.getMessage("option_RB") }}</a></li>
 														<li class="divider"></li>
 														<li><a href="#" class="playerAddToPitchLinkItem" data-target="DM" >{{ i18n.getMessage("option_DM") }}</a></li>
 														<li><a href="#" class="playerAddToPitchLinkItem" data-target="LM" >{{ i18n.getMessage("option_LM") }}</a></li>
-														<li><a href="#" class="playerAddToPitchLinkItem" data-target="ZM" >{{ i18n.getMessage("option_ZM") }}</a></li>
+														<li><a href="#" class="playerAddToPitchLinkItem" data-target="CM" >{{ i18n.getMessage("option_CM") }}</a></li>
 														<li><a href="#" class="playerAddToPitchLinkItem" data-target="RM" >{{ i18n.getMessage("option_RM") }}</a></li>
-														<li><a href="#" class="playerAddToPitchLinkItem" data-target="OM" >{{ i18n.getMessage("option_OM") }}</a></li>
+														<li><a href="#" class="playerAddToPitchLinkItem" data-target="AM" >{{ i18n.getMessage("option_AM") }}</a></li>
 														<li class="divider"></li>
-														<li><a href="#" class="playerAddToPitchLinkItem" data-target="LS" >{{ i18n.getMessage("option_LS") }}</a></li>
-														<li><a href="#" class="playerAddToPitchLinkItem" data-target="MS" >{{ i18n.getMessage("option_MS") }}</a></li>
-														<li><a href="#" class="playerAddToPitchLinkItem" data-target="RS" >{{ i18n.getMessage("option_RS") }}</a></li>
+														<li><a href="#" class="playerAddToPitchLinkItem" data-target="LW" >{{ i18n.getMessage("option_LW") }}</a></li>
+														<li><a href="#" class="playerAddToPitchLinkItem" data-target="CF" >{{ i18n.getMessage("option_CF") }}</a></li>
+														<li><a href="#" class="playerAddToPitchLinkItem" data-target="RW" >{{ i18n.getMessage("option_RW") }}</a></li>
 													</ul>
 												<a href="#" class="btn btn-mini playerRemoveLink"><i class="icon-remove"></i> {{ i18n.getMessage("player_button_remove_from_pitch") }}</a>
 												<a href="#" class="btn btn-mini playerAddToBenchLink"><i class="icon-retweet"></i> {{ i18n.getMessage("player_button_to_bench") }}</a>

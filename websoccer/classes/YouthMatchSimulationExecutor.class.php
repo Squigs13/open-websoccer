@@ -158,7 +158,7 @@ class YouthMatchSimulationExecutor {
 				// first player must be always goalkeeper
 				if ($addedFieldPlayers == 0) {
 					$player->position = 'Goalkeeper';
-					$player->mainPosition = 'T';
+					$player->mainPosition = 'GK';
 				} else {
 					$player->position = $playerinfo['match_position'];
 				}
@@ -196,7 +196,7 @@ class YouthMatchSimulationExecutor {
 		$db->queryDelete($websoccer->getConfig('db_prefix') . '_youthmatch_player', 'match_id = %d AND team_id = %d', array($match->id, $team->id));
 		
 		// define the exact default formation
-		$formationPositions = array('T', 'LV', 'IV', 'IV', 'RV', 'LM', 'ZM', 'ZM', 'RM', 'LS', 'RS');
+		$formationPositions = array('GK', 'LB', 'CB', 'CB', 'RB', 'LM', 'CM', 'CM', 'RM', 'LW', 'RW');
 		$positionMapping = SimulationHelper::getPositionsMapping();
 		
 		// set players

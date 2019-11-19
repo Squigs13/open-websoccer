@@ -154,34 +154,34 @@
 	right: 0;
 }
 
-.position.T {
+.position.GK {
 	bottom: 50px;
 	left: 180px;
 }
 
-.position.LV, .position.IV.leftWing {
+.position.LB, .position.CB.leftWing {
 	bottom: 160px;
 	left: 18px;
 }
 
-.position.LV.goalyRow, .position.RV.goalyRow {
+.position.LB.goalyRow, .position.RB.goalyRow {
 	bottom: 50px;
 }
 
-.position.IV {
+.position.CB {
 	bottom: 160px;
 	left: 180px;
 }
 
-.position.IV.leftPos {
+.position.CB.leftPos {
 	left: 126px;
 }
 
-.position.IV.rightPos {
+.position.CB.rightPos {
 	left: 234px;
 }
 
-.position.RV, .position.IV.rightWing {
+.position.RB, .position.CB.rightWing {
 	bottom: 160px;
 	left: 342px;
 }
@@ -212,16 +212,16 @@
 	left: 18px;
 }
 
-.position.ZM {
+.position.CM {
 	bottom: 380px;
 	left: 180px;
 }
 
-.position.ZM.leftPos {
+.position.CM.leftPos {
 	left: 126px;
 }
 
-.position.ZM.rightPos {
+.position.CM.rightPos {
 	left: 234px;
 }
 
@@ -230,46 +230,46 @@
 	left: 342px;
 }
 
-.position.OM {
+.position.AM {
 	bottom: 490px;
 	left: 180px;
 }
 
-.position.OM.leftPos {
+.position.AM.leftPos {
 	left: 126px;
 }
 
-.position.OM.rightPos {
+.position.AM.rightPos {
 	left: 234px;
 }
 
-.position.OM.leftOuterPos {
+.position.AM.leftOuterPos {
 	left: 18px;
 }
 
-.position.OM.rightOuterPos {
+.position.AM.rightOuterPos {
 	left: 342px;
 }
 
-.position.LS {
+.position.LW {
 	bottom: 600px;
 	left: 18px;
 }
 
-.position.MS {
+.position .CF {
 	bottom: 600px;
 	left: 180px;
 }
 
-.position.MS.leftPos {
+.position .CF.leftPos {
 	left: 126px;
 }
 
-.position.MS.rightPos {
+.position .CF.rightPos {
 	left: 234px;
 }
 
-.position.RS {
+.position.RW {
 	bottom: 600px;
 	left: 342px;
 }
