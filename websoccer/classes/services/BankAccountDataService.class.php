@@ -36,7 +36,7 @@ class BankAccountDataService {
 	public static function countAccountStatementsOfTeam(WebSoccer $websoccer, DbConnection $db, $teamId) {
 		$columns = "COUNT(*) AS hits";
 		
-		$fromTable = $websoccer->getConfig("db_prefix") . "_accounts";
+		$fromTable = $websoccer->getConfig("db_prefix") . "_transactions";
 		
 		$whereCondition = "club_id = %d";
 		$parameters = $teamId;
@@ -71,7 +71,7 @@ class BankAccountDataService {
 		
 		$limit = $startIndex .",". $entries_per_page;
 		
-		$fromTable = $websoccer->getConfig("db_prefix") . "_accounts";
+		$fromTable = $websoccer->getConfig("db_prefix") . "_transactions";
 		
 		$whereCondition = "club_id = %d ORDER BY date DESC";
 		$parameters = $teamId;
@@ -154,7 +154,7 @@ class BankAccountDataService {
 		}
 		
 		// create transaction
-		$fromTable = $websoccer->getConfig("db_prefix") ."_accounts";
+		$fromTable = $websoccer->getConfig("db_prefix") ."_transactions";
 		$columns["club_id"] = $teamId;
 		$columns["sender"] = $sender;
 		$columns["amount"] = $amount;

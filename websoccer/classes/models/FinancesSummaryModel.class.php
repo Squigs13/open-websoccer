@@ -47,7 +47,7 @@ class FinancesSummaryModel implements IModel {
 				'AVG(amount)' => 'avgAmount'
 				);
 		$result = $this->_db->querySelect($columns, 
-				$this->_websoccer->getConfig('db_prefix') . '_accounts', 
+				$this->_websoccer->getConfig('db_prefix') . '_transactions', 
 				'club_id = %d AND date > %d GROUP BY details HAVING COUNT(*) > 5', array($this->_teamId, $minDate));
 		$majorPositions = array();
 		while ($position = $result->fetch_array()) {

@@ -256,16 +256,16 @@
 	left: 18px;
 }
 
-.position .CF {
+.position.CF {
 	bottom: 600px;
 	left: 180px;
 }
 
-.position .CF.leftPos {
+.position.CF.leftPos {
 	left: 126px;
 }
 
-.position .CF.rightPos {
+.position.CF.rightPos {
 	left: 234px;
 }
 

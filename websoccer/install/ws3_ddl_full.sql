@@ -944,6 +944,82 @@ CREATE TABLE ws3_achievement (
   date_recorded INT(10) NOT NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
+CREATE TABLE ws3_stadiumbuilding (
+  id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  description VARCHAR(255) NULL,
+  picture VARCHAR(255) NULL,
+  required_building_id INT(10) NULL,
+  costs INT(10) NOT NULL,
+  premiumfee INT(10) NOT NULL DEFAULT 0,
+  construction_time_days TINYINT(3) NOT NULL DEFAULT 0,
+  effect_training TINYINT(3) NOT NULL DEFAULT 0,
+  effect_youthscouting TINYINT(3) NOT NULL DEFAULT 0,
+  effect_tickets TINYINT(3) NOT NULL DEFAULT 0,
+  effect_fanpopularity TINYINT(3) NOT NULL DEFAULT 0,
+  effect_injury TINYINT(3) NOT NULL DEFAULT 0,
+  effect_income INT(10) NOT NULL DEFAULT 0,
+  FOREIGN KEY (required_building_id) REFERENCES ws3_stadiumbuilding(id) ON DELETE SET NULL
+) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
+
+CREATE TABLE ws3_buildings_of_team (
+  building_id INT(10) NOT NULL,
+  team_id INT(10) NOT NULL,
+  construction_deadline INT(11) NULL,
+  FOREIGN KEY (building_id) REFERENCES ws3_stadiumbuilding(id) ON DELETE CASCADE,
+  FOREIGN KEY (team_id) REFERENCES ws3_club(id) ON DELETE CASCADE,
+  PRIMARY KEY (building_id, team_id)
+) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
+
+INSERT INTO ws3_match_text (action_type, message) VALUES
+('Goal', '<b>Tor von {sp1}!</b>'),
+('Goal', '<b>{sp1} schießt..... TOR!</b>'),
+('Goal', '<b>TOR - wunderschön gemacht von {sp1}</b>'),
+('Goal', '<b>{sp1} schießt auf das Tor... und der Ball ist drin!</b>'),
+('Substitution', '<i>{sp1} kommt für {sp2}.</i>'),
+('Tackle_won', '{sp1} geht auf seinen Gegenspieler zu und gewinnt den Zweikampf!'),
+('Tackle_won', '{sp1} in einem Zweikampf.... gewonnen!'),
+('Tackle_won', '{sp1} läuft mit dem Ball am Fuß auf seinen Gegenspieler zu... und gewinnt den Zweikampf.'),
+('Tackle_won', '{sp1} nimmt seinem Gegenspieler gekonnt den Ball von den Füßen.'),
+('Tackle_lost', '{sp1} geht auf {sp2} zu... und verliert den Zweikampf.'),
+('Tackle_lost', '{sp1} in einem Zweikampf.... und verliert ihn.'),
+('Tackle_lost', '{sp1} geht mit dem Ball am Fuß auf seinen Gegenspieler zu... und verliert ihn.'),
+('Tackle_lost', '{sp1} sieht seinen Gegenspieler gegenüber und lässt sich den Ball abnehmen.'),
+('Pass_missed', 'Flanke von {sp1}... in die Wolken!'),
+('Pass_missed', '{sp1} passt den Ball in die Mitte... genau auf die Füße des Gegners.'),
+('Pass_missed', '{sp1} passt den Ball steil nach vorne... Abschlag!'),
+('Pass_missed', 'Pass von {sp1}... ins Seitenaus.'),
+('Shot_missed', '{sp1} hat freie Bahn und schießt... weit über das Tor.'),
+('Shot_missed', '{sp1} schießt..... daneben.'),
+('Shot_missed', '{sp1} schießt auf das Tor... aber genau auf den Goalkeeper.'),
+('Shot_missed', 'Kopfball {sp1}... daneben.'),
+('Shot_missed', '{sp1} haut mit aller Kraft auf den Ball... Abschlag.'),
+('Shot_missed', '{sp1} schießt..... in die Wolken.'),
+('Shot_on_target', '{sp1} schießt..... Glanzparade des Torwarts!'),
+('Shot_on_target', '{sp1} schießt auf das Tor... aber der Goalkeeper macht einen Hechtsprung und hat den Ball.'),
+('Shot_on_target', '{sp1} hat freie Bahn und schießt... aber der Goalkeeper kann den Ball gerade noch so um den Pfosten drehen.'),
+('Shot_on_target', '{sp1} kommt zum Kopfball... ganz knapp daneben.'),
+('Goal', '<b>{sp1} kommt zum Kopfball... und da flattert der Ball im Netz!</b>'),
+('Yellow_card', '{sp1} bekommt nach einem Foul die gelbe Karte.'),
+('Yellow_card', '{sp1} sieht die gelbe Karte.'),
+('Yellow_card', '{sp1} haut seinen Gegenspieler um und bekommt dafür die gelbe Karte.'),
+('Red_card', '<i>{sp1} springt von hinten in die Beine seines Gegenspielers und sieht sofort die Rote Karte.</i>'),
+('Red_card', '<i>{sp1} haut seinen Gegenspieler um und sieht dafür die Rote Karte.</i>'),
+('Red_card', '<i>{sp1} bekommt die Rote Karte wegen Prügelei.</i>'),
+('Yellow_card_2nd', '<i>{sp1} sieht die Gelb-Rote Karte und muss vom Platz.</i>'),
+('Yellow_card_2nd', '<i>{sp1} haut seinen Gegenspieler um und bekommt dafür die Gelb-Rote Karte.</i>'),
+('Red_card', '<i>{sp1} sieht nach einem bösen Foul die Rote Karte und muss vom Platz.</i>'),
+('Injury', '<i>{sp1} ist injured und muss vom Spielfeld getragen werden.</i>'),
+('Injury', '<i>{sp1} hat sich injured und kann nicht mehr weiterspielen.</i>'),
+('Penalty_scored', '{sp1} tritt an: Und trifft!'),
+('Penalty_missed', '{sp1} tritt an: Aber {sp2} hält den Ball!!'),
+('Penalty_missed', '{sp1} legt sich den Ball zurecht. Etwas unsicherer Anlauf... und haut den Ball über das Tor.'),
+('Tactics_changed', '{sp1} ändert die Taktik.'),
+('Corner', 'Corner für {ma1}. {sp1} spielt auf {sp2}...'),
+('Freekick_missed', 'Freistoß für {ma1}! {sp1} schießt, aber zu ungenau.'),
+('Freekick_scored', '{sp1} tritt den direkten Freistoß und trifft!'),
+('Goal_with_assist', 'Tooor für {ma1}! {sp2} legt auf {sp1} ab, der nur noch einschieben muss.');
+
 ALTER TABLE ws3_user_inactivity ADD CONSTRAINT ws3_user_inactivity_user_id_fk FOREIGN KEY (user_id) REFERENCES ws3_user(id) ON DELETE CASCADE;
 ALTER TABLE ws3_messages ADD CONSTRAINT ws3_messages_user_id_fk FOREIGN KEY (sender_id) REFERENCES ws3_user(id) ON DELETE CASCADE;
 ALTER TABLE ws3_club ADD CONSTRAINT ws3_club_user_id_fk FOREIGN KEY (user_id) REFERENCES ws3_user(id) ON DELETE SET NULL;
@@ -1004,79 +1080,3 @@ ALTER TABLE ws3_premiumpayment ADD CONSTRAINT ws3_premiumpayment_user_id_fk FORE
 ALTER TABLE ws3_club ADD CONSTRAINT ws3_club_original_user_id_fk FOREIGN KEY (user_id_actual) REFERENCES ws3_user(id) ON DELETE SET NULL;
 ALTER TABLE ws3_match ADD CONSTRAINT ws3_match_home_user_id_fk FOREIGN KEY (home_user_id) REFERENCES ws3_user(id) ON DELETE SET NULL;
 ALTER TABLE ws3_match ADD CONSTRAINT ws3_match_guest_user_id_fk FOREIGN KEY (guest_user_id) REFERENCES ws3_user(id) ON DELETE SET NULL;
-
-CREATE TABLE ws3_stadiumbuilding (
-  id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
-  description VARCHAR(255) NULL,
-  picture VARCHAR(255) NULL,
-  required_building_id INT(10) NULL,
-  costs INT(10) NOT NULL,
-  premiumfee INT(10) NOT NULL DEFAULT 0,
-  construction_time_days TINYINT(3) NOT NULL DEFAULT 0,
-  effect_training TINYINT(3) NOT NULL DEFAULT 0,
-  effect_youthscouting TINYINT(3) NOT NULL DEFAULT 0,
-  effect_tickets TINYINT(3) NOT NULL DEFAULT 0,
-  effect_fanpopularity TINYINT(3) NOT NULL DEFAULT 0,
-  effect_injury TINYINT(3) NOT NULL DEFAULT 0,
-  effect_income INT(10) NOT NULL DEFAULT 0,
-  FOREIGN KEY (required_building_id) REFERENCES ws3_stadiumbuilding(id) ON DELETE SET NULL
-) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
-
-CREATE TABLE ws3_buildings_of_team (
-  building_id INT(10) NOT NULL,
-  team_id INT(10) NOT NULL,
-  construction_deadline INT(11) NULL,
-  FOREIGN KEY (building_id) REFERENCES ws3_stadiumbuilding(id) ON DELETE CASCADE,
-  FOREIGN KEY (team_id) REFERENCES ws3_club(id) ON DELETE CASCADE,
-  PRIMARY KEY (building_id, team_id)
-) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
-
-INSERT INTO ws3_match_text (action, message) VALUES
-('Goal', '<b>Tor von {sp1}!</b>'),
-('Goal', '<b>{sp1} schießt..... TOR!</b>'),
-('Goal', '<b>TOR - wunderschön gemacht von {sp1}</b>'),
-('Goal', '<b>{sp1} schießt auf das Tor... und der Ball ist drin!</b>'),
-('Substitution', '<i>{sp1} kommt für {sp2}.</i>'),
-('Tackle_won', '{sp1} geht auf seinen Gegenspieler zu und gewinnt den Zweikampf!'),
-('Tackle_won', '{sp1} in einem Zweikampf.... gewonnen!'),
-('Tackle_won', '{sp1} läuft mit dem Ball am Fuß auf seinen Gegenspieler zu... und gewinnt den Zweikampf.'),
-('Tackle_won', '{sp1} nimmt seinem Gegenspieler gekonnt den Ball von den Füßen.'),
-('Tackle_lost', '{sp1} geht auf {sp2} zu... und verliert den Zweikampf.'),
-('Tackle_lost', '{sp1} in einem Zweikampf.... und verliert ihn.'),
-('Tackle_lost', '{sp1} geht mit dem Ball am Fuß auf seinen Gegenspieler zu... und verliert ihn.'),
-('Tackle_lost', '{sp1} sieht seinen Gegenspieler gegenüber und lässt sich den Ball abnehmen.'),
-('Pass_missed', 'Flanke von {sp1}... in die Wolken!'),
-('Pass_missed', '{sp1} passt den Ball in die Mitte... genau auf die Füße des Gegners.'),
-('Pass_missed', '{sp1} passt den Ball steil nach vorne... Abschlag!'),
-('Pass_missed', 'Pass von {sp1}... ins Seitenaus.'),
-('Shot_missed', '{sp1} hat freie Bahn und schießt... weit über das Tor.'),
-('Shot_missed', '{sp1} schießt..... daneben.'),
-('Shot_missed', '{sp1} schießt auf das Tor... aber genau auf den Goalkeeper.'),
-('Shot_missed', 'Kopfball {sp1}... daneben.'),
-('Shot_missed', '{sp1} haut mit aller Kraft auf den Ball... Abschlag.'),
-('Shot_missed', '{sp1} schießt..... in die Wolken.'),
-('Shot_on_target', '{sp1} schießt..... Glanzparade des Torwarts!'),
-('Shot_on_target', '{sp1} schießt auf das Tor... aber der Goalkeeper macht einen Hechtsprung und hat den Ball.'),
-('Shot_on_target', '{sp1} hat freie Bahn und schießt... aber der Goalkeeper kann den Ball gerade noch so um den Pfosten drehen.'),
-('Shot_on_target', '{sp1} kommt zum Kopfball... ganz knapp daneben.'),
-('Goal', '<b>{sp1} kommt zum Kopfball... und da flattert der Ball im Netz!</b>'),
-('Yellow_card', '{sp1} bekommt nach einem Foul die gelbe Karte.'),
-('Yellow_card', '{sp1} sieht die gelbe Karte.'),
-('Yellow_card', '{sp1} haut seinen Gegenspieler um und bekommt dafür die gelbe Karte.'),
-('Red_card', '<i>{sp1} springt von hinten in die Beine seines Gegenspielers und sieht sofort die Rote Karte.</i>'),
-('Red_card', '<i>{sp1} haut seinen Gegenspieler um und sieht dafür die Rote Karte.</i>'),
-('Red_card', '<i>{sp1} bekommt die Rote Karte wegen Prügelei.</i>'),
-('Yellow_card_2nd', '<i>{sp1} sieht die Gelb-Rote Karte und muss vom Platz.</i>'),
-('Yellow_card_2nd', '<i>{sp1} haut seinen Gegenspieler um und bekommt dafür die Gelb-Rote Karte.</i>'),
-('Red_card', '<i>{sp1} sieht nach einem bösen Foul die Rote Karte und muss vom Platz.</i>'),
-('Injury', '<i>{sp1} ist injured und muss vom Spielfeld getragen werden.</i>'),
-('Injury', '<i>{sp1} hat sich injured und kann nicht mehr weiterspielen.</i>'),
-('Penalty_scored', '{sp1} tritt an: Und trifft!'),
-('Penalty_missed', '{sp1} tritt an: Aber {sp2} hält den Ball!!'),
-('Penalty_missed', '{sp1} legt sich den Ball zurecht. Etwas unsicherer Anlauf... und haut den Ball über das Tor.'),
-('Tactics_changed', '{sp1} ändert die Taktik.'),
-('Corner', 'Corner für {ma1}. {sp1} spielt auf {sp2}...'),
-('Freekick_missed', 'Freistoß für {ma1}! {sp1} schießt, aber zu ungenau.'),
-('Freekick_scored', '{sp1} tritt den direkten Freistoß und trifft!'),
-('Goal_with_assist', 'Tooor für {ma1}! {sp2} legt auf {sp1} ab, der nur noch einschieben muss.');
