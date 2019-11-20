@@ -24,6 +24,7 @@ define('FILE_PREFIXNAMES', BASE_FOLDER . '/admin/config/names/%s/clubprefix.txt'
 define('FILE_SUFFIXNAMES', BASE_FOLDER . '/admin/config/names/%s/clubsuffix.txt');
 define('FILE_FIRSTNAMES', BASE_FOLDER . '/admin/config/names/%s/firstnames.txt');
 define('FILE_LASTNAMES', BASE_FOLDER . '/admin/config/names/%s/lastnames.txt');
+define('FILE_NATIONS', BASE_FOLDER . '/admin/config/names/%s/nations.txt');
 
 /**
  * Service for generating random game data records (teams, players).
@@ -96,6 +97,9 @@ class DataGeneratorService {
 	 */
 	public static function generatePlayers(WebSoccer $websoccer, DbConnection $db, $teamId, $age, $ageDeviation, $salary, $contractDuration, $strengths, $positions, $maxDeviation, $nationality = NULL) {
 		
+		$names = self::_getAllNames();
+		$nations = self::_getLines(FILE_NATIONS, 'common');
+
 		if (strlen($nationality)) {
 			$country = $nationality;
 		} else {
@@ -113,10 +117,6 @@ class DataGeneratorService {
 			$country = $league['country'];
 		}
 
-		
-		$firstNames = self::_getLines(FILE_FIRSTNAMES, $country);
-		$lastNames = self::_getLines(FILE_LASTNAMES, $country);
-		
 		// map main position to parent position
 		$mainPositions['GK'] = 'Goalkeeper';
 		$mainPositions['LB'] = 'Defender';
@@ -136,6 +136,15 @@ class DataGeneratorService {
 			
 			for ($playerNo = 1; $playerNo <= $numberOfPlayers; $playerNo++) {
 				
+				if (strlen($nationality) OR (mt_rand(0, 10) >= 2)) {
+					$nation = $country;
+				} else {
+					$nation = self::_getItemFromArray($nations);					
+				}
+
+				$firstNames = $names[$nation]['firstnames'];
+				$lastNames = $names[$nation]['lastnames'];
+				
 				$playerAge = $age + self::_getRandomDeviationValue($ageDeviation);
 				$time = strtotime('-' . $playerAge . ' years', $websoccer->getNowAsTimestamp());
 				$birthday = date('Y-m-d', $time);
@@ -143,11 +152,22 @@ class DataGeneratorService {
 				$firstName = self::_getItemFromArray($firstNames);
 				$lastName = self::_getItemFromArray($lastNames);
 				self::_createPlayer($websoccer, $db, $teamId, $firstName, $lastName,
-						$mainPositions[$mainPosition], $mainPosition, $strengths, $country, $playerAge, $birthday, $salary, $contractDuration, $maxDeviation);
+						$mainPositions[$mainPosition], $mainPosition, $strengths, $nation, $playerAge, $birthday, $salary, $contractDuration, $maxDeviation);
 			}
 
 		}
 		
+	}
+
+	private static function _getAllNames() {
+		$nations = self::_getLines(FILE_NATIONS, 'common');
+
+		foreach($nations as $nation) {
+			$names[$nation]['firstnames'] = self::_getLines(FILE_FIRSTNAMES, $nation);
+			$names[$nation]['lastnames'] = self::_getLines(FILE_LASTNAMES, $nation);
+		}
+
+		return $names;
 	}
 	
 	private static function _getLines($fileName, $country) {
