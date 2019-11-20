@@ -528,7 +528,7 @@ CREATE TABLE ws3_match_simulation (
 
 CREATE TABLE ws3_match_text (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  action ENUM(  'Goal',  'Substitution',  'Tackle_won',  'Tackle_lost',  'Pass_missed',  'Shot_missed',  'Shot_on_target',  'Yellow_card',  'Red_card',  'Yellow_card_2nd',  'Injury', 'Penalty_scored',  'Penalty_missed', 'Tactics_changed', 'Corner', 'Freekick_missed', 'Freekick_scored', 'Goal_with_assist' ),
+  action_type ENUM(  'Goal',  'Substitution',  'Tackle_won',  'Tackle_lost',  'Pass_missed',  'Shot_missed',  'Shot_on_target',  'Yellow_card',  'Red_card',  'Yellow_card_2nd',  'Injury', 'Penalty_scored',  'Penalty_missed', 'Tactics_changed', 'Corner', 'Freekick_missed', 'Freekick_scored', 'Goal_with_assist' ),
   message VARCHAR(250) NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
@@ -889,7 +889,7 @@ CREATE TABLE ws3_leaguehistory (
   team_id INT(10) NOT NULL,
   season_id INT(10) NOT NULL,
   user_id INT(10) NULL,
-  matchday TINYINT(3) NULL,
+  matchday TINYINT(3) NOT NULL,
   rank TINYINT(3) NULL,
   FOREIGN KEY (team_id) REFERENCES ws3_club(id) ON DELETE CASCADE,
   FOREIGN KEY (season_id) REFERENCES ws3_season(id) ON DELETE CASCADE,
@@ -1027,7 +1027,7 @@ ALTER TABLE ws3_club ADD CONSTRAINT ws3_club_stadium_id_fk FOREIGN KEY (stadium_
 ALTER TABLE ws3_club ADD CONSTRAINT ws3_club_sponsor_id_fk FOREIGN KEY (sponsor_id) REFERENCES ws3_sponsor(id) ON DELETE SET NULL;
 ALTER TABLE ws3_club ADD CONSTRAINT ws3_club_league_id_fk FOREIGN KEY (league_id) REFERENCES ws3_league(id) ON DELETE CASCADE;
 ALTER TABLE ws3_player ADD CONSTRAINT ws3_player_club_id_fk FOREIGN KEY (club_id) REFERENCES ws3_club(id) ON DELETE CASCADE;
-ALTER TABLE ws3_accounts ADD CONSTRAINT ws3_accounts_club_id_fk FOREIGN KEY (club_id) REFERENCES ws3_club(id) ON DELETE CASCADE;
+ALTER TABLE ws3_transactions ADD CONSTRAINT ws3_transactions_club_id_fk FOREIGN KEY (club_id) REFERENCES ws3_club(id) ON DELETE CASCADE;
 ALTER TABLE ws3_transfer_bid ADD CONSTRAINT ws3_transfer_bid_user_id_fk FOREIGN KEY (user_id) REFERENCES ws3_user(id) ON DELETE CASCADE;
 ALTER TABLE ws3_training_camp_booking ADD CONSTRAINT ws3_training_camp_booking_fk FOREIGN KEY (camp_id) REFERENCES ws3_training_camp(id) ON DELETE CASCADE;
 ALTER TABLE ws3_training_camp_booking ADD CONSTRAINT ws3_training_camp_club_fk FOREIGN KEY (club_id) REFERENCES ws3_club(id) ON DELETE CASCADE;
