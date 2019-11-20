@@ -119,7 +119,7 @@ CREATE TABLE ws3_league (
   price_standing SMALLINT(5) NOT NULL,
   price_seat SMALLINT(5) NOT NULL,
   price_vip SMALLINT(5) NOT NULL,
-  admin_id SMALLINT(5) NOT NULL
+  admin_id SMALLINT(5) NOT NULL DEFAULT 0
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
 CREATE TABLE ws3_table_marker (
@@ -136,11 +136,11 @@ CREATE TABLE ws3_season (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(20) NULL,
   league_id SMALLINT(5) NOT NULL,
-  place_1_id INT(10) NOT NULL,
-  place_2_id INT(10) NOT NULL,
-  place_3_id INT(10) NOT NULL,
-  place_4_id INT(10) NOT NULL,
-  place_5_id INT(10) NOT NULL,
+  place_1_id INT(10) NOT NULL DEFAULT 0,
+  place_2_id INT(10) NOT NULL DEFAULT 0,
+  place_3_id INT(10) NOT NULL DEFAULT 0,
+  place_4_id INT(10) NOT NULL DEFAULT 0,
+  place_5_id INT(10) NOT NULL DEFAULT 0,
   completed ENUM('1','0') NOT NULL DEFAULT '0'
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 

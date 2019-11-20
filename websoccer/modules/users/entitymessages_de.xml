@@ -16,11 +16,11 @@
     <message id="entity_users_city">city</message>
     <message id="entity_users_country">country</message>
     <message id="entity_users_birthday">birthday</message>
-    <message id="entity_users_beruf">occupation</message>
-    <message id="entity_users_interessen">interests</message>
-    <message id="entity_users_lieblingsclub">fav_club</message>
+    <message id="entity_users_occupation">occupation</message>
+    <message id="entity_users_interests">interests</message>
+    <message id="entity_users_fav_club">fav_club</message>
     <message id="entity_users_homepage">Homepage</message>
-    <message id="entity_users_fanbeliebtheit">popularity</message>
+    <message id="entity_users_popularity">popularity</message>
     <message id="entity_users_history">Historie</message>
     <message id="entity_users_status">Aktiv</message>
     
@@ -34,7 +34,7 @@
 	<message id="entity_user_inactivity_login">Anmeldungen auf Webseite</message>
    	<message id="entity_user_inactivity_tactics">formation abgegeben</message>
    	<message id="entity_user_inactivity_transfer">Transfers getätigt</message>
-   	<message id="entity_user_inactivity_contractsauslauf">Spielerverträge verlängert</message>
+   	<message id="entity_user_inactivity_contracts">Spielerverträge verlängert</message>
    	<message id="entity_user_inactivity_transfer_check">Letzte Aktion am %s</message>
    	
 </messages>

@@ -20,7 +20,7 @@
 		    	<column id="entity_user_inactivity_login" type="text" field="ActTab.login" hidden="true"/> 
 		    	<column id="entity_user_inactivity_tactics" type="text" field="ActTab.formation" hidden="true"/>
 		    	<column id="entity_user_inactivity_transfer" type="text" field="ActTab.transfer" hidden="true"/> 
-		    	<column id="entity_user_inactivity_contractsauslauf" type="text" field="ActTab.contract_expiry " hidden="true"/> 
+		    	<column id="entity_user_inactivity_contracts" type="text" field="ActTab.contract_expiry " hidden="true"/> 
 		    	<column id="entity_user_inactivity_transfer_check" type="text" field="ActTab.transfer_check " hidden="true"/> 
 		    	
 		    	<join type="LEFT" jointable="club AS ClubTab" joincondition="ClubTab.user_id = UserTab.id" />

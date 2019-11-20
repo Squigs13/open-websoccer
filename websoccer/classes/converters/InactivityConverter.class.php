@@ -77,7 +77,7 @@ class InactivityConverter implements IConverter {
 		$popup .= '<h3 id=\'actPopupLabel'. $row['id']. '\'>'. $this->_i18n->getMessage('entity_user_inactivity') . ': '. escapeOutput($row['entity_users_nick']) . '</h3></div>';
 		$popup .= '<div class=\'modal-body\'>';
 	
-		$gesamt = $row['entity_user_inactivity_login'] + $row['entity_user_inactivity_tactics'] + $row['entity_user_inactivity_transfer']+ $row['entity_user_inactivity_contractsauslauf'];
+		$gesamt = $row['entity_user_inactivity_login'] + $row['entity_user_inactivity_tactics'] + $row['entity_user_inactivity_transfer']+ $row['entity_user_inactivity_contracts'];
 		$popup .= '<table class=\'table table-bordered\'>
           <thead><tr>
             <th>'. $this->_i18n->getMessage('popup_user_inactivity_title_action') . '</th>
@@ -98,8 +98,8 @@ class InactivityConverter implements IConverter {
             <td style=\'text-align: center; font-weight: bold; color: '.$this->_color($this->_format($row['entity_user_inactivity_transfer'])).'\'>'.$this->_format($row['entity_user_inactivity_transfer']).' %</td>
           </tr>
           <tr>
-            <td><b>'. $this->_i18n->getMessage('entity_user_inactivity_contractsauslauf') . '</b></td>
-            <td style=\'text-align: center; font-weight: bold; color: '.$this->_color($this->_format($row['entity_user_inactivity_contractsauslauf'])).'\'>'.$this->_format($row['entity_user_inactivity_contractsauslauf']).' %</td>
+            <td><b>'. $this->_i18n->getMessage('entity_user_inactivity_contracts') . '</b></td>
+            <td style=\'text-align: center; font-weight: bold; color: '.$this->_color($this->_format($row['entity_user_inactivity_contracts'])).'\'>'.$this->_format($row['entity_user_inactivity_contracts']).' %</td>
           </tr></tbody>
           <tfoot>
           <tr>

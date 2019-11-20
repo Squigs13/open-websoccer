@@ -96,7 +96,7 @@
 			{% endif %}
 			
 			{{ profile.infofield(i18n.getMessage("entity_users_highscore"), user.highscore) }}
-			{{ profile.infofield(i18n.getMessage("entity_users_fanbeliebtheit"), user.popularity ~ "%") }}
+			{{ profile.infofield(i18n.getMessage("entity_users_popularity"), user.popularity ~ "%") }}
 			{{ profile.infofield(i18n.getMessage("entity_users_date_registered"), env.getFormattedDate(user.registration_date)) }}
 			{{ profile.infofield(i18n.getMessage("entity_users_lastonline"), env.getFormattedDate(user.lastonline)) }}
 		</div>
@@ -115,13 +115,13 @@
 			{{ profile.infofield(i18n.getMessage("entity_users_birthday"), user.birthday|date(env.getConfig("date_format"))) }}
 		{% endif %}
 		{% if user.occupation|length > 0 %}
-			{{ profile.infofield(i18n.getMessage("entity_users_beruf"), user.occupation) }}
+			{{ profile.infofield(i18n.getMessage("entity_users_occupation"), user.occupation) }}
 		{% endif %}
 		{% if user.interests|length > 0 %}
-			{{ profile.infofield(i18n.getMessage("entity_users_interessen"), user.interests) }}
+			{{ profile.infofield(i18n.getMessage("entity_users_interests"), user.interests) }}
 		{% endif %}
 		{% if user.favorite_club|length > 0 %}
-			{{ profile.infofield(i18n.getMessage("entity_users_lieblingsclub"), user.favorite_club) }}
+			{{ profile.infofield(i18n.getMessage("entity_users_fav_club"), user.favorite_club) }}
 		{% endif %}
 		{% if user.homepage|length > 0 %}
 		
