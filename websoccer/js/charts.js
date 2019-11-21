@@ -11,7 +11,7 @@ $(function() {
 			   },
 			yaxis: {
 				   min: 0,
-				   max: 6
+				   max: 10
 			   },
 			   lines: { show: true },
 			   points: { show: true },

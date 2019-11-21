@@ -193,7 +193,7 @@ class TeamOfTheDayModel implements IModel {
 		
 		$whereCondition = "M.season_id = %d AND M.matchday = %d AND (S.position_main = '";
 		$whereCondition .= implode("' OR S.position_main = '", $mainPositions);
-		$whereCondition .= "') ORDER BY S.rating ASC, S.goals DESC, S.assists DESC, S.wontackles DESC";
+		$whereCondition .= "') ORDER BY S.rating DESC, S.goals DESC, S.assists DESC, S.wontackles DESC";
 		
 		$result = $this->_db->querySelect($columns, $fromTable, $whereCondition, array($seasonId, $matchday), $limit);
 		while ($player = $result->fetch_array()) {

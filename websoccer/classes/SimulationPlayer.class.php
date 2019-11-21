@@ -188,7 +188,7 @@ class SimulationPlayer {
      * @param double $improvement grade improvement
      */
     public function improveMark($improvement) {
-    	$newMark = max((float) $this->mark - $improvement, 1);
+    	$newMark = min((float) $this->mark + $improvement, 10);
     	$this->setMark($newMark);
     }
     
@@ -198,7 +198,7 @@ class SimulationPlayer {
      * @param double $downgrade downgrade
      */
     public function downgradeMark($downgrade) {
-    	$newMark = min((float) $this->mark + $downgrade, 6);
+    	$newMark = max((float) $this->mark - $downgrade, 1);
     	$this->setMark($newMark);
     }
     
@@ -236,8 +236,8 @@ class SimulationPlayer {
     	$totalStrength += $this->strengthSatisfaction * $websoccer->getConfig("sim_weight_strengthSatisfaction");
     	$totalStrength = $totalStrength / $weightsSum;
     	
-    	// consider mark (1.0 -> +10%, 6.0 -> -10%)
-    	$totalStrength = $totalStrength * (114 - 4 * $this->mark) / 100;
+    	// consider mark (10.0 -> +10%, 1.0 -> -10%)
+    	$totalStrength = $totalStrength * ((790 / 9) + (20 * $this->mark / 9)) / 100;
     	
     	$this->totalStrength = min(100, round($totalStrength));
     	

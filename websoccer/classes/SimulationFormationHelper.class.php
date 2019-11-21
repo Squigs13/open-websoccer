@@ -175,7 +175,7 @@ class SimulationFormationHelper {
 			}
 			
 			$player = new SimulationPlayer($playerinfo['id'], $team, $position, $mainPosition,
-					3.0, $playerinfo['age'], $playerinfo['strength'], $playerinfo['technique'], $playerinfo['stamina'],
+					5.5, $playerinfo['age'], $playerinfo['strength'], $playerinfo['technique'], $playerinfo['stamina'],
 					$playerinfo['freshness'], $playerinfo['satisfaction']);
 			
 			if (strlen($playerinfo['pseudonym'])) {

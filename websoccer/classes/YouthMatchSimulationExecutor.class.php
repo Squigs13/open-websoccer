@@ -206,7 +206,7 @@ class YouthMatchSimulationExecutor {
 			$mainPosition = $formationPositions[$positionIndex];
 			$position = $positionMapping[$mainPosition];
 			
-			$player = new SimulationPlayer($playerinfo['id'], $team, $position, $mainPosition, 3.0,
+			$player = new SimulationPlayer($playerinfo['id'], $team, $position, $mainPosition, 5.5,
 					DEFAULT_PLAYER_AGE, $playerinfo['strength'], $playerinfo['strength'],
 					YOUTH_STRENGTH_STAMINA, YOUTH_STRENGTH_FRESHNESS, YOUTH_STRENGTH_SATISFACTION);
 			$player->name = $playerinfo['firstname'] . ' ' . $playerinfo['lastname'];

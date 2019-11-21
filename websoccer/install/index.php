@@ -31,7 +31,7 @@ define("DDL_MIGRATION", "ws3_ddl_upgrade.sql");
 define("DDL_INDEX", "ws3_ddl_index.sql");
 
 session_start();
-$supportedLanguages = array("de" => "Deutsch", "en" => "English");
+$supportedLanguages = array("en" => "English");
 
 ignore_user_abort(TRUE);
 set_time_limit(0);
@@ -45,7 +45,7 @@ include(BASE_FOLDER . "/classes/SecurityUtil.class.php");
 function printWelcomeScreen() {
 	global $supportedLanguages;
 	
-	echo "<h2>Sprache wählen / Choose language</h2>";
+	echo "<h2>Choose language</h2>";
 	
 	echo "<form method=\"post\">";
 	$first = TRUE;
@@ -60,7 +60,7 @@ function printWelcomeScreen() {
 		echo "</label>";
 	}
 	
-	echo "<button type=\"submit\" class=\"btn\">Wählen / Choose</button>";
+	echo "<button type=\"submit\" class=\"btn\">Choose</button>";
 	echo "<input type=\"hidden\" name=\"action\" value=\"actionSetLanguage\">";
 	echo "</form>";
 }
