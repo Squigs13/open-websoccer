@@ -110,9 +110,12 @@ class Simulator {
     			SimulationHelper::checkAndExecuteSubstitutions($match, $match->guestTeam, $this->_observers);
     		}
     		
-    		// execute next action
-    		$actionName = $this->_simStrategy->nextAction($match);
-    		$this->_simStrategy->$actionName($match);
+			// execute next action
+			// Loop 4 times to give 15 second increments
+			for($x = 1; $x <= 4; $x++) {
+				$actionName = $this->_simStrategy->nextAction($match);
+    			$this->_simStrategy->$actionName($match);
+			}
     		
     		// increase minutes played
     		$this->_increaseMinutesPlayed($match->homeTeam);

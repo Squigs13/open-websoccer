@@ -130,6 +130,10 @@ class DefaultSimulationStrategy implements ISimulationStrategy {
 		$pAction['shoot'] = round(max($minShootProb, min($pShoot + $tacticInfluence + $resultInfluence, 50)) * $this->_websoccer->getConfig('sim_shootprobability') / 100);
 		
 		$pAction['passBall'] = 100 - $pAction['tackle'] - $pAction['shoot'] ;
+
+		$pAction['passBall'] = 85;
+		$pAction['tackle'] = 10;
+		$pAction['shoot'] = 5;
 		
 		return SimulationHelper::selectItemFromProbabilities($pAction);
 	}
@@ -142,6 +146,7 @@ class DefaultSimulationStrategy implements ISimulationStrategy {
 		
 		// failed to pass the ball?
 		$pFailed[FALSE] = round(($player->getTotalStrength($this->_websoccer, $match) + $player->strengthTech) / 2);
+		$pFailed[FALSE] = 85;
 		
 		// probability of failure increases if long passes are activated
 		if ($player->team->longPasses) {
@@ -370,7 +375,7 @@ class DefaultSimulationStrategy implements ISimulationStrategy {
 			$shootStrength = round($shootStrength / $player->getGoals());
 		}
 		
-		$pGoal[TRUE] = max(1, min($shootStrength - $shootReduction, 60));
+		$pGoal[TRUE] = max(1, min($shootStrength - $shootReduction, 30));
 		$pGoal[FALSE] = 100 - $pGoal[TRUE];
 		
 		$result = SimulationHelper::selectItemFromProbabilities($pGoal);

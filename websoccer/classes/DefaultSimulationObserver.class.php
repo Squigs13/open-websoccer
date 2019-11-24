@@ -23,12 +23,12 @@
 // define mark/grade improvements or downgrades for particular events.
 define('MARK_IMPROVE_GOAL_SCORER', 1);
 define('MARK_IMPROVE_GOAL_PASSPLAYER', 0.75);
-define('MARK_DOWNGRADE_GOAL_GOALY', 0.5);
-define('MARK_DOWNGRADE_SHOOTFAILURE', 0.5);
+define('MARK_DOWNGRADE_GOAL_GOALY', 0.25);
+define('MARK_DOWNGRADE_SHOOTFAILURE', 0.25);
 define('MARK_IMPROVE_SHOOTFAILURE_GOALY', 0.5);
-define('MARK_IMPROVE_TACKLE_WINNER', 0.25);
-define('MARK_DOWNGRADE_TACKLE_LOSER', 0.5);
-define('MARK_DOWNGRADE_BALLPASS_FAILURE', 0.25);
+define('MARK_IMPROVE_TACKLE_WINNER', 0.5);
+define('MARK_DOWNGRADE_TACKLE_LOSER', 0.25);
+define('MARK_DOWNGRADE_BALLPASS_FAILURE', 0.1);
 define('MARK_IMPROVE_BALLPASS_SUCCESS', 0.1);
 
 /**
@@ -72,8 +72,8 @@ class DefaultSimulationObserver implements ISimulationObserver {
 		
 		$goaly->improveMark(MARK_IMPROVE_SHOOTFAILURE_GOALY);
 		// consider goals against goaly, in order to prevent goalies in team of the day, even though team lost very high.
-		if ($goaly->team->getGoals() > 3) {
-			$goaly->setMark(max(2.0, $goaly->getMark()));
+		if ($scorer->team->getGoals() > 3) {
+			$goaly->setMark(min(8.5, $goaly->getMark()));
 		}
 		
 		$scorer->setShoots($scorer->getShoots() + 1);
