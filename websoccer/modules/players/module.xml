@@ -97,7 +97,11 @@
 					<field id="suspended_cups" type="number" default="0"  />
 					<field id="suspended_nationalteam" type="number" default="0"  />
 					
-					<field id="w_strength" type="percent" required="true" roles="r_attributes" />
+					<field id="w_handling" type="percent" required="true" roles="r_attributes" />
+                    <field id="w_tackling" type="percent" required="true" roles="r_attributes" />
+                    <field id="w_passing" type="percent" required="true" roles="r_attributes" />
+                    <field id="w_finishing" type="percent" required="true" roles="r_attributes" />
+                    <field id="w_pace" type="percent" required="true" roles="r_attributes" />
 					<field id="w_technique" type="percent" required="true" roles="r_attributes" />
 					<field id="w_stamina" type="percent" required="true" roles="r_attributes" />
 					<field id="w_fitness" type="percent" required="true" roles="r_attributes" />
