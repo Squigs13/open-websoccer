@@ -57,6 +57,31 @@ class SimulationPlayer {
 	 * @var int age in years.
 	 */
 	public $age;
+
+	/**
+	 * @var int handling attribute (in per cent).
+	 */
+	public $handling;
+
+	/**
+	 * @var int tackling attribute (in per cent).
+	 */
+	public $tackling;
+
+	/**
+	 * @var int passing attribute (in per cent).
+	 */
+	public $passing;
+
+	/**
+	 * @var int finishing attribute (in per cent).
+	 */
+	public $finishing;
+
+	/**
+	 * @var int pace attribute (in per cent).
+	 */
+	public $pace;
 	
 	/**
 	 * @var int strength attribute: strength (in per cent). Including strength weakness due to wrong position.
@@ -123,13 +148,18 @@ class SimulationPlayer {
 	private $needsStrengthRecomputation;
 	
     public function __construct($id, $team, $position, $mainPosition, 
-    		$mark, $age, $strength, $strengthTech, $strengthStamina, $strengthFreshness, $strengthSatisfaction) {
+    		$mark, $age, $handling, $tackling, $passing, $finishing, $pace, $strength, $strengthTech, $strengthStamina, $strengthFreshness, $strengthSatisfaction) {
     	$this->id = $id;
     	$this->team = $team;
     	$this->position = $position;
     	$this->mainPosition = $mainPosition;
     	$this->mark = $mark;
-    	$this->age = $age;
+		$this->age = $age;
+		$this->handling = $handling;
+		$this->tackling = $tackling;
+		$this->passing = $passing;
+		$this->finishing = $finishing;
+		$this->pace = $pace;
     	$this->strength = $strength;
     	$this->strengthTech = $strengthTech;
     	$this->strengthStamina = $strengthStamina;

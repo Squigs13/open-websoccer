@@ -213,6 +213,11 @@ CREATE TABLE ws3_player (
   transfer_start INT(11) NOT NULL DEFAULT 0,
   transfer_end INT(11) NOT NULL DEFAULT 0,
   transfer_min_bid INT(11) NOT NULL DEFAULT 0,
+  w_handling TINYINT(3) NOT NULL,
+  w_tackling TINYINT(3) NOT NULL,
+  w_passing TINYINT(3) NOT NULL,
+  w_finishing TINYINT(3) NOT NULL,
+  w_pace TINYINT(3) NOT NULL,
   w_strength TINYINT(3) NOT NULL,
   w_technique TINYINT(3) NOT NULL,
   w_stamina TINYINT(3) NOT NULL,
@@ -306,6 +311,11 @@ CREATE TABLE ws3_sponsor (
 CREATE TABLE ws3_training (
   id SMALLINT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(30) NULL,
+  w_handling TINYINT(3) NOT NULL,
+  w_tackling TINYINT(3) NOT NULL,
+  w_passing TINYINT(3) NOT NULL,
+  w_finishing TINYINT(3) NOT NULL,
+  w_pace TINYINT(3) NOT NULL,
   w_strength TINYINT(3) NOT NULL,
   w_technique TINYINT(3) NOT NULL,
   w_stamina TINYINT(3) NOT NULL,
@@ -319,6 +329,11 @@ CREATE TABLE ws3_training_camp (
   country VARCHAR(30) NULL,
   image VARCHAR(100) NULL,
   price_player_day INT(10) NOT NULL,
+  p_handling TINYINT(3) NOT NULL,
+  p_tackling TINYINT(3) NOT NULL,
+  p_passing TINYINT(3) NOT NULL,
+  p_finishing TINYINT(3) NOT NULL,
+  p_pace TINYINT(3) NOT NULL,
   p_strength TINYINT(3) NOT NULL,
   p_technique TINYINT(3) NOT NULL,
   p_stamina TINYINT(3) NOT NULL,
@@ -511,6 +526,11 @@ CREATE TABLE ws3_match_simulation (
   field ENUM('1','Bench','Substituted') NOT NULL DEFAULT '1',
   position_main VARCHAR(5) NULL,
   age TINYINT(2) NULL,
+  w_handling TINYINT(3) NOT NULL,
+  w_tackling TINYINT(3) NOT NULL,
+  w_passing TINYINT(3) NOT NULL,
+  w_finishing TINYINT(3) NOT NULL,
+  w_pace TINYINT(3) NOT NULL,
   w_strength TINYINT(3) NULL,
   w_technique TINYINT(3) NULL,
   w_stamina TINYINT(3) NULL,
@@ -548,7 +568,7 @@ CREATE TABLE ws3_transfer (
 
 CREATE TABLE ws3_session (
   session_id CHAR(32) NOT NULL PRIMARY KEY,
-  session_data TEXT NOT NULL,
+  session_data TEXT NOT NULL DEFAULT '',
   expires INT(11) NOT NULL
 )  DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 

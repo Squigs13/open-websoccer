@@ -141,6 +141,18 @@
   		{% if env.getConfig("hide_strength_attributes") != "1" %}
 			<h4>{{ i18n.getMessage("player_details_strength_title") }}</h4>
 			
+			<p><em>{{ i18n.getMessage('entity_player_w_handling') }} ({{ player.player_handling }}%)</em></p>
+			{{ statisticelements.progressbar(player.player_handling) }}
+
+			<p><em>{{ i18n.getMessage('entity_player_w_tackling') }} ({{ player.player_tackling }}%)</em></p>
+			{{ statisticelements.progressbar(player.player_tackling) }}
+
+			<p><em>{{ i18n.getMessage('entity_player_w_passing') }} ({{ player.player_passing }}%)</em></p>
+			{{ statisticelements.progressbar(player.player_passing) }}
+
+			<p><em>{{ i18n.getMessage('entity_player_w_finishing') }} ({{ player.player_finishing }}%)</em></p>
+			{{ statisticelements.progressbar(player.player_finishing) }}
+
 			<p><em>{{ i18n.getMessage('entity_player_w_strength') }} ({{ player.player_strength }}%)</em></p>
 			{{ statisticelements.progressbar(player.player_strength) }}
 			

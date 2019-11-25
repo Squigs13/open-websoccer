@@ -111,6 +111,11 @@ class PlayersDataService {
 				'position' => 'position',
 				'position_main' => 'position_main',
 				'position_second' => 'position_second',
+				'w_handling' => 'handling',
+				'w_tackling' => 'tackling',
+				'w_passing' => 'passing',
+				'w_finishing' => 'finishing',
+				'w_pace' => 'pace',
 				'w_strength' => 'strength',
 				'w_technique' => 'strength_technic',
 				'w_stamina' => 'strength_stamina',
@@ -195,6 +200,11 @@ class PlayersDataService {
 		$columns['P.contract_salary'] = 'contract_salary';
 		$columns['P.contract_goal_bonus'] = 'contract_goalbonus';
 		
+		$columns['P.w_handling'] = 'handling';
+		$columns['P.w_tackling'] = 'tackling';
+		$columns['P.w_passing'] = 'passing';
+		$columns['P.w_finishing'] = 'finishing';
+		$columns['P.w_pace'] = 'pace';
 		$columns['P.w_strength'] = 'strength';
 		$columns['P.w_technique'] = 'strength_technique';
 		$columns['P.w_stamina'] = 'strength_stamina';
@@ -307,6 +317,11 @@ class PlayersDataService {
 		$columns['P.contract_matches'] = 'player_contract_matches';
 		$columns['P.contract_goal_bonus'] = 'player_contract_goalbonus';
 		
+		$columns['P.w_handling'] = 'player_handling';
+		$columns['P.w_tackling'] = 'player_tackling';
+		$columns['P.w_passing'] = 'player_passing';
+		$columns['P.w_finishing'] = 'player_finishing';
+		$columns['P.w_pace'] = 'player_pace';
 		$columns['P.w_strength'] = 'player_strength';
 		$columns['P.w_technique'] = 'player_strength_technique';
 		$columns['P.w_stamina'] = 'player_strength_stamina';
@@ -505,6 +520,11 @@ class PlayersDataService {
 		$columns['P.transfer_listed'] = 'transfermarket';
 		$columns['P.unsellable'] = 'unsellable';
 		
+		$columns['P.w_handling'] = 'handling';
+		$columns['P.w_tackling'] = 'tackling';
+		$columns['P.w_passing'] = 'passing';
+		$columns['P.w_finishing'] = 'finishing';
+		$columns['P.w_pace'] = 'pace';
 		$columns['P.w_strength'] = 'strength';
 		$columns['P.w_technique'] = 'strength_technique';
 		$columns['P.w_stamina'] = 'strength_stamina';

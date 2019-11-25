@@ -25,7 +25,12 @@
 	<message id="entity_player_suspended">Suspended</message>
 	<message id="entity_player_suspended_cups">Suspended (Cups)</message>
 	<message id="entity_player_suspended_nationalteam">Suspended (National team)</message>
-	<message id="entity_player_w_strength">Skill</message>
+	<message id="entity_player_w_handling">Handling</message>
+	<message id="entity_player_w_tackling">Tackling</message>
+	<message id="entity_player_w_passing">Passing</message>
+	<message id="entity_player_w_finishing">Finishing</message>
+	<message id="entity_player_w_pace">Pace</message>
+	<message id="entity_player_w_strength">Strength</message>
 	<message id="entity_player_w_technique">Technique</message>
 	<message id="entity_player_w_stamina">Stamina</message>
 	<message id="entity_player_w_fitness">Fitness</message>

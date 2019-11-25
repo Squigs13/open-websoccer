@@ -31,10 +31,10 @@
 				<td>{% if nationImg %}<img src="{{ nationImg }}" title="{{ countryLabel }}" alt="{{ countryLabel }}" width="20px" />{% else %}{{ countryLabel }}{% endif %}</td>
 				
 				{% if env.getConfig("hide_strength_attributes") != "1" %}
-				<td {{ playerlists.strengthClass(player.strength) }} title="{{ i18n.getMessage("playertable_head_strength") }}"><strong>{{ player.strength }}</strong></td>
-				<td {{ playerlists.strengthClass(player.strength_technic) }} title="{{ i18n.getMessage("playertable_head_strength_technic") }}">{{ player.strength_technic }}</td>
-				<td {{ playerlists.strengthClass(player.strength_freshness) }} title="{{ i18n.getMessage("playertable_head_strength_freshness") }}">{{ player.strength_freshness }}</td>
-				<td {{ playerlists.strengthClass(player.strength_stamina) }} title="{{ i18n.getMessage("playertable_head_strength_stamina") }}">{{ player.strength_stamina }}</td>
+				<td {{ playerlists.strengthClass(player.handling) }} title="{{ i18n.getMessage("playertable_head_handling") }}">{{ player.handling }}</td>
+				<td {{ playerlists.strengthClass(player.tackling) }} title="{{ i18n.getMessage("playertable_head_tackling") }}">{{ player.tackling }}</td>
+				<td {{ playerlists.strengthClass(player.passing) }} title="{{ i18n.getMessage("playertable_head_passing") }}">{{ player.passing }}</td>
+				<td {{ playerlists.strengthClass(player.finishing) }} title="{{ i18n.getMessage("playertable_head_finishing") }}">{{ player.finishing }}</td>
 				<td {{ playerlists.strengthClass(player.strength_satisfaction) }} title="{{ i18n.getMessage("playertable_head_strength_satisfaction") }}">{{ player.strength_satisfaction }}</td>
 				{% endif %}
 				

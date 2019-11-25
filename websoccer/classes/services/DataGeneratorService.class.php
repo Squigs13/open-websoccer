@@ -262,6 +262,7 @@ class DataGeneratorService {
 		$columns['position'] = $position;
 		$columns['position_main'] = $mainPosition;
 		$columns['nation'] = $country;
+		$columns['w_pace'] = max(1, min(100, 70 + self::_getRandomDeviationValue(29)));
 		$columns['w_strength'] = max(1, min(100, $strengths['strength'] + self::_getRandomDeviationValue($maxDeviation)));
 		$columns['w_technique'] = max(1, min(100, $strengths['technique'] + self::_getRandomDeviationValue($maxDeviation)));
 		$columns['w_stamina'] = max(1, min(100, $strengths['stamina'] + self::_getRandomDeviationValue($maxDeviation)));
@@ -270,6 +271,37 @@ class DataGeneratorService {
 		$columns['contract_salary'] = $salary;
 		$columns['contract_matches'] = $contractDuration;
 		$columns['status'] = '1';
+
+		switch ($position) {
+			case 'Goalkeeper':
+				$columns['w_handling'] = max(1, min(100, 75 + self::_getRandomDeviationValue($maxDeviation)));
+				$columns['w_tackling'] = max(1, min(100, 35 + self::_getRandomDeviationValue($maxDeviation)));
+				$columns['w_passing'] = max(1, min(100, 45 + self::_getRandomDeviationValue($maxDeviation)));
+				$columns['w_finishing'] = max(1, min(100, 25 + self::_getRandomDeviationValue($maxDeviation)));
+				break;
+			case 'Defender':
+				$columns['w_handling'] = max(1, min(100, 25 + self::_getRandomDeviationValue($maxDeviation)));
+				$columns['w_tackling'] = max(1, min(100, 75 + self::_getRandomDeviationValue($maxDeviation)));
+				$columns['w_passing'] = max(1, min(100, 45 + self::_getRandomDeviationValue($maxDeviation)));
+				$columns['w_finishing'] = max(1, min(100, 35 + self::_getRandomDeviationValue($maxDeviation)));
+				break;
+			case 'Midfielder':
+				$columns['w_handling'] = max(1, min(100, 25 + self::_getRandomDeviationValue($maxDeviation)));
+				$columns['w_tackling'] = max(1, min(100, 45 + self::_getRandomDeviationValue($maxDeviation)));
+				$columns['w_passing'] = max(1, min(100, 75 + self::_getRandomDeviationValue($maxDeviation)));
+				$columns['w_finishing'] = max(1, min(100, 45 + self::_getRandomDeviationValue($maxDeviation)));
+				break;
+			case 'Forward':
+				$columns['w_handling'] = max(1, min(100, 25 + self::_getRandomDeviationValue($maxDeviation)));
+				$columns['w_tackling'] = max(1, min(100, 35 + self::_getRandomDeviationValue($maxDeviation)));
+				$columns['w_passing'] = max(1, min(100, 45 + self::_getRandomDeviationValue($maxDeviation)));
+				$columns['w_finishing'] = max(1, min(100, 75 + self::_getRandomDeviationValue($maxDeviation)));
+				break;
+			
+			default:
+				# code...
+				break;
+		}
 		
 		if ($teamId) {
 			$columns['club_id'] = $teamId;
