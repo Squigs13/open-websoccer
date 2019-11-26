@@ -289,6 +289,11 @@ class SimulationStateHelper {
 		$columns['position_main'] = $player->mainPosition;
 		$columns['age'] = $player->age;
 		
+		$columns['w_handling'] = $player->handling;
+		$columns['w_tackling'] = $player->tackling;
+		$columns['w_passing'] = $player->passing;
+		$columns['w_finishing'] = $player->finishing;
+		$columns['w_pace'] = $player->pace;
 		$columns['w_strength'] = $player->strength;
 		$columns['w_technique'] = $player->strengthTech;
 		$columns['w_stamina'] = $player->strengthStamina;
@@ -323,6 +328,11 @@ class SimulationStateHelper {
 		$columns['position_main'] = 'main_position';
 		$columns['age'] = 'age';
 		
+		$columns['w_handling'] = 'handling';
+		$columns['w_tackling'] = 'tackling';
+		$columns['w_passing'] = 'passing';
+		$columns['w_finishing'] = 'finishing';
+		$columns['w_pace'] = 'pace';
 		$columns['w_strength'] = 'strength';
 		$columns['w_technique'] = 'strength_tech';
 		$columns['w_stamina'] = 'strength_stamina';
@@ -345,7 +355,8 @@ class SimulationStateHelper {
 		while ($playerinfo = $result->fetch_array()) {
 			
 			$player = new SimulationPlayer($playerinfo['player_id'], $team, $playerinfo['position'], $playerinfo['main_position'], 
-					$playerinfo['mark'], $playerinfo['age'], $playerinfo['strength'], $playerinfo['strength_tech'], 
+					$playerinfo['mark'], $playerinfo['age'], $playerinfo['handling'], $playerinfo['tackling'], $playerinfo['passing'], 
+					$playerinfo['finishing'], $playerinfo['pace'], $playerinfo['strength'], $playerinfo['strength_tech'], 
 					$playerinfo['strength_stamina'], $playerinfo['strength_freshness'], $playerinfo['strength_satisfaction']);
 			
 			$player->name = $playerinfo['name'];

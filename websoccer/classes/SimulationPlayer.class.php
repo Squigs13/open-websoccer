@@ -240,7 +240,24 @@ class SimulationPlayer {
      * @param SimulationMatch $match match model.
      */
     public function recomputeTotalStrength(WebSoccer $websoccer, SimulationMatch $match) {
-    	$mainStrength = $this->strength;
+		switch ($this->position) {
+			case 'Goalkeeper':
+				$mainStrength = $this->handling;
+				break;
+			case 'Defender':
+				$mainStrength = $this->tackling;
+				break;
+			case 'Midfielder':
+				$mainStrength = $this->passing;
+				break;
+			case 'Forward':
+				$mainStrength = $this->finishing;
+				break;
+			
+			default:
+				# code...
+				break;
+		}
     	
     	// home field advantage
     	if ($match->isSoldOut && $this->team->id == $match->homeTeam->id) {
@@ -254,14 +271,14 @@ class SimulationPlayer {
     	
     	$weightsSum = $websoccer->getConfig("sim_weight_strength")
     		+ $websoccer->getConfig("sim_weight_strengthTech")
-    		+ $websoccer->getConfig("sim_weight_strengthStamina")
+    		// + $websoccer->getConfig("sim_weight_strengthStamina")
     		+ $websoccer->getConfig("sim_weight_strengthFreshness")
     		+ $websoccer->getConfig("sim_weight_strengthSatisfaction");
     		
     	// get weights from settings
     	$totalStrength = $mainStrength * $websoccer->getConfig("sim_weight_strength"); 
     	$totalStrength += $this->strengthTech * $websoccer->getConfig("sim_weight_strengthTech"); 
-    	$totalStrength += $this->strengthStamina * $websoccer->getConfig("sim_weight_strengthStamina"); 
+    	// $totalStrength += $this->strengthStamina * $websoccer->getConfig("sim_weight_strengthStamina"); 
     	$totalStrength += $this->strengthFreshness * $websoccer->getConfig("sim_weight_strengthFreshness");
     	$totalStrength += $this->strengthSatisfaction * $websoccer->getConfig("sim_weight_strengthSatisfaction");
     	$totalStrength = $totalStrength / $weightsSum;

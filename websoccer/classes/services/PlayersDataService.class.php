@@ -666,17 +666,36 @@ class PlayersDataService {
 		if (!$websoccer->getConfig('transfermarket_computed_marketvalue')) {
 			return $player[$columnPrefix . 'marketvalue'];
 		}
+
+		switch ($player[$columnPrefix . 'position']) {
+			case 'goaly':
+				$totalStrength = $websoccer->getConfig('sim_weight_strength') * $player[$columnPrefix . 'handling'];
+				break;
+			case 'defense':
+				$totalStrength = $websoccer->getConfig('sim_weight_strength') * $player[$columnPrefix . 'tackling'];
+				break;
+			case 'midfield':
+				$totalStrength = $websoccer->getConfig('sim_weight_strength') * $player[$columnPrefix . 'passing'];
+				break;
+			case 'striker':
+				$totalStrength = $websoccer->getConfig('sim_weight_strength') * $player[$columnPrefix . 'finishing'];
+				break;
+			
+			default:
+				# code...
+				break;
+		}
 		
 		// compute market value
-		$totalStrength = $websoccer->getConfig('sim_weight_strength') * $player[$columnPrefix . 'strength'];
+		// $totalStrength = $websoccer->getConfig('sim_weight_strength') * $player[$columnPrefix . 'strength'];
 		$totalStrength += $websoccer->getConfig('sim_weight_strengthTech') * $player[$columnPrefix . 'strength_technique'];
 		$totalStrength += $websoccer->getConfig('sim_weight_strengthStamina') * $player[$columnPrefix . 'strength_stamina'];
-		$totalStrength += $websoccer->getConfig('sim_weight_strengthFreshness') * $player[$columnPrefix . 'strength_freshness'];
-		$totalStrength += $websoccer->getConfig('sim_weight_strengthSatisfaction') * $player[$columnPrefix . 'strength_satisfaction'];
+		// $totalStrength += $websoccer->getConfig('sim_weight_strengthFreshness') * $player[$columnPrefix . 'strength_freshness'];
+		// $totalStrength += $websoccer->getConfig('sim_weight_strengthSatisfaction') * $player[$columnPrefix . 'strength_satisfaction'];
 		
 		$totalStrength /= $websoccer->getConfig('sim_weight_strength') + $websoccer->getConfig('sim_weight_strengthTech')
-			+ $websoccer->getConfig('sim_weight_strengthStamina') + $websoccer->getConfig('sim_weight_strengthFreshness')
-			+ $websoccer->getConfig('sim_weight_strengthSatisfaction');
+			+ $websoccer->getConfig('sim_weight_strengthStamina'); //+ $websoccer->getConfig('sim_weight_strengthFreshness')
+			// + $websoccer->getConfig('sim_weight_strengthSatisfaction');
 		
 		return $totalStrength * $websoccer->getConfig('transfermarket_value_per_strength');
 	}

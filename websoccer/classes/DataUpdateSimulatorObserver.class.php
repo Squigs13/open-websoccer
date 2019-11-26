@@ -302,10 +302,10 @@ class DataUpdateSimulatorObserver implements ISimulatorObserver {
 			$columns['injured'] = $player->injured;
 			
 			if ($player->getMinutesPlayed() >= $minMinutes) {
-				$columns['w_stamina'] = min(100, $player->strengthStamina + $staminaChange);
+				// $columns['w_stamina'] = min(100, $player->strengthStamina + $staminaChange);
 				$columns['w_morale'] = min(100, $player->strengthSatisfaction + $satisfactionChange);
 			} else {
-				$columns['w_stamina'] = max(1, $player->strengthStamina - $staminaChange);
+				// $columns['w_stamina'] = max(1, $player->strengthStamina - $staminaChange);
 				$columns['w_morale'] = max(1, $player->strengthSatisfaction - $satisfactionChange);
 			}
 			

@@ -310,6 +310,11 @@ class MatchSimulationExecutor {
 		$columns['first_name'] = 'firstName';
 		$columns['last_name'] = 'lastName';
 		$columns['nickname'] = 'pseudonym';
+		$columns['w_handling'] = 'handling';
+		$columns['w_tackling'] = 'tackling';
+		$columns['w_passing'] = 'passing';
+		$columns['w_finishing'] = 'finishing';
+		$columns['w_pace'] = 'pace';
 		$columns['w_strength'] = 'strength';
 		$columns['w_technique'] = 'technique';
 		$columns['w_stamina'] = 'stamina';
@@ -367,7 +372,7 @@ class MatchSimulationExecutor {
 				}
 				
 				$player = new SimulationPlayer($playerId, $team, $position, $mainPosition, 
-						5.5, $playerinfo['age'], $strength, $playerinfo['technique'], $playerinfo['stamina'], 
+						5.5, $playerinfo['age'], $playerinfo['handling'], $playerinfo['tackling'], $playerinfo['passing'], $playerinfo['finishing'], $playerinfo['pace'], $strength, $playerinfo['technique'], $playerinfo['stamina'], 
 						$playerinfo['freshness'], $playerinfo['satisfaction']);
 				
 				if (strlen($playerinfo['pseudonym'])) {
@@ -420,7 +425,8 @@ class MatchSimulationExecutor {
 			if (isset($playerinfo['team_id']) && $playerinfo['team_id'] == $team->id
 					|| $team->isNationalTeam && $playerinfo['nation'] == $team->name) {
 				$player = new SimulationPlayer($playerId, $team, $playerinfo['position'], $playerinfo['mainPosition'],
-						5.5, $playerinfo['age'], $playerinfo['strength'], $playerinfo['technique'], $playerinfo['stamina'],
+						5.5, $playerinfo['age'], $playerinfo['handling'], $playerinfo['tackling'], $playerinfo['passing'], 
+						$playerinfo['finishing'], $playerinfo['pace'], $playerinfo['strength'], $playerinfo['technique'], $playerinfo['stamina'],
 						$playerinfo['freshness'], $playerinfo['satisfaction']);
 				
 				if (strlen($playerinfo['pseudonym'])) {
